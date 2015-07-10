@@ -49,7 +49,7 @@
       /* inspired by http://unindented.org/articles/github-ribbon-using-css-transforms/ */
 
       .ribbon-container {
-        position: absolute;
+        position: fixed;
         top: 0px;
         overflow: hidden;
         width: 167px;
@@ -126,21 +126,45 @@
         height: 100%;
       }
 
-      #demo1 #tree {
-        float: left;
-        width: 60%;
-        height: 100%;
-      }
-
       #demo1 .panel-body {
-        height: 50%;
+        height: 70%;
         min-height: 250px;
         width: 100%;
         overflow: hidden;
       }
 
       #tree-container {
-        overflow-y: scroll;
+        float: left;
+        width: 60%;
+        position: relative;
+        background-color: whitesmoke;
+      }
+      #tree-container #tree {
+        height: 100%;
+        overflow-y: auto;
+      }
+      #tree-container.error {
+        overflow: hidden;
+      }
+      #tree-container.error #tree {
+        opacity: 0.5;
+        -webkit-filter: grayscale(1);
+                filter: grayscale(1);
+      }
+
+      #error-message {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
+        background-color: orangered;
+        color: white;
+        font-weight: bold;
+        padding: 0.5em;
+      }
+      #tree-container.error #error-message {
+        display: initial;
       }
     </style>
 
@@ -178,8 +202,7 @@
         </div>
         <div class="panel-body">
           <div id="layout">
-<div id="editor" spellcheck="false">
-"use strict";
+<div id="editor" spellcheck="false">"use strict";
 
 let [x,y,z] = [1,2,3].map( _ => _ * 2 );
 
@@ -191,6 +214,7 @@ class Person {
 </div>
             <div id="tree-container">
               <ui-treeview expanded id="tree"></ui-treeview>
+              <div id="error-message"></div>
             </div>
           </div>
           <script src="bower_components/ace-builds/src-min/ace.js"></script>

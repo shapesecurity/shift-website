@@ -38,7 +38,7 @@ var editor = ace.edit("editor"),
     session = editor.getSession(),
     Range = ace.require('ace/range').Range;
 
-var error = document.getElementById("error");
+var error = document.getElementById("error-message");
 var tree = document.getElementById("tree");
 var treeContainer = document.getElementById("tree-container");
 
@@ -47,7 +47,7 @@ var markers = [];
 
 function displayError(exception) {
   hideError();
-  console.dir(exception);
+  error.innerText = exception.message;
   if (exception.line) {
     session.setAnnotations([{
       row: exception.line,
