@@ -1,0 +1,213 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shift Parser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        clear: right;
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+      .nav {
+        margin-bottom: 60px;
+      }
+    </style>
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <style>
+      /* inspired by http://unindented.org/articles/github-ribbon-using-css-transforms/ */
+
+      .ribbon-container {
+        position: absolute;
+        top: 0px;
+        overflow: hidden;
+        width: 167px;
+        height: 92px;
+      }
+  
+      .ribbon {
+        position: absolute;
+        top: 22px;
+        background-color: #a00;
+        white-space: nowrap;
+        -webkit-box-shadow: 0 0 10px #888;
+           -moz-box-shadow: 0 0 10px #888;
+                box-shadow: 0 0 10px #888;
+      }
+
+      .ribbon-container.right {
+        right: 0;
+      }
+      .ribbon-container.right .ribbon {
+        -webkit-transform: rotate(32deg);
+           -moz-transform: rotate(32deg);
+            -ms-transform: rotate(32deg);
+             -o-transform: rotate(32deg);
+                transform: rotate(32deg);
+      }
+
+      .ribbon-container.left {
+        left: 0;
+      }
+      .ribbon-container.left .ribbon {
+        -webkit-transform: rotate(-32deg);
+           -moz-transform: rotate(-32deg);
+            -ms-transform: rotate(-32deg);
+             -o-transform: rotate(-32deg);
+                transform: rotate(-32deg);
+        position: absolute;
+        left: -55px;
+      }
+
+      .ribbon a {
+        border: 1px solid #faa;
+        color: #fff;
+        display: block;
+        font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        margin: 1px 0;
+        padding: 7px 60px;
+        text-align: center;
+        text-decoration: none;
+        text-shadow: 0 0 5px #444;
+      }
+    </style>
+    <style>
+      html, body {
+        padding: 0;
+        margin: 0;
+      }
+
+      a.hub-link::before {
+        content: "\238B";
+        padding: 5px;
+      }
+      a.hub-link:hover, a.hub-link:focus {
+        text-decoration: none;
+      }
+
+      .lead {
+        margin: 1em auto;
+      }
+
+      #editor {
+        float: left;
+        width: 40%;
+        height: 100%;
+      }
+
+      #demo1 #tree {
+        float: left;
+        width: 60%;
+        height: 100%;
+      }
+
+      #demo1 .panel-body {
+        height: 50%;
+        min-height: 250px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      #tree-container {
+        overflow-y: scroll;
+      }
+    </style>
+
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html"/>
+    <link rel="import" href="bower_components/ui-treeview/ui-treeview.html"/>
+  </head>
+
+  <body>
+    <div class="ribbon-container right">
+      <div class="ribbon">
+        <a href="https://github.com/shapesecurity/shift-parser-js" target="_blank">Fork me on GitHub</a>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="masthead">
+        <h3><a href="./index.html" class="muted hub-link" target="_blank">part of the Shift suite</a></h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Shift Parser</h1>
+        <p class="lead">
+          generates a Shift format AST<br />
+          from ECMAScript program text
+        </p>
+      </div>
+
+      <hr>
+
+      <div id="demo1" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Demo</h3>
+        </div>
+        <div class="panel-body">
+          <div id="layout">
+<div id="editor" spellcheck="false">
+"use strict";
+
+let [x,y,z] = [1,2,3].map( _ => _ * 2 );
+
+class Person {
+  constructor(name) {
+    this.name = name
+  }
+}
+</div>
+            <div id="tree-container">
+              <ui-treeview expanded id="tree"></ui-treeview>
+            </div>
+          </div>
+          <script src="bower_components/ace-builds/src-min/ace.js"></script>
+          <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
+          <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
+          <script src="js/parser/shift-parser.js"></script>
+          <script src="js/parser/main.js"></script>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; Shape Security Labs 2015</p>
+      </div>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
