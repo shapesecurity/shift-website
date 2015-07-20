@@ -9,52 +9,20 @@
     <!-- Le styles -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        clear: right;
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
       .marketing {
         margin: 60px 0;
       }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
 
       .nav {
-        margin-bottom: 60px;
+        margin: 30px 0 60px 0;
       }
 
-      .panel {
+      section {
         margin: 2em auto;
       }
     </style>
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
   </head>
 
   <body>
@@ -69,13 +37,15 @@
       </ul>
 
       <div class="jumbotron">
-        <h1>Shift AST</h1>
+        <h1><span class="shift">Shift</span> AST</h1>
         <p class="lead">... and the Shift family of tools</p>
       </div>
 
+      <hr />
+
       <div class="row-fluid marketing">
         <div class="span6">
-          <h3>What is the Shift <abbr class="initialism" title="abstract syntax tree">AST</abbr>?</h3>
+          <h3>What is the <span class="shift">Shift</span> <abbr class="initialism" title="abstract syntax tree">AST</abbr>?</h3>
           <ul class="list-unstyled">
             <li>Represents the structure of an ECMAScript program as a tree</li>
             <li>Easily transformed to create new programs or analysed to create reports or inform other computations</li>
@@ -91,76 +61,73 @@
         </div>
       </div>
 
+      <hr />
+
       <h3>Use Cases</h3>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Transformation</h4>
+      <section>
+        <h4>Transformation</h4>
+
+        <p>
+          Allowing for convenient, error-free transformation was the highest
+          priority in the design of the Shift AST format.
+          This has been achieved through a number of means, some of which are
+          illustrated below.
+          The following program is represented in both the Shift AST (left)
+          and an alternative representation, <a href="https://github.com/estree/estree">ESTree</a> (right).
+        </p>
+
+        <p>
+          TODO: Make the representations below pretty. Probably make a
+          graphical representation of the tree and syntax highlight the JS.
+        </p>
+
+        <p class="text-center">
+          <code style="font-size: 120%;">var x; for(var y;;);</code>
+        </p>
+
+        <div class="row-fluid">
+          <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">
+            <div style="width: 100%; height: 30%; background-color: lightgray;"></div>
+            <figcaption><h5><span class="shift">Shift</span></h5></figcaption>
+          </figure>
+          <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">
+            <div style="width: 100%; height: 30%; background-color: lightgray;"></div>
+            <figcaption><h5>ESTree</h5></figcaption>
+          </figure>
         </div>
-        <div class="panel-body">
-          <p>
-            Allowing for convenient, error-free transformation was the highest
-            priority in the design of the Shift AST format.
-            This has been achieved through a number of means, some of which are
-            illustrated below.
-            The following program is represented in both the Shift AST (left)
-            and an alternative representation, ESTree (right).
-          </p>
 
-          <p>
-            TODO: Make the representations below pretty. Probably make a
-            graphical representation of the tree and syntax highlight the JS.
-          </p>
+        <p>
+          Using the ESTree format, a user that is only considering programs
+          that contain variable declarations in statement position may write
+          a na&#xEF;ve transformation that replaces all variable declarations
+          with while statements. But the same user using the Shift AST format
+          knows that all statement nodes may be replaced by other statement
+          nodes, and would apply the transformation to the
+          VariableDeclarationStatement node instead.
+        </p>
 
-          <p class="text-center">
-            <code style="font-size: 120%;">var x; for(var y;;);</code>
-          </p>
+        <p>
+          This is a single, simple example of the benefits reaped from using
+          an AST format that was specifically designed with transformation in
+          mind. For other examples, see the Shape Security Labs blog post,
+          <a href="#"><em>Why use the Shift AST for transformation?</em></a>.
+        </p>
+      </section>
 
-          <div class="row-fluid">
-            <div style="width: 49%; padding: 0; text-align: center; float: left; height: 30%; background-color: lightgray;"></div>
-            <div style="width: 49%; padding: 0; text-align: center; float: right; height: 30%; background-color: lightgray;"></div>
-          </div>
-          <div class="row-fluid">
-            <h5 style="width: 50%; margin-left: 0; margin-right: 0; padding: 0; text-align: center; float: left;">Shift</h5>
-            <h5 style="width: 50%; margin-left: 0; margin-right: 0; padding: 0; text-align: center; float: left;">ESTree</h5>
-          </div>
+      <section>
+        <h4>Analysis</h4>
+        <p>
+          Program analysis using the Shift AST is easy due to the large
+          variety of node types that help reduce the necessary amount of
+          context during analysis.
+        </p>
+        <p>
+          TODO: text text text.
+        </p>
+      </section>
 
-          <p>
-            Using the ESTree format, a user that is only considering programs
-            that contain variable declarations in statement position may write
-            a na&#xEF;ve transformation that replaces all variable declarations
-            with while statements. But the same user using the Shift AST format
-            knows that all statement nodes may be replaced by other statement
-            nodes, and would apply the transformation to the
-            VariableDeclarationStatement node instead.
-          </p>
-
-          <p>
-            This is a single, simple example of the benefits reaped from using
-            an AST format that was specifically designed with transformation in
-            mind. For other examples, see the Shape Security Labs blog post,
-            <a href="#"><em>Why use the Shift AST for transformation?</em></a>.
-          </p>
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Analysis</h4>
-        </div>
-        <div class="panel-body">
-          <p>
-            Program analysis using the Shift AST is easy due to the large
-            variety of node types that help reduce the necessary amount of
-            context during analysis.
-          </p>
-          <p>
-            TODO: text text text.
-          </p>
-        </div>
-      </div>
-
-      <hr>
+      <hr />
 
       <div class="footer">
         <p>&copy; Shape Security Labs 2015</p>

@@ -7,119 +7,10 @@
     <meta name="author" content="">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        clear: right;
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-
-      .nav {
-        margin-bottom: 60px;
-      }
-    </style>
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
+    <link href="css/ribbon.css" rel="stylesheet">
     <style>
-      /* inspired by http://unindented.org/articles/github-ribbon-using-css-transforms/ */
-
-      .ribbon-container {
-        position: fixed;
-        top: 0px;
-        overflow: hidden;
-        width: 167px;
-        height: 92px;
-      }
-  
-      .ribbon {
-        position: absolute;
-        top: 22px;
-        background-color: #a00;
-        white-space: nowrap;
-        -webkit-box-shadow: 0 0 10px #888;
-           -moz-box-shadow: 0 0 10px #888;
-                box-shadow: 0 0 10px #888;
-      }
-
-      .ribbon-container.right {
-        right: 0;
-      }
-      .ribbon-container.right .ribbon {
-        -webkit-transform: rotate(32deg);
-           -moz-transform: rotate(32deg);
-            -ms-transform: rotate(32deg);
-             -o-transform: rotate(32deg);
-                transform: rotate(32deg);
-      }
-
-      .ribbon-container.left {
-        left: 0;
-      }
-      .ribbon-container.left .ribbon {
-        -webkit-transform: rotate(-32deg);
-           -moz-transform: rotate(-32deg);
-            -ms-transform: rotate(-32deg);
-             -o-transform: rotate(-32deg);
-                transform: rotate(-32deg);
-        position: absolute;
-        left: -55px;
-      }
-
-      .ribbon a {
-        border: 1px solid #faa;
-        color: #fff;
-        display: block;
-        font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        margin: 1px 0;
-        padding: 7px 60px;
-        text-align: center;
-        text-decoration: none;
-        text-shadow: 0 0 5px #444;
-      }
-    </style>
-    <style>
-      html, body {
-        padding: 0;
-        margin: 0;
-      }
-
-      a.hub-link::before {
-        content: "\238B";
-        padding: 5px;
-      }
-      a.hub-link:hover, a.hub-link:focus {
-        text-decoration: none;
-      }
-
-      .lead {
-        margin: 1em auto;
-      }
-
       #editor {
         float: left;
         width: 40%;
@@ -188,14 +79,14 @@
       </div>
 
       <div class="jumbotron">
-        <h1>Shift Parser</h1>
+        <h1><span class="shift">Shift</span> Parser</h1>
         <p class="lead">
           generates a Shift format AST<br />
           from ECMAScript program text
         </p>
       </div>
 
-      <hr>
+      <hr />
 
       <div id="demo1" class="panel panel-default">
         <div class="panel-heading">
@@ -226,7 +117,7 @@ class Person {
         </div>
       </div>
 
-      <hr>
+      <hr />
 
       <div class="footer">
         <p>&copy; Shape Security Labs 2015</p>

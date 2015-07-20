@@ -1,0 +1,54 @@
+/* Custom container */
+.container-narrow {
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  clear: both;
+  padding: 60px 0;
+  text-align: center;
+}
+.jumbotron h1 {
+  font-size: 72px;
+  line-height: 1;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px dashed #DDD;
+}
+
+.shift {
+  background-image: url(/img/shift_logo_v2.fw.png);
+  background-repeat: no-repeat;
+  background-size: 1em;
+  background-position: left center;
+  padding-left: 1.2em;
+}
+
+a.hub-link::before {
+  content: "\238B";
+  padding: 5px;
+}
+a.hub-link:hover, a.hub-link:focus {
+  text-decoration: none;
+}
+
+.lead {
+  margin: 1em auto;
+}
+
+.footer {
+  margin: 20px 0;
+}
