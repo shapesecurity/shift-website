@@ -1,10 +1,8 @@
-/* Custom container */
 .container-narrow {
   margin: 0 auto;
   max-width: 700px;
 }
 
-/* Main marketing message and sign up button */
 .jumbotron {
   clear: both;
   padding: 60px 0;
