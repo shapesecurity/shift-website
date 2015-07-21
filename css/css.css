@@ -30,7 +30,7 @@ hr {
 }
 
 .shift {
-  background-image: url(/img/shift_logo_v2.fw.png);
+  background-image: url(../img/shift_logo_v2.fw.png);
   background-repeat: no-repeat;
   background-size: 1em;
   background-position: left center;
