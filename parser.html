@@ -8,9 +8,9 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
+    <link href="css/css.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="css/css.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
     <style>
       #editor {
@@ -19,8 +19,10 @@
         height: 100%;
       }
 
-      #demo1 .panel-body {
-        height: 70%;
+      #demo {
+        /* height: 70%; */
+        height: 500px;
+        resize: vertical;
         min-height: 250px;
         max-height: 600px;
         width: 100%;
@@ -30,6 +32,7 @@
       #tree-container {
         float: left;
         width: 60%;
+        height: 100%;
         position: relative;
         background-color: whitesmoke;
       }
@@ -37,7 +40,7 @@
         height: 100%;
         overflow-y: auto;
       }
-      #tree-container.error {
+      #tree-container.error #tree {
         overflow: hidden;
       }
       #tree-container.error #tree {
@@ -90,12 +93,8 @@
 
       <hr />
 
-      <div id="demo1" class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Demo</h3>
-        </div>
-        <div class="panel-body">
-          <div id="layout">
+      <h3 class="panel-title">Demo</h3>
+      <div id="demo">
 <div id="editor" spellcheck="false">"use strict";
 
 let [x,y,z] = [1,2,3].map( _ => _ * 2 );
@@ -106,17 +105,15 @@ class Person {
   }
 }
 </div>
-            <div id="tree-container">
-              <ui-treeview expanded id="tree"></ui-treeview>
-              <div id="error-message"></div>
-            </div>
-          </div>
-          <script src="bower_components/ace-builds/src-min/ace.js"></script>
-          <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
-          <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
-          <script src="js/parser/shift-parser.js"></script>
-          <script src="js/parser/main.js"></script>
-        </div>
+        <div id="tree-container">
+        <ui-treeview expanded id="tree"></ui-treeview>
+        <div id="error-message"></div>
+      </div>
+      <script src="bower_components/ace-builds/src-min/ace.js"></script>
+      <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
+        <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
+        <script src="js/parser/shift-parser.js"></script>
+        <script src="js/parser/main.js"></script>
       </div>
 
       <hr />
