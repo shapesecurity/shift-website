@@ -8,9 +8,17 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <link href="css/css.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'/>
+
+    <!-- highlight.js -->
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/monokai.min.css' rel='stylesheet'/>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js'></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
     <style type="text/css">
       .marketing {
         margin: 60px 0;
@@ -102,12 +110,12 @@
 
         <p>
           TODO: Make the representations below pretty. Probably make a
-          graphical representation of the tree and syntax highlight the JS.
+          graphical representation of the tree.
         </p>
 
-        <p class="text-center">
-          <code style="font-size: 120%;">var x; for(var y;;);</code>
-        </p>
+        <div class="text-center highlight">
+          <pre><code class="language-js" style="font-size: 140%">var x; for(var y;;);</code></pre>
+        </div>
 
         <div class="row-fluid">
           <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">

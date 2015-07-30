@@ -30,6 +30,43 @@ hr {
   border-bottom: 1px dashed #DDD;
 }
 
+code {
+  padding: 2px 5px;
+}
+
+pre {
+  margin: 12px -10px;
+  padding: 0;
+  word-wrap: normal;
+  overflow: auto;
+}
+
+code, pre {
+  background-color: #2A2A2A;
+  color: #EEE;
+  border: 0;
+  font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
+  border-radius: 6px;
+  font-size: 0.94em;
+}
+
+pre code {
+  padding: 0;
+}
+
+.highlight pre, .highlight pre code {
+  background-color: #2A2A2A;
+}
+
+.highlight pre {
+  overflow-x: auto;
+}
+
+.highlight pre code {
+  white-space: pre;
+  word-wrap: normal;
+}
+
 .shift {
   background-image: url(../img/shift_logo_v2.fw.png);
   background-repeat: no-repeat;
