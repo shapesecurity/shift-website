@@ -29,7 +29,7 @@
       }
 
       section {
-        margin: 2em auto;
+        margin: 1em 0 2em;
       }
 
       ul li:hover ul.dropdown-menu,
@@ -48,193 +48,202 @@
   <body>
 
     <div class="container-narrow">
+      <div class="content">
 
-      <ul class="nav nav-pills pull-right">
-        <li class="dropdown">
-          <a href="#" onclick="return false;">Family <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a target="_blank" href="parser.html">Shift Parser</a></li>
-            <li><a target="_blank" href="codegen.html">Shift Code Generator</a></li>
-            <li><a target="_blank" href="scope.html">Shift Scope Analyser</a></li>
-            <li><a target="_blank" href="reducer.html">Shift Reducer</a></li>
-            <li><a target="_blank" href="fuzzer.html">Shift Fuzzer</a></li>
-            <li><a target="_blank" href="validator.html">Shift Validator</a></li>
-            <li><a target="_blank" href="estree-converter.html">Shift-ESTree Converter</a></li>
-          </ul>
-        </li>
-        <li><a target="_blank" href="https://github.com/shapesecurity/shift-spec">Spec</a></li>
-        <li><a target="_blank" href="faq.html">FAQ</a></li>
-        <li><a target="_blank" href="https://github.com/shapesecurity?utf8=%E2%9C%93&amp;query=shift">Github</a></li>
-      </ul>
+        <ul class="nav nav-pills pull-right">
+          <li class="dropdown">
+            <a href="#" onclick="return false;">Family <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a target="_blank" href="parser.html">Shift Parser</a></li>
+              <li><a target="_blank" href="codegen.html">Shift Code Generator</a></li>
+              <li><a target="_blank" href="scope.html">Shift Scope Analyser</a></li>
+              <li><a target="_blank" href="reducer.html">Shift Reducer</a></li>
+              <li><a target="_blank" href="fuzzer.html">Shift Fuzzer</a></li>
+              <li><a target="_blank" href="validator.html">Shift Validator</a></li>
+              <li><a target="_blank" href="estree-converter.html">Shift-ESTree Converter</a></li>
+            </ul>
+          </li>
+          <li><a target="_blank" href="https://github.com/shapesecurity/shift-spec">Spec</a></li>
+          <li><a target="_blank" href="faq.html">FAQ</a></li>
+          <li><a target="_blank" href="https://github.com/shapesecurity?utf8=%E2%9C%93&amp;query=shift">Github</a></li>
+        </ul>
 
-      <div class="jumbotron">
-        <h1><span class="shift">Shift</span> AST</h1>
-        <p class="lead">... and the Shift family of tools</p>
+        <div class="jumbotron">
+          <h1><span class="shift">Shift</span> AST</h1>
+          <p class="lead">... and the Shift family of tools</p>
+        </div>
+
+        <hr />
+
+        <div class="row-fluid marketing">
+          <div class="span6">
+            <h3>What is the Shift <abbr class="initialism" title="abstract syntax tree">AST</abbr>?</h3>
+            <ul class="list-unstyled">
+              <li>Represents the structure of an ECMAScript program as a tree</li>
+              <li>Easily transformed to create new programs or analysed to create reports or inform other computations</li>
+            </ul>
+          </div>
+
+          <div class="span6">
+            <h3>Why is it relevant to you?</h3>
+            <ul class="list-unstyled">
+              <li>ECMAScript ASTs are used in the vast majority of language tooling: linters, compilers, minifiers, refactoring tools, IDEs, etc.</li>
+              <li>Nearly eliminates the chance of accidentally creating an AST that does not represent an ECMAScript program</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr />
+
+        <h3>Use Cases</h3>
+
+        <section id="transformation">
+          <h4>Transformation</h4>
+
+          <p>
+            Allowing for convenient, error-free transformation was the highest
+            priority in the design of the Shift AST format.
+            This has been achieved through a number of means, some of which are
+            illustrated below.
+            The following program is represented in both the Shift AST (left)
+            and an alternative representation, <a href="https://github.com/estree/estree">ESTree</a> (right).
+          </p>
+
+          <div class="text-center">
+            <pre><code class="javascript" style="font-size: 130%">var x; for(var y;;);</code></pre>
+          </div>
+
+          <div class="row-fluid">
+            <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">
+              <div style="width: 100%; height: 300px; background-color: lightgray;"></div>
+              <figcaption><h5><span class="shift">Shift</span></h5></figcaption>
+            </figure>
+            <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">
+              <div style="width: 100%; height: 300px; background-color: lightgray;"></div>
+              <figcaption><h5>ESTree</h5></figcaption>
+            </figure>
+          </div>
+
+          <p>
+            Using the ESTree format, a user that is only considering programs
+            that contain variable declarations in statement position may write
+            a na&#xEF;ve transformation that replaces all variable declarations
+            with while statements. But the same user using the Shift AST format
+            knows that all statement nodes may be replaced by other statement
+            nodes, and would apply the transformation to the
+            VariableDeclarationStatement node instead.
+          </p>
+
+          <p>
+            This is a single, simple example of the benefits reaped from using
+            an AST format that was specifically designed with transformation in
+            mind. For other examples, see the Shape Security Labs blog post,
+            <a href="#"><em>Why use the Shift AST for transformation?</em></a>.
+          </p>
+        </section>
+
+        <section id="analysis">
+          <h4>Analysis</h4>
+          <p>
+            Program analysis using the Shift AST is easy due to the large
+            variety of node types that help reduce the necessary amount of
+            context during analysis.
+          </p>
+          <p>
+            As a case study, consider the implementation of the
+            <a href="http://eslint.org/docs/rules/id-length">id-length</a>
+            linting rule in eslint, which allows a user to enforce a minimum or
+            maximum length for identifiers. Because eslint uses the ESTree
+            representation internally, this rule has to do a surprising amount
+            of work keeping track of context while linting to ensure that
+            labels, object property names, and static member accesses do not
+            get misinterpreted as identifiers. This difficulty originates from
+            the use of a generic Identifier node in ESTree, which is used in
+            all of these contexts and more. Using the Shift AST, a linting rule
+            like this would be trivial: assert that the name of each
+            IdentifierExpression and BindingIdentifier node is within the given
+            bounds.
+          </p>
+        </section>
+
+
+        <hr />
+
+        <h3>Support</h3>
+
+        <section id="support">
+
+          <div class="table-responsive">
+            <table class="table table-condensed table-hover">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>ES5</th>
+                  <th>ES2015 (ES6)</th>
+                  <th>ES2016</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th><a href="https://github.com/shapesecurity/shift-spec">AST Specification</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-spec/blob/es5/spec.idl">Legacy</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-spec/blob/es6/spec.idl">Complete</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-spec/compare/es6...es7#diff">In Progress</a></td>
+                </tr>
+                <tr>
+                  <th><a href="parser.html">Parser</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-parser-js/tree/es5">JS</a> + <a href="https://github.com/shapesecurity/shift-java/blob/master/src/main/java/com/shapesecurity/shift/parser/README.md">Java</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-parser-js/tree/es6">JS</a> + <a href="https://github.com/shapesecurity/shift-java/blob/es6/src/main/java/com/shapesecurity/shift/parser/README.md">Java</a></td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="codegen.html">Code Generator</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-codegen-js/tree/es5">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/codegen">Java</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-codegen-js/tree/es6">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/codegen">Java</a></td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="scope.html">Scope Analyser</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-scope-js/tree/master">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/scope">Java</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/scope">Java</a></td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="reducer.html">Reducer</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-reducer-js/tree/es5">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/visitor">Java</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-reducer-js/tree/es6">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/visitor">Java</a></td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="fuzzer.html">Fuzzer</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/fuzzer">Java</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/fuzzer">Java</a></td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="validator.html">Validator</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-validator-js/tree/master">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/validator">Java</a></td>
+                  <td><a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/validator">Java</a></td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="estree-converter.html">ESTree Converter</a></th>
+                  <td><a href="https://github.com/shapesecurity/shift-spidermonkey-converter-js/tree/master">JS</a></td>
+                  <td>&mdash;</td>
+                  <td>&mdash;</td>
+                </tr>
+                <tr>
+                  <th><a href="https://github.com/shapesecurity/shift-spec-js">Spec Representation</a></th>
+                  <td>&mdash;</td>
+                  <td><a href="https://github.com/shapesecurity/shift-spec-js/tree/es6">JS</a></td>
+                  <td>&mdash;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </section>
       </div>
-
-      <hr />
-
-      <div class="row-fluid marketing">
-        <div class="span6">
-          <h3>What is the Shift <abbr class="initialism" title="abstract syntax tree">AST</abbr>?</h3>
-          <ul class="list-unstyled">
-            <li>Represents the structure of an ECMAScript program as a tree</li>
-            <li>Easily transformed to create new programs or analysed to create reports or inform other computations</li>
-          </ul>
-        </div>
-
-        <div class="span6">
-          <h3>Why is it relevant to you?</h3>
-          <ul class="list-unstyled">
-            <li>ECMAScript ASTs are used in the vast majority of language tooling: linters, compilers, minifiers, refactoring tools, IDEs, etc.</li>
-            <li>Nearly eliminates the chance of accidentally creating an AST that does not represent an ECMAScript program</li>
-          </ul>
-        </div>
-      </div>
-
-      <hr />
-
-      <h3>Use Cases</h3>
-
-      <section id="transformation">
-        <h4>Transformation</h4>
-
-        <p>
-          Allowing for convenient, error-free transformation was the highest
-          priority in the design of the Shift AST format.
-          This has been achieved through a number of means, some of which are
-          illustrated below.
-          The following program is represented in both the Shift AST (left)
-          and an alternative representation, <a href="https://github.com/estree/estree">ESTree</a> (right).
-        </p>
-
-        <p>
-          TODO: Make the representations below pretty. Probably make a
-          graphical representation of the tree.
-        </p>
-
-        <div class="text-center">
-          <pre><code class="javascript" style="font-size: 130%">var x; for(var y;;);</code></pre>
-        </div>
-
-        <div class="row-fluid">
-          <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">
-            <div style="width: 100%; height: 300px; background-color: lightgray;"></div>
-            <figcaption><h5><span class="shift">Shift</span></h5></figcaption>
-          </figure>
-          <figure style="width: 346px; margin: 0 2px; float: left; text-align: center;">
-            <div style="width: 100%; height: 300px; background-color: lightgray;"></div>
-            <figcaption><h5>ESTree</h5></figcaption>
-          </figure>
-        </div>
-
-        <p>
-          Using the ESTree format, a user that is only considering programs
-          that contain variable declarations in statement position may write
-          a na&#xEF;ve transformation that replaces all variable declarations
-          with while statements. But the same user using the Shift AST format
-          knows that all statement nodes may be replaced by other statement
-          nodes, and would apply the transformation to the
-          VariableDeclarationStatement node instead.
-        </p>
-
-        <p>
-          This is a single, simple example of the benefits reaped from using
-          an AST format that was specifically designed with transformation in
-          mind. For other examples, see the Shape Security Labs blog post,
-          <a href="#"><em>Why use the Shift AST for transformation?</em></a>.
-        </p>
-      </section>
-
-      <section id="analysis">
-        <h4>Analysis</h4>
-        <p>
-          Program analysis using the Shift AST is easy due to the large
-          variety of node types that help reduce the necessary amount of
-          context during analysis.
-        </p>
-        <p>
-          TODO: text text text.
-        </p>
-      </section>
-
-
-      <hr />
-
-      <h3>Support</h3>
-
-      <section id="support">
-
-        <div class="table-responsive">
-          <table class="table table-condensed table-hover">
-            <thead>
-              <tr>
-                <th></th>
-                <th>ES5</th>
-                <th>ES2015 (ES6)</th>
-                <th>ES2016</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th><a href="https://github.com/shapesecurity/shift-spec">AST Specification</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-spec/blob/es5/spec.idl">Legacy</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-spec/blob/es6/spec.idl">Complete</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-spec/compare/es6...es7#diff">In Progress</a></td>
-              </tr>
-              <tr>
-                <th><a href="parser.html">Parser</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-parser-js/tree/es5">JS</a> + <a href="https://github.com/shapesecurity/shift-java/blob/master/src/main/java/com/shapesecurity/shift/parser/README.md">Java</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-parser-js/tree/es6">JS</a> + <a href="https://github.com/shapesecurity/shift-java/blob/es6/src/main/java/com/shapesecurity/shift/parser/README.md">Java</a></td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="codegen.html">Code Generator</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-codegen-js/tree/es5">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/codegen">Java</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-codegen-js/tree/es6">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/codegen">Java</a></td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="scope.html">Scope Analyser</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-scope-js/tree/master">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/scope">Java</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/scope">Java</a></td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="reducer.html">Reducer</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-reducer-js/tree/es5">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/visitor">Java</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-reducer-js/tree/es6">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/visitor">Java</a></td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="fuzzer.html">Fuzzer</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/fuzzer">Java</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/fuzzer">Java</a></td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="validator.html">Validator</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-validator-js/tree/master">JS</a> + <a href="https://github.com/shapesecurity/shift-java/tree/master/src/main/java/com/shapesecurity/shift/validator">Java</a></td>
-                <td><a href="https://github.com/shapesecurity/shift-java/tree/es6/src/main/java/com/shapesecurity/shift/validator">Java</a></td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="estree-converter.html">ESTree Converter</a></th>
-                <td><a href="https://github.com/shapesecurity/shift-spidermonkey-converter-js/tree/master">JS</a></td>
-                <td>&mdash;</td>
-                <td>&mdash;</td>
-              </tr>
-              <tr>
-                <th><a href="https://github.com/shapesecurity/shift-spec-js">Spec Representation</a></th>
-                <td>&mdash;</td>
-                <td><a href="https://github.com/shapesecurity/shift-spec-js/tree/es6">JS</a></td>
-                <td>&mdash;</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </section>
 
       <hr />
 
