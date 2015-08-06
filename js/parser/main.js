@@ -34,13 +34,13 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = ace.edit("editor"),
+var editor = ace.edit(document.querySelector("#demo1 .editor")),
     session = editor.getSession(),
     Range = ace.require('ace/range').Range;
 
-var error = document.getElementById("error-message");
-var output = document.getElementById("output");
-var outputContainer = document.getElementById("output-container");
+var error = document.querySelector("#demo1 .error-message");
+var output = document.querySelector("#demo1 .output");
+var outputContainer = document.querySelector("#demo1 .output-container");
 
 function displayError(exception) {
   hideError();

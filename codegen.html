@@ -12,6 +12,7 @@
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
     <link href="css/css.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
 
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
 
@@ -21,70 +22,13 @@
     <script>hljs.initHighlightingOnLoad();</script>
 
     <style>
-      #editor {
-        float: left;
-        height: 100%;
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
-      }
-
-      #demo {
-        border-radius: 6px;
-        border: 1px solid #666;
-        background-color: whitesmoke;
-        height: 500px;
-        min-height: 250px;
-        max-height: 600px;
-        width: 100%;
-        overflow: hidden;
-      }
-
-      #output-container {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-        float: left;
-        height: 100%;
-        position: relative;
-      }
-      #output-container #output {
-        background-color: transparent;
-        height: 100%;
-        overflow-y: auto;
-      }
-      #output-container.error #output {
-        overflow: hidden;
-      }
-      #output-container.error #output {
-        opacity: 0.5;
-        -webkit-filter: grayscale(1);
-                filter: grayscale(1);
-      }
-
-      #error-message {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 0;
-        background-color: orangered;
-        color: white;
-        font-weight: bold;
-        padding: 0.5em;
-      }
-      #output-container.error #error-message {
-        display: initial;
-      }
-    </style>
-
-    <style>
-      #editor {
+      #demo1 .editor {
         width: 60%;
       }
-      #output-container {
+      #demo1 .output-container {
         width: 40%;
       }
-
-      #output {
+      #demo1 .output {
         font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
         font-size: 21px;
         padding: 1em;
@@ -115,8 +59,8 @@
       <hr />
 
       <h3 class="panel-title">Demo</h3>
-      <div id="demo">
-<div id="editor" spellcheck="false">{
+      <div class="demo" id="demo1">
+<div class="editor" spellcheck="false">{
   type: "Script",
   directives: [],
   statements: [
@@ -142,9 +86,9 @@
   ]
 }
 </div>
-        <div id="output-container">
-          <div id="output"></div>
-          <div id="error-message"></div>
+        <div class="output-container">
+          <div class="output"></div>
+          <div class="error-message"></div>
         </div>
         <script src="bower_components/ace-builds/src-min/ace.js"></script>
         <script src="js/shift-codegen.js"></script>

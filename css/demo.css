@@ -1,0 +1,53 @@
+.editor {
+  float: left;
+  height: 100%;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.demo {
+  border-radius: 6px;
+  border: 1px solid #666;
+  background-color: whitesmoke;
+  height: 500px;
+  min-height: 250px;
+  max-height: 600px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.output-container {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  float: left;
+  height: 100%;
+  position: relative;
+}
+.output-container .output {
+  background-color: transparent;
+  height: 100%;
+  overflow-y: auto;
+}
+.output-container.error .output {
+  overflow: hidden;
+}
+.output-container.error .output {
+  opacity: 0.5;
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+}
+
+.error-message {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  background-color: orangered;
+  color: white;
+  font-weight: bold;
+  padding: 0.5em;
+}
+.output-container.error .error-message {
+  display: initial;
+}

@@ -8,74 +8,19 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <link href="css/css.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
     <style>
-      #editor {
-        float: left;
-        height: 100%;
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
-      }
-
-      #demo {
-        border-radius: 6px;
-        border: 1px solid #666;
-        background-color: whitesmoke;
-        height: 500px;
-        min-height: 250px;
-        max-height: 600px;
-        width: 100%;
-        overflow: hidden;
-      }
-
-      #output-container {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-        float: left;
-        height: 100%;
-        position: relative;
-      }
-      #output-container #output {
-        background-color: transparent;
-        height: 100%;
-        overflow-y: auto;
-      }
-      #output-container.error #output {
-        overflow: hidden;
-      }
-      #output-container.error #output {
-        opacity: 0.5;
-        -webkit-filter: grayscale(1);
-                filter: grayscale(1);
-      }
-
-      #error-message {
-        display: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 0;
-        background-color: orangered;
-        color: white;
-        font-weight: bold;
-        padding: 0.5em;
-      }
-      #output-container.error #error-message {
-        display: initial;
-      }
-    </style>
-
-    <style>
-      #editor {
-        width: 40%;
-      }
-      #demo {
+      #demo1 {
         resize: vertical;
       }
-      #output-container {
+      #demo1 .editor {
+        width: 40%;
+      }
+      #demo1 .output-container {
         width: 60%;
       }
     </style>
@@ -108,8 +53,8 @@
       <hr />
 
       <h3 class="panel-title">Demo</h3>
-      <div id="demo">
-<div id="editor" spellcheck="false">"use strict";
+      <div class="demo" id="demo1">
+<div class="editor" spellcheck="false">"use strict";
 
 let [x,y,z] = [1,2,3].map(_ => _ * 2);
 
@@ -119,9 +64,9 @@ class Person {
   }
 }
 </div>
-        <div id="output-container">
-          <ui-treeview expanded id="output"></ui-treeview>
-          <div id="error-message"></div>
+        <div class="output-container">
+          <ui-treeview expanded class="output"></ui-treeview>
+          <div class="error-message"></div>
         </div>
         <script src="bower_components/ace-builds/src-min/ace.js"></script>
         <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
