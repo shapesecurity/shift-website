@@ -43,7 +43,6 @@ pre {
 }
 
 code, pre {
-  background-color: #2A2A2A;
   color: #EEE;
   border: 0;
   font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
@@ -53,10 +52,6 @@ code, pre {
 
 pre code {
   padding: 0;
-}
-
-.highlight pre, .highlight pre code {
-  background-color: #2A2A2A;
 }
 
 .highlight pre {
