@@ -35,7 +35,7 @@ code {
 }
 
 pre {
-  margin: 12px -10px;
+  margin: 12px -15px;
   padding: 0;
   word-wrap: break-word;
   word-break: break-word;
@@ -43,22 +43,17 @@ pre {
 }
 
 code, pre {
-  color: #EEE;
+  color: #000;
   border: 0;
   font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
   border-radius: 6px;
   font-size: 0.94em;
 }
 
-pre code {
-  padding: 0;
-}
-
-.highlight pre {
+pre code, pre code.hljs {
+  padding: 1em;
+  display: block;
   overflow-x: auto;
-}
-
-.highlight pre code {
   white-space: pre;
   word-wrap: normal;
 }
@@ -85,4 +80,6 @@ a.hub-link:hover, a.hub-link:focus {
 
 .footer {
   margin: 20px 0;
+  color: #888;
+  text-align: center;
 }

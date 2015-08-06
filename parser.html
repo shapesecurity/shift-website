@@ -13,6 +13,14 @@
     <link href="css/ribbon.css" rel="stylesheet">
     <link href="css/css.css" rel="stylesheet">
     <link href="css/demo.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
+
+    <!-- highlight.js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/magula.min.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
     <style>
       #demo1 {
         resize: vertical;
@@ -28,6 +36,10 @@
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <link rel="import" href="bower_components/polymer/polymer.html"/>
     <link rel="import" href="bower_components/ui-treeview/ui-treeview.html"/>
+    <script src="bower_components/ace-builds/src-min/ace.js"></script>
+    <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
+    <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
+    <script src="js/shift-parser.js"></script>
   </head>
 
   <body>
@@ -52,7 +64,13 @@
 
       <hr />
 
-      <h3 class="panel-title">Demo</h3>
+      <h3>Demo</h3>
+
+      <p>
+        This demo shows a rendering of the parser output on the right. You may
+        edit its input on the left.
+      </p>
+
       <div class="demo" id="demo1">
 <div class="editor" spellcheck="false">"use strict";
 
@@ -68,12 +86,21 @@ class Person {
           <ui-treeview expanded class="output"></ui-treeview>
           <div class="error-message"></div>
         </div>
-        <script src="bower_components/ace-builds/src-min/ace.js"></script>
-        <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
-        <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
-        <script src="js/shift-parser.js"></script>
         <script src="js/parser/main.js"></script>
       </div>
+
+      <h3>Installation</h3>
+
+      <pre><code class="nohighlight">npm install shift-parser</code></pre>
+
+      <h3>Usage</h3>
+
+      <pre><code class="javascript">import parse from "shift-parser";
+let ast = parse("/* ECMAScript program text */");</code></pre>
+
+      <pre><code class="javascript">import {parseScript, parseModule} from "shift-parser";
+let scriptAST = parseScript("/* ECMAScript Script text */");
+let moduleAST = parseModule("/* ECMAScript Module text */");</code></pre>
 
       <hr />
 

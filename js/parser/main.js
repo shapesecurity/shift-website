@@ -68,6 +68,8 @@ function render(ast) {
 
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
+editor.setOption("fontFamily", "Source Code Pro");
+editor.setOption("fontSize", "10pt");
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/textmate");
 editor.setWrapBehavioursEnabled(false);
@@ -89,6 +91,4 @@ function onChange() {
 
 editor.getSession().on('change', debounce(onChange, 300));
 
-window.addEventListener('polymer-ready', function () {
-  onChange();
-})
+window.addEventListener('polymer-ready', onChange);

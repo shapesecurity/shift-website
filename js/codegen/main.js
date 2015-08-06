@@ -53,7 +53,6 @@ function hideError() {
   session.clearAnnotations();
 }
 
-
 function render(program) {
   hideError();
   outputContainer.classList.remove("error");
@@ -63,6 +62,8 @@ function render(program) {
 
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
+editor.setOption("fontFamily", "Source Code Pro");
+editor.setOption("fontSize", "10pt");
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/textmate");
 editor.setWrapBehavioursEnabled(false);
@@ -84,7 +85,4 @@ function onChange() {
 
 editor.getSession().on('change', debounce(onChange, 300));
 
-window.addEventListener('DOMContentLoaded', function () {
-  onChange();
-})
-
+window.addEventListener('DOMContentLoaded', onChange);
