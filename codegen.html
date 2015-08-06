@@ -2,16 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Shift Parser</title>
+    <title>Shift Code Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <link href="css/css.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
+
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'/>
+
+    <!-- highlight.js -->
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/default.min.css' rel='stylesheet'/>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js'></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
     <style>
       #editor {
         float: left;
@@ -35,7 +43,6 @@
         position: relative;
       }
       #output-container #output {
-        border-radius: 6px;
         background-color: transparent;
         height: 100%;
         overflow-y: auto;
@@ -67,25 +74,24 @@
 
     <style>
       #editor {
-        width: 40%;
-      }
-      #demo {
-        resize: vertical;
-      }
-      #output-container {
         width: 60%;
       }
-    </style>
+      #output-container {
+        width: 40%;
+      }
 
-    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
-    <link rel="import" href="bower_components/polymer/polymer.html"/>
-    <link rel="import" href="bower_components/ui-treeview/ui-treeview.html"/>
+      #output {
+        font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
+        font-size: 21px;
+        padding: 1em;
+      }
+    </style>
   </head>
 
   <body>
     <div class="ribbon-container right">
       <div class="ribbon">
-        <a href="https://github.com/shapesecurity/shift-parser-js" target="_blank">Fork me on GitHub</a>
+        <a href="https://github.com/shapesecurity/shift-codegen-js" target="_blank">Fork me on GitHub</a>
       </div>
     </div>
 
@@ -96,9 +102,9 @@
       </div>
 
       <div class="jumbotron">
-        <h1><span class="shift">Shift</span> Parser</h1>
+        <h1><span class="shift">Shift</span> Code Generator</h1>
         <p class="lead">
-          generates a Shift format AST from ECMAScript program text
+          generates an ECMAScript program from a Shift format AST
         </p>
       </div>
 
@@ -106,25 +112,39 @@
 
       <h3 class="panel-title">Demo</h3>
       <div id="demo">
-<div id="editor" spellcheck="false">"use strict";
-
-let [x,y,z] = [1,2,3].map(_ => _ * 2);
-
-class Person {
-  constructor(name) {
-    this.name = name;
-  }
+<div id="editor" spellcheck="false">{
+  type: "Script",
+  directives: [],
+  statements: [
+    {
+      type: "VariableDeclarationStatement",
+      declaration: {
+        type: "VariableDeclaration",
+        kind: "let",
+        declarators: [
+          {
+            type: "VariableDeclarator",
+            binding: { type: "BindingIdentifier", name: "a" },
+            init: { type: "LiteralNumericExpression", value: 0 }
+          },
+          {
+            type: "VariableDeclarator",
+            binding: { type: "BindingIdentifier", name: "b" },
+            init: { type: "LiteralStringExpression", value: "string" }
+          }
+        ]
+      }
+    }
+  ]
 }
 </div>
         <div id="output-container">
-          <ui-treeview expanded id="output"></ui-treeview>
+          <div id="output"></div>
           <div id="error-message"></div>
         </div>
         <script src="bower_components/ace-builds/src-min/ace.js"></script>
-        <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
-        <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
-        <script src="js/shift-parser.js"></script>
-        <script src="js/parser/main.js"></script>
+        <script src="js/shift-codegen.js"></script>
+        <script src="js/codegen/main.js"></script>
       </div>
 
       <hr />

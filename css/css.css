@@ -37,7 +37,8 @@ code {
 pre {
   margin: 12px -10px;
   padding: 0;
-  word-wrap: normal;
+  word-wrap: break-word;
+  word-break: break-word;
   overflow: auto;
 }
 
@@ -84,7 +85,7 @@ a.hub-link:hover, a.hub-link:focus {
 }
 
 .lead {
-  margin: 1em auto;
+  margin: 1em 4em;
 }
 
 .footer {

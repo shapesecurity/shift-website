@@ -42,17 +42,10 @@ var error = document.getElementById("error-message");
 var output = document.getElementById("output");
 var outputContainer = document.getElementById("output-container");
 
+
 function displayError(exception) {
   hideError();
   error.innerText = exception.message;
-  if (exception.line) {
-    session.setAnnotations([{
-      row: exception.line - 1,
-      column: exception.column,
-      text: exception.description,
-      type: "error" // also warning and information
-    }]);
-  }
   outputContainer.classList.add("error");
 }
 
@@ -60,10 +53,12 @@ function hideError() {
   session.clearAnnotations();
 }
 
-function render(ast) {
+
+function render(program) {
   hideError();
   outputContainer.classList.remove("error");
-  output.display(ast);
+  output.textContent = program;
+  hljs.highlightBlock(output);
 }
 
 editor.setBehavioursEnabled(false);
@@ -71,7 +66,7 @@ editor.setHighlightActiveLine(false);
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/textmate");
 editor.setWrapBehavioursEnabled(false);
-session.setMode("ace/mode/javascript");
+session.setMode("ace/mode/json");
 session.setOption("useWorker", false);
 session.setTabSize(2);
 session.setUseSoftTabs(true);
@@ -80,8 +75,8 @@ session.setUseWrapMode(false);
 function onChange() {
   var code = editor.getValue();
   try {
-    var ast = parser.parseModule(code, { loc: false, earlyErrors : true });
-    render(ast);
+    var program = codegen.default((0, eval)("(" + code + ")"));
+    render(program);
   } catch (ex) {
     displayError(ex);
   }
@@ -89,6 +84,7 @@ function onChange() {
 
 editor.getSession().on('change', debounce(onChange, 300));
 
-window.addEventListener('polymer-ready', function () {
+window.addEventListener('DOMContentLoaded', function () {
   onChange();
 })
+
