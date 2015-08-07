@@ -54,7 +54,7 @@
       <div class="jumbotron">
         <h1><span class="shift">Shift</span> Code Generator</h1>
         <p class="lead">
-          generates an ECMAScript program from a Shift format AST
+          generates an ECMAScript program from a valid Shift AST
         </p>
       </div>
 
@@ -63,10 +63,10 @@
       <h3>Demo</h3>
 
       <p>
-        In this demo, a Shift format AST is given on the left, and the code
-        generator output is shown on the right. Notice how the code generator
-        outputs only the whitespace/punctuation that is strictly necessary for
-        the program to round trip through the parser.
+        In this demo, a Shift AST is given on the left, and the code generator
+        output is shown on the right. Notice how the code generator outputs
+        only the whitespace/punctuation that is strictly necessary for the
+        program to round trip through the parser.
       </p>
 
       <div class="demo" id="demo1">
@@ -110,12 +110,12 @@
       <h3>Usage</h3>
 
       <pre><code class="javascript">import codegen from "shift-codegen";
-let programSource = codegen(/* Shift format AST */);</code></pre>
+let programSource = codegen(/* Shift AST */);</code></pre>
 
       <h3>Note on IfStatements</h3>
 
       <p>
-        When presented with a Shift format AST that represents an IfStatement
+        When presented with a Shift AST that represents an IfStatement
         <em>without</em> an alternate which is nested inside the consequent of
         an IfStatement <em>with</em> an alternate, we choose to generate code
         that preserves the intent of the AST rather than generate a program
