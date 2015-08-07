@@ -37,9 +37,23 @@
 
         <hr />
 
-        <p class="text-center">
-        <img src="http://mediaserver.pulse2.com/wp-content/uploads/2012/12/Under_construction.jpg" alt="Under Construction" />
+        <p>
+          We call an AST <dfn>valid</dfn> if it represents an ECMAScript
+          program. The Shift AST format was designed to permit the fewest
+          possible conforming ASTs that are not valid. For various reasons, it
+          is impossible to exclude all invalid ASTs. This module distinguishes
+          valid Shift format ASTs from invalid ones.
         </p>
+
+        <h3>Installation</h3>
+
+        <pre><code class="nohighlight">npm install shift-validator</code></pre>
+
+        <h3>Usage</h3>
+
+        <pre><code class="javascript">import isValid, {Validator} from "shift-validator";
+isValid(myAst); // Boolean
+Validator.validate(myAst); // [ValidationError]</code></pre>
 
       </div>
 
