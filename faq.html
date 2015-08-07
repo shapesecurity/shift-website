@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shift</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
+    <link href="css/nav.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+      <div class="content">
+
+        <ul class="nav nav-pills pull-right">
+          <li><a href="index.html">Home</a></li>
+          <li class="dropdown">
+            <a href="#" onclick="return false;">Family <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="parser.html">Shift Parser</a></li>
+              <li><a href="codegen.html">Shift Code Generator</a></li>
+              <li><a href="scope.html">Shift Scope Analyser</a></li>
+              <li><a href="reducer.html">Shift Reducer</a></li>
+              <li><a href="fuzzer.html">Shift Fuzzer</a></li>
+              <li><a href="validator.html">Shift Validator</a></li>
+              <li><a href="estree-converter.html">Shift-ESTree Converter</a></li>
+            </ul>
+          </li>
+          <li><a target="_blank" href="https://github.com/shapesecurity/shift-spec">Spec</a></li>
+          <li><a target="_blank" href="https://github.com/shapesecurity?utf8=%E2%9C%93&amp;query=shift">Github</a></li>
+        </ul>
+
+        <div class="jumbotron">
+          <h1><span class="shift">Shift</span> FAQ</h1>
+        </div>
+
+        <hr />
+
+        <h3>Will my lawyer let me use the Shift tools?</h3>
+        <section>Yes.</section>
+
+        <h3>Will my lawyer let me build tools that create or consume Shift ASTs?</h3>
+        <section>Yes.</section>
+
+        <h3>How wil future ECMAScript versions be supported?</h3>
+        <section>
+          A new version of the Shift specification will be released shortly
+          after the release of the next ECMAScript document. Shift ASTs that
+          conform to earlier versions of the Shift specification may not
+          conform to the most recent version of the Shift specification.
+        </section>
+
+      </div>
+
+      <hr />
+
+      <div class="footer">
+        <p>&copy; Shape Security Labs 2015</p>
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -15,7 +15,7 @@
 
 .jumbotron {
   clear: both;
-  padding: 60px 0;
+  margin: 50px 0;
   text-align: center;
   cursor: default;
 }
@@ -82,6 +82,10 @@ a.hub-link::before {
 }
 a.hub-link:hover, a.hub-link:focus {
   text-decoration: none;
+}
+
+section {
+  margin: 1em 0 2em;
 }
 
 .lead {
