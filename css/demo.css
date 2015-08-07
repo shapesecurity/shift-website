@@ -55,29 +55,3 @@
 .output-container.error .error-message {
   display: initial;
 }
-
-ui-treeview::shadow /deep/ * {
-  font-family: Source Code Pro;
-  font-size: 10pt;
-}
-
-ui-treeview::shadow /deep/ #caret {
-  width: 6px !important;
-}
-
-ui-treeview::shadow /deep/ #caret {
-  cursor: zoom-in;
-}
-
-ui-treeview::shadow /deep/ .expanded #caret {
-  cursor: zoom-out;
-}
-
-ui-treeview::shadow /deep/ .inline #caret {
-  cursor: default;
-}
-
-ui-treeview::shadow /deep/ #caretSvg {
-  width: 11px;
-  height: 11px;
-}
