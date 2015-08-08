@@ -2,6 +2,7 @@
 
 .ribbon-container {
   position: fixed;
+  z-index: 1;
   top: 0px;
   overflow: hidden;
   width: 167px;
