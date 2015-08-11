@@ -44,26 +44,57 @@
         <hr />
 
         <h3>Will my lawyer let me use the Shift tools?</h3>
-        <section>Yes.</section>
+        <section>
+          <p>
+            The following does not constitute legal advice. You should still
+            consult your lawyer.
+          </p>
+          <p>
+            It is very likely. The Shift AST specification and each of the
+            officially supported tools are released under the Apache 2 license.
+            The Apache 2 license and BSD/MIT licenses are similarly permissive;
+            the main difference is that the Apache 2 license makes explicit all
+            of the rights that are granted as opposed to the looser language of
+            the BSD/MIT licenses. The license is both FSF and OSI approved, and
+            compares favourably with other OSS licenses, as can be seen in
+            <a href="https://en.wikipedia.org/wiki/Comparison_of_free_and_open-source_software_licenses">
+              Wikipedia's comparison of FOSS licenses
+            </a>.
+          </p>
+        </section>
 
         <h3>Will my lawyer let me build tools that create or consume Shift ASTs?</h3>
-        <section>Yes.</section>
+        <section>
+          <p>
+            This answer is unfortunately difficult to predict. We would love to
+            say yes, but recent case law involving Google using Oracle's Java
+            APIs in Android may have scared some corporate lawyers. Additional
+            language may need to be added to the license under which the
+            specification is distributed to explicitly allow this usage, since
+            it appears the license only applies to the specification document
+            itself, not the structure it describes.
+          </p>
+        </section>
 
         <h3>How will future ECMAScript versions be supported?</h3>
         <section>
-          A new version of the Shift specification will be released shortly
-          after the release of the next ECMAScript document. Shift ASTs that
-          conform to earlier versions of the Shift specification may not
-          conform to the most recent version of the Shift specification.
+          <p>
+            A new version of the Shift specification will be released shortly
+            after the release of the next ECMAScript document. Shift ASTs that
+            conform to earlier versions of the Shift specification may not
+            conform to the most recent version of the Shift specification.
+          </p>
         </section>
 
         <h3>Is the Shift AST available in non-ECMAScript environments?</h3>
         <section>
-          Nothing about the Shift AST specification requires implementations to
-          be written in ECMAScript. The ECMAScript and Java implementations of
-          many tools based on the Shift AST specification are maintained by
-          Shape Security, with occasional contributions from the community.
-          Shift-based tools have been created for Haskell and Go.
+          <p>
+            Nothing about the Shift AST specification requires implementations to
+            be written in ECMAScript. The ECMAScript and Java implementations of
+            many tools based on the Shift AST specification are maintained by
+            Shape Security, with occasional contributions from the community.
+            Shift-based tools have been created for Haskell and Go.
+          </p>
         </section>
 
         <h3>How should I contribute to the Shift projects?</h3>
