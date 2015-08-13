@@ -22,11 +22,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
 
     <style>
-      #demo1 #target-program.editor {
-        display: none;
-        width: 40%;
-      }
-      #demo1 #reducer-program.editor {
+      #demo1 .editor {
         width: 60%;
       }
       #demo1 .output-container {
@@ -37,6 +33,11 @@
         font-size: 21px;
         padding: 1em;
         white-space: pre;
+      }
+      #demo1 .go-button {
+        position: absolute;
+        right: 1em;
+        top: 1em;
       }
     </style>
     <script src="bower_components/ace-builds/src-min/ace.js"></script>
@@ -70,7 +71,7 @@
         <hr />
 
         <div class="demo" id="demo1">
-<div id="reducer-program" class="editor" spellcheck="false">let EMPTY;
+<div class="editor" spellcheck="false">let EMPTY;
 class Collector {
   constructor(x) { this.value = x; }
   static empty() { return EMPTY; }
@@ -95,6 +96,7 @@ export default class IdentifierCollector extends MonoidalReducer {
             <div class="output json"></div>
             <div class="error-message"></div>
           </div>
+          <button class="btn btn-primary btn-lg go-button" type="button">RUN</button>
           <script src="js/reducer/main.js"></script>
         </div>
       </div>

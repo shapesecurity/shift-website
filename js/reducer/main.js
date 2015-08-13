@@ -34,11 +34,12 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor =  ace.edit(document.querySelector("#demo1 #reducer-program.editor"))
+var editor =  ace.edit(document.querySelector("#demo1 .editor"))
 
 var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
 var outputContainer = document.querySelector("#demo1 .output-container");
+var goButton = document.querySelector("#demo1 .go-button");
 
 
 function displayError(exception, editor) {
@@ -56,11 +57,11 @@ function displayError(exception, editor) {
 }
 
 function hideError(editor) {
+  outputContainer.classList.remove("error");
   editor.getSession().clearAnnotations();
 }
 
 function render(program) {
-  outputContainer.classList.remove("error");
   output.textContent = program;
   hljs.highlightBlock(output);
 }
@@ -78,21 +79,34 @@ session.setOption("useWorker", false);
 session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
-session.on('change', debounce(onChange, 300));
 
-function onChange() {
-  // TODO: show GO button instead
-  compile(exec);
+
+var lastExecutedProgram;
+
+session.on('change', debounce(function onChange() {
+  var input = editor.getValue();
+  goButton.style.display = "none";
+  compile(input, function(ast, program) {
+    goButton.style.display = input === lastExecutedProgram ? "none" : "initial";
+  });
+}, 300));
+
+function go(){
+  var input = editor.getValue();
+  compile(input, function(ast, program) {
+    lastExecutedProgram = input;
+    exec(ast, program);
+    goButton.style.display = "none";
+  });
 }
+goButton.addEventListener("click", go);
 
-function compile(cont) {
-  var es6program = editor.getValue();
-
+function compile(es6program, cont) {
   try {
     var ast = parser.parseModule(es6program, { earlyErrors: true });
   } catch (ex) {
     displayError(ex, editor);
-    return "";
+    return;
   }
   hideError(editor);
 
@@ -102,7 +116,7 @@ function compile(cont) {
     ex.line = ex.loc.line;
     ex.column = ex.loc.column;
     displayError(ex, editor);
-    return "";
+    return;
   }
   hideError(editor);
 
@@ -133,4 +147,4 @@ function exec(ast, program) {
   render(JSON.stringify(state, null, 2));
 }
 
-window.addEventListener('DOMContentLoaded', onChange);
+window.addEventListener('DOMContentLoaded', go);
