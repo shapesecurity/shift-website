@@ -34,10 +34,7 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = {
-  target: ace.edit(document.querySelector("#demo1 #target-program.editor")),
-  reducer: ace.edit(document.querySelector("#demo1 #reducer-program.editor"))
-};
+var editor =  ace.edit(document.querySelector("#demo1 #reducer-program.editor"))
 
 var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
@@ -46,7 +43,7 @@ var outputContainer = document.querySelector("#demo1 .output-container");
 
 function displayError(exception, editor) {
   hideError(editor);
-  error.innerText = exception.message;
+  error.textContent = exception.message;
   if (exception.line) {
     editor.getSession().setAnnotations([{
       row: exception.line - 1,
@@ -68,44 +65,72 @@ function render(program) {
   hljs.highlightBlock(output);
 }
 
-[editor.target, editor.reducer].forEach(function (editor) {
-  var session = editor.getSession();
-  editor.setBehavioursEnabled(false);
-  editor.setHighlightActiveLine(false);
-  editor.setOption("fontFamily", "Source Code Pro");
-  editor.setOption("fontSize", "10pt");
-  editor.setShowPrintMargin(false);
-  editor.setTheme("ace/theme/textmate");
-  editor.setWrapBehavioursEnabled(false);
-  session.setMode("ace/mode/json");
-  session.setOption("useWorker", false);
-  session.setTabSize(2);
-  session.setUseSoftTabs(true);
-  session.setUseWrapMode(false);
-  // session.on('change', debounce(onChange, 300));
-});
+var session = editor.getSession();
+editor.setBehavioursEnabled(false);
+editor.setHighlightActiveLine(false);
+editor.setOption("fontFamily", "Source Code Pro");
+editor.setOption("fontSize", "10pt");
+editor.setShowPrintMargin(false);
+editor.setTheme("ace/theme/textmate");
+editor.setWrapBehavioursEnabled(false);
+session.setMode("ace/mode/javascript");
+session.setOption("useWorker", false);
+session.setTabSize(2);
+session.setUseSoftTabs(true);
+session.setUseWrapMode(false);
+session.on('change', debounce(onChange, 300));
 
 function onChange() {
-  var targetCode = editor.target.getValue();
-  var reducerCode = editor.reducer.getValue();
-
-  try {
-    var ast = parser.parseModule(targetCode, { loc: true, earlyErrors: true });
-  } catch (ex) {
-    displayError(ex, editor.target);
-    return;
-  }
-  hideError(editor.target);
-  try {
-    var inputReducer = new ((0, eval)(reducerCode));
-  } catch (ex) {
-    displayError(ex, editor.reducer);
-    return;
-  }
-  hideError(editor.reducer);
-  var state = reducer.default(inputReducer, ast);
-  render(JSON.stringify(state));
+  // TODO: show GO button instead
+  compile(exec);
 }
 
+function compile(cont) {
+  var es6program = editor.getValue();
+
+  try {
+    var ast = parser.parseModule(es6program, { earlyErrors: true });
+  } catch (ex) {
+    displayError(ex, editor);
+    return "";
+  }
+  hideError(editor);
+
+  try {
+    var es5program = babel(es6program, { ast: false, retainLines: true }).code;
+  } catch (ex) {
+    ex.line = ex.loc.line;
+    ex.column = ex.loc.column;
+    displayError(ex, editor);
+    return "";
+  }
+  hideError(editor);
+
+  cont(ast, es5program);
+}
+
+function exec(ast, program) {
+  var exports = {}, module = {exports: exports};
+  try {
+    eval(program);
+    var inputReducer = new exports.default;
+    var state = reducer.default(inputReducer, ast);
+  } catch (ex) {
+    ex.column = ex.column || ex.columnNumber;
+    ex.line = ex.line || ex.lineNumber;
+    if (!ex.line) {
+      var stackLines = ex.stack.split("\n");
+      var match = stackLines[1].match(/<anonymous>:(\d+):(\d+)/) || stackLines[0].match(/eval:(\d+):(\d+)/);
+      if (match != null) {
+        ex.line = match[1];
+        ex.column = match[2];
+      }
+    }
+    displayError(ex, editor);
+    return;
+  }
+  hideError(editor);
+  render(JSON.stringify(state, null, 2));
+}
 
 window.addEventListener('DOMContentLoaded', onChange);

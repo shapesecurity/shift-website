@@ -23,23 +23,26 @@
 
     <style>
       #demo1 #target-program.editor {
+        display: none;
         width: 40%;
       }
       #demo1 #reducer-program.editor {
-        width: 40%;
+        width: 60%;
       }
       #demo1 .output-container {
-        width: 20%;
+        width: 40%;
       }
       #demo1 .output {
         font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
         font-size: 21px;
         padding: 1em;
+        white-space: pre;
       }
     </style>
     <script src="bower_components/ace-builds/src-min/ace.js"></script>
     <script src="js/shift-parser.js"></script>
-    <script src="js/shift-reducer-full.js"></script>
+    <script src="js/shift-reducer.js"></script>
+    <script src="js/babel.js"></script>
     <script>var MonoidalReducer = reducer.MonoidalReducer;</script>
   </head>
 
@@ -67,40 +70,27 @@
         <hr />
 
         <div class="demo" id="demo1">
-          <div id="target-program" class="editor" spellcheck="false">
-class IdentifierCounter extends MonoidalReducer {
-  static count(program) {
-    return reduce(new this, program);
+<div id="reducer-program" class="editor" spellcheck="false">let EMPTY;
+class Collector {
+  constructor(x) { this.value = x; }
+  static empty() { return EMPTY; }
+  concat(a) { return new Collector(this.value.concat(a.value)); }
+}
+EMPTY = new Collector([]);
+
+export default class IdentifierCollector extends MonoidalReducer {
+  static collect(program) {
+    return reduce(new this, program).value;
   }
 
   constructor() {
-    super(class Sum {
-        static empty() { return 0; }
-        concat(a) { return this + a; }
-    });
+    super(Collector);
   }
 
   reduceIdentifierExpression(node, state) {
-    return 1;
+    return new Collector([node.name]);
   }
-}
-</div>
-<div id="reducer-program" class="editor" spellcheck="false">
-function Collector(x){ debugger; this.value = x; }
-var EMPTY = new Collector([]);
-Collector.empty = function() { return EMPTY; }
-Collector.prototype.concat = function(a) { return this.value.concat(a.value); }
-function IdentifierCounter() {
-debugger;
-  MonoidalReducer.call(this, Collector);
-}
-IdentifierCounter.prototype = Object.create(MonoidalReducer.prototype);
-IdentifierCounter.prototype.constructor = IdentifierCounter;
-Object.defineProperty(IdentifierCounter.prototype, "reduceIdentifierExpression", { value: function(node, state) {
-  return new Collector([node]);
-}});
-IdentifierCounter;
-</div>
+}</div>
           <div class="output-container">
             <div class="output json"></div>
             <div class="error-message"></div>

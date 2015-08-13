@@ -51,6 +51,8 @@
   color: white;
   font-weight: bold;
   padding: 0.5em;
+  white-space: pre;
+  font-family: monospace;
 }
 .output-container.error .error-message {
   display: initial;
