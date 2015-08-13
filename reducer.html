@@ -12,6 +12,35 @@
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
     <link href="css/css.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
+
+    <!-- highlight.js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/magula.min.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <style>
+      #demo1 #target-program.editor {
+        width: 40%;
+      }
+      #demo1 #reducer-program.editor {
+        width: 40%;
+      }
+      #demo1 .output-container {
+        width: 20%;
+      }
+      #demo1 .output {
+        font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
+        font-size: 21px;
+        padding: 1em;
+      }
+    </style>
+    <script src="bower_components/ace-builds/src-min/ace.js"></script>
+    <script src="js/shift-parser.js"></script>
+    <script src="js/shift-reducer-full.js"></script>
+    <script>var MonoidalReducer = reducer.MonoidalReducer;</script>
   </head>
 
   <body>
@@ -37,10 +66,47 @@
 
         <hr />
 
-        <p class="text-center">
-        <img src="http://mediaserver.pulse2.com/wp-content/uploads/2012/12/Under_construction.jpg" alt="Under Construction" />
-        </p>
+        <div class="demo" id="demo1">
+          <div id="target-program" class="editor" spellcheck="false">
+class IdentifierCounter extends MonoidalReducer {
+  static count(program) {
+    return reduce(new this, program);
+  }
 
+  constructor() {
+    super(class Sum {
+        static empty() { return 0; }
+        concat(a) { return this + a; }
+    });
+  }
+
+  reduceIdentifierExpression(node, state) {
+    return 1;
+  }
+}
+</div>
+<div id="reducer-program" class="editor" spellcheck="false">
+function Collector(x){ debugger; this.value = x; }
+var EMPTY = new Collector([]);
+Collector.empty = function() { return EMPTY; }
+Collector.prototype.concat = function(a) { return this.value.concat(a.value); }
+function IdentifierCounter() {
+debugger;
+  MonoidalReducer.call(this, Collector);
+}
+IdentifierCounter.prototype = Object.create(MonoidalReducer.prototype);
+IdentifierCounter.prototype.constructor = IdentifierCounter;
+Object.defineProperty(IdentifierCounter.prototype, "reduceIdentifierExpression", { value: function(node, state) {
+  return new Collector([node]);
+}});
+IdentifierCounter;
+</div>
+          <div class="output-container">
+            <div class="output json"></div>
+            <div class="error-message"></div>
+          </div>
+          <script src="js/reducer/main.js"></script>
+        </div>
       </div>
 
       <hr />
