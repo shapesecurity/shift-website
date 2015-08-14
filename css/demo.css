@@ -5,6 +5,10 @@
   border-bottom-left-radius: 6px;
 }
 
+.container {
+  max-width: 800px;
+}
+
 .demo {
   border-radius: 6px;
   border: 1px solid #BBB;
@@ -15,10 +19,32 @@
   height: 500px;
   min-height: 250px;
   max-height: 600px;
-  width: 100%;
-  margin: 20px auto;
+  width: 940px;
+  margin: 20px 0 20px -70px;
   overflow: hidden;
   position: relative;
+}
+
+@media(min-width: 1200px) {
+  .demo {
+    width: 1170px;
+    margin-left: -185px;
+  }
+}
+
+@media(min-width: 768px) and (max-width:979px) {
+  .demo {
+    width: 724px;
+    margin-left: -10px;
+    margin-left: 0;
+  }
+}
+
+@media(max-width: 767px) {
+  .demo {
+    width: auto;
+    margin-left: 0;
+  }
 }
 
 .output-container {

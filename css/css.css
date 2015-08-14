@@ -45,11 +45,17 @@ code {
 }
 
 pre {
-  margin: 12px -15px;
+  margin: 12px 0;
   padding: 0;
   word-wrap: break-word;
   word-break: break-word;
   overflow: auto;
+}
+
+@media(min-width: 768px) {
+  pre {
+    margin: 12px -14px;
+  }
 }
 
 code, pre {
