@@ -40,6 +40,7 @@
         top: 1em;
       }
     </style>
+
     <script src="bower_components/ace-builds/src-min/ace.js"></script>
     <script src="js/shift-parser.js"></script>
     <script src="js/shift-reducer.js"></script>
@@ -69,6 +70,15 @@
         </div>
 
         <hr />
+
+        <h3>Demo</h3>
+
+        <p>
+          In this demo, a reducer is given on the left, and run against itself.
+          The final reduction state is displayed as JSON on the right. Be sure
+          to define the reducer as the module's default export. ECMAScript 2015
+          syntax may be used.
+        </p>
 
         <div class="demo" id="demo1">
 <div class="editor" spellcheck="false">let EMPTY;
