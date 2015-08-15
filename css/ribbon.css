@@ -6,12 +6,13 @@
   top: 0px;
   overflow: hidden;
   width: 167px;
-  height: 92px;
+  height: 100px;
 }
 
 .ribbon {
   position: absolute;
   top: 22px;
+  font-size: 14px;
   background-color: #a00;
   white-space: nowrap;
   -webkit-box-shadow: 0 0 10px #888;
