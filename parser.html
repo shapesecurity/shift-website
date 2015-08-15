@@ -55,29 +55,31 @@
     </div>
 
     <div class="container">
+      <div class="content">
 
-      <div class="masthead">
-        <h3><a href="./index.html" class="muted hub-link">part of the Shift suite</a></h3>
-      </div>
+        <div class="masthead">
+          <h3><a href="./index.html" class="muted hub-link">part of the Shift suite</a></h3>
+        </div>
 
-      <div class="jumbotron">
-        <h1><span class="shift">Shift</span> Parser</h1>
-        <p class="lead">
-          generates a Shift AST from ECMAScript program text
-        </p>
-      </div>
+        <div class="jumbotron">
+          <h1><span class="shift">Shift</span> Parser</h1>
+          <p class="lead">
+            generates a Shift AST from ECMAScript program text
+          </p>
+        </div>
 
-      <hr />
+        <hr />
 
-      <h3>Demo</h3>
+        <section id="demo">
+          <h3>Demo</h3>
 
-      <p>
-        This demo shows a rendering of the parser output on the right. You may
-        edit its input on the left.
-      </p>
+          <p>
+            This demo shows a rendering of the parser output on the right. You may
+            edit its input on the left.
+          </p>
 
-      <div class="demo" id="demo1">
-<div class="editor" spellcheck="false">"use strict";
+          <div class="demo" id="demo1">
+          <div class="editor" spellcheck="false">"use strict";
 
 let [x,y,z] = [1,2,3].map(_ => _ * 2);
 
@@ -87,25 +89,32 @@ class Person {
   }
 }
 </div>
-        <div class="output-container">
-          <ui-treeview expanded class="output"></ui-treeview>
-          <div class="error-message"></div>
-        </div>
-        <script src="js/parser/main.js"></script>
-      </div>
+            <div class="output-container">
+              <ui-treeview expanded class="output"></ui-treeview>
+              <div class="error-message"></div>
+            </div>
+            <script src="js/parser/main.js"></script>
+          </div>
+        </section>
 
-      <h3>Installation</h3>
+        <section id="installation">
+          <h3>Installation</h3>
 
-      <pre><code class="nohighlight">npm install shift-parser</code></pre>
+          <pre><code class="nohighlight">npm install shift-parser</code></pre>
+        </section>
 
-      <h3>Usage</h3>
+        <section id="usage">
+          <h3>Usage</h3>
 
-      <pre><code class="javascript">import parse from "shift-parser";
+          <pre><code class="javascript">import parse from "shift-parser";
 let ast = parse("/* ECMAScript program text */");</code></pre>
 
-      <pre><code class="javascript">import {parseScript, parseModule} from "shift-parser";
+        <pre><code class="javascript">import {parseScript, parseModule} from "shift-parser";
 let scriptAST = parseScript("/* ECMAScript Script text */");
 let moduleAST = parseModule("/* ECMAScript Module text */");</code></pre>
+        </section>
+
+      </div>
 
       <hr />
 

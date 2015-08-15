@@ -21,8 +21,7 @@
 }
 
 .jumbotron h1 {
-  font-size: 72px;
-  line-height: 1;
+  font-size: 60px;
 }
 
 .jumbotron .btn {
@@ -92,8 +91,12 @@ a.hub-link:hover, a.hub-link:focus {
   text-decoration: none;
 }
 
+li {
+  line-height: 140%;
+}
+
 section {
-  margin: 1em 0 2em;
+  margin: 1em 0 1.5em;
 }
 
 .lead {
