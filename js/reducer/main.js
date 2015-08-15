@@ -41,7 +41,6 @@ var output = document.querySelector("#demo1 .output");
 var outputContainer = document.querySelector("#demo1 .output-container");
 var goButton = document.querySelector("#demo1 .go-button");
 
-
 function displayError(exception, editor) {
   hideError(editor);
   error.textContent = exception.message;
@@ -49,7 +48,7 @@ function displayError(exception, editor) {
     editor.getSession().setAnnotations([{
       row: exception.line - 1,
       column: exception.column,
-      text: exception.description,
+      text: exception.message,
       type: "error" // also warning and information
     }]);
   }
@@ -130,21 +129,25 @@ function exec(ast, program) {
     var inputReducer = new exports.default;
     var state = reducer.default(inputReducer, ast);
   } catch (ex) {
-    ex.column = ex.column || ex.columnNumber;
-    ex.line = ex.line || ex.lineNumber;
-    if (!ex.line) {
-      var stackLines = ex.stack.split("\n");
-      var match = stackLines[1].match(/<anonymous>:(\d+):(\d+)/) || stackLines[0].match(/eval:(\d+):(\d+)/);
-      if (match != null) {
-        ex.line = match[1];
-        ex.column = match[2];
-      }
-    }
+    findEvalLineNumber(ex);
     displayError(ex, editor);
     return;
   }
   hideError(editor);
   render(JSON.stringify(state, null, 2));
+}
+
+function findEvalLineNumber(ex) {
+  ex.column = ex.column || ex.columnNumber;
+  ex.line = ex.line || ex.lineNumber;
+  if (!ex.line) {
+    var stackLines = ex.stack.split("\n");
+    var match = stackLines[1].match(/<anonymous>:(\d+):(\d+)/) || stackLines[0].match(/eval:(\d+):(\d+)/);
+    if (match != null) {
+      ex.line = match[1];
+      ex.column = match[2];
+    }
+  }
 }
 
 window.addEventListener('DOMContentLoaded', go);

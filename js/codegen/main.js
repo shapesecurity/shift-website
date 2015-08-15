@@ -34,32 +34,38 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = ace.edit(document.querySelector("#demo1 .editor")),
-    session = editor.getSession(),
-    Range = ace.require('ace/range').Range;
+var editor = ace.edit(document.querySelector("#demo1 .editor"));
 
 var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
 var outputContainer = document.querySelector("#demo1 .output-container");
 
-
 function displayError(exception) {
   hideError();
-  error.innerText = exception.message;
+  error.textContent = exception.message;
+  if (exception.line) {
+    editor.getSession().setAnnotations([{
+      row: exception.line - 1,
+      column: exception.column,
+      text: exception.message,
+      type: "error" // also warning and information
+    }]);
+  }
   outputContainer.classList.add("error");
 }
 
 function hideError() {
-  session.clearAnnotations();
+  outputContainer.classList.remove("error");
+  editor.getSession().clearAnnotations();
 }
 
 function render(program) {
   hideError();
-  outputContainer.classList.remove("error");
   output.textContent = program;
   hljs.highlightBlock(output);
 }
 
+var session = editor.getSession();
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
 editor.setOption("fontFamily", "Source Code Pro");
@@ -76,11 +82,13 @@ session.setUseWrapMode(false);
 function onChange() {
   var code = editor.getValue();
   try {
-    var program = codegen.default((0, eval)("(" + code + ")"));
-    render(program);
+    var ast = (0, eval)("(function(){return " + code + "}())");
+    var program = codegen.default(ast);
   } catch (ex) {
     displayError(ex);
+    return;
   }
+  render(program);
 }
 
 editor.getSession().on('change', debounce(onChange, 300));

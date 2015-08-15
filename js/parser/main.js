@@ -34,9 +34,7 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = ace.edit(document.querySelector("#demo1 .editor")),
-    session = editor.getSession(),
-    Range = ace.require('ace/range').Range;
+var editor = ace.edit(document.querySelector("#demo1 .editor"));
 
 var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
@@ -44,9 +42,10 @@ var outputContainer = document.querySelector("#demo1 .output-container");
 
 function displayError(exception) {
   hideError();
-  error.innerText = exception.message;
+  error.textContent = exception.description;
+  console.dir(exception);
   if (exception.line) {
-    session.setAnnotations([{
+    editor.getSession().setAnnotations([{
       row: exception.line - 1,
       column: exception.column,
       text: exception.description,
@@ -57,15 +56,16 @@ function displayError(exception) {
 }
 
 function hideError() {
-  session.clearAnnotations();
+  outputContainer.classList.remove("error");
+  editor.getSession().clearAnnotations();
 }
 
 function render(ast) {
   hideError();
-  outputContainer.classList.remove("error");
   output.display(ast);
 }
 
+var session = editor.getSession();
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
 editor.setOption("fontFamily", "Source Code Pro");
@@ -83,10 +83,11 @@ function onChange() {
   var code = editor.getValue();
   try {
     var ast = parser.parseModule(code, { loc: false, earlyErrors : true });
-    render(ast);
   } catch (ex) {
     displayError(ex);
+    return;
   }
+  render(ast);
 }
 
 editor.getSession().on('change', debounce(onChange, 300));
