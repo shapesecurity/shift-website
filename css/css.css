@@ -36,6 +36,14 @@ html, body {
   font-size: medium;
 }
 
+li {
+  line-height: 140%;
+}
+
+p {
+  margin-bottom: 14px;
+}
+
 hr {
   border: 0;
   border-bottom: 1px dashed #DDD;
@@ -89,10 +97,6 @@ a.hub-link::before {
 }
 a.hub-link:hover, a.hub-link:focus {
   text-decoration: none;
-}
-
-li {
-  line-height: 140%;
 }
 
 section {
