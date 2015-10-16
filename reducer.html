@@ -111,7 +111,7 @@ class Collector {
   constructor(x) { this.value = x; }
   static empty() { return EMPTY; }
   concat(a) { return new Collector(this.value.concat(a.value)); }
-  extract() { return this.value }
+  extract() { return this.value; }
 }
 EMPTY = new Collector([]);
 
