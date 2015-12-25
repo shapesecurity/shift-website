@@ -1,1 +1,5926 @@
-(function(b){function a(b,d){if({}.hasOwnProperty.call(a.cache,b))return a.cache[b];var e=a.resolve(b);if(!e)throw new Error('Failed to resolve module '+b);var c={id:b,require:a,filename:b,exports:{},loaded:!1,parent:d,children:[]};d&&d.children.push(c);var f=b.slice(0,b.lastIndexOf('/')+1);return a.cache[b]=c.exports,e.call(c.exports,c,c.exports,f,b),c.loaded=!0,a.cache[b]=c.exports}a.modules={},a.cache={},a.resolve=function(b){return{}.hasOwnProperty.call(a.modules,b)?a.modules[b]:void 0},a.define=function(b,c){a.modules[b]=c},a.define('dist/index.js',function(v,V,X,W){'use strict';function m(a){if(Array.isArray(a)){for(var b=0,c=Array(a.length);b<a.length;b++)c[b]=a[b];return c}else return Array.from(a)}function o(b,a){if(typeof a!=='function'&&a!==null)throw new TypeError('Super expression must either be null or a function, not '+typeof a);b.prototype=Object.create(a&&a.prototype,{constructor:{value:b,enumerable:!1,writable:!0,configurable:!0}}),a&&(Object.setPrototypeOf?Object.setPrototypeOf(b,a):b.__proto__=a)}function j(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function U(c){var a=new G.TokenStream,b=(0,C['default'])(L,c);return b.emit(a),a.result}function g(c){var b=!0;a:while(b){var a=c;b=!1;switch(a.type){case'ArrayExpression':case'FunctionExpression':case'IdentifierExpression':case'LiteralBooleanExpression':case'LiteralNullExpression':case'LiteralNumericExpression':case'LiteralInfinityExpression':case'LiteralRegExpExpression':case'LiteralStringExpression':case'ObjectExpression':case'ThisExpression':return d.Primary;case'AssignmentExpression':case'CompoundAssignmentExpression':case'YieldExpression':case'YieldGeneratorExpression':return d.Assignment;case'ConditionalExpression':return d.Conditional;case'ComputedMemberExpression':case'StaticMemberExpression':switch(a.object.type){case'CallExpression':case'ComputedMemberExpression':case'StaticMemberExpression':case'TemplateExpression':c=a.object;b=!0;continue a;default:return d.Member}case'TemplateExpression':if(a.tag==null)return d.Member;switch(a.tag.type){case'CallExpression':case'ComputedMemberExpression':case'StaticMemberExpression':case'TemplateExpression':c=a.tag;b=!0;continue a;default:return d.Member}case'BinaryExpression':return I[a.operator];case'CallExpression':return d.Call;case'NewExpression':return a.arguments.length===0?d.New:d.Member;case'UpdateExpression':return a.isPrefix?d.Prefix:d.Postfix;case'UnaryExpression':return d.Prefix}}}function s(e){var a='',f=0,g=0;for(var b=0,h=e.length;b<h;++b){var c=e[b];c==='"'?++g:c==="'"&&++f}var d=g>f?"'":'"';a+=d;for(var b=0;b<e.length;b++){var c=e.charAt(b);switch(c){case d:a+='\\'+d;break;case'':a+='\\b';break;case'	':a+='\\t';break;case'\n':a+='\\n';break;case'':a+='\\v';break;case'':a+='\\f';break;case'\r':a+='\\r';break;case'\\':a+='\\\\';break;case'\u2028':a+='\\u2028';break;case'\u2029':a+='\\u2029';break;default:a+=c;break}}return a+=d,a}function p(b,c,a){return g(b)<c?e(a):a}function b(a){return new A(a)}function e(a){return new N(a)}function t(a){return new O(a)}function z(a){return new Q(a)}function u(a){return a.containsIn?new R(a):a}function c(){for(var b=arguments.length,c=Array(b),a=0;a<b;a++)c[a]=arguments[a];return new S(c)}function B(){return new T}function f(){return new K}function r(a){return new H(a)}function l(a){return new P(a)}function h(){return new J}function x(a,b){return a&&a.type==='ExpressionStatement'&&a.expression.type==='LiteralStringExpression'?c(e(b.children[0]),h()):b}function y(a){return a?a.containsGroup?e(a):a:f()}var k=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),n=function a(i,k,j){var f=!0;a:while(f){var c=i,g=k,h=j;b=d=e=undefined,f=!1,c===null&&(c=Function.prototype);var b=Object.getOwnPropertyDescriptor(c,g);if(b===undefined){var d=Object.getPrototypeOf(c);if(d===null)return undefined;else{i=d,k=g,j=h,f=!0;continue a}}else if('value'in b)return b.value;else{var e=b.get;return e===undefined?undefined:e.call(h)}}};V['default']=U;var C=a('node_modules/shift-reducer/dist/index.js',v),D=a('node_modules/object-assign/index.js',v),i=D,F=a('node_modules/esutils/lib/utils.js',v),G=a('dist/token_stream.js',v),d={Sequence:0,Yield:1,Assignment:1,Conditional:2,ArrowFunction:2,LogicalOR:3,LogicalAND:4,BitwiseOR:5,BitwiseXOR:6,BitwiseAND:7,Equality:8,Relational:9,BitwiseSHIFT:10,Additive:11,Multiplicative:12,Prefix:13,Postfix:14,New:15,Call:16,TaggedTemplate:17,Member:18,Primary:19},I={',':d.Sequence,'||':d.LogicalOR,'&&':d.LogicalAND,'|':d.BitwiseOR,'^':d.BitwiseXOR,'&':d.BitwiseAND,'==':d.Equality,'!=':d.Equality,'===':d.Equality,'!==':d.Equality,'<':d.Relational,'>':d.Relational,'<=':d.Relational,'>=':d.Relational,'in':d.Relational,'instanceof':d.Relational,'<<':d.BitwiseSHIFT,'>>':d.BitwiseSHIFT,'>>>':d.BitwiseSHIFT,'+':d.Additive,'-':d.Additive,'*':d.Multiplicative,'%':d.Multiplicative,'/':d.Multiplicative},q=function a(){j(this,a),this.containsIn=!1,this.containsGroup=!1,this.startsWithCurly=!1,this.startsWithFunctionOrClass=!1,this.startsWithLet=!1,this.startsWithLetSquareBracket=!1,this.endsWithMissingElse=!1},K=function(b){function a(){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this)}return o(a,b),k(a,[{key:'emit',value:function a(){}}]),a}(q),A=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.token=b}return o(a,b),k(a,[{key:'emit',value:function a(b){b.put(this.token)}}]),a}(q),w=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.number=b}return o(a,b),k(a,[{key:'emit',value:function a(b){b.putNumber(this.number)}}]),a}(q),N=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.expr=b}return o(a,b),k(a,[{key:'emit',value:function a(b){b.put('('),this.expr.emit(b,!1),b.put(')')}}]),a}(q),O=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.expr=b}return o(a,b),k(a,[{key:'emit',value:function a(b){b.put('['),this.expr.emit(b,!1),b.put(']')}}]),a}(q),P=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.expr=b}return o(a,b),k(a,[{key:'emit',value:function a(b){b.put('{'),this.expr.emit(b,!1),b.put('}')}}]),a}(q),Q=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.expr=b}return o(a,b),k(a,[{key:'emit',value:function a(b){this.expr.emit(b,!0)}}]),a}(q),R=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.expr=b}return o(a,b),k(a,[{key:'emit',value:function a(b,c){c?(b.put('('),this.expr.emit(b,!1),b.put(')')):this.expr.emit(b,!1)}}]),a}(q),S=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.children=b}return o(a,b),k(a,[{key:'emit',value:function a(b,c){this.children.forEach(function(a){return a.emit(b,c)})}}]),a}(q),T=function(b){function a(){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this,';')}return o(a,b),a}(A),H=function(b){function a(b){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.children=b}return o(a,b),k(a,[{key:'emit',value:function a(c,d){var b=!0;this.children.forEach(function(a){b?b=!1:c.put(','),a.emit(c,d)})}}]),a}(q),J=function(b){function a(){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this)}return o(a,b),k(a,[{key:'emit',value:function a(b){b.putOptionalSemi()}}]),a}(q),E=function(b){function a(b,c){j(this,a),n(Object.getPrototypeOf(a.prototype),'constructor',this).call(this),this.binding=b,this.init=c}return o(a,b),k(a,[{key:'emit',value:function a(b,c){this.binding.emit(b),this.init!=null&&(b.put('='),this.init.emit(b,c))}}]),a}(q),M=function(){function a(){j(this,a)}return k(a,[{key:'reduceArrayExpression',value:function a(h,g){var d=g.elements;if(d.length===0)return t(f());var e=r(d.map(y));return d.length>0&&d[d.length-1]==null&&(e=c(e,b(','))),t(e)}},{key:'reduceSpreadElement',value:function a(f,g){var e=g.expression;return c(b('...'),p(f.expression,d.Assignment,e))}},{key:'reduceAssignmentExpression',value:function a(l,n){var d=n.binding,h=n.expression,k=d,f=h,j=h.containsIn,o=d.startsWithCurly,p=d.startsWithLetSquareBracket,m=d.startsWithFunctionOrClass;return g(l.expression)<g(l)&&(f=e(f),j=!1),i(c(k,b('='),f),{containsIn:j,startsWithCurly:o,startsWithLetSquareBracket:p,startsWithFunctionOrClass:m})}},{key:'reduceCompoundAssignmentExpression',value:function a(j,m){var d=m.binding,h=m.expression,l=d,f=h,k=h.containsIn,o=d.startsWithCurly,p=d.startsWithLetSquareBracket,n=d.startsWithFunctionOrClass;return g(j.expression)<g(j)&&(f=e(f),k=!1),i(c(l,b(j.operator),f),{containsIn:k,startsWithCurly:o,startsWithLetSquareBracket:p,startsWithFunctionOrClass:n})}},{key:'reduceBinaryExpression',value:function a(d,q){var f=q.left,m=q.right,j=f,k=f.startsWithCurly,n=f.startsWithLetSquareBracket,o=f.startsWithFunctionOrClass,p=f.containsIn;g(d.left)<g(d)&&(j=e(j),k=!1,n=!1,o=!1,p=!1);var h=m,l=m.containsIn;return g(d.right)<=g(d)&&(h=e(h),l=!1),i(c(j,b(d.operator),h),{containsIn:p||l||d.operator==='in',containsGroup:d.operator==',',startsWithCurly:k,startsWithLetSquareBracket:n,startsWithFunctionOrClass:o})}},{key:'reduceBindingWithDefault',value:function a(g,d){var e=d.binding,f=d.init;return c(e,b('='),f)}},{key:'reduceBindingIdentifier',value:function a(d){var c=b(d.name);return d.name==='let'&&(c.startsWithLet=!0),c}},{key:'reduceArrayBinding',value:function a(i,h){var d=h.elements,g=h.restElement,e=undefined;return d.length===0?e=g==null?f():c(b('...'),g):(d=d.concat(g==null?[]:[c(b('...'),g)]),e=r(d.map(y)),d.length>0&&d[d.length-1]==null&&(e=c(e,b(',')))),t(e)}},{key:'reduceObjectBinding',value:function a(e,d){var c=d.properties,b=l(r(c));return b.startsWithCurly=!0,b}},{key:'reduceBindingPropertyIdentifier',value:function a(g,e){var d=e.binding,f=e.init;return g.init==null?d:c(d,b('='),f)}},{key:'reduceBindingPropertyProperty',value:function a(g,d){var e=d.name,f=d.binding;return c(e,b(':'),f)}},{key:'reduceBlock',value:function a(e,d){var b=d.statements;return l(c.apply(undefined,m(b)))}},{key:'reduceBlockStatement',value:function a(d,c){var b=c.block;return b}},{key:'reduceBreakStatement',value:function a(g,e){var d=e.label;return c(b('break'),d?b(d):f(),h())}},{key:'reduceCallExpression',value:function a(d,f){var b=f.callee,h=f.arguments;return i(c(p(d.callee,g(d),b),e(r(h))),{startsWithCurly:b.startsWithCurly,startsWithLetSquareBracket:b.startsWithLetSquareBracket,startsWithFunctionOrClass:b.startsWithFunctionOrClass})}},{key:'reduceCatchClause',value:function a(h,d){var f=d.binding,g=d.body;return c(b('catch'),e(f),g)}},{key:'reduceClassDeclaration',value:function a(i,e){var g=e.name,f=e['super'],h=e.elements,d=c(b('class'),g);return f!=null&&(d=c(d,b('extends'),f)),d=c.apply(undefined,[d,b('{')].concat(m(h),[b('}')])),d}},{key:'reduceClassExpression',value:function a(i,e){var f=e.name,g=e['super'],h=e.elements,d=b('class');return f!=null&&(d=c(d,f)),g!=null&&(d=c(d,b('extends'),g)),d=c.apply(undefined,[d,b('{')].concat(m(h),[b('}')])),d.startsWithFunctionOrClass=!0,d}},{key:'reduceClassElement',value:function a(e,f){var d=f.method;return e.isStatic?c(b('static'),d):d}},{key:'reduceComputedMemberExpression',value:function a(d,e){var b=e.object,f=e.expression,h=b.startsWithLetSquareBracket||d.object.type==='IdentifierExpression'&&d.object.name==='let';return i(c(p(d.object,g(d),b),t(f)),{startsWithLet:b.startsWithLet,startsWithLetSquareBracket:h,startsWithCurly:b.startsWithCurly,startsWithFunctionOrClass:b.startsWithFunctionOrClass})}},{key:'reduceComputedPropertyName',value:function a(d,c){var b=c.expression;return t(b)}},{key:'reduceConditionalExpression',value:function a(f,g){var e=g.test,j=g.consequent,h=g.alternate,k=e.containsIn||h.containsIn,l=e.startsWithCurly,m=e.startsWithLetSquareBracket,n=e.startsWithFunctionOrClass;return i(c(p(f.test,d.LogicalOR,e),b('?'),p(f.consequent,d.Assignment,j),b(':'),p(f.alternate,d.Assignment,h)),{containsIn:k,startsWithCurly:l,startsWithLetSquareBracket:m,startsWithFunctionOrClass:n})}},{key:'reduceContinueStatement',value:function a(g,e){var d=e.label;return c(b('continue'),d?b(d):f(),h())}},{key:'reduceDataProperty',value:function a(g,d){var e=d.name,f=d.expression;return c(e,b(':'),y(f))}},{key:'reduceDebuggerStatement',value:function a(d){return c(b('debugger'),h())}},{key:'reduceDoWhileStatement',value:function a(i,d){var f=d.body,g=d.test;return c(b('do'),f,b('while'),e(g),h())}},{key:'reduceEmptyStatement',value:function a(b){return B()}},{key:'reduceExpressionStatement',value:function a(g,f){var b=f.expression,d=b.startsWithCurly||b.startsWithLetSquareBracket||b.startsWithFunctionOrClass;return c(d?e(b):b,h())}},{key:'reduceForInStatement',value:function a(j,g){var d=g.left,k=g.right,h=g.body,f=d;switch(j.left.type){case'VariableDeclaration':f=z(u(d));break;case'BindingIdentifier':j.left.name==='let'&&(f=e(d));break}return i(c(b('for'),e(c(f,b('in'),k)),h),{endsWithMissingElse:h.endsWithMissingElse})}},{key:'reduceForOfStatement',value:function a(j,f){var d=f.left,h=f.right,g=f.body;return d=j.left.type==='VariableDeclaration'?z(u(d)):d,i(c(b('for'),e(c(d.startsWithLet?e(d):d,b('of'),h)),g),{endsWithMissingElse:g.endsWithMissingElse})}},{key:'reduceForStatement',value:function a(l,d){var g=d.init,j=d.test,k=d.update,h=d.body;return i(c(b('for'),e(c(g?z(u(g)):f(),B(),j||f(),B(),k||f())),h),{endsWithMissingElse:h.endsWithMissingElse})}},{key:'reduceFunctionBody',value:function a(f,d){var e=d.directives,b=d.statements;return b.length&&(b[0]=x(f.statements[0],b[0])),c.apply(undefined,m(e).concat(m(b)))}},{key:'reduceFunctionDeclaration',value:function a(g,d){var h=d.name,i=d.params,j=d.body;return c(b('function'),g.isGenerator?b('*'):f(),g.name.name==='*default*'?f():h,e(i),l(j))}},{key:'reduceFunctionExpression',value:function a(k,d){var g=d.name,i=d.params,j=d.body,h=c(b('function'),k.isGenerator?b('*'):f(),g?g:f(),e(i),l(j));return h.startsWithFunctionOrClass=!0,h}},{key:'reduceFormalParameters',value:function a(g,e){var f=e.items,d=e.rest;return r(f.concat(d==null?[]:[c(b('...'),d)]))}},{key:'reduceArrowExpression',value:function a(f,h){var g=h.params,d=h.body;return(f.params.rest!=null||f.params.items.length!==1||f.params.items[0].type!=='BindingIdentifier')&&(g=e(g)),f.body.type==='FunctionBody'?d=l(d):d.startsWithCurly&&(d=e(d)),c(g,b('=>'),d)}},{key:'reduceGetter',value:function a(i,d){var g=d.name,h=d.body;return c(b('get'),g,e(f()),l(h))}},{key:'reduceIdentifierExpression',value:function a(d){var c=b(d.name);return d.name==='let'&&(c.startsWithLet=!0),c}},{key:'reduceIfStatement',value:function a(k,h){var j=h.test,g=h.consequent,d=h.alternate;return d&&g.endsWithMissingElse&&(g=l(g)),i(c(b('if'),e(j),g,d?c(b('else'),d):f()),{endsWithMissingElse:d?d.endsWithMissingElse:!0})}},{key:'reduceImport',value:function a(g,i){var e=i.defaultBinding,f=i.namedImports,d=[];return e!=null&&d.push(e),f.length>0&&d.push(l(r(f))),d.length===0?c(b('import'),b(s(g.moduleSpecifier)),h()):c(b('import'),r(d),b('from'),b(s(g.moduleSpecifier)),h())}},{key:'reduceImportNamespace',value:function a(i,e){var d=e.defaultBinding,g=e.namespaceBinding;return c(b('import'),d==null?f():c(d,b(',')),b('*'),b('as'),g,b('from'),b(s(i.moduleSpecifier)),h())}},{key:'reduceImportSpecifier',value:function a(e,f){var d=f.binding;return e.name==null?d:c(b(e.name),b('as'),d)}},{key:'reduceExportAllFrom',value:function a(d){return c(b('export'),b('*'),b('from'),b(s(d.moduleSpecifier)),h())}},{key:'reduceExportFrom',value:function a(d,g){var e=g.namedExports;return c(b('export'),l(r(e)),d.moduleSpecifier==null?f():c(b('from'),b(s(d.moduleSpecifier)),h()))}},{key:'reduceExport',value:function a(e,f){var d=f.declaration;switch(e.declaration.type){case'FunctionDeclaration':case'ClassDeclaration':break;default:d=c(d,h())}return c(b('export'),d)}},{key:'reduceExportDefault',value:function a(f,g){var d=g.body;d=d.startsWithFunctionOrClass?e(d):d;switch(f.body.type){case'FunctionDeclaration':case'ClassDeclaration':break;default:d=c(d,h())}return c(b('export default'),d)}},{key:'reduceExportSpecifier',value:function a(d){return d.name==null?b(d.exportedName):c(b(d.name),b('as'),b(d.exportedName))}},{key:'reduceLabeledStatement',value:function a(g,e){var f=e.label,d=e.body;return i(c(b(f+':'),d),{endsWithMissingElse:d.endsWithMissingElse})}},{key:'reduceLiteralBooleanExpression',value:function a(c){return b(c.value.toString())}},{key:'reduceLiteralNullExpression',value:function a(c){return b('null')}},{key:'reduceLiteralInfinityExpression',value:function a(c){return b('2e308')}},{key:'reduceLiteralNumericExpression',value:function a(b){return new w(b.value)}},{key:'reduceLiteralRegExpExpression',value:function a(c){return b('/'+c.pattern+'/'+c.flags)}},{key:'reduceLiteralStringExpression',value:function a(c){return b(s(c.value))}},{key:'reduceMethod',value:function a(j,d){var g=d.name,h=d.params,i=d.body;return c(j.isGenerator?b('*'):f(),g,e(h),l(i))}},{key:'reduceModule',value:function a(f,d){var e=d.directives,b=d.items;return b.length&&(b[0]=x(f.items[0],b[0])),c.apply(undefined,m(e).concat(m(b)))}},{key:'reduceNewExpression',value:function a(h,k){var i=k.callee,j=k.arguments,l=g(h.callee)==d.Call?e(i):p(h.callee,g(h),i);return c(b('new'),l,j.length===0?f():e(r(j)))}},{key:'reduceNewTargetExpression',value:function a(){return b('new.target')}},{key:'reduceObjectExpression',value:function a(e,d){var c=d.properties,b=l(r(c));return b.startsWithCurly=!0,b}},{key:'reduceUpdateExpression',value:function a(f,g){var e=g.operand;return f.isPrefix?this.reduceUnaryExpression.apply(this,arguments):i(c(p(f.operand,d.New,e),b(f.operator)),{startsWithCurly:e.startsWithCurly,startsWithLetSquareBracket:e.startsWithLetSquareBracket,startsWithFunctionOrClass:e.startsWithFunctionOrClass})}},{key:'reduceUnaryExpression',value:function a(d,f){var e=f.operand;return c(b(d.operator),p(d.operand,g(d),e))}},{key:'reduceReturnStatement',value:function a(g,e){var d=e.expression;return c(b('return'),d||f(),h())}},{key:'reduceScript',value:function a(f,d){var e=d.directives,b=d.statements;return b.length&&(b[0]=x(f.statements[0],b[0])),c.apply(undefined,m(e).concat(m(b)))}},{key:'reduceSetter',value:function a(i,d){var f=d.name,g=d.param,h=d.body;return c(b('set'),f,e(g),l(h))}},{key:'reduceShorthandProperty',value:function a(c){return b(c.name)}},{key:'reduceStaticMemberExpression',value:function a(f,h){var d=h.object,i=h.property,e=c(p(f.object,g(f),d),b('.'),b(i));return e.startsWithLet=d.startsWithLet,e.startsWithCurly=d.startsWithCurly,e.startsWithLetSquareBracket=d.startsWithLetSquareBracket,e.startsWithFunctionOrClass=d.startsWithFunctionOrClass,e}},{key:'reduceStaticPropertyName',value:function a(c){var d;return F.keyword.isIdentifierNameES6(c.value)?b(c.value):(d=parseFloat(c.value),d===d?new w(d):b(s(c.value)))}},{key:'reduceSuper',value:function a(){return b('super')}},{key:'reduceSwitchCase',value:function a(g,d){var e=d.test,f=d.consequent;return c(b('case'),e,b(':'),c.apply(undefined,m(f)))}},{key:'reduceSwitchDefault',value:function a(f,e){var d=e.consequent;return c(b('default:'),c.apply(undefined,m(d)))}},{key:'reduceSwitchStatement',value:function a(h,d){var f=d.discriminant,g=d.cases;return c(b('switch'),e(f),l(c.apply(undefined,m(g))))}},{key:'reduceSwitchStatementWithDefault',value:function a(j,d){var f=d.discriminant,g=d.preDefaultCases,h=d.defaultCase,i=d.postDefaultCases;return c(b('switch'),e(f),l(c.apply(undefined,m(g).concat([h],m(i)))))}},{key:'reduceTemplateExpression',value:function a(h,l){var i=l.tag,m=l.elements,d=h.tag==null?f():p(h.tag,g(h),i);d=c(d,b('`'));for(var e=0,k=h.elements.length;e<k;++e)if(h.elements[e].type==='TemplateElement'){var j='';e>0&&(j+='}'),j+=h.elements[e].rawValue,e<k-1&&(j+='${'),d=c(d,b(j))}else d=c(d,m[e]);return d=c(d,b('`')),h.tag!=null&&(d.startsWithCurly=i.startsWithCurly,d.startsWithLetSquareBracket=i.startsWithLetSquareBracket,d.startsWithFunctionOrClass=i.startsWithFunctionOrClass),d}},{key:'reduceTemplateElement',value:function a(c){return b(c.rawValue)}},{key:'reduceThisExpression',value:function a(c){return b('this')}},{key:'reduceThrowStatement',value:function a(f,e){var d=e.expression;return c(b('throw'),d,h())}},{key:'reduceTryCatchStatement',value:function a(g,d){var e=d.body,f=d.catchClause;return c(b('try'),e,f)}},{key:'reduceTryFinallyStatement',value:function a(i,d){var e=d.body,g=d.catchClause,h=d.finalizer;return c(b('try'),e,g||f(),b('finally'),h)}},{key:'reduceYieldExpression',value:function a(d,f){var e=f.expression;return d.expression==null?b('yield'):c(b('yield'),p(d.expression,g(d),e))}},{key:'reduceYieldGeneratorExpression',value:function a(d,f){var e=f.expression;return c(b('yield'),b('*'),p(d.expression,g(d),e))}},{key:'reduceDirective',value:function a(e){var d=/^(?:[^"\\]|\\.)*$/.test(e.rawValue)?'"':"'";return c(b(d+e.rawValue+d),h())}},{key:'reduceVariableDeclaration',value:function a(e,f){var d=f.declarators;return c(b(e.kind),r(d))}},{key:'reduceVariableDeclarationStatement',value:function a(e,d){var b=d.declaration;return c(b,h())}},{key:'reduceVariableDeclarator',value:function a(g,c){var d=c.binding,b=c.init,f=b&&b.containsIn&&!b.containsGroup;return b&&(b.containsGroup?b=e(b):b=u(b)),i(new E(d,b),{containsIn:f})}},{key:'reduceWhileStatement',value:function a(h,f){var g=f.test,d=f.body;return i(c(b('while'),e(g),d),{endsWithMissingElse:d.endsWithMissingElse})}},{key:'reduceWithStatement',value:function a(h,f){var g=f.object,d=f.body;return i(c(b('with'),e(g),d),{endsWithMissingElse:d.endsWithMissingElse})}}]),a}(),L=new M}),a.define('dist/token_stream.js',function(g,f,k,j){'use strict';function e(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function h(a){return a.indexOf('.')<0&&a.indexOf('e')<0?'..':'.'}function i(a){var b;return a>=1e3&&a%10===0?(b=a.toString(10),/[eE]/.test(b)?b.replace(/[eE]\+/,'e'):a.toString(10).replace(/0+$/,function(a){return'e'+a.length})):a%1===0?a>1e15&&a<1e20?'0x'+a.toString(16).toUpperCase():a.toString(10).replace(/[eE]\+/,'e'):a.toString(10).replace(/^0\./,'.').replace(/[eE]\+/,'e')}var d=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),b=a('node_modules/esutils/lib/utils.js',g),c=function(){function a(){e(this,a),this.result='',this.lastNumber=null,this.lastChar=null,this.optionalSemi=!1}return d(a,[{key:'putNumber',value:function a(c){var b=i(c);this.put(b),this.lastNumber=b}},{key:'putOptionalSemi',value:function a(){this.optionalSemi=!0}},{key:'put',value:function a(c){if(this.optionalSemi&&(this.optionalSemi=!1,c!=='}'&&this.put(';')),this.lastNumber!==null&&c.length==1&&c==='.'){this.result+=h(this.lastNumber),this.lastNumber=null,this.lastChar='.';return}this.lastNumber=null;var e=c.charAt(0),d=this.lastChar;this.lastChar=c.charAt(c.length-1),d&&((d=='+'||d=='-')&&d==e||b.code.isIdentifierPartES6(d.charCodeAt(0))&&b.code.isIdentifierPartES6(e.charCodeAt(0))||d=='/'&&e=='i')&&(this.result+=' '),this.result+=c}}]),a}();f.TokenStream=c}),a.define('node_modules/esutils/lib/utils.js',function(b,c,d,e){!function(){'use strict';c.ast=a('node_modules/esutils/lib/ast.js',b),c.code=a('node_modules/esutils/lib/code.js',b),c.keyword=a('node_modules/esutils/lib/keyword.js',b)}()}),a.define('node_modules/esutils/lib/keyword.js',function(b,c,d,e){!function(c){'use strict';function m(a){switch(a){case'implements':case'interface':case'package':case'private':case'protected':case'public':case'static':case'let':return!0;default:return!1}}function f(a,b){return!b&&a==='yield'?!1:d(a,b)}function d(a,b){if(b&&m(a))return!0;switch(a.length){case 2:return a==='if'||a==='in'||a==='do';case 3:return a==='var'||a==='for'||a==='new'||a==='try';case 4:return a==='this'||a==='else'||a==='case'||a==='void'||a==='with'||a==='enum';case 5:return a==='while'||a==='break'||a==='catch'||a==='throw'||a==='const'||a==='yield'||a==='class'||a==='super';case 6:return a==='return'||a==='typeof'||a==='delete'||a==='switch'||a==='export'||a==='import';case 7:return a==='default'||a==='finally'||a==='extends';case 8:return a==='function'||a==='continue'||a==='debugger';case 10:return a==='instanceof';default:return!1}}function g(a,b){return a==='null'||a==='true'||a==='false'||f(a,b)}function e(a,b){return a==='null'||a==='true'||a==='false'||d(a,b)}function j(a){return a==='eval'||a==='arguments'}function h(a){var b,e,d;if(a.length===0)return!1;if(d=a.charCodeAt(0),!c.isIdentifierStartES5(d))return!1;for(b=1,e=a.length;b<e;++b)if(d=a.charCodeAt(b),!c.isIdentifierPartES5(d))return!1;return!0}function l(a,b){return(a-55296)*1024+(b-56320)+65536}function i(d){var a,f,b,e,g;if(d.length===0)return!1;for(g=c.isIdentifierStartES6,a=0,f=d.length;a<f;++a){if(b=d.charCodeAt(a),55296<=b&&b<=56319){if(++a,a>=f)return!1;if(e=d.charCodeAt(a),!(56320<=e&&e<=57343))return!1;b=l(b,e)}if(!g(b))return!1;g=c.isIdentifierPartES6}return!0}function n(a,b){return h(a)&&!g(a,b)}function k(a,b){return i(a)&&!e(a,b)}c=a('node_modules/esutils/lib/code.js',b),b.exports={isKeywordES5:f,isKeywordES6:d,isReservedWordES5:g,isReservedWordES6:e,isRestrictedWord:j,isIdentifierNameES5:h,isIdentifierNameES6:i,isIdentifierES5:n,isIdentifierES6:k}}()}),a.define('node_modules/esutils/lib/code.js',function(a,b,c,d){!function(g,f,h,c,d,b){'use strict';function n(a){return 48<=a&&a<=57}function i(a){return 48<=a&&a<=57||97<=a&&a<=102||65<=a&&a<=70}function k(a){return a>=48&&a<=55}function l(a){return a===32||a===9||a===11||a===12||a===160||a>=5760&&h.indexOf(a)>=0}function m(a){return a===10||a===13||a===8232||a===8233}function e(a){if(a<=65535)return String.fromCharCode(a);var b=String.fromCharCode(Math.floor((a-65536)/1024)+55296),c=String.fromCharCode((a-65536)%1024+56320);return b+c}function o(a){return a<128?c[a]:f.NonAsciiIdentifierStart.test(e(a))}function p(a){return a<128?d[a]:f.NonAsciiIdentifierPart.test(e(a))}function q(a){return a<128?c[a]:g.NonAsciiIdentifierStart.test(e(a))}function j(a){return a<128?d[a]:g.NonAsciiIdentifierPart.test(e(a))}for(f={NonAsciiIdentifierStart:/[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B2\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/,NonAsciiIdentifierPart:/[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u08A0-\u08B2\u08E4-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58\u0C59\u0C60-\u0C63\u0C66-\u0C6F\u0C81-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D01-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D57\u0D60-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19D9\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1CD0-\u1CD2\u1CD4-\u1CF6\u1CF8\u1CF9\u1D00-\u1DF5\u1DFC-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u200C\u200D\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099\u309A\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA69D\uA69F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C4\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2D\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/},g={NonAsciiIdentifierStart:/[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B2\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2118-\u211D\u2124\u2126\u2128\u212A-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309B-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF30-\uDF4A\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48]|\uD804[\uDC03-\uDC37\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDE00-\uDE11\uDE13-\uDE2B\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF5D-\uDF61]|\uD805[\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDE00-\uDE2F\uDE44\uDE80-\uDEAA]|\uD806[\uDCA0-\uDCDF\uDCFF\uDEC0-\uDEF8]|\uD808[\uDC00-\uDF98]|\uD809[\uDC00-\uDC6E]|[\uD80C\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50\uDF93-\uDF9F]|\uD82C[\uDC00\uDC01]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD83A[\uDC00-\uDCC4]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD87E[\uDC00-\uDE1D]/,NonAsciiIdentifierPart:/[\xAA\xB5\xB7\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u08A0-\u08B2\u08E4-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58\u0C59\u0C60-\u0C63\u0C66-\u0C6F\u0C81-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D01-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D57\u0D60-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1369-\u1371\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19DA\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1CD0-\u1CD2\u1CD4-\u1CF6\u1CF8\u1CF9\u1D00-\u1DF5\u1DFC-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u200C\u200D\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2118-\u211D\u2124\u2126\u2128\u212A-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA69D\uA69F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C4\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2D\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDDFD\uDE80-\uDE9C\uDEA0-\uDED0\uDEE0\uDF00-\uDF1F\uDF30-\uDF4A\uDF50-\uDF7A\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00-\uDE03\uDE05\uDE06\uDE0C-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE38-\uDE3A\uDE3F\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE6\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48]|\uD804[\uDC00-\uDC46\uDC66-\uDC6F\uDC7F-\uDCBA\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD00-\uDD34\uDD36-\uDD3F\uDD50-\uDD73\uDD76\uDD80-\uDDC4\uDDD0-\uDDDA\uDE00-\uDE11\uDE13-\uDE37\uDEB0-\uDEEA\uDEF0-\uDEF9\uDF01-\uDF03\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3C-\uDF44\uDF47\uDF48\uDF4B-\uDF4D\uDF57\uDF5D-\uDF63\uDF66-\uDF6C\uDF70-\uDF74]|\uD805[\uDC80-\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDB5\uDDB8-\uDDC0\uDE00-\uDE40\uDE44\uDE50-\uDE59\uDE80-\uDEB7\uDEC0-\uDEC9]|\uD806[\uDCA0-\uDCE9\uDCFF\uDEC0-\uDEF8]|\uD808[\uDC00-\uDF98]|\uD809[\uDC00-\uDC6E]|[\uD80C\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDED0-\uDEED\uDEF0-\uDEF4\uDF00-\uDF36\uDF40-\uDF43\uDF50-\uDF59\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50-\uDF7E\uDF8F-\uDF9F]|\uD82C[\uDC00\uDC01]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99\uDC9D\uDC9E]|\uD834[\uDD65-\uDD69\uDD6D-\uDD72\uDD7B-\uDD82\uDD85-\uDD8B\uDDAA-\uDDAD\uDE42-\uDE44]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD83A[\uDC00-\uDCC4\uDCD0-\uDCD6]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD87E[\uDC00-\uDE1D]|\uDB40[\uDD00-\uDDEF]/},h=[5760,6158,8192,8193,8194,8195,8196,8197,8198,8199,8200,8201,8202,8239,8287,12288,65279],c=new Array(128),b=0;b<128;++b)c[b]=b>=97&&b<=122||b>=65&&b<=90||b===36||b===95;for(d=new Array(128),b=0;b<128;++b)d[b]=b>=97&&b<=122||b>=65&&b<=90||b>=48&&b<=57||b===36||b===95;a.exports={isDecimalDigit:n,isHexDigit:i,isOctalDigit:k,isWhiteSpace:l,isLineTerminator:m,isIdentifierStartES5:o,isIdentifierPartES5:p,isIdentifierStartES6:q,isIdentifierPartES6:j}}()}),a.define('node_modules/esutils/lib/ast.js',function(a,b,c,d){!function(){'use strict';function d(a){if(a==null)return!1;switch(a.type){case'ArrayExpression':case'AssignmentExpression':case'BinaryExpression':case'CallExpression':case'ConditionalExpression':case'FunctionExpression':case'Identifier':case'Literal':case'LogicalExpression':case'MemberExpression':case'NewExpression':case'ObjectExpression':case'SequenceExpression':case'ThisExpression':case'UnaryExpression':case'UpdateExpression':return!0}return!1}function e(a){if(a==null)return!1;switch(a.type){case'DoWhileStatement':case'ForInStatement':case'ForStatement':case'WhileStatement':return!0}return!1}function b(a){if(a==null)return!1;switch(a.type){case'BlockStatement':case'BreakStatement':case'ContinueStatement':case'DebuggerStatement':case'DoWhileStatement':case'EmptyStatement':case'ExpressionStatement':case'ForInStatement':case'ForStatement':case'IfStatement':case'LabeledStatement':case'ReturnStatement':case'SwitchStatement':case'ThrowStatement':case'TryStatement':case'VariableDeclaration':case'WhileStatement':case'WithStatement':return!0}return!1}function f(a){return b(a)||a!=null&&a.type==='FunctionDeclaration'}function c(a){switch(a.type){case'IfStatement':return a.alternate!=null?a.alternate:a.consequent;case'LabeledStatement':case'ForStatement':case'ForInStatement':case'WhileStatement':case'WithStatement':return a.body}return null}function g(b){var a;if(b.type!=='IfStatement')return!1;if(b.alternate==null)return!1;a=b.consequent;do{if(a.type==='IfStatement'&&a.alternate==null)return!0;a=c(a)}while(a);return!1}a.exports={isExpression:d,isStatement:b,isIterationStatement:e,isSourceElement:f,isProblematicIfStatement:g,trailingStatement:c}}()}),a.define('node_modules/object-assign/index.js',function(b,e,f,g){'use strict';function c(a){if(a==null)throw new TypeError('Object.assign cannot be called with null or undefined');return Object(a)}function d(c){var b=Object.getOwnPropertyNames(c);return Object.getOwnPropertySymbols&&(b=b.concat(Object.getOwnPropertySymbols(c))),b.filter(function(b){return a.call(c,b)})}var a=Object.prototype.propertyIsEnumerable;b.exports=Object.assign||function(h,i){var f,b,g=c(h);for(var e=1;e<arguments.length;e++){f=arguments[e],b=d(Object(f));for(var a=0;a<b.length;a++)g[b[a]]=f[b[a]]}return g}}),a.define('node_modules/shift-reducer/dist/index.js',function(b,c,g,h){'use strict';function d(g,h,i){var k,c=!0;a:while(c){c=!1;var b=g,a=h,f=i;j=undefined;switch(f.typeName){case'Enum':case'String':case'Number':case'Boolean':case'SourceSpan':return a;case'Const':g=b;h=a;i=f.argument;c=!0;continue a;case'Maybe':if(!(k=a))return k;g=b;h=a;i=f.argument;c=!0;continue a;case'List':return a.map(function(a){return d(b,a,f.argument)});case'Union':g=b;h=a;i=e[a.type];c=!0;continue a;default:{var j=function(c){return c={},f.fields.forEach(function(e){var f=d(b,a[e.name],e.type);c[e.name]=f==null?null:f}),{v:b['reduce'+a.type](a,c)}}();if(typeof j==='object')return j.v}}}}function f(b,a){return d(b,a,e[a.type])}c['default']=f;var e=a('node_modules/shift-reducer/node_modules/shift-spec/dist/index.js',b)['default'];c.CloneReducer=a('node_modules/shift-reducer/dist/clone-reducer.js',b)['default'],c.MonoidalReducer=a('node_modules/shift-reducer/dist/monoidal-reducer.js',b)['default']}),a.define('node_modules/shift-reducer/dist/monoidal-reducer.js',function(j,k,m,l){'use strict';function i(a){return a}function b(f){var c=!0;a:while(c){c=!1;var a=f;d=e=undefined;switch(a.typeName){case'Enum':case'String':case'Boolean':case'Number':case'SourceSpan':return null;case'Const':f=a.argument;c=!0;continue a;case'Maybe':{var d=function(c){return c=b(a.argument),c==null?{v:null}:{v:function(a){return a==null?this.identity:c.call(this,a)}}}();if(typeof d==='object')return d.v}case'List':{var e=function(c){return c=b(a.argument),c==null?{v:null}:{v:function(b){var a=this;return this.fold(b.map(function(b){return c.call(a,b)}))}}}();if(typeof e==='object')return e.v}default:return i}}}var f=function(){function a(d,b){for(var c in b){var a=b[c];a.configurable=!0,a.value&&(a.writable=!0)}Object.defineProperties(d,b)}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),g=function(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')},e=a('node_modules/shift-reducer/node_modules/shift-spec/dist/index.js',j)['default'],d={};for(var h in e)!function(c,f,a,g){f=e[c],a={},f.fields.forEach(function(d){var c=b(d.type);c!=null&&(a[d.name]=c)}),g=Object.keys(a),d['reduce'+c]={value:function b(e,d){var c=this;return this.fold(g.map(function(b){return a[b].call(c,d[b])}))}}}(h);var c=function(){function a(b){g(this,a),this.identity=b.empty();var c=b.prototype&&b.prototype.concat||b.concat;this.append=function(a,b){return c.call(a,b)}}return f(a,{fold:{value:function a(d,b){var c=this;return d.reduce(function(a,b){return c.append(a,b)},b==null?this.identity:b)}}}),a}();k['default']=c,Object.defineProperties(c.prototype,d)}),a.define('node_modules/shift-reducer/node_modules/shift-spec/dist/index.js',function(b,a,c,d){a.default=function(b,t,K,j,d,aR,aV,aW,aU,aS,I,c,r,h,m,n,aD,_,F,y,C,a4,av,aw,E,ay,az,aA,aC,D,aE,aF,aG,aH,aI,aJ,aK,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,G,$,a0,a1,a2,a3,ax,a5,a6,a7,a8,a9,aa,ab,ac,ad,ae,af,ag,ah,ai,aj,ak,al,am,an,ao,ap,aq,ar,as,at,au,q,B,z,s,o,v,aB,u,A,x,L,H,p,J,aZ,aO,aL,aP,aM,aQ,aN,w,l,f,aT,k,aY,aX){function a(a){return{typeName:'Maybe',argument:a}}function i(a){return{typeName:'List',argument:a}}function e(a){return{typeName:'Const',argument:a}}function g(){return{typeName:'Union',arguments:[].slice.call(arguments,0)}}return b={},t={typeName:'Boolean'},K={typeName:'Number'},j={typeName:'String'},d={typeName:'Enum',values:['ArrayBinding','ArrayExpression','ArrowExpression','AssignmentExpression','BinaryExpression','BindingIdentifier','BindingProperty','BindingPropertyIdentifier','BindingPropertyProperty','BindingWithDefault','Block','BlockStatement','BreakStatement','CallExpression','CatchClause','Class','ClassDeclaration','ClassElement','ClassExpression','CompoundAssignmentExpression','ComputedMemberExpression','ComputedPropertyName','ConditionalExpression','ContinueStatement','DataProperty','DebuggerStatement','Directive','DoWhileStatement','EmptyStatement','Export','ExportAllFrom','ExportDeclaration','ExportDefault','ExportFrom','ExportSpecifier','Expression','ExpressionStatement','ForInStatement','ForOfStatement','ForStatement','FormalParameters','Function','FunctionBody','FunctionDeclaration','FunctionExpression','Getter','IdentifierExpression','IfStatement','Import','ImportDeclaration','ImportNamespace','ImportSpecifier','IterationStatement','LabeledStatement','LiteralBooleanExpression','LiteralInfinityExpression','LiteralNullExpression','LiteralNumericExpression','LiteralRegExpExpression','LiteralStringExpression','MemberExpression','Method','MethodDefinition','Module','NamedObjectProperty','NewExpression','NewTargetExpression','Node','ObjectBinding','ObjectExpression','ObjectProperty','PropertyName','ReturnStatement','Script','Setter','ShorthandProperty','SourceLocation','SourceSpan','SpreadElement','Statement','StaticMemberExpression','StaticPropertyName','Super','SwitchCase','SwitchDefault','SwitchStatement','SwitchStatementWithDefault','TemplateElement','TemplateExpression','ThisExpression','ThrowStatement','TryCatchStatement','TryFinallyStatement','UnaryExpression','UpdateExpression','VariableDeclaration','VariableDeclarationStatement','VariableDeclarator','WhileStatement','WithStatement','YieldExpression','YieldGeneratorExpression']},aR={typeName:'Enum',values:['var','let','const']},aV={typeName:'Enum',values:['+=','-=','*=','/=','%=','<<=','>>=','>>>=','|=','^=','&=']},aW={typeName:'Enum',values:['==','!=','===','!==','<','<=','>','>=','in','instanceof','<<','>>','>>>','+','-','*','/','%',',','||','&&','|','^','&']},aU={typeName:'Enum',values:['+','-','!','~','typeof','void','delete']},aS={typeName:'Enum',values:['++','--']},I=b.SourceLocation={},c=b.SourceSpan={},r=b.BindingWithDefault={},h=b.BindingIdentifier={},m=b.ArrayBinding={},n=b.ObjectBinding={},aD=b.BindingPropertyIdentifier={},_=b.BindingPropertyProperty={},F=b.ClassExpression={},y=b.ClassDeclaration={},C=b.ClassElement={},a4=b.Module={},av=b.Import={},aw=b.ImportNamespace={},E=b.ImportSpecifier={},ay=b.ExportAllFrom={},az=b.ExportFrom={},aA=b.Export={},aC=b.ExportDefault={},D=b.ExportSpecifier={},aE=b.Method={},aF=b.Getter={},aG=b.Setter={},aH=b.DataProperty={},aI=b.ShorthandProperty={},aJ=b.ComputedPropertyName={},aK=b.StaticPropertyName={},M=b.LiteralBooleanExpression={},N=b.LiteralInfinityExpression={},O=b.LiteralNullExpression={},P=b.LiteralNumericExpression={},Q=b.LiteralRegExpExpression={},R=b.LiteralStringExpression={},S=b.ArrayExpression={},T=b.ArrowExpression={},U=b.AssignmentExpression={},V=b.BinaryExpression={},W=b.CallExpression={},X=b.CompoundAssignmentExpression={},Y=b.ComputedMemberExpression={},Z=b.ConditionalExpression={},G=b.FunctionExpression={},$=b.IdentifierExpression={},a0=b.NewExpression={},a1=b.NewTargetExpression={},a2=b.ObjectExpression={},a3=b.UnaryExpression={},ax=b.StaticMemberExpression={},a5=b.TemplateExpression={},a6=b.ThisExpression={},a7=b.UpdateExpression={},a8=b.YieldExpression={},a9=b.YieldGeneratorExpression={},aa=b.BlockStatement={},ab=b.BreakStatement={},ac=b.ContinueStatement={},ad=b.DebuggerStatement={},ae=b.DoWhileStatement={},af=b.EmptyStatement={},ag=b.ExpressionStatement={},ah=b.ForInStatement={},ai=b.ForOfStatement={},aj=b.ForStatement={},ak=b.IfStatement={},al=b.LabeledStatement={},am=b.ReturnStatement={},an=b.SwitchStatement={},ao=b.SwitchStatementWithDefault={},ap=b.ThrowStatement={},aq=b.TryCatchStatement={},ar=b.TryFinallyStatement={},as=b.VariableDeclarationStatement={},at=b.WhileStatement={},au=b.WithStatement={},q=b.Block={},B=b.CatchClause={},z=b.Directive={},s=b.FormalParameters={},o=b.FunctionBody={},v=b.FunctionDeclaration={},aB=b.Script={},u=b.SpreadElement={},A=b.Super={},x=b.SwitchCase={},L=b.SwitchDefault={},H=b.TemplateElement={},p=b.VariableDeclaration={},J=b.VariableDeclarator={},aZ=g(F,y),aO=g(aD,_),aL=g(ay,az,aA,aC),aP=g(av,aw),aM=g(aE,aF,aG),aQ=g(aM,aH),aN=g(aQ,aI),w=g(aJ,aK),l=g(Y,ax),f=g(l,F,M,N,O,P,Q,R,S,T,U,V,W,X,Z,G,$,a0,a1,a2,a3,a5,a6,a7,a8,a9),aT=g(ae,ah,ai,aj,at),k=g(aT,y,aa,ab,ac,ad,af,ag,ak,al,am,an,ao,ap,aq,ar,as,au,v),aY=g(k,f,w,aN,aP,aL,r,h,m,n,aO,C,a4,E,D,q,B,z,s,o,aB,u,A,x,L,H,p,J),aX=g(G,v),I.typeName='SourceLocation',I.fields=[{name:'line',type:K},{name:'column',type:K},{name:'offset',type:K}],c.typeName='SourceSpan',c.fields=[{name:'source',type:a(j)},{name:'start',type:I},{name:'end',type:I}],r.typeName='BindingWithDefault',r.fields=[{name:'type',type:e(d),value:'BindingWithDefault'},{name:'loc',type:a(c)},{name:'binding',type:g(n,m,h,l)},{name:'init',type:f}],h.typeName='BindingIdentifier',h.fields=[{name:'type',type:e(d),value:'BindingIdentifier'},{name:'loc',type:a(c)},{name:'name',type:j}],m.typeName='ArrayBinding',m.fields=[{name:'type',type:e(d),value:'ArrayBinding'},{name:'loc',type:a(c)},{name:'elements',type:i(a(g(n,m,h,l,r)))},{name:'restElement',type:a(g(n,m,h,l))}],n.typeName='ObjectBinding',n.fields=[{name:'type',type:e(d),value:'ObjectBinding'},{name:'loc',type:a(c)},{name:'properties',type:i(aO)}],aD.typeName='BindingPropertyIdentifier',aD.fields=[{name:'type',type:e(d),value:'BindingPropertyIdentifier'},{name:'loc',type:a(c)},{name:'binding',type:h},{name:'init',type:a(f)}],_.typeName='BindingPropertyProperty',_.fields=[{name:'type',type:e(d),value:'BindingPropertyProperty'},{name:'loc',type:a(c)},{name:'name',type:w},{name:'binding',type:g(n,m,h,l,r)}],F.typeName='ClassExpression',F.fields=[{name:'type',type:e(d),value:'ClassExpression'},{name:'loc',type:a(c)},{name:'name',type:a(h)},{name:'super',type:a(f)},{name:'elements',type:i(C)}],y.typeName='ClassDeclaration',y.fields=[{name:'type',type:e(d),value:'ClassDeclaration'},{name:'loc',type:a(c)},{name:'name',type:h},{name:'super',type:a(f)},{name:'elements',type:i(C)}],C.typeName='ClassElement',C.fields=[{name:'type',type:e(d),value:'ClassElement'},{name:'loc',type:a(c)},{name:'isStatic',type:t},{name:'method',type:aM}],a4.typeName='Module',a4.fields=[{name:'type',type:e(d),value:'Module'},{name:'loc',type:a(c)},{name:'directives',type:i(z)},{name:'items',type:i(g(aP,aL,k))}],av.typeName='Import',av.fields=[{name:'type',type:e(d),value:'Import'},{name:'loc',type:a(c)},{name:'moduleSpecifier',type:j},{name:'defaultBinding',type:a(h)},{name:'namedImports',type:i(E)}],aw.typeName='ImportNamespace',aw.fields=[{name:'type',type:e(d),value:'ImportNamespace'},{name:'loc',type:a(c)},{name:'moduleSpecifier',type:j},{name:'defaultBinding',type:a(h)},{name:'namespaceBinding',type:h}],E.typeName='ImportSpecifier',E.fields=[{name:'type',type:e(d),value:'ImportSpecifier'},{name:'loc',type:a(c)},{name:'name',type:a(j)},{name:'binding',type:h}],ay.typeName='ExportAllFrom',ay.fields=[{name:'type',type:e(d),value:'ExportAllFrom'},{name:'loc',type:a(c)},{name:'moduleSpecifier',type:j}],az.typeName='ExportFrom',az.fields=[{name:'type',type:e(d),value:'ExportFrom'},{name:'loc',type:a(c)},{name:'namedExports',type:i(D)},{name:'moduleSpecifier',type:a(j)}],aA.typeName='Export',aA.fields=[{name:'type',type:e(d),value:'Export'},{name:'loc',type:a(c)},{name:'declaration',type:g(v,y,p)}],aC.typeName='ExportDefault',aC.fields=[{name:'type',type:e(d),value:'ExportDefault'},{name:'loc',type:a(c)},{name:'body',type:g(v,y,f)}],D.typeName='ExportSpecifier',D.fields=[{name:'type',type:e(d),value:'ExportSpecifier'},{name:'loc',type:a(c)},{name:'name',type:a(j)},{name:'exportedName',type:j}],aE.typeName='Method',aE.fields=[{name:'type',type:e(d),value:'Method'},{name:'loc',type:a(c)},{name:'name',type:w},{name:'isGenerator',type:t},{name:'params',type:s},{name:'body',type:o}],aF.typeName='Getter',aF.fields=[{name:'type',type:e(d),value:'Getter'},{name:'loc',type:a(c)},{name:'name',type:w},{name:'body',type:o}],aG.typeName='Setter',aG.fields=[{name:'type',type:e(d),value:'Setter'},{name:'loc',type:a(c)},{name:'name',type:w},{name:'param',type:g(n,m,h,l,r)},{name:'body',type:o}],aH.typeName='DataProperty',aH.fields=[{name:'type',type:e(d),value:'DataProperty'},{name:'loc',type:a(c)},{name:'name',type:w},{name:'expression',type:f}],aI.typeName='ShorthandProperty',aI.fields=[{name:'type',type:e(d),value:'ShorthandProperty'},{name:'loc',type:a(c)},{name:'name',type:j}],aJ.typeName='ComputedPropertyName',aJ.fields=[{name:'type',type:e(d),value:'ComputedPropertyName'},{name:'loc',type:a(c)},{name:'expression',type:f}],aK.typeName='StaticPropertyName',aK.fields=[{name:'type',type:e(d),value:'StaticPropertyName'},{name:'loc',type:a(c)},{name:'value',type:j}],M.typeName='LiteralBooleanExpression',M.fields=[{name:'type',type:e(d),value:'LiteralBooleanExpression'},{name:'loc',type:a(c)},{name:'value',type:t}],N.typeName='LiteralInfinityExpression',N.fields=[{name:'type',type:e(d),value:'LiteralInfinityExpression'},{name:'loc',type:a(c)}],O.typeName='LiteralNullExpression',O.fields=[{name:'type',type:e(d),value:'LiteralNullExpression'},{name:'loc',type:a(c)}],P.typeName='LiteralNumericExpression',P.fields=[{name:'type',type:e(d),value:'LiteralNumericExpression'},{name:'loc',type:a(c)},{name:'value',type:K}],Q.typeName='LiteralRegExpExpression',Q.fields=[{name:'type',type:e(d),value:'LiteralRegExpExpression'},{name:'loc',type:a(c)},{name:'pattern',type:j},{name:'flags',type:j}],R.typeName='LiteralStringExpression',R.fields=[{name:'type',type:e(d),value:'LiteralStringExpression'},{name:'loc',type:a(c)},{name:'value',type:j}],S.typeName='ArrayExpression',S.fields=[{name:'type',type:e(d),value:'ArrayExpression'},{name:'loc',type:a(c)},{name:'elements',type:i(a(g(u,f)))}],T.typeName='ArrowExpression',T.fields=[{name:'type',type:e(d),value:'ArrowExpression'},{name:'loc',type:a(c)},{name:'params',type:s},{name:'body',type:g(o,f)}],U.typeName='AssignmentExpression',U.fields=[{name:'type',type:e(d),value:'AssignmentExpression'},{name:'loc',type:a(c)},{name:'binding',type:g(n,m,h,l)},{name:'expression',type:f}],V.typeName='BinaryExpression',V.fields=[{name:'type',type:e(d),value:'BinaryExpression'},{name:'loc',type:a(c)},{name:'operator',type:aW},{name:'left',type:f},{name:'right',type:f}],W.typeName='CallExpression',W.fields=[{name:'type',type:e(d),value:'CallExpression'},{name:'loc',type:a(c)},{name:'callee',type:g(f,A)},{name:'arguments',type:i(g(u,f))}],X.typeName='CompoundAssignmentExpression',X.fields=[{name:'type',type:e(d),value:'CompoundAssignmentExpression'},{name:'loc',type:a(c)},{name:'operator',type:aV},{name:'binding',type:g(h,l)},{name:'expression',type:f}],Y.typeName='ComputedMemberExpression',Y.fields=[{name:'type',type:e(d),value:'ComputedMemberExpression'},{name:'loc',type:a(c)},{name:'object',type:g(f,A)},{name:'expression',type:f}],Z.typeName='ConditionalExpression',Z.fields=[{name:'type',type:e(d),value:'ConditionalExpression'},{name:'loc',type:a(c)},{name:'test',type:f},{name:'consequent',type:f},{name:'alternate',type:f}],G.typeName='FunctionExpression',G.fields=[{name:'type',type:e(d),value:'FunctionExpression'},{name:'loc',type:a(c)},{name:'isGenerator',type:t},{name:'name',type:a(h)},{name:'params',type:s},{name:'body',type:o}],$.typeName='IdentifierExpression',$.fields=[{name:'type',type:e(d),value:'IdentifierExpression'},{name:'loc',type:a(c)},{name:'name',type:j}],a0.typeName='NewExpression',a0.fields=[{name:'type',type:e(d),value:'NewExpression'},{name:'loc',type:a(c)},{name:'callee',type:f},{name:'arguments',type:i(g(u,f))}],a1.typeName='NewTargetExpression',a1.fields=[{name:'type',type:e(d),value:'NewTargetExpression'},{name:'loc',type:a(c)}],a2.typeName='ObjectExpression',a2.fields=[{name:'type',type:e(d),value:'ObjectExpression'},{name:'loc',type:a(c)},{name:'properties',type:i(aN)}],a3.typeName='UnaryExpression',a3.fields=[{name:'type',type:e(d),value:'UnaryExpression'},{name:'loc',type:a(c)},{name:'operator',type:aU},{name:'operand',type:f}],ax.typeName='StaticMemberExpression',ax.fields=[{name:'type',type:e(d),value:'StaticMemberExpression'},{name:'loc',type:a(c)},{name:'object',type:g(f,A)},{name:'property',type:j}],a5.typeName='TemplateExpression',a5.fields=[{name:'type',type:e(d),value:'TemplateExpression'},{name:'loc',type:a(c)},{name:'tag',type:a(f)},{name:'elements',type:i(g(f,H))}],a6.typeName='ThisExpression',a6.fields=[{name:'type',type:e(d),value:'ThisExpression'},{name:'loc',type:a(c)}],a7.typeName='UpdateExpression',a7.fields=[{name:'type',type:e(d),value:'UpdateExpression'},{name:'loc',type:a(c)},{name:'isPrefix',type:t},{name:'operator',type:aS},{name:'operand',type:g(h,l)}],a8.typeName='YieldExpression',a8.fields=[{name:'type',type:e(d),value:'YieldExpression'},{name:'loc',type:a(c)},{name:'expression',type:a(f)}],a9.typeName='YieldGeneratorExpression',a9.fields=[{name:'type',type:e(d),value:'YieldGeneratorExpression'},{name:'loc',type:a(c)},{name:'expression',type:f}],aa.typeName='BlockStatement',aa.fields=[{name:'type',type:e(d),value:'BlockStatement'},{name:'loc',type:a(c)},{name:'block',type:q}],ab.typeName='BreakStatement',ab.fields=[{name:'type',type:e(d),value:'BreakStatement'},{name:'loc',type:a(c)},{name:'label',type:a(j)}],ac.typeName='ContinueStatement',ac.fields=[{name:'type',type:e(d),value:'ContinueStatement'},{name:'loc',type:a(c)},{name:'label',type:a(j)}],ad.typeName='DebuggerStatement',ad.fields=[{name:'type',type:e(d),value:'DebuggerStatement'},{name:'loc',type:a(c)}],ae.typeName='DoWhileStatement',ae.fields=[{name:'type',type:e(d),value:'DoWhileStatement'},{name:'loc',type:a(c)},{name:'body',type:k},{name:'test',type:f}],af.typeName='EmptyStatement',af.fields=[{name:'type',type:e(d),value:'EmptyStatement'},{name:'loc',type:a(c)}],ag.typeName='ExpressionStatement',ag.fields=[{name:'type',type:e(d),value:'ExpressionStatement'},{name:'loc',type:a(c)},{name:'expression',type:f}],ah.typeName='ForInStatement',ah.fields=[{name:'type',type:e(d),value:'ForInStatement'},{name:'loc',type:a(c)},{name:'left',type:g(p,n,m,h,l)},{name:'right',type:f},{name:'body',type:k}],ai.typeName='ForOfStatement',ai.fields=[{name:'type',type:e(d),value:'ForOfStatement'},{name:'loc',type:a(c)},{name:'left',type:g(p,n,m,h,l)},{name:'right',type:f},{name:'body',type:k}],aj.typeName='ForStatement',aj.fields=[{name:'type',type:e(d),value:'ForStatement'},{name:'loc',type:a(c)},{name:'init',type:a(g(p,f))},{name:'test',type:a(f)},{name:'update',type:a(f)},{name:'body',type:k}],ak.typeName='IfStatement',ak.fields=[{name:'type',type:e(d),value:'IfStatement'},{name:'loc',type:a(c)},{name:'test',type:f},{name:'consequent',type:k},{name:'alternate',type:a(k)}],al.typeName='LabeledStatement',al.fields=[{name:'type',type:e(d),value:'LabeledStatement'},{name:'loc',type:a(c)},{name:'label',type:j},{name:'body',type:k}],am.typeName='ReturnStatement',am.fields=[{name:'type',type:e(d),value:'ReturnStatement'},{name:'loc',type:a(c)},{name:'expression',type:a(f)}],an.typeName='SwitchStatement',an.fields=[{name:'type',type:e(d),value:'SwitchStatement'},{name:'loc',type:a(c)},{name:'discriminant',type:f},{name:'cases',type:i(x)}],ao.typeName='SwitchStatementWithDefault',ao.fields=[{name:'type',type:e(d),value:'SwitchStatementWithDefault'},{name:'loc',type:a(c)},{name:'discriminant',type:f},{name:'preDefaultCases',type:i(x)},{name:'defaultCase',type:L},{name:'postDefaultCases',type:i(x)}],ap.typeName='ThrowStatement',ap.fields=[{name:'type',type:e(d),value:'ThrowStatement'},{name:'loc',type:a(c)},{name:'expression',type:f}],aq.typeName='TryCatchStatement',aq.fields=[{name:'type',type:e(d),value:'TryCatchStatement'},{name:'loc',type:a(c)},{name:'body',type:q},{name:'catchClause',type:B}],ar.typeName='TryFinallyStatement',ar.fields=[{name:'type',type:e(d),value:'TryFinallyStatement'},{name:'loc',type:a(c)},{name:'body',type:q},{name:'catchClause',type:a(B)},{name:'finalizer',type:q}],as.typeName='VariableDeclarationStatement',as.fields=[{name:'type',type:e(d),value:'VariableDeclarationStatement'},{name:'loc',type:a(c)},{name:'declaration',type:p}],at.typeName='WhileStatement',at.fields=[{name:'type',type:e(d),value:'WhileStatement'},{name:'loc',type:a(c)},{name:'test',type:f},{name:'body',type:k}],au.typeName='WithStatement',au.fields=[{name:'type',type:e(d),value:'WithStatement'},{name:'loc',type:a(c)},{name:'object',type:f},{name:'body',type:k}],q.typeName='Block',q.fields=[{name:'type',type:e(d),value:'Block'},{name:'loc',type:a(c)},{name:'statements',type:i(k)}],B.typeName='CatchClause',B.fields=[{name:'type',type:e(d),value:'CatchClause'},{name:'loc',type:a(c)},{name:'binding',type:g(n,m,h,l)},{name:'body',type:q}],z.typeName='Directive',z.fields=[{name:'type',type:e(d),value:'Directive'},{name:'loc',type:a(c)},{name:'rawValue',type:j}],s.typeName='FormalParameters',s.fields=[{name:'type',type:e(d),value:'FormalParameters'},{name:'loc',type:a(c)},{name:'items',type:i(g(n,m,h,l,r))},{name:'rest',type:a(h)}],o.typeName='FunctionBody',o.fields=[{name:'type',type:e(d),value:'FunctionBody'},{name:'loc',type:a(c)},{name:'directives',type:i(z)},{name:'statements',type:i(k)}],v.typeName='FunctionDeclaration',v.fields=[{name:'type',type:e(d),value:'FunctionDeclaration'},{name:'loc',type:a(c)},{name:'isGenerator',type:t},{name:'name',type:h},{name:'params',type:s},{name:'body',type:o}],aB.typeName='Script',aB.fields=[{name:'type',type:e(d),value:'Script'},{name:'loc',type:a(c)},{name:'directives',type:i(z)},{name:'statements',type:i(k)}],u.typeName='SpreadElement',u.fields=[{name:'type',type:e(d),value:'SpreadElement'},{name:'loc',type:a(c)},{name:'expression',type:f}],A.typeName='Super',A.fields=[{name:'type',type:e(d),value:'Super'},{name:'loc',type:a(c)}],x.typeName='SwitchCase',x.fields=[{name:'type',type:e(d),value:'SwitchCase'},{name:'loc',type:a(c)},{name:'test',type:f},{name:'consequent',type:i(k)}],L.typeName='SwitchDefault',L.fields=[{name:'type',type:e(d),value:'SwitchDefault'},{name:'loc',type:a(c)},{name:'consequent',type:i(k)}],H.typeName='TemplateElement',H.fields=[{name:'type',type:e(d),value:'TemplateElement'},{name:'loc',type:a(c)},{name:'rawValue',type:j}],p.typeName='VariableDeclaration',p.fields=[{name:'type',type:e(d),value:'VariableDeclaration'},{name:'loc',type:a(c)},{name:'kind',type:aR},{name:'declarators',type:i(J)}],J.typeName='VariableDeclarator',J.fields=[{name:'type',type:e(d),value:'VariableDeclarator'},{name:'loc',type:a(c)},{name:'binding',type:g(n,m,h,l)},{name:'init',type:a(f)}],b}()}),a.define('node_modules/shift-reducer/dist/clone-reducer.js',function(f,g,i,j){'use strict';var e=function(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')},b=a('node_modules/shift-reducer/node_modules/shift-spec/dist/index.js',f)['default'],c=function a(){e(this,a)};g['default']=c;for(var d in b){var h=b[d];Object.defineProperty(c.prototype,'reduce'+d,{value:function a(c,b){return b}})}}),b.codegen=a('dist/index.js')}.call(this,this))
+// Generated by CommonJS Everywhere 0.9.7
+(function (global) {
+  function require(file, parentModule) {
+    if ({}.hasOwnProperty.call(require.cache, file))
+      return require.cache[file];
+    var resolved = require.resolve(file);
+    if (!resolved)
+      throw new Error('Failed to resolve module ' + file);
+    var module$ = {
+        id: file,
+        require: require,
+        filename: file,
+        exports: {},
+        loaded: false,
+        parent: parentModule,
+        children: []
+      };
+    if (parentModule)
+      parentModule.children.push(module$);
+    var dirname = file.slice(0, file.lastIndexOf('/') + 1);
+    require.cache[file] = module$.exports;
+    resolved.call(module$.exports, module$, module$.exports, dirname, file);
+    module$.loaded = true;
+    return require.cache[file] = module$.exports;
+  }
+  require.modules = {};
+  require.cache = {};
+  require.resolve = function (file) {
+    return {}.hasOwnProperty.call(require.modules, file) ? require.modules[file] : void 0;
+  };
+  require.define = function (file, fn) {
+    require.modules[file] = fn;
+  };
+  var process = function () {
+      var cwd = '/';
+      return {
+        title: 'browser',
+        version: 'v5.3.0',
+        browser: true,
+        env: {},
+        argv: [],
+        nextTick: global.setImmediate || function (fn) {
+          setTimeout(fn, 0);
+        },
+        cwd: function () {
+          return cwd;
+        },
+        chdir: function (dir) {
+          cwd = dir;
+        }
+      };
+    }();
+  require.define('/dist/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    exports['default'] = codeGen;
+    var _shiftReducer = require('/node_modules/shift-reducer/dist/index.js', module);
+    var _token_stream = require('/dist/token_stream.js', module);
+    var _minimalCodegen = require('/dist/minimal-codegen.js', module);
+    function codeGen(script) {
+      var generator = arguments.length <= 1 || arguments[1] === undefined ? new _minimalCodegen['default'] : arguments[1];
+      var ts = new _token_stream.TokenStream;
+      var rep = (0, _shiftReducer['default'])(generator, script);
+      rep.emit(ts);
+      return ts.result;
+    }
+    Object.defineProperty(exports, 'MinimalCodeGen', {
+      enumerable: true,
+      get: function get() {
+        return _minimalCodegen['default'];
+      }
+    });
+    var _formattedCodegen = require('/dist/formatted-codegen.js', module);
+    Object.defineProperty(exports, 'ExtensibleCodeGen', {
+      enumerable: true,
+      get: function get() {
+        return _formattedCodegen.ExtensibleCodeGen;
+      }
+    });
+    Object.defineProperty(exports, 'FormattedCodeGen', {
+      enumerable: true,
+      get: function get() {
+        return _formattedCodegen.FormattedCodeGen;
+      }
+    });
+    Object.defineProperty(exports, 'Sep', {
+      enumerable: true,
+      get: function get() {
+        return _formattedCodegen.Sep;
+      }
+    });
+  });
+  require.define('/dist/formatted-codegen.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _get = function get(_x, _x2, _x3) {
+      var _again = true;
+      _function:
+        while (_again) {
+          var object = _x, property = _x2, receiver = _x3;
+          _again = false;
+          if (object === null)
+            object = Function.prototype;
+          var desc = Object.getOwnPropertyDescriptor(object, property);
+          if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);
+            if (parent === null) {
+              return undefined;
+            } else {
+              _x = parent;
+              _x2 = property;
+              _x3 = receiver;
+              _again = true;
+              desc = parent = undefined;
+              continue _function;
+            }
+          } else if ('value' in desc) {
+            return desc.value;
+          } else {
+            var getter = desc.get;
+            if (getter === undefined) {
+              return undefined;
+            }
+            return getter.call(receiver);
+          }
+        }
+    };
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    function _toConsumableArray(arr) {
+      if (Array.isArray(arr)) {
+        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
+          arr2[i] = arr[i];
+        return arr2;
+      } else {
+        return Array.from(arr);
+      }
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var _objectAssign = require('/node_modules/object-assign/index.js', module);
+    var objectAssign = _objectAssign;
+    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
+    var _coderep = require('/dist/coderep.js', module);
+    function empty() {
+      return new _coderep.Empty;
+    }
+    function noIn(rep) {
+      return new _coderep.NoIn(rep);
+    }
+    function markContainsIn(state) {
+      return state.containsIn ? new _coderep.ContainsIn(state) : state;
+    }
+    function seq() {
+      for (var _len = arguments.length, reps = Array(_len), _key = 0; _key < _len; _key++) {
+        reps[_key] = arguments[_key];
+      }
+      return new _coderep.Seq(reps);
+    }
+    function isEmpty(codeRep) {
+      return codeRep instanceof _coderep.Empty || codeRep instanceof Linebreak || codeRep instanceof _coderep.Seq && codeRep.children.every(isEmpty);
+    }
+    var Sep = {};
+    var separatorNames = [
+        'ARRAY_EMPTY',
+        'ARRAY_BEFORE_COMMA',
+        'ARRAY_AFTER_COMMA',
+        'SPREAD',
+        'BEFORE_DEFAULT_EQUALS',
+        'AFTER_DEFAULT_EQUALS',
+        'REST',
+        'OBJECT_BEFORE_COMMA',
+        'OBJECT_AFTER_COMMA',
+        'BEFORE_PROP',
+        'AFTER_PROP',
+        'BEFORE_JUMP_LABEL',
+        'ARGS_BEFORE_COMMA',
+        'ARGS_AFTER_COMMA',
+        'CALL',
+        'BEFORE_CATCH_BINDING',
+        'AFTER_CATCH_BINDING',
+        'BEFORE_CLASS_NAME',
+        'BEFORE_EXTENDS',
+        'AFTER_EXTENDS',
+        'BEFORE_CLASS_DECLARATION_ELEMENTS',
+        'BEFORE_CLASS_EXPRESSION_ELEMENTS',
+        'AFTER_STATIC',
+        'BEFORE_CLASS_ELEMENT',
+        'AFTER_CLASS_ELEMENT',
+        'BEFORE_TERNARY_QUESTION',
+        'AFTER_TERNARY_QUESTION',
+        'BEFORE_TERNARY_COLON',
+        'AFTER_TERNARY_COLON',
+        'COMPUTED_MEMBER_EXPRESSION',
+        'AFTER_DO',
+        'BEFORE_DOWHILE_WHILE',
+        'AFTER_DOWHILE_WHILE',
+        'AFTER_FORIN_FOR',
+        'BEFORE_FORIN_IN',
+        'AFTER_FORIN_FOR',
+        'BEFORE_FORIN_BODY',
+        'AFTER_FOROF_FOR',
+        'BEFORE_FOROF_OF',
+        'AFTER_FOROF_FOR',
+        'BEFORE_FOROF_BODY',
+        'AFTER_FOR_FOR',
+        'BEFORE_FOR_INIT',
+        'AFTER_FOR_INIT',
+        'EMPTY_FOR_INIT',
+        'BEFORE_FOR_TEST',
+        'AFTER_FOR_TEST',
+        'EMPTY_FOR_TEST',
+        'BEFORE_FOR_UPDATE',
+        'AFTER_FOR_UPDATE',
+        'EMPTY_FOR_UPDATE',
+        'BEFORE_FOR_BODY',
+        'BEFORE_GENERATOR_STAR',
+        'AFTER_GENERATOR_STAR',
+        'BEFORE_FUNCTION_PARAMS',
+        'BEFORE_FUNCTION_DECLARATION_BODY',
+        'BEFORE_FUNCTION_EXPRESSION_BODY',
+        'AFTER_FUNCTION_DIRECTIVES',
+        'BEFORE_ARROW',
+        'AFTER_ARROW',
+        'AFTER_GET',
+        'BEFORE_GET_PARAMS',
+        'BEFORE_GET_BODY',
+        'AFTER_IF',
+        'AFTER_IF_TEST',
+        'BEFORE_ELSE',
+        'AFTER_ELSE',
+        'PARAMETER_BEFORE_COMMA',
+        'PARAMETER_AFTER_COMMA',
+        'NAMED_IMPORT_BEFORE_COMMA',
+        'NAMED_IMPORT_AFTER_COMMA',
+        'IMPORT_BEFORE_COMMA',
+        'IMPORT_AFTER_COMMA',
+        'BEFORE_IMPORT_BINDINGS',
+        'BEFORE_IMPORT_MODULE',
+        'AFTER_IMPORT_BINDINGS',
+        'AFTER_FROM',
+        'BEFORE_IMPORT_NAMESPACE',
+        'BEFORE_IMPORT_STAR',
+        'AFTER_IMPORT_STAR',
+        'AFTER_IMPORT_AS',
+        'AFTER_NAMESPACE_BINDING',
+        'BEFORE_IMPORT_AS',
+        'AFTER_IMPORT_AS',
+        'EXPORTS_BEFORE_COMMA',
+        'EXPORTS_AFTER_COMMA',
+        'BEFORE_EXPORT_STAR',
+        'AFTER_EXPORT_STAR',
+        'BEFORE_EXPORT_BINDINGS',
+        'AFTER_EXPORT_BINDINGS',
+        'AFTER_EXPORT',
+        'EXPORT_DEFAULT',
+        'AFTER_EXPORT_DEFAULT',
+        'BEFORE_EXPORT_AS',
+        'AFTER_EXPORT_AS',
+        'BEFORE_LABEL_COLON',
+        'AFTER_LABEL_COLON',
+        'AFTER_METHOD_GENERATOR_STAR',
+        'AFTER_METHOD_NAME',
+        'BEFORE_METHOD_BODY',
+        'AFTER_MODULE_DIRECTIVES',
+        'AFTER_NEW',
+        'BEFORE_NEW_ARGS',
+        'EMPTY_NEW_CALL',
+        'NEW_TARGET_BEFORE_DOT',
+        'NEW_TARGET_AFTER_DOT',
+        'RETURN',
+        'AFTER_SET',
+        'BEFORE_SET_PARAMS',
+        'BEFORE_SET_BODY',
+        'AFTER_SCRIPT_DIRECTIVES',
+        'BEFORE_STATIC_MEMBER_DOT',
+        'AFTER_STATIC_MEMBER_DOT',
+        'BEFORE_CASE_TEST',
+        'AFTER_CASE_TEST',
+        'BEFORE_CASE_BODY',
+        'AFTER_CASE_BODY',
+        'DEFAULT',
+        'AFTER_DEFAULT_BODY',
+        'BEFORE_SWITCH_DISCRIM',
+        'BEFORE_SWITCH_BODY',
+        'TEMPLATE_TAG',
+        'BEFORE_TEMPLATE_EXPRESSION',
+        'AFTER_TEMPLATE_EXPRESSION',
+        'THROW',
+        'AFTER_TRY',
+        'BEFORE_CATCH',
+        'BEFORE_FINALLY',
+        'AFTER_FINALLY',
+        'VARIABLE_DECLARATION',
+        'YIELD',
+        'BEFORE_YIELD_STAR',
+        'AFTER_YIELD_STAR',
+        'DECLARATORS_BEFORE_COMMA',
+        'DECLARATORS_AFTER_COMMA',
+        'BEFORE_INIT_EQUALS',
+        'AFTER_INIT_EQUALS',
+        'AFTER_WHILE',
+        'BEFORE_WHILE_BODY',
+        'AFTER_WITH',
+        'BEFORE_WITH_BODY',
+        'PAREN_AVOIDING_DIRECTIVE_BEFORE',
+        'PAREN_AVOIDING_DIRECTIVE_AFTER',
+        'PRECEDENCE_BEFORE',
+        'PRECEDENCE_AFTER',
+        'EXPRESSION_PAREN_BEFORE',
+        'EXPRESSION_PAREN_AFTER',
+        'CALL_PAREN_BEFORE',
+        'CALL_PAREN_AFTER',
+        'CALL_PAREN_EMPTY',
+        'CATCH_PAREN_BEFORE',
+        'CATCH_PAREN_AFTER',
+        'DO_WHILE_TEST_PAREN_BEFORE',
+        'DO_WHILE_TEST_PAREN_AFTER',
+        'EXPRESSION_STATEMENT_PAREN_BEFORE',
+        'EXPRESSION_STATEMENT_PAREN_AFTER',
+        'FOR_IN_LET_PAREN_BEFORE',
+        'FOR_IN_LET_PAREN_AFTER',
+        'FOR_IN_PAREN_BEFORE',
+        'FOR_IN_PAREN_AFTER',
+        'FOR_OF_LET_PAREN_BEFORE',
+        'FOR_OF_LET_PAREN_AFTER',
+        'FOR_OF_PAREN_BEFORE',
+        'FOR_OF_PAREN_AFTER',
+        'FOR_PAREN_BEFORE',
+        'FOR_PAREN_AFTER',
+        'PARAMETERS_PAREN_BEFORE',
+        'PARAMETERS_PAREN_AFTER',
+        'PARAMETERS_PAREN_EMPTY',
+        'ARROW_PARAMETERS_PAREN_BEFORE',
+        'ARROW_PARAMETERS_PAREN_AFTER',
+        'ARROW_PARAMETERS_PAREN_EMPTY',
+        'ARROW_BODY_PAREN_BEFORE',
+        'ARROW_BODY_PAREN_AFTER',
+        'GETTER_PARAMS',
+        'IF_PAREN_BEFORE',
+        'IF_PAREN_AFTER',
+        'EXPORT_PAREN_BEFORE',
+        'EXPORT_PAREN_AFTER',
+        'NEW_CALLEE_PAREN_BEFORE',
+        'NEW_CALLEE_PAREN_AFTER',
+        'NEW_PAREN_BEFORE',
+        'NEW_PAREN_AFTER',
+        'NEW_PAREN_EMPTY',
+        'SETTER_PARAM_BEFORE',
+        'SETTER_PARAM_AFTER',
+        'SWITCH_DISCRIM_PAREN_BEFORE',
+        'SWITCH_DISCRIM_PAREN_AFTER',
+        'WHILE_TEST_PAREN_BEFORE',
+        'WHILE_TEST_PAREN_AFTER',
+        'WITH_PAREN_BEFORE',
+        'WITH_PAREN_AFTER',
+        'OBJECT_BRACE_INITIAL',
+        'OBJECT_BRACE_FINAL',
+        'OBJECT_EMPTY',
+        'BLOCK_BRACE_INITIAL',
+        'BLOCK_BRACE_FINAL',
+        'BLOCK_EMPTY',
+        'CLASS_BRACE_INITIAL',
+        'CLASS_BRACE_FINAL',
+        'CLASS_EMPTY',
+        'CLASS_EXPRESSION_BRACE_INITIAL',
+        'CLASS_EXPRESSION_BRACE_FINAL',
+        'CLASS_EXPRESSION_BRACE_EMPTY',
+        'FUNCTION_BRACE_INITIAL',
+        'FUNCTION_BRACE_FINAL',
+        'FUNCTION_EMPTY',
+        'FUNCTION_EXPRESSION_BRACE_INITIAL',
+        'FUNCTION_EXPRESSION_BRACE_FINAL',
+        'FUNCTION_EXPRESSION_EMPTY',
+        'ARROW_BRACE_INITIAL, ARROW_BRACE_FINAL, ARROW_BRACE_EMPTY',
+        'GET_BRACE_INTIAL',
+        'GET_BRACE_FINAL',
+        'GET_BRACE_EMPTY',
+        'MISSING_ELSE_INTIIAL',
+        'MISSING_ELSE_FINAL',
+        'MISSING_ELSE_EMPTY',
+        'IMPORT_BRACE_INTIAL',
+        'IMPORT_BRACE_FINAL',
+        'IMPORT_BRACE_EMPTY',
+        'EXPORT_BRACE_INITIAL',
+        'EXPORT_BRACE_FINAL',
+        'EXPORT_BRACE_EMPTY',
+        'METHOD_BRACE_INTIAL',
+        'METHOD_BRACE_FINAL',
+        'METHOD_BRACE_EMPTY',
+        'SET_BRACE_INTIIAL',
+        'SET_BRACE_FINAL',
+        'SET_BRACE_EMPTY',
+        'SWITCH_BRACE_INTIAL',
+        'SWITCH_BRACE_FINAL',
+        'SWITCH_BRACE_EMPTY',
+        'ARRAY_INITIAL',
+        'ARRAY_FINAL',
+        'COMPUTED_MEMBER_BRACKET_INTIAL',
+        'COMPUTED_MEMBER_BRACKET_FINAL',
+        'COMPUTED_PROPERTY_BRACKET_INTIAL',
+        'COMPUTED_PROPERTY_BRACKET_FINAL'
+      ];
+    for (var i = 0; i < separatorNames.length; ++i) {
+      Sep[separatorNames[i]] = { type: separatorNames[i] };
+    }
+    Sep.BEFORE_ASSIGN_OP = function (op) {
+      return {
+        type: 'BEFORE_ASSIGN_OP',
+        op: op
+      };
+    };
+    Sep.AFTER_ASSIGN_OP = function (op) {
+      return {
+        type: 'AFTER_ASSIGN_OP',
+        op: op
+      };
+    };
+    Sep.BEFORE_BINOP = function (op) {
+      return {
+        type: 'BEFORE_BINOP',
+        op: op
+      };
+    };
+    Sep.AFTER_BINOP = function (op) {
+      return {
+        type: 'AFTER_BINOP',
+        op: op
+      };
+    };
+    Sep.BEFORE_POSTFIX = function (op) {
+      return {
+        type: 'BEFORE_POSTFIX',
+        op: op
+      };
+    };
+    Sep.UNARY = function (op) {
+      return {
+        type: 'UNARY',
+        op: op
+      };
+    };
+    Sep.AFTER_STATEMENT = function (node) {
+      return {
+        type: 'AFTER_STATEMENT',
+        node: node
+      };
+    };
+    Sep.BEFORE_FUNCTION_NAME = function (node) {
+      return {
+        type: 'BEFORE_FUNCTION_NAME',
+        node: node
+      };
+    };
+    exports.Sep = Sep;
+    var ExtensibleCodeGen = function () {
+        function ExtensibleCodeGen() {
+          _classCallCheck(this, ExtensibleCodeGen);
+        }
+        _createClass(ExtensibleCodeGen, [
+          {
+            key: 'parenToAvoidBeingDirective',
+            value: function parenToAvoidBeingDirective(element, original) {
+              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
+                return seq(this.paren(original.children[0], Sep.PAREN_AVOIDING_DIRECTIVE_BEFORE, Sep.PAREN_AVOIDING_DIRECTIVE_AFTER), this.semiOp());
+              }
+              return original;
+            }
+          },
+          {
+            key: 't',
+            value: function t(token) {
+              return new _coderep.Token(token);
+            }
+          },
+          {
+            key: 'p',
+            value: function p(node, precedence, a) {
+              return (0, _coderep.getPrecedence)(node) < precedence ? this.paren(a, Sep.PRECEDENCE_BEFORE, Sep.PRECEDENCE_AFTER) : a;
+            }
+          },
+          {
+            key: 'getAssignmentExpr',
+            value: function getAssignmentExpr(state) {
+              return state ? state.containsGroup ? this.paren(state, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER) : state : empty();
+            }
+          },
+          {
+            key: 'paren',
+            value: function paren(rep, first, last, empty) {
+              if (isEmpty(rep)) {
+                return new _coderep.Paren(this.sep(empty));
+              }
+              return new _coderep.Paren(seq(this.sep(first), rep, this.sep(last)));
+            }
+          },
+          {
+            key: 'brace',
+            value: function brace(rep, node, first, last, empty) {
+              if (isEmpty(rep)) {
+                return new _coderep.Brace(this.sep(empty));
+              }
+              return new _coderep.Brace(seq(this.sep(first), rep, this.sep(last)));
+            }
+          },
+          {
+            key: 'bracket',
+            value: function bracket(rep, first, last, empty) {
+              if (isEmpty(rep)) {
+                return new _coderep.Bracket(this.sep(empty));
+              }
+              return new _coderep.Bracket(seq(this.sep(first), rep, this.sep(last)));
+            }
+          },
+          {
+            key: 'commaSep',
+            value: function commaSep(pieces, before, after) {
+              var _this = this;
+              var first = true;
+              pieces = pieces.map(function (p) {
+                if (first) {
+                  first = false;
+                  return p;
+                } else {
+                  return seq(_this.sep(before), _this.t(','), _this.sep(after), p);
+                }
+              });
+              return seq.apply(undefined, _toConsumableArray(pieces));
+            }
+          },
+          {
+            key: 'semiOp',
+            value: function semiOp() {
+              return new _coderep.SemiOp;
+            }
+          },
+          {
+            key: 'sep',
+            value: function sep(kind) {
+              return new _coderep.Empty;
+            }
+          },
+          {
+            key: 'reduceArrayExpression',
+            value: function reduceArrayExpression(node, _ref) {
+              var _this2 = this;
+              var elements = _ref.elements;
+              if (elements.length === 0) {
+                return this.bracket(empty(), null, null, Sep.ARRAY_EMPTY);
+              }
+              var content = this.commaSep(elements.map(function (e) {
+                  return _this2.getAssignmentExpr(e);
+                }), Sep.ARRAY_BEFORE_COMMA, Sep.ARRAY_AFTER_COMMA);
+              if (elements.length > 0 && elements[elements.length - 1] == null) {
+                content = seq(content, this.sep(Sep.ARRAY_BEFORE_COMMA), this.t(','), this.sep(Sep.ARRAY_AFTER_COMMA));
+              }
+              return this.bracket(content, Sep.ARRAY_INITIAL, Sep.ARRAY_FINAL);
+            }
+          },
+          {
+            key: 'reduceSpreadElement',
+            value: function reduceSpreadElement(node, _ref2) {
+              var expression = _ref2.expression;
+              return seq(this.t('...'), this.sep(Sep.SPREAD), this.p(node.expression, _coderep.Precedence.Assignment, expression));
+            }
+          },
+          {
+            key: 'reduceAssignmentExpression',
+            value: function reduceAssignmentExpression(node, _ref3) {
+              var binding = _ref3.binding;
+              var expression = _ref3.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                containsIn = false;
+              }
+              return objectAssign(seq(leftCode, this.sep(Sep.BEFORE_ASSIGN_OP('=')), this.t('='), this.sep(Sep.AFTER_ASSIGN_OP('=')), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCompoundAssignmentExpression',
+            value: function reduceCompoundAssignmentExpression(node, _ref4) {
+              var binding = _ref4.binding;
+              var expression = _ref4.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                containsIn = false;
+              }
+              return objectAssign(seq(leftCode, this.sep(Sep.BEFORE_ASSIGN_OP(node.operator)), this.t(node.operator), this.sep(Sep.AFTER_ASSIGN_OP(node.operator)), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBinaryExpression',
+            value: function reduceBinaryExpression(node, _ref5) {
+              var left = _ref5.left;
+              var right = _ref5.right;
+              var leftCode = left;
+              var startsWithCurly = left.startsWithCurly;
+              var startsWithLetSquareBracket = left.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = left.startsWithFunctionOrClass;
+              var leftContainsIn = left.containsIn;
+              if ((0, _coderep.getPrecedence)(node.left) < (0, _coderep.getPrecedence)(node)) {
+                leftCode = this.paren(leftCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                startsWithCurly = false;
+                startsWithLetSquareBracket = false;
+                startsWithFunctionOrClass = false;
+                leftContainsIn = false;
+              }
+              var rightCode = right;
+              var rightContainsIn = right.containsIn;
+              if ((0, _coderep.getPrecedence)(node.right) <= (0, _coderep.getPrecedence)(node)) {
+                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                rightContainsIn = false;
+              }
+              return objectAssign(seq(leftCode, this.sep(Sep.BEFORE_BINOP(node.operator)), this.t(node.operator), this.sep(Sep.AFTER_BINOP(node.operator)), rightCode), {
+                containsIn: leftContainsIn || rightContainsIn || node.operator === 'in',
+                containsGroup: node.operator == ',',
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBindingWithDefault',
+            value: function reduceBindingWithDefault(node, _ref6) {
+              var binding = _ref6.binding;
+              var init = _ref6.init;
+              return seq(binding, this.sep(Sep.BEFORE_DEFAULT_EQUALS), this.t('='), this.sep(Sep.AFTER_DEFAULT_EQUALS), init);
+            }
+          },
+          {
+            key: 'reduceBindingIdentifier',
+            value: function reduceBindingIdentifier(node) {
+              var a = this.t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceArrayBinding',
+            value: function reduceArrayBinding(node, _ref7) {
+              var _this3 = this;
+              var elements = _ref7.elements;
+              var restElement = _ref7.restElement;
+              var content = undefined;
+              if (elements.length === 0) {
+                content = restElement == null ? empty() : seq(this.t('...'), this.sep(Sep.REST), restElement);
+              } else {
+                elements = elements.concat(restElement == null ? [] : [seq(this.t('...'), this.sep(Sep.REST), restElement)]);
+                content = this.commaSep(elements.map(function (e) {
+                  return _this3.getAssignmentExpr(e);
+                }), Sep.ARRAY_BEFORE_COMMA, Sep.ARRAY_AFTER_COMMA);
+                if (elements.length > 0 && elements[elements.length - 1] == null) {
+                  content = seq(content, this.sep(Sep.ARRAY_BEFORE_COMMA), this.t(','), this.sep(Sep.ARRAY_AFTER_COMMA));
+                }
+              }
+              return this.bracket(content, Sep.ARRAY_INITIAL, Sep.ARRAY_FINAL, Sep.ARRAY_EMPTY);
+            }
+          },
+          {
+            key: 'reduceObjectBinding',
+            value: function reduceObjectBinding(node, _ref8) {
+              var properties = _ref8.properties;
+              var state = this.brace(this.commaSep(properties, Sep.OBJECT_BEFORE_COMMA, Sep.OBJECT_AFTER_COMMA), node, Sep.OBJECT_BRACE_INITIAL, Sep.OBJECT_BRACE_FINAL, Sep.OBJECT_EMPTY);
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceBindingPropertyIdentifier',
+            value: function reduceBindingPropertyIdentifier(node, _ref9) {
+              var binding = _ref9.binding;
+              var init = _ref9.init;
+              if (node.init == null)
+                return binding;
+              return seq(binding, this.sep(Sep.BEFORE_DEFAULT_EQUALS), this.t('='), this.sep(Sep.AFTER_DEFAULT_EQUALS), init);
+            }
+          },
+          {
+            key: 'reduceBindingPropertyProperty',
+            value: function reduceBindingPropertyProperty(node, _ref10) {
+              var name = _ref10.name;
+              var binding = _ref10.binding;
+              return seq(name, this.sep(Sep.BEFORE_PROP), this.t(':'), this.sep(Sep.AFTER_PROP), binding);
+            }
+          },
+          {
+            key: 'reduceBlock',
+            value: function reduceBlock(node, _ref11) {
+              var statements = _ref11.statements;
+              return this.brace(seq.apply(undefined, _toConsumableArray(statements)), node, Sep.BLOCK_BRACE_INITIAL, Sep.BLOCK_BRACE_FINAL, Sep.BLOCK_EMPTY);
+            }
+          },
+          {
+            key: 'reduceBlockStatement',
+            value: function reduceBlockStatement(node, _ref12) {
+              var block = _ref12.block;
+              return seq(block, this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceBreakStatement',
+            value: function reduceBreakStatement(node, _ref13) {
+              var label = _ref13.label;
+              return seq(this.t('break'), label ? seq(this.sep(Sep.BEFORE_JUMP_LABEL), this.t(label)) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceCallExpression',
+            value: function reduceCallExpression(node, _ref14) {
+              var callee = _ref14.callee;
+              var args = _ref14.arguments;
+              return objectAssign(seq(this.p(node.callee, (0, _coderep.getPrecedence)(node), callee), this.sep(Sep.CALL), this.paren(this.commaSep(args, Sep.ARGS_BEFORE_COMMA, Sep.ARGS_AFTER_COMMA), Sep.CALL_PAREN_BEFORE, Sep.CALL_PAREN_AFTER, Sep.CALL_PAREN_EMPTY)), {
+                startsWithCurly: callee.startsWithCurly,
+                startsWithLetSquareBracket: callee.startsWithLetSquareBracket,
+                startsWithFunctionOrClass: callee.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCatchClause',
+            value: function reduceCatchClause(node, _ref15) {
+              var binding = _ref15.binding;
+              var body = _ref15.body;
+              return seq(this.t('catch'), this.sep(Sep.BEFORE_CATCH_BINDING), this.paren(binding, Sep.CATCH_PAREN_BEFORE, Sep.CATCH_PAREN_AFTER), this.sep(Sep.AFTER_CATCH_BINDING), body);
+            }
+          },
+          {
+            key: 'reduceClassDeclaration',
+            value: function reduceClassDeclaration(node, _ref16) {
+              var name = _ref16.name;
+              var _super = _ref16['super'];
+              var elements = _ref16.elements;
+              var state = seq(this.t('class'), this.sep(Sep.BEFORE_CLASS_NAME), name);
+              if (_super != null) {
+                state = seq(state, this.sep(Sep.BEFORE_EXTENDS), this.t('extends'), this.sep(Sep.AFTER_EXTENDS), _super);
+              }
+              state = seq(state, this.sep(Sep.BEFORE_CLASS_DECLARATION_ELEMENTS), this.brace(seq.apply(undefined, _toConsumableArray(elements)), node, Sep.CLASS_BRACE_INITIAL, Sep.CLASS_BRACE_FINAL, Sep.CLASS_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassExpression',
+            value: function reduceClassExpression(node, _ref17) {
+              var name = _ref17.name;
+              var _super = _ref17['super'];
+              var elements = _ref17.elements;
+              var state = this.t('class');
+              if (name != null) {
+                state = seq(state, this.sep(Sep.BEFORE_CLASS_NAME), name);
+              }
+              if (_super != null) {
+                state = seq(state, this.sep(Sep.BEFORE_EXTENDS), this.t('extends'), this.sep(Sep.AFTER_EXTENDS), _super);
+              }
+              state = seq(state, this.sep(Sep.BEFORE_CLASS_EXPRESSION_ELEMENTS), this.brace(seq.apply(undefined, _toConsumableArray(elements)), node, Sep.CLASS_EXPRESSION_BRACE_INITIAL, Sep.CLASS_EXPRESSION_BRACE_FINAL, Sep.CLASS_EXPRESSION_BRACE_EMPTY));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassElement',
+            value: function reduceClassElement(node, _ref18) {
+              var method = _ref18.method;
+              method = seq(this.sep(Sep.BEFORE_CLASS_ELEMENT), method, this.sep(Sep.AFTER_CLASS_ELEMENT));
+              if (!node.isStatic)
+                return method;
+              return seq(this.t('static'), this.sep(Sep.AFTER_STATIC), method);
+            }
+          },
+          {
+            key: 'reduceComputedMemberExpression',
+            value: function reduceComputedMemberExpression(node, _ref19) {
+              var object = _ref19.object;
+              var expression = _ref19.expression;
+              var startsWithLetSquareBracket = object.startsWithLetSquareBracket || node.object.type === 'IdentifierExpression' && node.object.name === 'let';
+              return objectAssign(seq(this.p(node.object, (0, _coderep.getPrecedence)(node), object), this.sep(Sep.COMPUTED_MEMBER_EXPRESSION), this.bracket(expression, Sep.COMPUTED_MEMBER_BRACKET_INTIAL, Sep.COMPUTED_MEMBER_BRACKET_FINAL)), {
+                startsWithLet: object.startsWithLet,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithCurly: object.startsWithCurly,
+                startsWithFunctionOrClass: object.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceComputedPropertyName',
+            value: function reduceComputedPropertyName(node, _ref20) {
+              var expression = _ref20.expression;
+              return this.bracket(expression, Sep.COMPUTED_PROPERTY_BRACKET_INTIAL, Sep.COMPUTED_PROPERTY_BRACKET_FINAL);
+            }
+          },
+          {
+            key: 'reduceConditionalExpression',
+            value: function reduceConditionalExpression(node, _ref21) {
+              var test = _ref21.test;
+              var consequent = _ref21.consequent;
+              var alternate = _ref21.alternate;
+              var containsIn = test.containsIn || alternate.containsIn;
+              var startsWithCurly = test.startsWithCurly;
+              var startsWithLetSquareBracket = test.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = test.startsWithFunctionOrClass;
+              return objectAssign(seq(this.p(node.test, _coderep.Precedence.LogicalOR, test), this.sep(Sep.BEFORE_TERNARY_QUESTION), this.t('?'), this.sep(Sep.AFTER_TERNARY_QUESTION), this.p(node.consequent, _coderep.Precedence.Assignment, consequent), this.sep(Sep.BEFORE_TERNARY_COLON), this.t(':'), this.sep(Sep.AFTER_TERNARY_COLON), this.p(node.alternate, _coderep.Precedence.Assignment, alternate)), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceContinueStatement',
+            value: function reduceContinueStatement(node, _ref22) {
+              var label = _ref22.label;
+              return seq(this.t('continue'), label ? seq(this.sep(Sep.BEFORE_JUMP_LABEL), this.t(label)) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceDataProperty',
+            value: function reduceDataProperty(node, _ref23) {
+              var name = _ref23.name;
+              var expression = _ref23.expression;
+              return seq(name, this.sep(Sep.BEFORE_PROP), this.t(':'), this.sep(Sep.AFTER_PROP), this.getAssignmentExpr(expression));
+            }
+          },
+          {
+            key: 'reduceDebuggerStatement',
+            value: function reduceDebuggerStatement(node) {
+              return seq(this.t('debugger'), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceDoWhileStatement',
+            value: function reduceDoWhileStatement(node, _ref24) {
+              var body = _ref24.body;
+              var test = _ref24.test;
+              return seq(this.t('do'), this.sep(Sep.AFTER_DO), body, this.sep(Sep.BEFORE_DOWHILE_WHILE), this.t('while'), this.sep(Sep.AFTER_DOWHILE_WHILE), this.paren(test, Sep.DO_WHILE_TEST_PAREN_BEFORE, Sep.DO_WHILE_TEST_PAREN_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceEmptyStatement',
+            value: function reduceEmptyStatement(node) {
+              return seq(this.t(';'), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceExpressionStatement',
+            value: function reduceExpressionStatement(node, _ref25) {
+              var expression = _ref25.expression;
+              var needsParens = expression.startsWithCurly || expression.startsWithLetSquareBracket || expression.startsWithFunctionOrClass;
+              return seq(needsParens ? this.paren(expression, Sep.EXPRESSION_STATEMENT_PAREN_BEFORE, Sep.EXPRESSION_STATEMENT_PAREN_AFTER) : expression, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceForInStatement',
+            value: function reduceForInStatement(node, _ref26) {
+              var left = _ref26.left;
+              var right = _ref26.right;
+              var body = _ref26.body;
+              var leftP = left;
+              switch (node.left.type) {
+              case 'VariableDeclaration':
+                leftP = noIn(markContainsIn(left));
+                break;
+              case 'BindingIdentifier':
+                if (node.left.name === 'let') {
+                  leftP = this.paren(left, Sep.FOR_IN_LET_PAREN_BEFORE, Sep.FOR_IN_LET_PAREN_BEFORE);
+                }
+                break;
+              }
+              return objectAssign(seq(this.t('for'), this.sep(Sep.AFTER_FORIN_FOR), this.paren(seq(leftP, this.sep(Sep.BEFORE_FORIN_IN), this.t('in'), this.sep(Sep.AFTER_FORIN_FOR), right), Sep.FOR_IN_PAREN_BEFORE, Sep.FOR_IN_PAREN_AFTER), this.sep(Sep.BEFORE_FORIN_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForOfStatement',
+            value: function reduceForOfStatement(node, _ref27) {
+              var left = _ref27.left;
+              var right = _ref27.right;
+              var body = _ref27.body;
+              left = node.left.type === 'VariableDeclaration' ? noIn(markContainsIn(left)) : left;
+              return objectAssign(seq(this.t('for'), this.sep(Sep.AFTER_FOROF_FOR), this.paren(seq(left.startsWithLet ? this.paren(left, Sep.FOR_OF_LET_PAREN_BEFORE, Sep.FOR_OF_LET_PAREN_AFTER) : left, this.sep(Sep.BEFORE_FOROF_OF), this.t('of'), this.sep(Sep.AFTER_FOROF_FOR), right), Sep.FOR_OF_PAREN_BEFORE, Sep.FOR_OF_PAREN_AFTER), this.sep(Sep.BEFORE_FOROF_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForStatement',
+            value: function reduceForStatement(node, _ref28) {
+              var init = _ref28.init;
+              var test = _ref28.test;
+              var update = _ref28.update;
+              var body = _ref28.body;
+              return objectAssign(seq(this.t('for'), this.sep(Sep.AFTER_FOR_FOR), this.paren(seq(this.sep(Sep.BEFORE_FOR_INIT), seq(init ? seq(this.sep(Sep.BEFORE_FOR_INIT), noIn(markContainsIn(init)), this.sep(Sep.AFTER_FOR_INIT)) : this.sep(Sep.EMPTY_FOR_INIT), this.t(';'), test ? seq(this.sep(Sep.BEFORE_FOR_TEST), test, this.sep(Sep.AFTER_FOR_TEST)) : this.sep(Sep.EMPTY_FOR_TEST), this.t(';'), update ? seq(this.sep(Sep.BEFORE_FOR_UPDATE), update, this.sep(Sep.AFTER_FOR_UPDATE)) : this.sep(Sep.EMPTY_FOR_UPDATE))), Sep.FOR_PAREN_BEFORE, Sep.FOR_PAREN_AFTER), this.sep(Sep.BEFORE_FOR_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceFunctionBody',
+            value: function reduceFunctionBody(node, _ref29) {
+              var directives = _ref29.directives;
+              var statements = _ref29.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_FUNCTION_DIRECTIVES) : empty()], _toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceFunctionDeclaration',
+            value: function reduceFunctionDeclaration(node, _ref30) {
+              var name = _ref30.name;
+              var params = _ref30.params;
+              var body = _ref30.body;
+              return seq(this.t('function'), node.isGenerator ? seq(this.sep(Sep.BEFORE_GENERATOR_STAR), this.t('*'), this.sep(Sep.AFTER_GENERATOR_STAR)) : empty(), this.sep(Sep.BEFORE_FUNCTION_NAME(node)), node.name.name === '*default*' ? empty() : name, this.sep(Sep.BEFORE_FUNCTION_PARAMS), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_FUNCTION_DECLARATION_BODY), this.brace(body, node, Sep.FUNCTION_BRACE_INITIAL, Sep.FUNCTION_BRACE_FINAL, Sep.FUNCTION_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceFunctionExpression',
+            value: function reduceFunctionExpression(node, _ref31) {
+              var name = _ref31.name;
+              var params = _ref31.params;
+              var body = _ref31.body;
+              var state = seq(this.t('function'), node.isGenerator ? seq(this.sep(Sep.BEFORE_GENERATOR_STAR), this.t('*'), this.sep(Sep.AFTER_GENERATOR_STAR)) : empty(), this.sep(Sep.BEFORE_FUNCTION_NAME(node)), name ? name : empty(), this.sep(Sep.BEFORE_FUNCTION_PARAMS), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_FUNCTION_EXPRESSION_BODY), this.brace(body, node, Sep.FUNCTION_EXPRESSION_BRACE_INITIAL, Sep.FUNCTION_EXPRESSION_BRACE_FINAL, Sep.FUNCTION_EXPRESSION_EMPTY));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceFormalParameters',
+            value: function reduceFormalParameters(node, _ref32) {
+              var items = _ref32.items;
+              var rest = _ref32.rest;
+              return this.commaSep(items.concat(rest == null ? [] : [seq(this.t('...'), this.sep(Sep.REST), rest)]), Sep.PARAMETER_BEFORE_COMMA, Sep.PARAMETER_AFTER_COMMA);
+            }
+          },
+          {
+            key: 'reduceArrowExpression',
+            value: function reduceArrowExpression(node, _ref33) {
+              var params = _ref33.params;
+              var body = _ref33.body;
+              if (node.params.rest != null || node.params.items.length !== 1 || node.params.items[0].type !== 'BindingIdentifier') {
+                params = this.paren(params, Sep.ARROW_PARAMETERS_PAREN_BEFORE, Sep.ARROW_PARAMETERS_PAREN_AFTER, Sep.ARROW_PARAMETERS_PAREN_EMPTY);
+              }
+              if (node.body.type === 'FunctionBody') {
+                body = this.brace(body, node, Sep.ARROW_BRACE_INITIAL, Sep.ARROW_BRACE_FINAL, Sep.ARROW_BRACE_EMPTY);
+              } else if (body.startsWithCurly) {
+                body = this.paren(body, Sep.ARROW_BODY_PAREN_BEFORE, Sep.ARROW_BODY_PAREN_AFTER);
+              }
+              return seq(params, this.sep(Sep.BEFORE_ARROW), this.t('=>'), this.sep(Sep.AFTER_ARROW), this.p(node.body, _coderep.Precedence.Assignment, body));
+            }
+          },
+          {
+            key: 'reduceGetter',
+            value: function reduceGetter(node, _ref34) {
+              var name = _ref34.name;
+              var body = _ref34.body;
+              return seq(this.t('get'), this.sep(Sep.AFTER_GET), name, this.sep(Sep.BEFORE_GET_PARAMS), this.paren(empty(), null, null, Sep.GETTER_PARAMS), this.sep(Sep.BEFORE_GET_BODY), this.brace(body, node, Sep.GET_BRACE_INTIAL, Sep.GET_BRACE_FINAL, Sep.GET_BRACE_EMPTY));
+            }
+          },
+          {
+            key: 'reduceIdentifierExpression',
+            value: function reduceIdentifierExpression(node) {
+              var a = this.t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceIfStatement',
+            value: function reduceIfStatement(node, _ref35) {
+              var test = _ref35.test;
+              var consequent = _ref35.consequent;
+              var alternate = _ref35.alternate;
+              if (alternate && consequent.endsWithMissingElse) {
+                consequent = this.brace(consequent, node, Sep.MISSING_ELSE_INTIIAL, Sep.MISSING_ELSE_FINAL, Sep.MISSING_ELSE_EMPTY);
+              }
+              return objectAssign(seq(this.t('if'), this.sep(Sep.AFTER_IF), this.paren(test, Sep.IF_PAREN_BEFORE, Sep.IF_PAREN_AFTER), this.sep(Sep.AFTER_IF_TEST), consequent, alternate ? seq(this.sep(Sep.BEFORE_ELSE), this.t('else'), this.sep(Sep.AFTER_ELSE), alternate) : empty(), this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
+            }
+          },
+          {
+            key: 'reduceImport',
+            value: function reduceImport(node, _ref36) {
+              var defaultBinding = _ref36.defaultBinding;
+              var namedImports = _ref36.namedImports;
+              var bindings = [];
+              if (defaultBinding != null) {
+                bindings.push(defaultBinding);
+              }
+              if (namedImports.length > 0) {
+                bindings.push(this.brace(this.commaSep(namedImports, Sep.NAMED_IMPORT_BEFORE_COMMA, Sep.NAMED_IMPORT_AFTER_COMMA), node, Sep.IMPORT_BRACE_INTIAL, Sep.IMPORT_BRACE_FINAL, Sep.IMPORT_BRACE_EMPTY));
+              }
+              if (bindings.length === 0) {
+                return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_MODULE), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+              }
+              return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_BINDINGS), this.commaSep(bindings, Sep.IMPORT_BEFORE_COMMA, Sep.IMPORT_AFTER_COMMA), this.sep(Sep.AFTER_IMPORT_BINDINGS), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceImportNamespace',
+            value: function reduceImportNamespace(node, _ref37) {
+              var defaultBinding = _ref37.defaultBinding;
+              var namespaceBinding = _ref37.namespaceBinding;
+              return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_NAMESPACE), defaultBinding == null ? empty() : seq(defaultBinding, this.sep(Sep.IMPORT_BEFORE_COMMA), this.t(','), this.sep(Sep.IMPORT_AFTER_COMMA)), this.sep(Sep.BEFORE_IMPORT_STAR), this.t('*'), this.sep(Sep.AFTER_IMPORT_STAR), this.t('as'), this.sep(Sep.AFTER_IMPORT_AS), namespaceBinding, this.sep(Sep.AFTER_NAMESPACE_BINDING), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceImportSpecifier',
+            value: function reduceImportSpecifier(node, _ref38) {
+              var binding = _ref38.binding;
+              if (node.name == null)
+                return binding;
+              return seq(this.t(node.name), this.sep(Sep.BEFORE_IMPORT_AS), this.t('as'), this.sep(Sep.AFTER_IMPORT_AS), binding);
+            }
+          },
+          {
+            key: 'reduceExportAllFrom',
+            value: function reduceExportAllFrom(node) {
+              return seq(this.t('export'), this.sep(Sep.BEFORE_EXPORT_STAR), this.t('*'), this.sep(Sep.AFTER_EXPORT_STAR), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceExportFrom',
+            value: function reduceExportFrom(node, _ref39) {
+              var namedExports = _ref39.namedExports;
+              return seq(this.t('export'), this.sep(Sep.BEFORE_EXPORT_BINDINGS), this.brace(this.commaSep(namedExports, Sep.EXPORTS_BEFORE_COMMA, Sep.EXPORTS_AFTER_COMMA), node, Sep.EXPORT_BRACE_INITIAL, Sep.EXPORT_BRACE_FINAL, Sep.EXPORT_BRACE_EMPTY), node.moduleSpecifier == null ? empty() : seq(this.sep(Sep.AFTER_EXPORT_BINDINGS), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node))));
+            }
+          },
+          {
+            key: 'reduceExport',
+            value: function reduceExport(node, _ref40) {
+              var declaration = _ref40.declaration;
+              switch (node.declaration.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                declaration = seq(declaration, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+              }
+              return seq(this.t('export'), this.sep(Sep.AFTER_EXPORT), declaration);
+            }
+          },
+          {
+            key: 'reduceExportDefault',
+            value: function reduceExportDefault(node, _ref41) {
+              var body = _ref41.body;
+              body = body.startsWithFunctionOrClass ? this.paren(body, Sep.EXPORT_PAREN_BEFORE, Sep.EXPORT_PAREN_AFTER) : body;
+              switch (node.body.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                body = seq(body, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+              }
+              return seq(this.t('export'), this.sep(Sep.EXPORT_DEFAULT), this.t('default'), this.sep(Sep.AFTER_EXPORT_DEFAULT), body);
+            }
+          },
+          {
+            key: 'reduceExportSpecifier',
+            value: function reduceExportSpecifier(node) {
+              if (node.name == null)
+                return this.t(node.exportedName);
+              return seq(this.t(node.name), this.sep(Sep.BEFORE_EXPORT_AS), this.t('as'), this.sep(Sep.AFTER_EXPORT_AS), this.t(node.exportedName));
+            }
+          },
+          {
+            key: 'reduceLabeledStatement',
+            value: function reduceLabeledStatement(node, _ref42) {
+              var label = _ref42.label;
+              var body = _ref42.body;
+              return objectAssign(seq(this.t(label), this.sep(Sep.BEFORE_LABEL_COLON), this.t(':'), this.sep(Sep.AFTER_LABEL_COLON), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceLiteralBooleanExpression',
+            value: function reduceLiteralBooleanExpression(node) {
+              return this.t(node.value.toString());
+            }
+          },
+          {
+            key: 'reduceLiteralNullExpression',
+            value: function reduceLiteralNullExpression(node) {
+              return this.t('null');
+            }
+          },
+          {
+            key: 'reduceLiteralInfinityExpression',
+            value: function reduceLiteralInfinityExpression(node) {
+              return this.t('2e308');
+            }
+          },
+          {
+            key: 'reduceLiteralNumericExpression',
+            value: function reduceLiteralNumericExpression(node) {
+              return new _coderep.NumberCodeRep(node.value);
+            }
+          },
+          {
+            key: 'reduceLiteralRegExpExpression',
+            value: function reduceLiteralRegExpExpression(node) {
+              return this.t('/' + node.pattern + '/' + node.flags);
+            }
+          },
+          {
+            key: 'reduceLiteralStringExpression',
+            value: function reduceLiteralStringExpression(node) {
+              return this.t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceMethod',
+            value: function reduceMethod(node, _ref43) {
+              var name = _ref43.name;
+              var params = _ref43.params;
+              var body = _ref43.body;
+              return seq(node.isGenerator ? seq(this.t('*'), this.sep(Sep.AFTER_METHOD_GENERATOR_STAR)) : empty(), name, this.sep(Sep.AFTER_METHOD_NAME), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_METHOD_BODY), this.brace(body, node, Sep.METHOD_BRACE_INTIAL, Sep.METHOD_BRACE_FINAL, Sep.METHOD_BRACE_EMPTY));
+            }
+          },
+          {
+            key: 'reduceModule',
+            value: function reduceModule(node, _ref44) {
+              var directives = _ref44.directives;
+              var items = _ref44.items;
+              if (items.length) {
+                items[0] = this.parenToAvoidBeingDirective(node.items[0], items[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_MODULE_DIRECTIVES) : empty()], _toConsumableArray(items)));
+            }
+          },
+          {
+            key: 'reduceNewExpression',
+            value: function reduceNewExpression(node, _ref45) {
+              var callee = _ref45.callee;
+              var args = _ref45.arguments;
+              var calleeRep = (0, _coderep.getPrecedence)(node.callee) == _coderep.Precedence.Call ? this.paren(callee, Sep.NEW_CALLEE_PAREN_BEFORE, Sep.NEW_CALLEE_PAREN_AFTER) : this.p(node.callee, (0, _coderep.getPrecedence)(node), callee);
+              return seq(this.t('new'), this.sep(Sep.AFTER_NEW), calleeRep, this.sep(Sep.BEFORE_NEW_ARGS), args.length === 0 ? this.sep(Sep.EMPTY_NEW_CALL) : this.paren(this.commaSep(args, Sep.ARGS_BEFORE_COMMA, Sep.ARGS_AFTER_COMMA), Sep.NEW_PAREN_BEFORE, Sep.NEW_PAREN_AFTER, Sep.NEW_PAREN_EMPTY));
+            }
+          },
+          {
+            key: 'reduceNewTargetExpression',
+            value: function reduceNewTargetExpression() {
+              return seq(this.t('new'), this.sep(Sep.NEW_TARGET_BEFORE_DOT), this.t('.'), this.sep(Sep.NEW_TARGET_AFTER_DOT), this.t('target'));
+            }
+          },
+          {
+            key: 'reduceObjectExpression',
+            value: function reduceObjectExpression(node, _ref46) {
+              var properties = _ref46.properties;
+              var state = this.brace(this.commaSep(properties, Sep.OBJECT_BEFORE_COMMA, Sep.OBJECT_AFTER_COMMA), node, Sep.OBJECT_BRACE_INITIAL, Sep.OBJECT_BRACE_FINAL, Sep.OBJECT_EMPTY);
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceUpdateExpression',
+            value: function reduceUpdateExpression(node, _ref47) {
+              var operand = _ref47.operand;
+              if (node.isPrefix) {
+                return this.reduceUnaryExpression.apply(this, arguments);
+              } else {
+                return objectAssign(seq(this.p(node.operand, _coderep.Precedence.New, operand), this.sep(Sep.BEFORE_POSTFIX(node.operator)), this.t(node.operator)), {
+                  startsWithCurly: operand.startsWithCurly,
+                  startsWithLetSquareBracket: operand.startsWithLetSquareBracket,
+                  startsWithFunctionOrClass: operand.startsWithFunctionOrClass
+                });
+              }
+            }
+          },
+          {
+            key: 'reduceUnaryExpression',
+            value: function reduceUnaryExpression(node, _ref48) {
+              var operand = _ref48.operand;
+              return seq(this.t(node.operator), this.sep(Sep.UNARY(node.operator)), this.p(node.operand, (0, _coderep.getPrecedence)(node), operand));
+            }
+          },
+          {
+            key: 'reduceReturnStatement',
+            value: function reduceReturnStatement(node, _ref49) {
+              var expression = _ref49.expression;
+              return seq(this.t('return'), expression ? seq(this.sep(Sep.RETURN), expression) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceScript',
+            value: function reduceScript(node, _ref50) {
+              var directives = _ref50.directives;
+              var statements = _ref50.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_SCRIPT_DIRECTIVES) : empty()], _toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceSetter',
+            value: function reduceSetter(node, _ref51) {
+              var name = _ref51.name;
+              var param = _ref51.param;
+              var body = _ref51.body;
+              return seq(this.t('set'), this.sep(Sep.AFTER_SET), name, this.sep(Sep.BEFORE_SET_PARAMS), this.paren(param, Sep.SETTER_PARAM_BEFORE, Sep.SETTER_PARAM_AFTER), this.sep(Sep.BEFORE_SET_BODY), this.brace(body, node, Sep.SET_BRACE_INTIIAL, Sep.SET_BRACE_FINAL, Sep.SET_BRACE_EMPTY));
+            }
+          },
+          {
+            key: 'reduceShorthandProperty',
+            value: function reduceShorthandProperty(node) {
+              return this.t(node.name);
+            }
+          },
+          {
+            key: 'reduceStaticMemberExpression',
+            value: function reduceStaticMemberExpression(node, _ref52) {
+              var object = _ref52.object;
+              var property = _ref52.property;
+              var state = seq(this.p(node.object, (0, _coderep.getPrecedence)(node), object), this.sep(Sep.BEFORE_STATIC_MEMBER_DOT), this.t('.'), this.sep(Sep.AFTER_STATIC_MEMBER_DOT), this.t(property));
+              state.startsWithLet = object.startsWithLet;
+              state.startsWithCurly = object.startsWithCurly;
+              state.startsWithLetSquareBracket = object.startsWithLetSquareBracket;
+              state.startsWithFunctionOrClass = object.startsWithFunctionOrClass;
+              return state;
+            }
+          },
+          {
+            key: 'reduceStaticPropertyName',
+            value: function reduceStaticPropertyName(node) {
+              var n;
+              if (_esutils.keyword.isIdentifierNameES6(node.value)) {
+                return this.t(node.value);
+              } else if (n = parseFloat(node.value), n === n) {
+                return new _coderep.NumberCodeRep(n);
+              }
+              return this.t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceSuper',
+            value: function reduceSuper() {
+              return this.t('super');
+            }
+          },
+          {
+            key: 'reduceSwitchCase',
+            value: function reduceSwitchCase(node, _ref53) {
+              var test = _ref53.test;
+              var consequent = _ref53.consequent;
+              return seq(this.t('case'), this.sep(Sep.BEFORE_CASE_TEST), test, this.sep(Sep.AFTER_CASE_TEST), this.t(':'), this.sep(Sep.BEFORE_CASE_BODY), seq.apply(undefined, _toConsumableArray(consequent)), this.sep(Sep.AFTER_CASE_BODY));
+            }
+          },
+          {
+            key: 'reduceSwitchDefault',
+            value: function reduceSwitchDefault(node, _ref54) {
+              var consequent = _ref54.consequent;
+              return seq(this.t('default'), this.sep(Sep.DEFAULT), this.t(':'), this.sep(Sep.BEFORE_CASE_BODY), seq.apply(undefined, _toConsumableArray(consequent)), this.sep(Sep.AFTER_DEFAULT_BODY));
+            }
+          },
+          {
+            key: 'reduceSwitchStatement',
+            value: function reduceSwitchStatement(node, _ref55) {
+              var discriminant = _ref55.discriminant;
+              var cases = _ref55.cases;
+              return seq(this.t('switch'), this.sep(Sep.BEFORE_SWITCH_DISCRIM), this.paren(discriminant, Sep.SWITCH_DISCRIM_PAREN_BEFORE, Sep.SWITCH_DISCRIM_PAREN_AFTER), this.sep(Sep.BEFORE_SWITCH_BODY), this.brace(seq.apply(undefined, _toConsumableArray(cases)), node, Sep.SWITCH_BRACE_INTIAL, Sep.SWITCH_BRACE_FINAL, Sep.SWITCH_BRACE_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceSwitchStatementWithDefault',
+            value: function reduceSwitchStatementWithDefault(node, _ref56) {
+              var discriminant = _ref56.discriminant;
+              var preDefaultCases = _ref56.preDefaultCases;
+              var defaultCase = _ref56.defaultCase;
+              var postDefaultCases = _ref56.postDefaultCases;
+              return seq(this.t('switch'), this.sep(Sep.BEFORE_SWITCH_DISCRIM), this.paren(discriminant, Sep.SWITCH_DISCRIM_PAREN_BEFORE, Sep.SWITCH_DISCRIM_PAREN_AFTER), this.sep(Sep.BEFORE_SWITCH_BODY), this.brace(seq.apply(undefined, _toConsumableArray(preDefaultCases).concat([defaultCase], _toConsumableArray(postDefaultCases))), node, Sep.SWITCH_BRACE_INTIAL, Sep.SWITCH_BRACE_FINAL, Sep.SWITCH_BRACE_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceTemplateExpression',
+            value: function reduceTemplateExpression(node, _ref57) {
+              var tag = _ref57.tag;
+              var elements = _ref57.elements;
+              var state = node.tag == null ? empty() : this.p(node.tag, (0, _coderep.getPrecedence)(node), tag, this.sep(Sep.TEMPLATE_TAG));
+              var templateData = '';
+              state = seq(state, this.t('`'));
+              for (var i = 0, l = node.elements.length; i < l; ++i) {
+                if (node.elements[i].type === 'TemplateElement') {
+                  var d = '';
+                  if (i > 0)
+                    d += '}';
+                  d += node.elements[i].rawValue;
+                  if (i < l - 1)
+                    d += '${';
+                  state = seq(state, this.t(d));
+                } else {
+                  state = seq(state, this.sep(Sep.BEFORE_TEMPLATE_EXPRESSION), elements[i], this.sep(Sep.AFTER_TEMPLATE_EXPRESSION));
+                }
+              }
+              state = seq(state, this.t('`'));
+              if (node.tag != null) {
+                state.startsWithCurly = tag.startsWithCurly;
+                state.startsWithLetSquareBracket = tag.startsWithLetSquareBracket;
+                state.startsWithFunctionOrClass = tag.startsWithFunctionOrClass;
+              }
+              return state;
+            }
+          },
+          {
+            key: 'reduceTemplateElement',
+            value: function reduceTemplateElement(node) {
+              return this.t(node.rawValue);
+            }
+          },
+          {
+            key: 'reduceThisExpression',
+            value: function reduceThisExpression(node) {
+              return this.t('this');
+            }
+          },
+          {
+            key: 'reduceThrowStatement',
+            value: function reduceThrowStatement(node, _ref58) {
+              var expression = _ref58.expression;
+              return seq(this.t('throw'), this.sep(Sep.THROW), expression, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceTryCatchStatement',
+            value: function reduceTryCatchStatement(node, _ref59) {
+              var body = _ref59.body;
+              var catchClause = _ref59.catchClause;
+              return seq(this.t('try'), this.sep(Sep.AFTER_TRY), body, this.sep(Sep.BEFORE_CATCH), catchClause, this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceTryFinallyStatement',
+            value: function reduceTryFinallyStatement(node, _ref60) {
+              var body = _ref60.body;
+              var catchClause = _ref60.catchClause;
+              var finalizer = _ref60.finalizer;
+              return seq(this.t('try'), this.sep(Sep.AFTER_TRY), body, catchClause ? seq(this.sep(Sep.BEFORE_CATCH), catchClause) : empty(), this.sep(Sep.BEFORE_FINALLY), this.t('finally'), this.sep(Sep.AFTER_FINALLY), finalizer, this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceYieldExpression',
+            value: function reduceYieldExpression(node, _ref61) {
+              var expression = _ref61.expression;
+              if (node.expression == null)
+                return this.t('yield');
+              return seq(this.t('yield'), this.sep(Sep.YIELD), this.p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceYieldGeneratorExpression',
+            value: function reduceYieldGeneratorExpression(node, _ref62) {
+              var expression = _ref62.expression;
+              return seq(this.t('yield'), this.sep(Sep.BEFORE_YIELD_STAR), this.t('*'), this.sep(Sep.AFTER_YIELD_STAR), this.p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceDirective',
+            value: function reduceDirective(node) {
+              var delim = /^(?:[^"\\]|\\.)*$/.test(node.rawValue) ? '"' : "'";
+              return seq(this.t(delim + node.rawValue + delim), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceVariableDeclaration',
+            value: function reduceVariableDeclaration(node, _ref63) {
+              var declarators = _ref63.declarators;
+              return seq(this.t(node.kind), this.sep(Sep.VARIABLE_DECLARATION), this.commaSep(declarators, Sep.DECLARATORS_BEFORE_COMMA, Sep.DECLARATORS_AFTER_COMMA));
+            }
+          },
+          {
+            key: 'reduceVariableDeclarationStatement',
+            value: function reduceVariableDeclarationStatement(node, _ref64) {
+              var declaration = _ref64.declaration;
+              return seq(declaration, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceVariableDeclarator',
+            value: function reduceVariableDeclarator(node, _ref65) {
+              var binding = _ref65.binding;
+              var init = _ref65.init;
+              var containsIn = init && init.containsIn && !init.containsGroup;
+              if (init) {
+                if (init.containsGroup) {
+                  init = this.paren(init, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                } else {
+                  init = markContainsIn(init);
+                }
+              }
+              return objectAssign(init == null ? binding : seq(binding, this.sep(Sep.BEFORE_INIT_EQUALS), this.t('='), this.sep(Sep.AFTER_INIT_EQUALS), init), { containsIn: containsIn });
+            }
+          },
+          {
+            key: 'reduceWhileStatement',
+            value: function reduceWhileStatement(node, _ref66) {
+              var test = _ref66.test;
+              var body = _ref66.body;
+              return objectAssign(seq(this.t('while'), this.sep(Sep.AFTER_WHILE), this.paren(test, Sep.WHILE_TEST_PAREN_BEFORE, Sep.WHILE_TEST_PAREN_AFTER), this.sep(Sep.BEFORE_WHILE_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceWithStatement',
+            value: function reduceWithStatement(node, _ref67) {
+              var object = _ref67.object;
+              var body = _ref67.body;
+              return objectAssign(seq(this.t('with'), this.sep(Sep.AFTER_WITH), this.paren(object, Sep.WITH_PAREN_BEFORE, Sep.WITH_PAREN_AFTER), this.sep(Sep.BEFORE_WITH_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          }
+        ]);
+        return ExtensibleCodeGen;
+      }();
+    exports.ExtensibleCodeGen = ExtensibleCodeGen;
+    var INDENT = '  ';
+    var Linebreak = function (_CodeRep) {
+        _inherits(Linebreak, _CodeRep);
+        function Linebreak() {
+          _classCallCheck(this, Linebreak);
+          _get(Object.getPrototypeOf(Linebreak.prototype), 'constructor', this).call(this);
+          this.indentation = 0;
+        }
+        _createClass(Linebreak, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('\n');
+              for (var i = 0; i < this.indentation; ++i) {
+                ts.put(INDENT);
+              }
+            }
+          }]);
+        return Linebreak;
+      }(_coderep.CodeRep);
+    function withoutTrailingLinebreak(state) {
+      if (state && state instanceof _coderep.Seq) {
+        var lastChild = state.children[state.children.length - 1];
+        while (lastChild instanceof _coderep.Empty) {
+          state.children.pop();
+          lastChild = state.children[state.children.length - 1];
+        }
+        if (lastChild instanceof _coderep.Seq) {
+          withoutTrailingLinebreak(lastChild);
+        } else if (lastChild instanceof Linebreak) {
+          state.children.pop();
+        }
+      }
+      return state;
+    }
+    function indent(rep, includingFinal) {
+      var finalLinebreak = undefined;
+      function indentNode(node) {
+        if (node instanceof Linebreak) {
+          finalLinebreak = node;
+          ++node.indentation;
+        }
+      }
+      rep.forEach(indentNode);
+      if (!includingFinal) {
+        --finalLinebreak.indentation;
+      }
+      return rep;
+    }
+    var FormattedCodeGen = function (_ExtensibleCodeGen) {
+        _inherits(FormattedCodeGen, _ExtensibleCodeGen);
+        function FormattedCodeGen() {
+          _classCallCheck(this, FormattedCodeGen);
+          _get(Object.getPrototypeOf(FormattedCodeGen.prototype), 'constructor', this).apply(this, arguments);
+        }
+        _createClass(FormattedCodeGen, [
+          {
+            key: 'parenToAvoidBeingDirective',
+            value: function parenToAvoidBeingDirective(element, original) {
+              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
+                return seq(this.paren(original.children[0], Sep.PAREN_AVOIDING_DIRECTIVE_BEFORE, Sep.PAREN_AVOIDING_DIRECTIVE_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(element)));
+              }
+              return original;
+            }
+          },
+          {
+            key: 'brace',
+            value: function brace(rep, node) {
+              if (isEmpty(rep)) {
+                return this.t('{}');
+              }
+              switch (node.type) {
+              case 'ObjectBinding':
+              case 'Import':
+              case 'ExportFrom':
+              case 'ObjectExpression':
+                return new _coderep.Brace(rep);
+              }
+              rep = seq(new Linebreak, rep);
+              indent(rep, false);
+              return new _coderep.Brace(rep);
+            }
+          },
+          {
+            key: 'reduceDoWhileStatement',
+            value: function reduceDoWhileStatement(node, _ref68) {
+              var body = _ref68.body;
+              var test = _ref68.test;
+              return seq(this.t('do'), this.sep(Sep.AFTER_DO), withoutTrailingLinebreak(body), this.sep(Sep.BEFORE_DOWHILE_WHILE), this.t('while'), this.sep(Sep.AFTER_DOWHILE_WHILE), this.paren(test, Sep.DO_WHILE_TEST_PAREN_BEFORE, Sep.DO_WHILE_TEST_PAREN_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceIfStatement',
+            value: function reduceIfStatement(node, _ref69) {
+              var test = _ref69.test;
+              var consequent = _ref69.consequent;
+              var alternate = _ref69.alternate;
+              if (alternate && consequent.endsWithMissingElse) {
+                consequent = this.brace(consequent, node);
+              }
+              return objectAssign(seq(this.t('if'), this.sep(Sep.AFTER_IF), this.paren(test, Sep.IF_PAREN_BEFORE, Sep.IF_PAREN_AFTER), this.sep(Sep.AFTER_IF_TEST), withoutTrailingLinebreak(consequent), alternate ? seq(this.sep(Sep.BEFORE_ELSE), this.t('else'), this.sep(Sep.AFTER_ELSE), withoutTrailingLinebreak(alternate)) : empty(), this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
+            }
+          },
+          {
+            key: 'reduceSwitchCase',
+            value: function reduceSwitchCase(node, _ref70) {
+              var test = _ref70.test;
+              var consequent = _ref70.consequent;
+              consequent = indent(withoutTrailingLinebreak(seq.apply(undefined, [this.sep(Sep.BEFORE_CASE_BODY)].concat(_toConsumableArray(consequent)))), true);
+              return seq(this.t('case'), this.sep(Sep.BEFORE_CASE_TEST), test, this.sep(Sep.AFTER_CASE_TEST), this.t(':'), consequent, this.sep(Sep.AFTER_CASE_BODY));
+            }
+          },
+          {
+            key: 'reduceSwitchDefault',
+            value: function reduceSwitchDefault(node, _ref71) {
+              var consequent = _ref71.consequent;
+              consequent = indent(withoutTrailingLinebreak(seq.apply(undefined, [this.sep(Sep.BEFORE_CASE_BODY)].concat(_toConsumableArray(consequent)))), true);
+              return seq(this.t('default'), this.sep(Sep.DEFAULT), this.t(':'), consequent, this.sep(Sep.AFTER_DEFAULT_BODY));
+            }
+          },
+          {
+            key: 'sep',
+            value: function sep(separator) {
+              switch (separator.type) {
+              case 'ARRAY_AFTER_COMMA':
+              case 'OBJECT_AFTER_COMMA':
+              case 'ARGS_AFTER_COMMA':
+              case 'PARAMETER_AFTER_COMMA':
+              case 'DECLARATORS_AFTER_COMMA':
+              case 'NAMED_IMPORT_AFTER_COMMA':
+              case 'IMPORT_AFTER_COMMA':
+              case 'BEFORE_DEFAULT_EQUALS':
+              case 'AFTER_DEFAULT_EQUALS':
+              case 'AFTER_PROP':
+              case 'BEFORE_JUMP_LABEL':
+              case 'BEFORE_CATCH':
+              case 'BEFORE_CATCH_BINDING':
+              case 'AFTER_CATCH_BINDING':
+              case 'BEFORE_CLASS_NAME':
+              case 'BEFORE_EXTENDS':
+              case 'AFTER_EXTENDS':
+              case 'BEFORE_CLASS_DECLARATION_ELEMENTS':
+              case 'BEFORE_CLASS_EXPRESSION_ELEMENTS':
+              case 'AFTER_STATIC':
+              case 'BEFORE_TERNARY_QUESTION':
+              case 'AFTER_TERNARY_QUESTION':
+              case 'BEFORE_TERNARY_COLON':
+              case 'AFTER_TERNARY_COLON':
+              case 'AFTER_DO':
+              case 'BEFORE_DOWHILE_WHILE':
+              case 'AFTER_DOWHILE_WHILE':
+              case 'AFTER_FORIN_FOR':
+              case 'BEFORE_FORIN_IN':
+              case 'AFTER_FORIN_FOR':
+              case 'BEFORE_FORIN_BODY':
+              case 'AFTER_FOROF_FOR':
+              case 'BEFORE_FOROF_OF':
+              case 'AFTER_FOROF_FOR':
+              case 'BEFORE_FOROF_BODY':
+              case 'AFTER_FOR_FOR':
+              case 'BEFORE_FOR_TEST':
+              case 'BEFORE_FOR_UPDATE':
+              case 'BEFORE_FOR_BODY':
+              case 'AFTER_GENERATOR_STAR':
+              case 'BEFORE_FUNCTION_DECLARATION_BODY':
+              case 'BEFORE_FUNCTION_EXPRESSION_BODY':
+              case 'BEFORE_ARROW':
+              case 'AFTER_ARROW':
+              case 'AFTER_GET':
+              case 'BEFORE_GET_BODY':
+              case 'AFTER_IF':
+              case 'AFTER_IF_TEST':
+              case 'BEFORE_ELSE':
+              case 'AFTER_ELSE':
+              case 'BEFORE_IMPORT_BINDINGS':
+              case 'BEFORE_IMPORT_MODULE':
+              case 'AFTER_IMPORT_BINDINGS':
+              case 'AFTER_FROM':
+              case 'BEFORE_IMPORT_NAMESPACE':
+              case 'BEFORE_IMPORT_STAR':
+              case 'AFTER_IMPORT_STAR':
+              case 'AFTER_IMPORT_AS':
+              case 'AFTER_NAMESPACE_BINDING':
+              case 'BEFORE_IMPORT_AS':
+              case 'AFTER_IMPORT_AS':
+              case 'EXPORTS_AFTER_COMMA':
+              case 'BEFORE_EXPORT_STAR':
+              case 'AFTER_EXPORT_STAR':
+              case 'BEFORE_EXPORT_BINDINGS':
+              case 'AFTER_EXPORT_BINDINGS':
+              case 'AFTER_EXPORT':
+              case 'AFTER_EXPORT_DEFAULT':
+              case 'BEFORE_EXPORT_AS':
+              case 'AFTER_EXPORT_AS':
+              case 'AFTER_LABEL_COLON':
+              case 'BEFORE_METHOD_BODY':
+              case 'AFTER_NEW':
+              case 'RETURN':
+              case 'AFTER_SET':
+              case 'BEFORE_SET_BODY':
+              case 'BEFORE_SET_PARAMS':
+              case 'BEFORE_CASE_TEST':
+              case 'BEFORE_SWITCH_DISCRIM':
+              case 'BEFORE_SWITCH_BODY':
+              case 'THROW':
+              case 'AFTER_TRY':
+              case 'BEFORE_CATCH':
+              case 'BEFORE_FINALLY':
+              case 'AFTER_FINALLY':
+              case 'VARIABLE_DECLARATION':
+              case 'YIELD':
+              case 'AFTER_YIELD_STAR':
+              case 'DECLARATORS_AFTER_COMMA':
+              case 'BEFORE_INIT_EQUALS':
+              case 'AFTER_INIT_EQUALS':
+              case 'AFTER_WHILE':
+              case 'BEFORE_WHILE_BODY':
+              case 'AFTER_WITH':
+              case 'BEFORE_WITH_BODY':
+              case 'BEFORE_FUNCTION_NAME':
+              case 'AFTER_BINOP':
+              case 'BEFORE_ASSIGN_OP':
+              case 'AFTER_ASSIGN_OP':
+                return this.t(' ');
+              case 'AFTER_STATEMENT':
+                switch (separator.node.type) {
+                case 'ForInStatement':
+                case 'ForOfStatement':
+                case 'ForStatement':
+                case 'WhileStatement':
+                case 'WithStatement':
+                  return empty();
+                default:
+                  return new Linebreak;
+                }
+              case 'AFTER_CLASS_ELEMENT':
+              case 'BEFORE_CASE_BODY':
+              case 'AFTER_CASE_BODY':
+              case 'AFTER_DEFAULT_BODY':
+                return new Linebreak;
+              case 'BEFORE_BINOP':
+                return separator.op === ',' ? empty() : this.t(' ');
+              case 'UNARY':
+                return separator.op === 'delete' || separator.op === 'void' || separator.op === 'typeof' ? this.t(' ') : empty();
+              default:
+                return empty();
+              }
+            }
+          }
+        ]);
+        return FormattedCodeGen;
+      }(ExtensibleCodeGen);
+    exports.FormattedCodeGen = FormattedCodeGen;
+  });
+  require.define('/dist/coderep.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _get = function get(_x, _x2, _x3) {
+      var _again = true;
+      _function:
+        while (_again) {
+          var object = _x, property = _x2, receiver = _x3;
+          _again = false;
+          if (object === null)
+            object = Function.prototype;
+          var desc = Object.getOwnPropertyDescriptor(object, property);
+          if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);
+            if (parent === null) {
+              return undefined;
+            } else {
+              _x = parent;
+              _x2 = property;
+              _x3 = receiver;
+              _again = true;
+              desc = parent = undefined;
+              continue _function;
+            }
+          } else if ('value' in desc) {
+            return desc.value;
+          } else {
+            var getter = desc.get;
+            if (getter === undefined) {
+              return undefined;
+            }
+            return getter.call(receiver);
+          }
+        }
+    };
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    exports.getPrecedence = getPrecedence;
+    exports.escapeStringLiteral = escapeStringLiteral;
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var Precedence = {
+        Sequence: 0,
+        Yield: 1,
+        Assignment: 1,
+        Conditional: 2,
+        ArrowFunction: 2,
+        LogicalOR: 3,
+        LogicalAND: 4,
+        BitwiseOR: 5,
+        BitwiseXOR: 6,
+        BitwiseAND: 7,
+        Equality: 8,
+        Relational: 9,
+        BitwiseSHIFT: 10,
+        Additive: 11,
+        Multiplicative: 12,
+        Prefix: 13,
+        Postfix: 14,
+        New: 15,
+        Call: 16,
+        TaggedTemplate: 17,
+        Member: 18,
+        Primary: 19
+      };
+    exports.Precedence = Precedence;
+    var BinaryPrecedence = {
+        ',': Precedence.Sequence,
+        '||': Precedence.LogicalOR,
+        '&&': Precedence.LogicalAND,
+        '|': Precedence.BitwiseOR,
+        '^': Precedence.BitwiseXOR,
+        '&': Precedence.BitwiseAND,
+        '==': Precedence.Equality,
+        '!=': Precedence.Equality,
+        '===': Precedence.Equality,
+        '!==': Precedence.Equality,
+        '<': Precedence.Relational,
+        '>': Precedence.Relational,
+        '<=': Precedence.Relational,
+        '>=': Precedence.Relational,
+        'in': Precedence.Relational,
+        'instanceof': Precedence.Relational,
+        '<<': Precedence.BitwiseSHIFT,
+        '>>': Precedence.BitwiseSHIFT,
+        '>>>': Precedence.BitwiseSHIFT,
+        '+': Precedence.Additive,
+        '-': Precedence.Additive,
+        '*': Precedence.Multiplicative,
+        '%': Precedence.Multiplicative,
+        '/': Precedence.Multiplicative
+      };
+    function getPrecedence(_x4) {
+      var _again2 = true;
+      _function2:
+        while (_again2) {
+          var node = _x4;
+          _again2 = false;
+          switch (node.type) {
+          case 'ArrayExpression':
+          case 'FunctionExpression':
+          case 'IdentifierExpression':
+          case 'LiteralBooleanExpression':
+          case 'LiteralNullExpression':
+          case 'LiteralNumericExpression':
+          case 'LiteralInfinityExpression':
+          case 'LiteralRegExpExpression':
+          case 'LiteralStringExpression':
+          case 'ObjectExpression':
+          case 'ThisExpression':
+            return Precedence.Primary;
+          case 'AssignmentExpression':
+          case 'CompoundAssignmentExpression':
+          case 'YieldExpression':
+          case 'YieldGeneratorExpression':
+            return Precedence.Assignment;
+          case 'ConditionalExpression':
+            return Precedence.Conditional;
+          case 'ComputedMemberExpression':
+          case 'StaticMemberExpression':
+            switch (node.object.type) {
+            case 'CallExpression':
+            case 'ComputedMemberExpression':
+            case 'StaticMemberExpression':
+            case 'TemplateExpression':
+              _x4 = node.object;
+              _again2 = true;
+              continue _function2;
+            default:
+              return Precedence.Member;
+            }
+          case 'TemplateExpression':
+            if (node.tag == null)
+              return Precedence.Member;
+            switch (node.tag.type) {
+            case 'CallExpression':
+            case 'ComputedMemberExpression':
+            case 'StaticMemberExpression':
+            case 'TemplateExpression':
+              _x4 = node.tag;
+              _again2 = true;
+              continue _function2;
+            default:
+              return Precedence.Member;
+            }
+          case 'BinaryExpression':
+            return BinaryPrecedence[node.operator];
+          case 'CallExpression':
+            return Precedence.Call;
+          case 'NewExpression':
+            return node.arguments.length === 0 ? Precedence.New : Precedence.Member;
+          case 'UpdateExpression':
+            return node.isPrefix ? Precedence.Prefix : Precedence.Postfix;
+          case 'UnaryExpression':
+            return Precedence.Prefix;
+          }
+        }
+    }
+    function escapeStringLiteral(stringValue) {
+      var result = '';
+      var nSingle = 0, nDouble = 0;
+      for (var i = 0, l = stringValue.length; i < l; ++i) {
+        var ch = stringValue[i];
+        if (ch === '"') {
+          ++nDouble;
+        } else if (ch === "'") {
+          ++nSingle;
+        }
+      }
+      var delim = nDouble > nSingle ? "'" : '"';
+      result += delim;
+      for (var i = 0; i < stringValue.length; i++) {
+        var ch = stringValue.charAt(i);
+        switch (ch) {
+        case delim:
+          result += '\\' + delim;
+          break;
+        case '\b':
+          result += '\\b';
+          break;
+        case '\t':
+          result += '\\t';
+          break;
+        case '\n':
+          result += '\\n';
+          break;
+        case '\x0B':
+          result += '\\v';
+          break;
+        case '\f':
+          result += '\\f';
+          break;
+        case '\r':
+          result += '\\r';
+          break;
+        case '\\':
+          result += '\\\\';
+          break;
+        case '\u2028':
+          result += '\\u2028';
+          break;
+        case '\u2029':
+          result += '\\u2029';
+          break;
+        default:
+          result += ch;
+          break;
+        }
+      }
+      result += delim;
+      return result;
+    }
+    var CodeRep = function () {
+        function CodeRep() {
+          _classCallCheck(this, CodeRep);
+          this.containsIn = false;
+          this.containsGroup = false;
+          this.startsWithCurly = false;
+          this.startsWithFunctionOrClass = false;
+          this.startsWithLet = false;
+          this.startsWithLetSquareBracket = false;
+          this.endsWithMissingElse = false;
+        }
+        _createClass(CodeRep, [{
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+            }
+          }]);
+        return CodeRep;
+      }();
+    exports.CodeRep = CodeRep;
+    var Empty = function (_CodeRep) {
+        _inherits(Empty, _CodeRep);
+        function Empty() {
+          _classCallCheck(this, Empty);
+          _get(Object.getPrototypeOf(Empty.prototype), 'constructor', this).call(this);
+        }
+        _createClass(Empty, [{
+            key: 'emit',
+            value: function emit() {
+            }
+          }]);
+        return Empty;
+      }(CodeRep);
+    exports.Empty = Empty;
+    var Token = function (_CodeRep2) {
+        _inherits(Token, _CodeRep2);
+        function Token(token) {
+          _classCallCheck(this, Token);
+          _get(Object.getPrototypeOf(Token.prototype), 'constructor', this).call(this);
+          this.token = token;
+        }
+        _createClass(Token, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put(this.token);
+            }
+          }]);
+        return Token;
+      }(CodeRep);
+    exports.Token = Token;
+    var NumberCodeRep = function (_CodeRep3) {
+        _inherits(NumberCodeRep, _CodeRep3);
+        function NumberCodeRep(number) {
+          _classCallCheck(this, NumberCodeRep);
+          _get(Object.getPrototypeOf(NumberCodeRep.prototype), 'constructor', this).call(this);
+          this.number = number;
+        }
+        _createClass(NumberCodeRep, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.putNumber(this.number);
+            }
+          }]);
+        return NumberCodeRep;
+      }(CodeRep);
+    exports.NumberCodeRep = NumberCodeRep;
+    var Paren = function (_CodeRep4) {
+        _inherits(Paren, _CodeRep4);
+        function Paren(expr) {
+          _classCallCheck(this, Paren);
+          _get(Object.getPrototypeOf(Paren.prototype), 'constructor', this).call(this);
+          this.expr = expr;
+        }
+        _createClass(Paren, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('(');
+              this.expr.emit(ts, false);
+              ts.put(')');
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return Paren;
+      }(CodeRep);
+    exports.Paren = Paren;
+    var Bracket = function (_CodeRep5) {
+        _inherits(Bracket, _CodeRep5);
+        function Bracket(expr) {
+          _classCallCheck(this, Bracket);
+          _get(Object.getPrototypeOf(Bracket.prototype), 'constructor', this).call(this);
+          this.expr = expr;
+        }
+        _createClass(Bracket, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('[');
+              this.expr.emit(ts, false);
+              ts.put(']');
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return Bracket;
+      }(CodeRep);
+    exports.Bracket = Bracket;
+    var Brace = function (_CodeRep6) {
+        _inherits(Brace, _CodeRep6);
+        function Brace(expr) {
+          _classCallCheck(this, Brace);
+          _get(Object.getPrototypeOf(Brace.prototype), 'constructor', this).call(this);
+          this.expr = expr;
+        }
+        _createClass(Brace, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('{');
+              this.expr.emit(ts, false);
+              ts.put('}');
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return Brace;
+      }(CodeRep);
+    exports.Brace = Brace;
+    var NoIn = function (_CodeRep7) {
+        _inherits(NoIn, _CodeRep7);
+        function NoIn(expr) {
+          _classCallCheck(this, NoIn);
+          _get(Object.getPrototypeOf(NoIn.prototype), 'constructor', this).call(this);
+          this.expr = expr;
+        }
+        _createClass(NoIn, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              this.expr.emit(ts, true);
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return NoIn;
+      }(CodeRep);
+    exports.NoIn = NoIn;
+    var ContainsIn = function (_CodeRep8) {
+        _inherits(ContainsIn, _CodeRep8);
+        function ContainsIn(expr) {
+          _classCallCheck(this, ContainsIn);
+          _get(Object.getPrototypeOf(ContainsIn.prototype), 'constructor', this).call(this);
+          this.expr = expr;
+        }
+        _createClass(ContainsIn, [
+          {
+            key: 'emit',
+            value: function emit(ts, noIn) {
+              if (noIn) {
+                ts.put('(');
+                this.expr.emit(ts, false);
+                ts.put(')');
+              } else {
+                this.expr.emit(ts, false);
+              }
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return ContainsIn;
+      }(CodeRep);
+    exports.ContainsIn = ContainsIn;
+    var Seq = function (_CodeRep9) {
+        _inherits(Seq, _CodeRep9);
+        function Seq(children) {
+          _classCallCheck(this, Seq);
+          _get(Object.getPrototypeOf(Seq.prototype), 'constructor', this).call(this);
+          this.children = children;
+        }
+        _createClass(Seq, [
+          {
+            key: 'emit',
+            value: function emit(ts, noIn) {
+              this.children.forEach(function (cr) {
+                return cr.emit(ts, noIn);
+              });
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.children.forEach(function (x) {
+                return x.forEach(f);
+              });
+            }
+          }
+        ]);
+        return Seq;
+      }(CodeRep);
+    exports.Seq = Seq;
+    var Semi = function (_Token) {
+        _inherits(Semi, _Token);
+        function Semi() {
+          _classCallCheck(this, Semi);
+          _get(Object.getPrototypeOf(Semi.prototype), 'constructor', this).call(this, ';');
+        }
+        return Semi;
+      }(Token);
+    exports.Semi = Semi;
+    var CommaSep = function (_CodeRep10) {
+        _inherits(CommaSep, _CodeRep10);
+        function CommaSep(children) {
+          _classCallCheck(this, CommaSep);
+          _get(Object.getPrototypeOf(CommaSep.prototype), 'constructor', this).call(this);
+          this.children = children;
+        }
+        _createClass(CommaSep, [
+          {
+            key: 'emit',
+            value: function emit(ts, noIn) {
+              var first = true;
+              this.children.forEach(function (cr) {
+                if (first) {
+                  first = false;
+                } else {
+                  ts.put(',');
+                }
+                cr.emit(ts, noIn);
+              });
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.children.forEach(function (x) {
+                return x.forEach(f);
+              });
+            }
+          }
+        ]);
+        return CommaSep;
+      }(CodeRep);
+    exports.CommaSep = CommaSep;
+    var SemiOp = function (_CodeRep11) {
+        _inherits(SemiOp, _CodeRep11);
+        function SemiOp() {
+          _classCallCheck(this, SemiOp);
+          _get(Object.getPrototypeOf(SemiOp.prototype), 'constructor', this).call(this);
+        }
+        _createClass(SemiOp, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.putOptionalSemi();
+            }
+          }]);
+        return SemiOp;
+      }(CodeRep);
+    exports.SemiOp = SemiOp;
+  });
+  require.define('/node_modules/esutils/lib/utils.js', function (module, exports, __dirname, __filename) {
+    (function () {
+      'use strict';
+      exports.ast = require('/node_modules/esutils/lib/ast.js', module);
+      exports.code = require('/node_modules/esutils/lib/code.js', module);
+      exports.keyword = require('/node_modules/esutils/lib/keyword.js', module);
+    }());
+  });
+  require.define('/node_modules/esutils/lib/keyword.js', function (module, exports, __dirname, __filename) {
+    (function () {
+      'use strict';
+      var code = require('/node_modules/esutils/lib/code.js', module);
+      function isStrictModeReservedWordES6(id) {
+        switch (id) {
+        case 'implements':
+        case 'interface':
+        case 'package':
+        case 'private':
+        case 'protected':
+        case 'public':
+        case 'static':
+        case 'let':
+          return true;
+        default:
+          return false;
+        }
+      }
+      function isKeywordES5(id, strict) {
+        if (!strict && id === 'yield') {
+          return false;
+        }
+        return isKeywordES6(id, strict);
+      }
+      function isKeywordES6(id, strict) {
+        if (strict && isStrictModeReservedWordES6(id)) {
+          return true;
+        }
+        switch (id.length) {
+        case 2:
+          return id === 'if' || id === 'in' || id === 'do';
+        case 3:
+          return id === 'var' || id === 'for' || id === 'new' || id === 'try';
+        case 4:
+          return id === 'this' || id === 'else' || id === 'case' || id === 'void' || id === 'with' || id === 'enum';
+        case 5:
+          return id === 'while' || id === 'break' || id === 'catch' || id === 'throw' || id === 'const' || id === 'yield' || id === 'class' || id === 'super';
+        case 6:
+          return id === 'return' || id === 'typeof' || id === 'delete' || id === 'switch' || id === 'export' || id === 'import';
+        case 7:
+          return id === 'default' || id === 'finally' || id === 'extends';
+        case 8:
+          return id === 'function' || id === 'continue' || id === 'debugger';
+        case 10:
+          return id === 'instanceof';
+        default:
+          return false;
+        }
+      }
+      function isReservedWordES5(id, strict) {
+        return id === 'null' || id === 'true' || id === 'false' || isKeywordES5(id, strict);
+      }
+      function isReservedWordES6(id, strict) {
+        return id === 'null' || id === 'true' || id === 'false' || isKeywordES6(id, strict);
+      }
+      function isRestrictedWord(id) {
+        return id === 'eval' || id === 'arguments';
+      }
+      function isIdentifierNameES5(id) {
+        var i, iz, ch;
+        if (id.length === 0) {
+          return false;
+        }
+        ch = id.charCodeAt(0);
+        if (!code.isIdentifierStartES5(ch)) {
+          return false;
+        }
+        for (i = 1, iz = id.length; i < iz; ++i) {
+          ch = id.charCodeAt(i);
+          if (!code.isIdentifierPartES5(ch)) {
+            return false;
+          }
+        }
+        return true;
+      }
+      function decodeUtf16(lead, trail) {
+        return (lead - 55296) * 1024 + (trail - 56320) + 65536;
+      }
+      function isIdentifierNameES6(id) {
+        var i, iz, ch, lowCh, check;
+        if (id.length === 0) {
+          return false;
+        }
+        check = code.isIdentifierStartES6;
+        for (i = 0, iz = id.length; i < iz; ++i) {
+          ch = id.charCodeAt(i);
+          if (55296 <= ch && ch <= 56319) {
+            ++i;
+            if (i >= iz) {
+              return false;
+            }
+            lowCh = id.charCodeAt(i);
+            if (!(56320 <= lowCh && lowCh <= 57343)) {
+              return false;
+            }
+            ch = decodeUtf16(ch, lowCh);
+          }
+          if (!check(ch)) {
+            return false;
+          }
+          check = code.isIdentifierPartES6;
+        }
+        return true;
+      }
+      function isIdentifierES5(id, strict) {
+        return isIdentifierNameES5(id) && !isReservedWordES5(id, strict);
+      }
+      function isIdentifierES6(id, strict) {
+        return isIdentifierNameES6(id) && !isReservedWordES6(id, strict);
+      }
+      module.exports = {
+        isKeywordES5: isKeywordES5,
+        isKeywordES6: isKeywordES6,
+        isReservedWordES5: isReservedWordES5,
+        isReservedWordES6: isReservedWordES6,
+        isRestrictedWord: isRestrictedWord,
+        isIdentifierNameES5: isIdentifierNameES5,
+        isIdentifierNameES6: isIdentifierNameES6,
+        isIdentifierES5: isIdentifierES5,
+        isIdentifierES6: isIdentifierES6
+      };
+    }());
+  });
+  require.define('/node_modules/esutils/lib/code.js', function (module, exports, __dirname, __filename) {
+    (function () {
+      'use strict';
+      var ES6Regex, ES5Regex, NON_ASCII_WHITESPACES, IDENTIFIER_START, IDENTIFIER_PART, ch;
+      ES5Regex = {
+        NonAsciiIdentifierStart: /[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B2\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/,
+        NonAsciiIdentifierPart: /[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u08A0-\u08B2\u08E4-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58\u0C59\u0C60-\u0C63\u0C66-\u0C6F\u0C81-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D01-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D57\u0D60-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19D9\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1CD0-\u1CD2\u1CD4-\u1CF6\u1CF8\u1CF9\u1D00-\u1DF5\u1DFC-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u200C\u200D\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099\u309A\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA69D\uA69F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C4\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2D\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/
+      };
+      ES6Regex = {
+        NonAsciiIdentifierStart: /[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B2\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2118-\u211D\u2124\u2126\u2128\u212A-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303C\u3041-\u3096\u309B-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6EF\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF30-\uDF4A\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48]|\uD804[\uDC03-\uDC37\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDE00-\uDE11\uDE13-\uDE2B\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF5D-\uDF61]|\uD805[\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDE00-\uDE2F\uDE44\uDE80-\uDEAA]|\uD806[\uDCA0-\uDCDF\uDCFF\uDEC0-\uDEF8]|\uD808[\uDC00-\uDF98]|\uD809[\uDC00-\uDC6E]|[\uD80C\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50\uDF93-\uDF9F]|\uD82C[\uDC00\uDC01]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD83A[\uDC00-\uDCC4]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD87E[\uDC00-\uDE1D]/,
+        NonAsciiIdentifierPart: /[\xAA\xB5\xB7\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u08A0-\u08B2\u08E4-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58\u0C59\u0C60-\u0C63\u0C66-\u0C6F\u0C81-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D01-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D57\u0D60-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1369-\u1371\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19DA\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1CD0-\u1CD2\u1CD4-\u1CF6\u1CF8\u1CF9\u1D00-\u1DF5\u1DFC-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u200C\u200D\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2118-\u211D\u2124\u2126\u2128\u212A-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA69D\uA69F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA7AD\uA7B0\uA7B1\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C4\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB5F\uAB64\uAB65\uABC0-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2D\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDDFD\uDE80-\uDE9C\uDEA0-\uDED0\uDEE0\uDF00-\uDF1F\uDF30-\uDF4A\uDF50-\uDF7A\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00-\uDE03\uDE05\uDE06\uDE0C-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE38-\uDE3A\uDE3F\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE6\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48]|\uD804[\uDC00-\uDC46\uDC66-\uDC6F\uDC7F-\uDCBA\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD00-\uDD34\uDD36-\uDD3F\uDD50-\uDD73\uDD76\uDD80-\uDDC4\uDDD0-\uDDDA\uDE00-\uDE11\uDE13-\uDE37\uDEB0-\uDEEA\uDEF0-\uDEF9\uDF01-\uDF03\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3C-\uDF44\uDF47\uDF48\uDF4B-\uDF4D\uDF57\uDF5D-\uDF63\uDF66-\uDF6C\uDF70-\uDF74]|\uD805[\uDC80-\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDB5\uDDB8-\uDDC0\uDE00-\uDE40\uDE44\uDE50-\uDE59\uDE80-\uDEB7\uDEC0-\uDEC9]|\uD806[\uDCA0-\uDCE9\uDCFF\uDEC0-\uDEF8]|\uD808[\uDC00-\uDF98]|\uD809[\uDC00-\uDC6E]|[\uD80C\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDED0-\uDEED\uDEF0-\uDEF4\uDF00-\uDF36\uDF40-\uDF43\uDF50-\uDF59\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50-\uDF7E\uDF8F-\uDF9F]|\uD82C[\uDC00\uDC01]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99\uDC9D\uDC9E]|\uD834[\uDD65-\uDD69\uDD6D-\uDD72\uDD7B-\uDD82\uDD85-\uDD8B\uDDAA-\uDDAD\uDE42-\uDE44]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD83A[\uDC00-\uDCC4\uDCD0-\uDCD6]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD87E[\uDC00-\uDE1D]|\uDB40[\uDD00-\uDDEF]/
+      };
+      function isDecimalDigit(ch) {
+        return 48 <= ch && ch <= 57;
+      }
+      function isHexDigit(ch) {
+        return 48 <= ch && ch <= 57 || 97 <= ch && ch <= 102 || 65 <= ch && ch <= 70;
+      }
+      function isOctalDigit(ch) {
+        return ch >= 48 && ch <= 55;
+      }
+      NON_ASCII_WHITESPACES = [
+        5760,
+        6158,
+        8192,
+        8193,
+        8194,
+        8195,
+        8196,
+        8197,
+        8198,
+        8199,
+        8200,
+        8201,
+        8202,
+        8239,
+        8287,
+        12288,
+        65279
+      ];
+      function isWhiteSpace(ch) {
+        return ch === 32 || ch === 9 || ch === 11 || ch === 12 || ch === 160 || ch >= 5760 && NON_ASCII_WHITESPACES.indexOf(ch) >= 0;
+      }
+      function isLineTerminator(ch) {
+        return ch === 10 || ch === 13 || ch === 8232 || ch === 8233;
+      }
+      function fromCodePoint(cp) {
+        if (cp <= 65535) {
+          return String.fromCharCode(cp);
+        }
+        var cu1 = String.fromCharCode(Math.floor((cp - 65536) / 1024) + 55296);
+        var cu2 = String.fromCharCode((cp - 65536) % 1024 + 56320);
+        return cu1 + cu2;
+      }
+      IDENTIFIER_START = new Array(128);
+      for (ch = 0; ch < 128; ++ch) {
+        IDENTIFIER_START[ch] = ch >= 97 && ch <= 122 || ch >= 65 && ch <= 90 || ch === 36 || ch === 95;
+      }
+      IDENTIFIER_PART = new Array(128);
+      for (ch = 0; ch < 128; ++ch) {
+        IDENTIFIER_PART[ch] = ch >= 97 && ch <= 122 || ch >= 65 && ch <= 90 || ch >= 48 && ch <= 57 || ch === 36 || ch === 95;
+      }
+      function isIdentifierStartES5(ch) {
+        return ch < 128 ? IDENTIFIER_START[ch] : ES5Regex.NonAsciiIdentifierStart.test(fromCodePoint(ch));
+      }
+      function isIdentifierPartES5(ch) {
+        return ch < 128 ? IDENTIFIER_PART[ch] : ES5Regex.NonAsciiIdentifierPart.test(fromCodePoint(ch));
+      }
+      function isIdentifierStartES6(ch) {
+        return ch < 128 ? IDENTIFIER_START[ch] : ES6Regex.NonAsciiIdentifierStart.test(fromCodePoint(ch));
+      }
+      function isIdentifierPartES6(ch) {
+        return ch < 128 ? IDENTIFIER_PART[ch] : ES6Regex.NonAsciiIdentifierPart.test(fromCodePoint(ch));
+      }
+      module.exports = {
+        isDecimalDigit: isDecimalDigit,
+        isHexDigit: isHexDigit,
+        isOctalDigit: isOctalDigit,
+        isWhiteSpace: isWhiteSpace,
+        isLineTerminator: isLineTerminator,
+        isIdentifierStartES5: isIdentifierStartES5,
+        isIdentifierPartES5: isIdentifierPartES5,
+        isIdentifierStartES6: isIdentifierStartES6,
+        isIdentifierPartES6: isIdentifierPartES6
+      };
+    }());
+  });
+  require.define('/node_modules/esutils/lib/ast.js', function (module, exports, __dirname, __filename) {
+    (function () {
+      'use strict';
+      function isExpression(node) {
+        if (node == null) {
+          return false;
+        }
+        switch (node.type) {
+        case 'ArrayExpression':
+        case 'AssignmentExpression':
+        case 'BinaryExpression':
+        case 'CallExpression':
+        case 'ConditionalExpression':
+        case 'FunctionExpression':
+        case 'Identifier':
+        case 'Literal':
+        case 'LogicalExpression':
+        case 'MemberExpression':
+        case 'NewExpression':
+        case 'ObjectExpression':
+        case 'SequenceExpression':
+        case 'ThisExpression':
+        case 'UnaryExpression':
+        case 'UpdateExpression':
+          return true;
+        }
+        return false;
+      }
+      function isIterationStatement(node) {
+        if (node == null) {
+          return false;
+        }
+        switch (node.type) {
+        case 'DoWhileStatement':
+        case 'ForInStatement':
+        case 'ForStatement':
+        case 'WhileStatement':
+          return true;
+        }
+        return false;
+      }
+      function isStatement(node) {
+        if (node == null) {
+          return false;
+        }
+        switch (node.type) {
+        case 'BlockStatement':
+        case 'BreakStatement':
+        case 'ContinueStatement':
+        case 'DebuggerStatement':
+        case 'DoWhileStatement':
+        case 'EmptyStatement':
+        case 'ExpressionStatement':
+        case 'ForInStatement':
+        case 'ForStatement':
+        case 'IfStatement':
+        case 'LabeledStatement':
+        case 'ReturnStatement':
+        case 'SwitchStatement':
+        case 'ThrowStatement':
+        case 'TryStatement':
+        case 'VariableDeclaration':
+        case 'WhileStatement':
+        case 'WithStatement':
+          return true;
+        }
+        return false;
+      }
+      function isSourceElement(node) {
+        return isStatement(node) || node != null && node.type === 'FunctionDeclaration';
+      }
+      function trailingStatement(node) {
+        switch (node.type) {
+        case 'IfStatement':
+          if (node.alternate != null) {
+            return node.alternate;
+          }
+          return node.consequent;
+        case 'LabeledStatement':
+        case 'ForStatement':
+        case 'ForInStatement':
+        case 'WhileStatement':
+        case 'WithStatement':
+          return node.body;
+        }
+        return null;
+      }
+      function isProblematicIfStatement(node) {
+        var current;
+        if (node.type !== 'IfStatement') {
+          return false;
+        }
+        if (node.alternate == null) {
+          return false;
+        }
+        current = node.consequent;
+        do {
+          if (current.type === 'IfStatement') {
+            if (current.alternate == null) {
+              return true;
+            }
+          }
+          current = trailingStatement(current);
+        } while (current);
+        return false;
+      }
+      module.exports = {
+        isExpression: isExpression,
+        isStatement: isStatement,
+        isIterationStatement: isIterationStatement,
+        isSourceElement: isSourceElement,
+        isProblematicIfStatement: isProblematicIfStatement,
+        trailingStatement: trailingStatement
+      };
+    }());
+  });
+  require.define('/node_modules/object-assign/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+    function ToObject(val) {
+      if (val == null) {
+        throw new TypeError('Object.assign cannot be called with null or undefined');
+      }
+      return Object(val);
+    }
+    function ownEnumerableKeys(obj) {
+      var keys = Object.getOwnPropertyNames(obj);
+      if (Object.getOwnPropertySymbols) {
+        keys = keys.concat(Object.getOwnPropertySymbols(obj));
+      }
+      return keys.filter(function (key) {
+        return propIsEnumerable.call(obj, key);
+      });
+    }
+    module.exports = Object.assign || function (target, source) {
+      var from;
+      var keys;
+      var to = ToObject(target);
+      for (var s = 1; s < arguments.length; s++) {
+        from = arguments[s];
+        keys = ownEnumerableKeys(Object(from));
+        for (var i = 0; i < keys.length; i++) {
+          to[keys[i]] = from[keys[i]];
+        }
+      }
+      return to;
+    };
+  });
+  require.define('/dist/minimal-codegen.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    function _toConsumableArray(arr) {
+      if (Array.isArray(arr)) {
+        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
+          arr2[i] = arr[i];
+        return arr2;
+      } else {
+        return Array.from(arr);
+      }
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var _objectAssign = require('/node_modules/object-assign/index.js', module);
+    var objectAssign = _objectAssign;
+    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
+    var _coderep = require('/dist/coderep.js', module);
+    function p(node, precedence, a) {
+      return (0, _coderep.getPrecedence)(node) < precedence ? paren(a) : a;
+    }
+    function t(token) {
+      return new _coderep.Token(token);
+    }
+    function paren(rep) {
+      return new _coderep.Paren(rep);
+    }
+    function brace(rep) {
+      return new _coderep.Brace(rep);
+    }
+    function bracket(rep) {
+      return new _coderep.Bracket(rep);
+    }
+    function noIn(rep) {
+      return new _coderep.NoIn(rep);
+    }
+    function markContainsIn(state) {
+      return state.containsIn ? new _coderep.ContainsIn(state) : state;
+    }
+    function seq() {
+      for (var _len = arguments.length, reps = Array(_len), _key = 0; _key < _len; _key++) {
+        reps[_key] = arguments[_key];
+      }
+      return new _coderep.Seq(reps);
+    }
+    function semi() {
+      return new _coderep.Semi;
+    }
+    function semiOp() {
+      return new _coderep.SemiOp;
+    }
+    function empty() {
+      return new _coderep.Empty;
+    }
+    function commaSep(pieces) {
+      return new _coderep.CommaSep(pieces);
+    }
+    function getAssignmentExpr(state) {
+      return state ? state.containsGroup ? paren(state) : state : empty();
+    }
+    var MinimalCodeGen = function () {
+        function MinimalCodeGen() {
+          _classCallCheck(this, MinimalCodeGen);
+        }
+        _createClass(MinimalCodeGen, [
+          {
+            key: 'parenToAvoidBeingDirective',
+            value: function parenToAvoidBeingDirective(element, original) {
+              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
+                return seq(paren(original.children[0]), semiOp());
+              }
+              return original;
+            }
+          },
+          {
+            key: 'reduceArrayExpression',
+            value: function reduceArrayExpression(node, _ref) {
+              var elements = _ref.elements;
+              if (elements.length === 0) {
+                return bracket(empty());
+              }
+              var content = commaSep(elements.map(getAssignmentExpr));
+              if (elements.length > 0 && elements[elements.length - 1] == null) {
+                content = seq(content, t(','));
+              }
+              return bracket(content);
+            }
+          },
+          {
+            key: 'reduceSpreadElement',
+            value: function reduceSpreadElement(node, _ref2) {
+              var expression = _ref2.expression;
+              return seq(t('...'), p(node.expression, _coderep.Precedence.Assignment, expression));
+            }
+          },
+          {
+            key: 'reduceAssignmentExpression',
+            value: function reduceAssignmentExpression(node, _ref3) {
+              var binding = _ref3.binding;
+              var expression = _ref3.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = paren(rightCode);
+                containsIn = false;
+              }
+              return objectAssign(seq(leftCode, t('='), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCompoundAssignmentExpression',
+            value: function reduceCompoundAssignmentExpression(node, _ref4) {
+              var binding = _ref4.binding;
+              var expression = _ref4.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = paren(rightCode);
+                containsIn = false;
+              }
+              return objectAssign(seq(leftCode, t(node.operator), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBinaryExpression',
+            value: function reduceBinaryExpression(node, _ref5) {
+              var left = _ref5.left;
+              var right = _ref5.right;
+              var leftCode = left;
+              var startsWithCurly = left.startsWithCurly;
+              var startsWithLetSquareBracket = left.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = left.startsWithFunctionOrClass;
+              var leftContainsIn = left.containsIn;
+              if ((0, _coderep.getPrecedence)(node.left) < (0, _coderep.getPrecedence)(node)) {
+                leftCode = paren(leftCode);
+                startsWithCurly = false;
+                startsWithLetSquareBracket = false;
+                startsWithFunctionOrClass = false;
+                leftContainsIn = false;
+              }
+              var rightCode = right;
+              var rightContainsIn = right.containsIn;
+              if ((0, _coderep.getPrecedence)(node.right) <= (0, _coderep.getPrecedence)(node)) {
+                rightCode = paren(rightCode);
+                rightContainsIn = false;
+              }
+              return objectAssign(seq(leftCode, t(node.operator), rightCode), {
+                containsIn: leftContainsIn || rightContainsIn || node.operator === 'in',
+                containsGroup: node.operator == ',',
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBindingWithDefault',
+            value: function reduceBindingWithDefault(node, _ref6) {
+              var binding = _ref6.binding;
+              var init = _ref6.init;
+              return seq(binding, t('='), init);
+            }
+          },
+          {
+            key: 'reduceBindingIdentifier',
+            value: function reduceBindingIdentifier(node) {
+              var a = t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceArrayBinding',
+            value: function reduceArrayBinding(node, _ref7) {
+              var elements = _ref7.elements;
+              var restElement = _ref7.restElement;
+              var content = undefined;
+              if (elements.length === 0) {
+                content = restElement == null ? empty() : seq(t('...'), restElement);
+              } else {
+                elements = elements.concat(restElement == null ? [] : [seq(t('...'), restElement)]);
+                content = commaSep(elements.map(getAssignmentExpr));
+                if (elements.length > 0 && elements[elements.length - 1] == null) {
+                  content = seq(content, t(','));
+                }
+              }
+              return bracket(content);
+            }
+          },
+          {
+            key: 'reduceObjectBinding',
+            value: function reduceObjectBinding(node, _ref8) {
+              var properties = _ref8.properties;
+              var state = brace(commaSep(properties));
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceBindingPropertyIdentifier',
+            value: function reduceBindingPropertyIdentifier(node, _ref9) {
+              var binding = _ref9.binding;
+              var init = _ref9.init;
+              if (node.init == null)
+                return binding;
+              return seq(binding, t('='), init);
+            }
+          },
+          {
+            key: 'reduceBindingPropertyProperty',
+            value: function reduceBindingPropertyProperty(node, _ref10) {
+              var name = _ref10.name;
+              var binding = _ref10.binding;
+              return seq(name, t(':'), binding);
+            }
+          },
+          {
+            key: 'reduceBlock',
+            value: function reduceBlock(node, _ref11) {
+              var statements = _ref11.statements;
+              return brace(seq.apply(undefined, _toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceBlockStatement',
+            value: function reduceBlockStatement(node, _ref12) {
+              var block = _ref12.block;
+              return block;
+            }
+          },
+          {
+            key: 'reduceBreakStatement',
+            value: function reduceBreakStatement(node, _ref13) {
+              var label = _ref13.label;
+              return seq(t('break'), label ? t(label) : empty(), semiOp());
+            }
+          },
+          {
+            key: 'reduceCallExpression',
+            value: function reduceCallExpression(node, _ref14) {
+              var callee = _ref14.callee;
+              var args = _ref14.arguments;
+              return objectAssign(seq(p(node.callee, (0, _coderep.getPrecedence)(node), callee), paren(commaSep(args))), {
+                startsWithCurly: callee.startsWithCurly,
+                startsWithLetSquareBracket: callee.startsWithLetSquareBracket,
+                startsWithFunctionOrClass: callee.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCatchClause',
+            value: function reduceCatchClause(node, _ref15) {
+              var binding = _ref15.binding;
+              var body = _ref15.body;
+              return seq(t('catch'), paren(binding), body);
+            }
+          },
+          {
+            key: 'reduceClassDeclaration',
+            value: function reduceClassDeclaration(node, _ref16) {
+              var name = _ref16.name;
+              var _super = _ref16['super'];
+              var elements = _ref16.elements;
+              var state = seq(t('class'), name);
+              if (_super != null) {
+                state = seq(state, t('extends'), _super);
+              }
+              state = seq.apply(undefined, [
+                state,
+                t('{')
+              ].concat(_toConsumableArray(elements), [t('}')]));
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassExpression',
+            value: function reduceClassExpression(node, _ref17) {
+              var name = _ref17.name;
+              var _super = _ref17['super'];
+              var elements = _ref17.elements;
+              var state = t('class');
+              if (name != null) {
+                state = seq(state, name);
+              }
+              if (_super != null) {
+                state = seq(state, t('extends'), _super);
+              }
+              state = seq.apply(undefined, [
+                state,
+                t('{')
+              ].concat(_toConsumableArray(elements), [t('}')]));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassElement',
+            value: function reduceClassElement(node, _ref18) {
+              var method = _ref18.method;
+              if (!node.isStatic)
+                return method;
+              return seq(t('static'), method);
+            }
+          },
+          {
+            key: 'reduceComputedMemberExpression',
+            value: function reduceComputedMemberExpression(node, _ref19) {
+              var object = _ref19.object;
+              var expression = _ref19.expression;
+              var startsWithLetSquareBracket = object.startsWithLetSquareBracket || node.object.type === 'IdentifierExpression' && node.object.name === 'let';
+              return objectAssign(seq(p(node.object, (0, _coderep.getPrecedence)(node), object), bracket(expression)), {
+                startsWithLet: object.startsWithLet,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithCurly: object.startsWithCurly,
+                startsWithFunctionOrClass: object.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceComputedPropertyName',
+            value: function reduceComputedPropertyName(node, _ref20) {
+              var expression = _ref20.expression;
+              return bracket(expression);
+            }
+          },
+          {
+            key: 'reduceConditionalExpression',
+            value: function reduceConditionalExpression(node, _ref21) {
+              var test = _ref21.test;
+              var consequent = _ref21.consequent;
+              var alternate = _ref21.alternate;
+              var containsIn = test.containsIn || alternate.containsIn;
+              var startsWithCurly = test.startsWithCurly;
+              var startsWithLetSquareBracket = test.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = test.startsWithFunctionOrClass;
+              return objectAssign(seq(p(node.test, _coderep.Precedence.LogicalOR, test), t('?'), p(node.consequent, _coderep.Precedence.Assignment, consequent), t(':'), p(node.alternate, _coderep.Precedence.Assignment, alternate)), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceContinueStatement',
+            value: function reduceContinueStatement(node, _ref22) {
+              var label = _ref22.label;
+              return seq(t('continue'), label ? t(label) : empty(), semiOp());
+            }
+          },
+          {
+            key: 'reduceDataProperty',
+            value: function reduceDataProperty(node, _ref23) {
+              var name = _ref23.name;
+              var expression = _ref23.expression;
+              return seq(name, t(':'), getAssignmentExpr(expression));
+            }
+          },
+          {
+            key: 'reduceDebuggerStatement',
+            value: function reduceDebuggerStatement(node) {
+              return seq(t('debugger'), semiOp());
+            }
+          },
+          {
+            key: 'reduceDoWhileStatement',
+            value: function reduceDoWhileStatement(node, _ref24) {
+              var body = _ref24.body;
+              var test = _ref24.test;
+              return seq(t('do'), body, t('while'), paren(test), semiOp());
+            }
+          },
+          {
+            key: 'reduceEmptyStatement',
+            value: function reduceEmptyStatement(node) {
+              return semi();
+            }
+          },
+          {
+            key: 'reduceExpressionStatement',
+            value: function reduceExpressionStatement(node, _ref25) {
+              var expression = _ref25.expression;
+              var needsParens = expression.startsWithCurly || expression.startsWithLetSquareBracket || expression.startsWithFunctionOrClass;
+              return seq(needsParens ? paren(expression) : expression, semiOp());
+            }
+          },
+          {
+            key: 'reduceForInStatement',
+            value: function reduceForInStatement(node, _ref26) {
+              var left = _ref26.left;
+              var right = _ref26.right;
+              var body = _ref26.body;
+              var leftP = left;
+              switch (node.left.type) {
+              case 'VariableDeclaration':
+                leftP = noIn(markContainsIn(left));
+                break;
+              case 'BindingIdentifier':
+                if (node.left.name === 'let') {
+                  leftP = paren(left);
+                }
+                break;
+              }
+              return objectAssign(seq(t('for'), paren(seq(leftP, t('in'), right)), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForOfStatement',
+            value: function reduceForOfStatement(node, _ref27) {
+              var left = _ref27.left;
+              var right = _ref27.right;
+              var body = _ref27.body;
+              left = node.left.type === 'VariableDeclaration' ? noIn(markContainsIn(left)) : left;
+              return objectAssign(seq(t('for'), paren(seq(left.startsWithLet ? paren(left) : left, t('of'), right)), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForStatement',
+            value: function reduceForStatement(node, _ref28) {
+              var init = _ref28.init;
+              var test = _ref28.test;
+              var update = _ref28.update;
+              var body = _ref28.body;
+              return objectAssign(seq(t('for'), paren(seq(init ? noIn(markContainsIn(init)) : empty(), semi(), test || empty(), semi(), update || empty())), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceFunctionBody',
+            value: function reduceFunctionBody(node, _ref29) {
+              var directives = _ref29.directives;
+              var statements = _ref29.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceFunctionDeclaration',
+            value: function reduceFunctionDeclaration(node, _ref30) {
+              var name = _ref30.name;
+              var params = _ref30.params;
+              var body = _ref30.body;
+              return seq(t('function'), node.isGenerator ? t('*') : empty(), node.name.name === '*default*' ? empty() : name, paren(params), brace(body));
+            }
+          },
+          {
+            key: 'reduceFunctionExpression',
+            value: function reduceFunctionExpression(node, _ref31) {
+              var name = _ref31.name;
+              var params = _ref31.params;
+              var body = _ref31.body;
+              var state = seq(t('function'), node.isGenerator ? t('*') : empty(), name ? name : empty(), paren(params), brace(body));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceFormalParameters',
+            value: function reduceFormalParameters(node, _ref32) {
+              var items = _ref32.items;
+              var rest = _ref32.rest;
+              return commaSep(items.concat(rest == null ? [] : [seq(t('...'), rest)]));
+            }
+          },
+          {
+            key: 'reduceArrowExpression',
+            value: function reduceArrowExpression(node, _ref33) {
+              var params = _ref33.params;
+              var body = _ref33.body;
+              if (node.params.rest != null || node.params.items.length !== 1 || node.params.items[0].type !== 'BindingIdentifier') {
+                params = paren(params);
+              }
+              if (node.body.type === 'FunctionBody') {
+                body = brace(body);
+              } else if (body.startsWithCurly) {
+                body = paren(body);
+              }
+              return seq(params, t('=>'), p(node.body, _coderep.Precedence.Assignment, body));
+            }
+          },
+          {
+            key: 'reduceGetter',
+            value: function reduceGetter(node, _ref34) {
+              var name = _ref34.name;
+              var body = _ref34.body;
+              return seq(t('get'), name, paren(empty()), brace(body));
+            }
+          },
+          {
+            key: 'reduceIdentifierExpression',
+            value: function reduceIdentifierExpression(node) {
+              var a = t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceIfStatement',
+            value: function reduceIfStatement(node, _ref35) {
+              var test = _ref35.test;
+              var consequent = _ref35.consequent;
+              var alternate = _ref35.alternate;
+              if (alternate && consequent.endsWithMissingElse) {
+                consequent = brace(consequent);
+              }
+              return objectAssign(seq(t('if'), paren(test), consequent, alternate ? seq(t('else'), alternate) : empty()), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
+            }
+          },
+          {
+            key: 'reduceImport',
+            value: function reduceImport(node, _ref36) {
+              var defaultBinding = _ref36.defaultBinding;
+              var namedImports = _ref36.namedImports;
+              var bindings = [];
+              if (defaultBinding != null) {
+                bindings.push(defaultBinding);
+              }
+              if (namedImports.length > 0) {
+                bindings.push(brace(commaSep(namedImports)));
+              }
+              if (bindings.length === 0) {
+                return seq(t('import'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+              }
+              return seq(t('import'), commaSep(bindings), t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+            }
+          },
+          {
+            key: 'reduceImportNamespace',
+            value: function reduceImportNamespace(node, _ref37) {
+              var defaultBinding = _ref37.defaultBinding;
+              var namespaceBinding = _ref37.namespaceBinding;
+              return seq(t('import'), defaultBinding == null ? empty() : seq(defaultBinding, t(',')), t('*'), t('as'), namespaceBinding, t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+            }
+          },
+          {
+            key: 'reduceImportSpecifier',
+            value: function reduceImportSpecifier(node, _ref38) {
+              var binding = _ref38.binding;
+              if (node.name == null)
+                return binding;
+              return seq(t(node.name), t('as'), binding);
+            }
+          },
+          {
+            key: 'reduceExportAllFrom',
+            value: function reduceExportAllFrom(node) {
+              return seq(t('export'), t('*'), t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+            }
+          },
+          {
+            key: 'reduceExportFrom',
+            value: function reduceExportFrom(node, _ref39) {
+              var namedExports = _ref39.namedExports;
+              return seq(t('export'), brace(commaSep(namedExports)), node.moduleSpecifier == null ? empty() : seq(t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp()));
+            }
+          },
+          {
+            key: 'reduceExport',
+            value: function reduceExport(node, _ref40) {
+              var declaration = _ref40.declaration;
+              switch (node.declaration.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                declaration = seq(declaration, semiOp());
+              }
+              return seq(t('export'), declaration);
+            }
+          },
+          {
+            key: 'reduceExportDefault',
+            value: function reduceExportDefault(node, _ref41) {
+              var body = _ref41.body;
+              body = body.startsWithFunctionOrClass ? paren(body) : body;
+              switch (node.body.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                body = seq(body, semiOp());
+              }
+              return seq(t('export default'), body);
+            }
+          },
+          {
+            key: 'reduceExportSpecifier',
+            value: function reduceExportSpecifier(node) {
+              if (node.name == null)
+                return t(node.exportedName);
+              return seq(t(node.name), t('as'), t(node.exportedName));
+            }
+          },
+          {
+            key: 'reduceLabeledStatement',
+            value: function reduceLabeledStatement(node, _ref42) {
+              var label = _ref42.label;
+              var body = _ref42.body;
+              return objectAssign(seq(t(label + ':'), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceLiteralBooleanExpression',
+            value: function reduceLiteralBooleanExpression(node) {
+              return t(node.value.toString());
+            }
+          },
+          {
+            key: 'reduceLiteralNullExpression',
+            value: function reduceLiteralNullExpression(node) {
+              return t('null');
+            }
+          },
+          {
+            key: 'reduceLiteralInfinityExpression',
+            value: function reduceLiteralInfinityExpression(node) {
+              return t('2e308');
+            }
+          },
+          {
+            key: 'reduceLiteralNumericExpression',
+            value: function reduceLiteralNumericExpression(node) {
+              return new _coderep.NumberCodeRep(node.value);
+            }
+          },
+          {
+            key: 'reduceLiteralRegExpExpression',
+            value: function reduceLiteralRegExpExpression(node) {
+              return t('/' + node.pattern + '/' + node.flags);
+            }
+          },
+          {
+            key: 'reduceLiteralStringExpression',
+            value: function reduceLiteralStringExpression(node) {
+              return t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceMethod',
+            value: function reduceMethod(node, _ref43) {
+              var name = _ref43.name;
+              var params = _ref43.params;
+              var body = _ref43.body;
+              return seq(node.isGenerator ? t('*') : empty(), name, paren(params), brace(body));
+            }
+          },
+          {
+            key: 'reduceModule',
+            value: function reduceModule(node, _ref44) {
+              var directives = _ref44.directives;
+              var items = _ref44.items;
+              if (items.length) {
+                items[0] = this.parenToAvoidBeingDirective(node.items[0], items[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(items)));
+            }
+          },
+          {
+            key: 'reduceNewExpression',
+            value: function reduceNewExpression(node, _ref45) {
+              var callee = _ref45.callee;
+              var args = _ref45.arguments;
+              var calleeRep = (0, _coderep.getPrecedence)(node.callee) == _coderep.Precedence.Call ? paren(callee) : p(node.callee, (0, _coderep.getPrecedence)(node), callee);
+              return seq(t('new'), calleeRep, args.length === 0 ? empty() : paren(commaSep(args)));
+            }
+          },
+          {
+            key: 'reduceNewTargetExpression',
+            value: function reduceNewTargetExpression() {
+              return t('new.target');
+            }
+          },
+          {
+            key: 'reduceObjectExpression',
+            value: function reduceObjectExpression(node, _ref46) {
+              var properties = _ref46.properties;
+              var state = brace(commaSep(properties));
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceUpdateExpression',
+            value: function reduceUpdateExpression(node, _ref47) {
+              var operand = _ref47.operand;
+              if (node.isPrefix) {
+                return this.reduceUnaryExpression.apply(this, arguments);
+              } else {
+                return objectAssign(seq(p(node.operand, _coderep.Precedence.New, operand), t(node.operator)), {
+                  startsWithCurly: operand.startsWithCurly,
+                  startsWithLetSquareBracket: operand.startsWithLetSquareBracket,
+                  startsWithFunctionOrClass: operand.startsWithFunctionOrClass
+                });
+              }
+            }
+          },
+          {
+            key: 'reduceUnaryExpression',
+            value: function reduceUnaryExpression(node, _ref48) {
+              var operand = _ref48.operand;
+              return seq(t(node.operator), p(node.operand, (0, _coderep.getPrecedence)(node), operand));
+            }
+          },
+          {
+            key: 'reduceReturnStatement',
+            value: function reduceReturnStatement(node, _ref49) {
+              var expression = _ref49.expression;
+              return seq(t('return'), expression || empty(), semiOp());
+            }
+          },
+          {
+            key: 'reduceScript',
+            value: function reduceScript(node, _ref50) {
+              var directives = _ref50.directives;
+              var statements = _ref50.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceSetter',
+            value: function reduceSetter(node, _ref51) {
+              var name = _ref51.name;
+              var param = _ref51.param;
+              var body = _ref51.body;
+              return seq(t('set'), name, paren(param), brace(body));
+            }
+          },
+          {
+            key: 'reduceShorthandProperty',
+            value: function reduceShorthandProperty(node) {
+              return t(node.name);
+            }
+          },
+          {
+            key: 'reduceStaticMemberExpression',
+            value: function reduceStaticMemberExpression(node, _ref52) {
+              var object = _ref52.object;
+              var property = _ref52.property;
+              var state = seq(p(node.object, (0, _coderep.getPrecedence)(node), object), t('.'), t(property));
+              state.startsWithLet = object.startsWithLet;
+              state.startsWithCurly = object.startsWithCurly;
+              state.startsWithLetSquareBracket = object.startsWithLetSquareBracket;
+              state.startsWithFunctionOrClass = object.startsWithFunctionOrClass;
+              return state;
+            }
+          },
+          {
+            key: 'reduceStaticPropertyName',
+            value: function reduceStaticPropertyName(node) {
+              var n;
+              if (_esutils.keyword.isIdentifierNameES6(node.value)) {
+                return t(node.value);
+              } else if (n = parseFloat(node.value), n === n) {
+                return new _coderep.NumberCodeRep(n);
+              }
+              return t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceSuper',
+            value: function reduceSuper() {
+              return t('super');
+            }
+          },
+          {
+            key: 'reduceSwitchCase',
+            value: function reduceSwitchCase(node, _ref53) {
+              var test = _ref53.test;
+              var consequent = _ref53.consequent;
+              return seq(t('case'), test, t(':'), seq.apply(undefined, _toConsumableArray(consequent)));
+            }
+          },
+          {
+            key: 'reduceSwitchDefault',
+            value: function reduceSwitchDefault(node, _ref54) {
+              var consequent = _ref54.consequent;
+              return seq(t('default:'), seq.apply(undefined, _toConsumableArray(consequent)));
+            }
+          },
+          {
+            key: 'reduceSwitchStatement',
+            value: function reduceSwitchStatement(node, _ref55) {
+              var discriminant = _ref55.discriminant;
+              var cases = _ref55.cases;
+              return seq(t('switch'), paren(discriminant), brace(seq.apply(undefined, _toConsumableArray(cases))));
+            }
+          },
+          {
+            key: 'reduceSwitchStatementWithDefault',
+            value: function reduceSwitchStatementWithDefault(node, _ref56) {
+              var discriminant = _ref56.discriminant;
+              var preDefaultCases = _ref56.preDefaultCases;
+              var defaultCase = _ref56.defaultCase;
+              var postDefaultCases = _ref56.postDefaultCases;
+              return seq(t('switch'), paren(discriminant), brace(seq.apply(undefined, _toConsumableArray(preDefaultCases).concat([defaultCase], _toConsumableArray(postDefaultCases)))));
+            }
+          },
+          {
+            key: 'reduceTemplateExpression',
+            value: function reduceTemplateExpression(node, _ref57) {
+              var tag = _ref57.tag;
+              var elements = _ref57.elements;
+              var state = node.tag == null ? empty() : p(node.tag, (0, _coderep.getPrecedence)(node), tag);
+              var templateData = '';
+              state = seq(state, t('`'));
+              for (var i = 0, l = node.elements.length; i < l; ++i) {
+                if (node.elements[i].type === 'TemplateElement') {
+                  var d = '';
+                  if (i > 0)
+                    d += '}';
+                  d += node.elements[i].rawValue;
+                  if (i < l - 1)
+                    d += '${';
+                  state = seq(state, t(d));
+                } else {
+                  state = seq(state, elements[i]);
+                }
+              }
+              state = seq(state, t('`'));
+              if (node.tag != null) {
+                state.startsWithCurly = tag.startsWithCurly;
+                state.startsWithLetSquareBracket = tag.startsWithLetSquareBracket;
+                state.startsWithFunctionOrClass = tag.startsWithFunctionOrClass;
+              }
+              return state;
+            }
+          },
+          {
+            key: 'reduceTemplateElement',
+            value: function reduceTemplateElement(node) {
+              return t(node.rawValue);
+            }
+          },
+          {
+            key: 'reduceThisExpression',
+            value: function reduceThisExpression(node) {
+              return t('this');
+            }
+          },
+          {
+            key: 'reduceThrowStatement',
+            value: function reduceThrowStatement(node, _ref58) {
+              var expression = _ref58.expression;
+              return seq(t('throw'), expression, semiOp());
+            }
+          },
+          {
+            key: 'reduceTryCatchStatement',
+            value: function reduceTryCatchStatement(node, _ref59) {
+              var body = _ref59.body;
+              var catchClause = _ref59.catchClause;
+              return seq(t('try'), body, catchClause);
+            }
+          },
+          {
+            key: 'reduceTryFinallyStatement',
+            value: function reduceTryFinallyStatement(node, _ref60) {
+              var body = _ref60.body;
+              var catchClause = _ref60.catchClause;
+              var finalizer = _ref60.finalizer;
+              return seq(t('try'), body, catchClause || empty(), t('finally'), finalizer);
+            }
+          },
+          {
+            key: 'reduceYieldExpression',
+            value: function reduceYieldExpression(node, _ref61) {
+              var expression = _ref61.expression;
+              if (node.expression == null)
+                return t('yield');
+              return seq(t('yield'), p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceYieldGeneratorExpression',
+            value: function reduceYieldGeneratorExpression(node, _ref62) {
+              var expression = _ref62.expression;
+              return seq(t('yield'), t('*'), p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceDirective',
+            value: function reduceDirective(node) {
+              var delim = /^(?:[^"\\]|\\.)*$/.test(node.rawValue) ? '"' : "'";
+              return seq(t(delim + node.rawValue + delim), semiOp());
+            }
+          },
+          {
+            key: 'reduceVariableDeclaration',
+            value: function reduceVariableDeclaration(node, _ref63) {
+              var declarators = _ref63.declarators;
+              return seq(t(node.kind), commaSep(declarators));
+            }
+          },
+          {
+            key: 'reduceVariableDeclarationStatement',
+            value: function reduceVariableDeclarationStatement(node, _ref64) {
+              var declaration = _ref64.declaration;
+              return seq(declaration, semiOp());
+            }
+          },
+          {
+            key: 'reduceVariableDeclarator',
+            value: function reduceVariableDeclarator(node, _ref65) {
+              var binding = _ref65.binding;
+              var init = _ref65.init;
+              var containsIn = init && init.containsIn && !init.containsGroup;
+              if (init) {
+                if (init.containsGroup) {
+                  init = paren(init);
+                } else {
+                  init = markContainsIn(init);
+                }
+              }
+              return objectAssign(init == null ? binding : seq(binding, t('='), init), { containsIn: containsIn });
+            }
+          },
+          {
+            key: 'reduceWhileStatement',
+            value: function reduceWhileStatement(node, _ref66) {
+              var test = _ref66.test;
+              var body = _ref66.body;
+              return objectAssign(seq(t('while'), paren(test), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceWithStatement',
+            value: function reduceWithStatement(node, _ref67) {
+              var object = _ref67.object;
+              var body = _ref67.body;
+              return objectAssign(seq(t('with'), paren(object), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          }
+        ]);
+        return MinimalCodeGen;
+      }();
+    exports['default'] = MinimalCodeGen;
+  });
+  require.define('/dist/token_stream.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
+    function numberDot(fragment) {
+      if (fragment.indexOf('.') < 0 && fragment.indexOf('e') < 0) {
+        return '..';
+      }
+      return '.';
+    }
+    function renderNumber(n) {
+      var s;
+      if (n >= 1e3 && n % 10 === 0) {
+        s = n.toString(10);
+        if (/[eE]/.test(s)) {
+          return s.replace(/[eE]\+/, 'e');
+        }
+        return n.toString(10).replace(/0+$/, function (match) {
+          return 'e' + match.length;
+        });
+      } else if (n % 1 === 0) {
+        if (n > 1e15 && n < 1e20) {
+          return '0x' + n.toString(16).toUpperCase();
+        }
+        return n.toString(10).replace(/[eE]\+/, 'e');
+      } else {
+        return n.toString(10).replace(/^0\./, '.').replace(/[eE]\+/, 'e');
+      }
+    }
+    var TokenStream = function () {
+        function TokenStream() {
+          _classCallCheck(this, TokenStream);
+          this.result = '';
+          this.lastNumber = null;
+          this.lastChar = null;
+          this.optionalSemi = false;
+        }
+        _createClass(TokenStream, [
+          {
+            key: 'putNumber',
+            value: function putNumber(number) {
+              var tokenStr = renderNumber(number);
+              this.put(tokenStr);
+              this.lastNumber = tokenStr;
+            }
+          },
+          {
+            key: 'putOptionalSemi',
+            value: function putOptionalSemi() {
+              this.optionalSemi = true;
+            }
+          },
+          {
+            key: 'put',
+            value: function put(tokenStr) {
+              if (this.optionalSemi) {
+                this.optionalSemi = false;
+                if (tokenStr !== '}') {
+                  this.put(';');
+                }
+              }
+              if (this.lastNumber !== null && tokenStr.length == 1) {
+                if (tokenStr === '.') {
+                  this.result += numberDot(this.lastNumber);
+                  this.lastNumber = null;
+                  this.lastChar = '.';
+                  return;
+                }
+              }
+              this.lastNumber = null;
+              var rightChar = tokenStr.charAt(0);
+              var lastChar = this.lastChar;
+              this.lastChar = tokenStr.charAt(tokenStr.length - 1);
+              if (lastChar && ((lastChar == '+' || lastChar == '-') && lastChar == rightChar || _esutils.code.isIdentifierPartES6(lastChar.charCodeAt(0)) && _esutils.code.isIdentifierPartES6(rightChar.charCodeAt(0)) || lastChar == '/' && rightChar == 'i')) {
+                this.result += ' ';
+              }
+              this.result += tokenStr;
+            }
+          }
+        ]);
+        return TokenStream;
+      }();
+    exports.TokenStream = TokenStream;
+  });
+  require.define('/node_modules/shift-reducer/dist/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    exports['default'] = reduce;
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
+    function transformWithSpec(_x, _x2, _x3) {
+      var _left;
+      var _again = true;
+      _function:
+        while (_again) {
+          var transformer = _x, node = _x2, spec = _x3;
+          _again = false;
+          switch (spec.typeName) {
+          case 'Enum':
+          case 'String':
+          case 'Number':
+          case 'Boolean':
+          case 'SourceSpan':
+            return node;
+          case 'Const':
+            _x = transformer;
+            _x2 = node;
+            _x3 = spec.argument;
+            _again = true;
+            continue _function;
+          case 'Maybe':
+            if (!(_left = node)) {
+              return _left;
+            }
+            _x = transformer;
+            _x2 = node;
+            _x3 = spec.argument;
+            _again = true;
+            continue _function;
+          case 'List':
+            return node.map(function (e) {
+              return transformWithSpec(transformer, e, spec.argument);
+            });
+          case 'Union':
+            _x = transformer;
+            _x2 = node;
+            _x3 = _shiftSpec['default'][node.type];
+            _again = true;
+            continue _function;
+          default:
+            var state = {};
+            spec.fields.forEach(function (field) {
+              var v = transformWithSpec(transformer, node[field.name], field.type);
+              state[field.name] = v == null ? null : v;
+            });
+            if (typeof transformer['reduce' + node.type] !== 'function') {
+              throw new Error('Encountered ' + node.type + ', which the provided reducer does not handle.');
+            }
+            return transformer['reduce' + node.type](node, state);
+          }
+        }
+    }
+    function reduce(reducer, reducible) {
+      return transformWithSpec(reducer, reducible, _shiftSpec['default'][reducible.type]);
+    }
+    var _cloneReducer = require('/node_modules/shift-reducer/dist/clone-reducer.js', module);
+    Object.defineProperty(exports, 'CloneReducer', {
+      enumerable: true,
+      get: function get() {
+        return _cloneReducer['default'];
+      }
+    });
+    var _monoidalReducer = require('/node_modules/shift-reducer/dist/monoidal-reducer.js', module);
+    Object.defineProperty(exports, 'MonoidalReducer', {
+      enumerable: true,
+      get: function get() {
+        return _monoidalReducer['default'];
+      }
+    });
+  });
+  require.define('/node_modules/shift-reducer/dist/monoidal-reducer.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
+    var methods = {};
+    function id(x) {
+      return x;
+    }
+    function handlerForFieldOfType(_x) {
+      var _again = true;
+      _function:
+        while (_again) {
+          var type = _x;
+          _again = false;
+          switch (type.typeName) {
+          case 'Enum':
+          case 'String':
+          case 'Boolean':
+          case 'Number':
+          case 'SourceSpan':
+            return null;
+          case 'Const':
+            _x = type.argument;
+            _again = true;
+            continue _function;
+          case 'Maybe': {
+              var _ret = function () {
+                  var subHandler = handlerForFieldOfType(type.argument);
+                  if (subHandler == null)
+                    return { v: null };
+                  return {
+                    v: function (t) {
+                      return t == null ? this.identity : subHandler.call(this, t);
+                    }
+                  };
+                }();
+              if (typeof _ret === 'object')
+                return _ret.v;
+            }
+          case 'List': {
+              var _ret2 = function () {
+                  var subHandler = handlerForFieldOfType(type.argument);
+                  if (subHandler == null)
+                    return { v: null };
+                  return {
+                    v: function (t) {
+                      var _this = this;
+                      return this.fold(t.map(function (x) {
+                        return subHandler.call(_this, x);
+                      }));
+                    }
+                  };
+                }();
+              if (typeof _ret2 === 'object')
+                return _ret2.v;
+            }
+          default:
+            return id;
+          }
+        }
+    }
+    var _loop = function (typeName) {
+      var type = _shiftSpec['default'][typeName];
+      var handlers = {};
+      type.fields.forEach(function (field) {
+        var handler = handlerForFieldOfType(field.type);
+        if (handler != null)
+          handlers[field.name] = handler;
+      });
+      var fieldNames = Object.keys(handlers);
+      methods['reduce' + typeName] = {
+        value: function value(node, state) {
+          var _this2 = this;
+          return this.fold(fieldNames.map(function (fieldName) {
+            return handlers[fieldName].call(_this2, state[fieldName]);
+          }));
+        }
+      };
+    };
+    for (var typeName in _shiftSpec['default']) {
+      _loop(typeName);
+    }
+    var MonoidalReducer = function () {
+        function MonoidalReducer(monoid) {
+          _classCallCheck(this, MonoidalReducer);
+          this.identity = monoid.empty();
+          var concat = monoid.prototype && monoid.prototype.concat || monoid.concat;
+          this.append = function (a, b) {
+            return concat.call(a, b);
+          };
+        }
+        _createClass(MonoidalReducer, [{
+            key: 'fold',
+            value: function fold(list, a) {
+              var _this3 = this;
+              return list.reduce(function (memo, x) {
+                return _this3.append(memo, x);
+              }, a == null ? this.identity : a);
+            }
+          }]);
+        return MonoidalReducer;
+      }();
+    exports['default'] = MonoidalReducer;
+    Object.defineProperties(MonoidalReducer.prototype, methods);
+  });
+  require.define('/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+    exports.default = function () {
+      var SPEC = {};
+      var BOOLEAN = { typeName: 'Boolean' };
+      var DOUBLE = { typeName: 'Number' };
+      var STRING = { typeName: 'String' };
+      function Maybe(arg) {
+        return {
+          typeName: 'Maybe',
+          argument: arg
+        };
+      }
+      function List(arg) {
+        return {
+          typeName: 'List',
+          argument: arg
+        };
+      }
+      function Const(arg) {
+        return {
+          typeName: 'Const',
+          argument: arg
+        };
+      }
+      function Union() {
+        return {
+          typeName: 'Union',
+          arguments: [].slice.call(arguments, 0)
+        };
+      }
+      var TYPE_INDICATOR = {
+          typeName: 'Enum',
+          values: [
+            'ArrayBinding',
+            'ArrayExpression',
+            'ArrowExpression',
+            'AssignmentExpression',
+            'BinaryExpression',
+            'BindingIdentifier',
+            'BindingProperty',
+            'BindingPropertyIdentifier',
+            'BindingPropertyProperty',
+            'BindingWithDefault',
+            'Block',
+            'BlockStatement',
+            'BreakStatement',
+            'CallExpression',
+            'CatchClause',
+            'Class',
+            'ClassDeclaration',
+            'ClassElement',
+            'ClassExpression',
+            'CompoundAssignmentExpression',
+            'ComputedMemberExpression',
+            'ComputedPropertyName',
+            'ConditionalExpression',
+            'ContinueStatement',
+            'DataProperty',
+            'DebuggerStatement',
+            'Directive',
+            'DoWhileStatement',
+            'EmptyStatement',
+            'Export',
+            'ExportAllFrom',
+            'ExportDeclaration',
+            'ExportDefault',
+            'ExportFrom',
+            'ExportSpecifier',
+            'Expression',
+            'ExpressionStatement',
+            'ForInStatement',
+            'ForOfStatement',
+            'ForStatement',
+            'FormalParameters',
+            'Function',
+            'FunctionBody',
+            'FunctionDeclaration',
+            'FunctionExpression',
+            'Getter',
+            'IdentifierExpression',
+            'IfStatement',
+            'Import',
+            'ImportDeclaration',
+            'ImportNamespace',
+            'ImportSpecifier',
+            'IterationStatement',
+            'LabeledStatement',
+            'LiteralBooleanExpression',
+            'LiteralInfinityExpression',
+            'LiteralNullExpression',
+            'LiteralNumericExpression',
+            'LiteralRegExpExpression',
+            'LiteralStringExpression',
+            'MemberExpression',
+            'Method',
+            'MethodDefinition',
+            'Module',
+            'NamedObjectProperty',
+            'NewExpression',
+            'NewTargetExpression',
+            'Node',
+            'ObjectBinding',
+            'ObjectExpression',
+            'ObjectProperty',
+            'PropertyName',
+            'ReturnStatement',
+            'Script',
+            'Setter',
+            'ShorthandProperty',
+            'SourceLocation',
+            'SourceSpan',
+            'SpreadElement',
+            'Statement',
+            'StaticMemberExpression',
+            'StaticPropertyName',
+            'Super',
+            'SwitchCase',
+            'SwitchDefault',
+            'SwitchStatement',
+            'SwitchStatementWithDefault',
+            'TemplateElement',
+            'TemplateExpression',
+            'ThisExpression',
+            'ThrowStatement',
+            'TryCatchStatement',
+            'TryFinallyStatement',
+            'UnaryExpression',
+            'UpdateExpression',
+            'VariableDeclaration',
+            'VariableDeclarationStatement',
+            'VariableDeclarator',
+            'WhileStatement',
+            'WithStatement',
+            'YieldExpression',
+            'YieldGeneratorExpression'
+          ]
+        };
+      var VariableDeclarationKind = {
+          typeName: 'Enum',
+          values: [
+            'var',
+            'let',
+            'const'
+          ]
+        };
+      var CompoundAssignmentOperator = {
+          typeName: 'Enum',
+          values: [
+            '+=',
+            '-=',
+            '*=',
+            '/=',
+            '%=',
+            '<<=',
+            '>>=',
+            '>>>=',
+            '|=',
+            '^=',
+            '&='
+          ]
+        };
+      var BinaryOperator = {
+          typeName: 'Enum',
+          values: [
+            '==',
+            '!=',
+            '===',
+            '!==',
+            '<',
+            '<=',
+            '>',
+            '>=',
+            'in',
+            'instanceof',
+            '<<',
+            '>>',
+            '>>>',
+            '+',
+            '-',
+            '*',
+            '/',
+            '%',
+            ',',
+            '||',
+            '&&',
+            '|',
+            '^',
+            '&'
+          ]
+        };
+      var UnaryOperator = {
+          typeName: 'Enum',
+          values: [
+            '+',
+            '-',
+            '!',
+            '~',
+            'typeof',
+            'void',
+            'delete'
+          ]
+        };
+      var UpdateOperator = {
+          typeName: 'Enum',
+          values: [
+            '++',
+            '--'
+          ]
+        };
+      var SourceLocation = SPEC.SourceLocation = {};
+      var SourceSpan = SPEC.SourceSpan = {};
+      var BindingWithDefault = SPEC.BindingWithDefault = {};
+      var BindingIdentifier = SPEC.BindingIdentifier = {};
+      var ArrayBinding = SPEC.ArrayBinding = {};
+      var ObjectBinding = SPEC.ObjectBinding = {};
+      var BindingPropertyIdentifier = SPEC.BindingPropertyIdentifier = {};
+      var BindingPropertyProperty = SPEC.BindingPropertyProperty = {};
+      var ClassExpression = SPEC.ClassExpression = {};
+      var ClassDeclaration = SPEC.ClassDeclaration = {};
+      var ClassElement = SPEC.ClassElement = {};
+      var Module = SPEC.Module = {};
+      var Import = SPEC.Import = {};
+      var ImportNamespace = SPEC.ImportNamespace = {};
+      var ImportSpecifier = SPEC.ImportSpecifier = {};
+      var ExportAllFrom = SPEC.ExportAllFrom = {};
+      var ExportFrom = SPEC.ExportFrom = {};
+      var Export = SPEC.Export = {};
+      var ExportDefault = SPEC.ExportDefault = {};
+      var ExportSpecifier = SPEC.ExportSpecifier = {};
+      var Method = SPEC.Method = {};
+      var Getter = SPEC.Getter = {};
+      var Setter = SPEC.Setter = {};
+      var DataProperty = SPEC.DataProperty = {};
+      var ShorthandProperty = SPEC.ShorthandProperty = {};
+      var ComputedPropertyName = SPEC.ComputedPropertyName = {};
+      var StaticPropertyName = SPEC.StaticPropertyName = {};
+      var LiteralBooleanExpression = SPEC.LiteralBooleanExpression = {};
+      var LiteralInfinityExpression = SPEC.LiteralInfinityExpression = {};
+      var LiteralNullExpression = SPEC.LiteralNullExpression = {};
+      var LiteralNumericExpression = SPEC.LiteralNumericExpression = {};
+      var LiteralRegExpExpression = SPEC.LiteralRegExpExpression = {};
+      var LiteralStringExpression = SPEC.LiteralStringExpression = {};
+      var ArrayExpression = SPEC.ArrayExpression = {};
+      var ArrowExpression = SPEC.ArrowExpression = {};
+      var AssignmentExpression = SPEC.AssignmentExpression = {};
+      var BinaryExpression = SPEC.BinaryExpression = {};
+      var CallExpression = SPEC.CallExpression = {};
+      var CompoundAssignmentExpression = SPEC.CompoundAssignmentExpression = {};
+      var ComputedMemberExpression = SPEC.ComputedMemberExpression = {};
+      var ConditionalExpression = SPEC.ConditionalExpression = {};
+      var FunctionExpression = SPEC.FunctionExpression = {};
+      var IdentifierExpression = SPEC.IdentifierExpression = {};
+      var NewExpression = SPEC.NewExpression = {};
+      var NewTargetExpression = SPEC.NewTargetExpression = {};
+      var ObjectExpression = SPEC.ObjectExpression = {};
+      var UnaryExpression = SPEC.UnaryExpression = {};
+      var StaticMemberExpression = SPEC.StaticMemberExpression = {};
+      var TemplateExpression = SPEC.TemplateExpression = {};
+      var ThisExpression = SPEC.ThisExpression = {};
+      var UpdateExpression = SPEC.UpdateExpression = {};
+      var YieldExpression = SPEC.YieldExpression = {};
+      var YieldGeneratorExpression = SPEC.YieldGeneratorExpression = {};
+      var BlockStatement = SPEC.BlockStatement = {};
+      var BreakStatement = SPEC.BreakStatement = {};
+      var ContinueStatement = SPEC.ContinueStatement = {};
+      var DebuggerStatement = SPEC.DebuggerStatement = {};
+      var DoWhileStatement = SPEC.DoWhileStatement = {};
+      var EmptyStatement = SPEC.EmptyStatement = {};
+      var ExpressionStatement = SPEC.ExpressionStatement = {};
+      var ForInStatement = SPEC.ForInStatement = {};
+      var ForOfStatement = SPEC.ForOfStatement = {};
+      var ForStatement = SPEC.ForStatement = {};
+      var IfStatement = SPEC.IfStatement = {};
+      var LabeledStatement = SPEC.LabeledStatement = {};
+      var ReturnStatement = SPEC.ReturnStatement = {};
+      var SwitchStatement = SPEC.SwitchStatement = {};
+      var SwitchStatementWithDefault = SPEC.SwitchStatementWithDefault = {};
+      var ThrowStatement = SPEC.ThrowStatement = {};
+      var TryCatchStatement = SPEC.TryCatchStatement = {};
+      var TryFinallyStatement = SPEC.TryFinallyStatement = {};
+      var VariableDeclarationStatement = SPEC.VariableDeclarationStatement = {};
+      var WhileStatement = SPEC.WhileStatement = {};
+      var WithStatement = SPEC.WithStatement = {};
+      var Block = SPEC.Block = {};
+      var CatchClause = SPEC.CatchClause = {};
+      var Directive = SPEC.Directive = {};
+      var FormalParameters = SPEC.FormalParameters = {};
+      var FunctionBody = SPEC.FunctionBody = {};
+      var FunctionDeclaration = SPEC.FunctionDeclaration = {};
+      var Script = SPEC.Script = {};
+      var SpreadElement = SPEC.SpreadElement = {};
+      var Super = SPEC.Super = {};
+      var SwitchCase = SPEC.SwitchCase = {};
+      var SwitchDefault = SPEC.SwitchDefault = {};
+      var TemplateElement = SPEC.TemplateElement = {};
+      var VariableDeclaration = SPEC.VariableDeclaration = {};
+      var VariableDeclarator = SPEC.VariableDeclarator = {};
+      var Class = Union(ClassExpression, ClassDeclaration);
+      var BindingProperty = Union(BindingPropertyIdentifier, BindingPropertyProperty);
+      var ExportDeclaration = Union(ExportAllFrom, ExportFrom, Export, ExportDefault);
+      var ImportDeclaration = Union(Import, ImportNamespace);
+      var MethodDefinition = Union(Method, Getter, Setter);
+      var NamedObjectProperty = Union(MethodDefinition, DataProperty);
+      var ObjectProperty = Union(NamedObjectProperty, ShorthandProperty);
+      var PropertyName = Union(ComputedPropertyName, StaticPropertyName);
+      var MemberExpression = Union(ComputedMemberExpression, StaticMemberExpression);
+      var Expression = Union(MemberExpression, ClassExpression, LiteralBooleanExpression, LiteralInfinityExpression, LiteralNullExpression, LiteralNumericExpression, LiteralRegExpExpression, LiteralStringExpression, ArrayExpression, ArrowExpression, AssignmentExpression, BinaryExpression, CallExpression, CompoundAssignmentExpression, ConditionalExpression, FunctionExpression, IdentifierExpression, NewExpression, NewTargetExpression, ObjectExpression, UnaryExpression, TemplateExpression, ThisExpression, UpdateExpression, YieldExpression, YieldGeneratorExpression);
+      var IterationStatement = Union(DoWhileStatement, ForInStatement, ForOfStatement, ForStatement, WhileStatement);
+      var Statement = Union(IterationStatement, ClassDeclaration, BlockStatement, BreakStatement, ContinueStatement, DebuggerStatement, EmptyStatement, ExpressionStatement, IfStatement, LabeledStatement, ReturnStatement, SwitchStatement, SwitchStatementWithDefault, ThrowStatement, TryCatchStatement, TryFinallyStatement, VariableDeclarationStatement, WithStatement, FunctionDeclaration);
+      var Node = Union(Statement, Expression, PropertyName, ObjectProperty, ImportDeclaration, ExportDeclaration, BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding, BindingProperty, ClassElement, Module, ImportSpecifier, ExportSpecifier, Block, CatchClause, Directive, FormalParameters, FunctionBody, Script, SpreadElement, Super, SwitchCase, SwitchDefault, TemplateElement, VariableDeclaration, VariableDeclarator);
+      var Function = Union(FunctionExpression, FunctionDeclaration);
+      SourceLocation.typeName = 'SourceLocation';
+      SourceLocation.fields = [
+        {
+          name: 'line',
+          type: DOUBLE
+        },
+        {
+          name: 'column',
+          type: DOUBLE
+        },
+        {
+          name: 'offset',
+          type: DOUBLE
+        }
+      ];
+      SourceSpan.typeName = 'SourceSpan';
+      SourceSpan.fields = [
+        {
+          name: 'source',
+          type: Maybe(STRING)
+        },
+        {
+          name: 'start',
+          type: SourceLocation
+        },
+        {
+          name: 'end',
+          type: SourceLocation
+        }
+      ];
+      BindingWithDefault.typeName = 'BindingWithDefault';
+      BindingWithDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingWithDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'init',
+          type: Expression
+        }
+      ];
+      BindingIdentifier.typeName = 'BindingIdentifier';
+      BindingIdentifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingIdentifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: STRING
+        }
+      ];
+      ArrayBinding.typeName = 'ArrayBinding';
+      ArrayBinding.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ArrayBinding'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'elements',
+          type: List(Maybe(Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault)))
+        },
+        {
+          name: 'restElement',
+          type: Maybe(Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression))
+        }
+      ];
+      ObjectBinding.typeName = 'ObjectBinding';
+      ObjectBinding.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ObjectBinding'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'properties',
+          type: List(BindingProperty)
+        }
+      ];
+      BindingPropertyIdentifier.typeName = 'BindingPropertyIdentifier';
+      BindingPropertyIdentifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingPropertyIdentifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: BindingIdentifier
+        },
+        {
+          name: 'init',
+          type: Maybe(Expression)
+        }
+      ];
+      BindingPropertyProperty.typeName = 'BindingPropertyProperty';
+      BindingPropertyProperty.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingPropertyProperty'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault)
+        }
+      ];
+      ClassExpression.typeName = 'ClassExpression';
+      ClassExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ClassExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'super',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'elements',
+          type: List(ClassElement)
+        }
+      ];
+      ClassDeclaration.typeName = 'ClassDeclaration';
+      ClassDeclaration.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ClassDeclaration'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: BindingIdentifier
+        },
+        {
+          name: 'super',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'elements',
+          type: List(ClassElement)
+        }
+      ];
+      ClassElement.typeName = 'ClassElement';
+      ClassElement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ClassElement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isStatic',
+          type: BOOLEAN
+        },
+        {
+          name: 'method',
+          type: MethodDefinition
+        }
+      ];
+      Module.typeName = 'Module';
+      Module.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Module'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'directives',
+          type: List(Directive)
+        },
+        {
+          name: 'items',
+          type: List(Union(ImportDeclaration, ExportDeclaration, Statement))
+        }
+      ];
+      Import.typeName = 'Import';
+      Import.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Import'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: STRING
+        },
+        {
+          name: 'defaultBinding',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'namedImports',
+          type: List(ImportSpecifier)
+        }
+      ];
+      ImportNamespace.typeName = 'ImportNamespace';
+      ImportNamespace.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ImportNamespace'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: STRING
+        },
+        {
+          name: 'defaultBinding',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'namespaceBinding',
+          type: BindingIdentifier
+        }
+      ];
+      ImportSpecifier.typeName = 'ImportSpecifier';
+      ImportSpecifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ImportSpecifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: Maybe(STRING)
+        },
+        {
+          name: 'binding',
+          type: BindingIdentifier
+        }
+      ];
+      ExportAllFrom.typeName = 'ExportAllFrom';
+      ExportAllFrom.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportAllFrom'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: STRING
+        }
+      ];
+      ExportFrom.typeName = 'ExportFrom';
+      ExportFrom.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportFrom'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'namedExports',
+          type: List(ExportSpecifier)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: Maybe(STRING)
+        }
+      ];
+      Export.typeName = 'Export';
+      Export.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Export'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'declaration',
+          type: Union(FunctionDeclaration, ClassDeclaration, VariableDeclaration)
+        }
+      ];
+      ExportDefault.typeName = 'ExportDefault';
+      ExportDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Union(FunctionDeclaration, ClassDeclaration, Expression)
+        }
+      ];
+      ExportSpecifier.typeName = 'ExportSpecifier';
+      ExportSpecifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportSpecifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: Maybe(STRING)
+        },
+        {
+          name: 'exportedName',
+          type: STRING
+        }
+      ];
+      Method.typeName = 'Method';
+      Method.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Method'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'isGenerator',
+          type: BOOLEAN
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      Getter.typeName = 'Getter';
+      Getter.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Getter'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      Setter.typeName = 'Setter';
+      Setter.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Setter'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'param',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault)
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      DataProperty.typeName = 'DataProperty';
+      DataProperty.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'DataProperty'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ShorthandProperty.typeName = 'ShorthandProperty';
+      ShorthandProperty.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ShorthandProperty'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: STRING
+        }
+      ];
+      ComputedPropertyName.typeName = 'ComputedPropertyName';
+      ComputedPropertyName.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ComputedPropertyName'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      StaticPropertyName.typeName = 'StaticPropertyName';
+      StaticPropertyName.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'StaticPropertyName'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: STRING
+        }
+      ];
+      LiteralBooleanExpression.typeName = 'LiteralBooleanExpression';
+      LiteralBooleanExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralBooleanExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: BOOLEAN
+        }
+      ];
+      LiteralInfinityExpression.typeName = 'LiteralInfinityExpression';
+      LiteralInfinityExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralInfinityExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      LiteralNullExpression.typeName = 'LiteralNullExpression';
+      LiteralNullExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralNullExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      LiteralNumericExpression.typeName = 'LiteralNumericExpression';
+      LiteralNumericExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralNumericExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: DOUBLE
+        }
+      ];
+      LiteralRegExpExpression.typeName = 'LiteralRegExpExpression';
+      LiteralRegExpExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralRegExpExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'pattern',
+          type: STRING
+        },
+        {
+          name: 'flags',
+          type: STRING
+        }
+      ];
+      LiteralStringExpression.typeName = 'LiteralStringExpression';
+      LiteralStringExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralStringExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: STRING
+        }
+      ];
+      ArrayExpression.typeName = 'ArrayExpression';
+      ArrayExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ArrayExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'elements',
+          type: List(Maybe(Union(SpreadElement, Expression)))
+        }
+      ];
+      ArrowExpression.typeName = 'ArrowExpression';
+      ArrowExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ArrowExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: Union(FunctionBody, Expression)
+        }
+      ];
+      AssignmentExpression.typeName = 'AssignmentExpression';
+      AssignmentExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'AssignmentExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      BinaryExpression.typeName = 'BinaryExpression';
+      BinaryExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BinaryExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'operator',
+          type: BinaryOperator
+        },
+        {
+          name: 'left',
+          type: Expression
+        },
+        {
+          name: 'right',
+          type: Expression
+        }
+      ];
+      CallExpression.typeName = 'CallExpression';
+      CallExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'CallExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'callee',
+          type: Union(Expression, Super)
+        },
+        {
+          name: 'arguments',
+          type: List(Union(SpreadElement, Expression))
+        }
+      ];
+      CompoundAssignmentExpression.typeName = 'CompoundAssignmentExpression';
+      CompoundAssignmentExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'CompoundAssignmentExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'operator',
+          type: CompoundAssignmentOperator
+        },
+        {
+          name: 'binding',
+          type: Union(BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ComputedMemberExpression.typeName = 'ComputedMemberExpression';
+      ComputedMemberExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ComputedMemberExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'object',
+          type: Union(Expression, Super)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ConditionalExpression.typeName = 'ConditionalExpression';
+      ConditionalExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ConditionalExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'consequent',
+          type: Expression
+        },
+        {
+          name: 'alternate',
+          type: Expression
+        }
+      ];
+      FunctionExpression.typeName = 'FunctionExpression';
+      FunctionExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FunctionExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isGenerator',
+          type: BOOLEAN
+        },
+        {
+          name: 'name',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      IdentifierExpression.typeName = 'IdentifierExpression';
+      IdentifierExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'IdentifierExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: STRING
+        }
+      ];
+      NewExpression.typeName = 'NewExpression';
+      NewExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'NewExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'callee',
+          type: Expression
+        },
+        {
+          name: 'arguments',
+          type: List(Union(SpreadElement, Expression))
+        }
+      ];
+      NewTargetExpression.typeName = 'NewTargetExpression';
+      NewTargetExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'NewTargetExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      ObjectExpression.typeName = 'ObjectExpression';
+      ObjectExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ObjectExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'properties',
+          type: List(ObjectProperty)
+        }
+      ];
+      UnaryExpression.typeName = 'UnaryExpression';
+      UnaryExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'UnaryExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'operator',
+          type: UnaryOperator
+        },
+        {
+          name: 'operand',
+          type: Expression
+        }
+      ];
+      StaticMemberExpression.typeName = 'StaticMemberExpression';
+      StaticMemberExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'StaticMemberExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'object',
+          type: Union(Expression, Super)
+        },
+        {
+          name: 'property',
+          type: STRING
+        }
+      ];
+      TemplateExpression.typeName = 'TemplateExpression';
+      TemplateExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TemplateExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'tag',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'elements',
+          type: List(Union(Expression, TemplateElement))
+        }
+      ];
+      ThisExpression.typeName = 'ThisExpression';
+      ThisExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ThisExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      UpdateExpression.typeName = 'UpdateExpression';
+      UpdateExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'UpdateExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isPrefix',
+          type: BOOLEAN
+        },
+        {
+          name: 'operator',
+          type: UpdateOperator
+        },
+        {
+          name: 'operand',
+          type: Union(BindingIdentifier, MemberExpression)
+        }
+      ];
+      YieldExpression.typeName = 'YieldExpression';
+      YieldExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'YieldExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Maybe(Expression)
+        }
+      ];
+      YieldGeneratorExpression.typeName = 'YieldGeneratorExpression';
+      YieldGeneratorExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'YieldGeneratorExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      BlockStatement.typeName = 'BlockStatement';
+      BlockStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BlockStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'block',
+          type: Block
+        }
+      ];
+      BreakStatement.typeName = 'BreakStatement';
+      BreakStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BreakStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'label',
+          type: Maybe(STRING)
+        }
+      ];
+      ContinueStatement.typeName = 'ContinueStatement';
+      ContinueStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ContinueStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'label',
+          type: Maybe(STRING)
+        }
+      ];
+      DebuggerStatement.typeName = 'DebuggerStatement';
+      DebuggerStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'DebuggerStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      DoWhileStatement.typeName = 'DoWhileStatement';
+      DoWhileStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'DoWhileStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Statement
+        },
+        {
+          name: 'test',
+          type: Expression
+        }
+      ];
+      EmptyStatement.typeName = 'EmptyStatement';
+      EmptyStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'EmptyStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      ExpressionStatement.typeName = 'ExpressionStatement';
+      ExpressionStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExpressionStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ForInStatement.typeName = 'ForInStatement';
+      ForInStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ForInStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'left',
+          type: Union(VariableDeclaration, ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'right',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      ForOfStatement.typeName = 'ForOfStatement';
+      ForOfStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ForOfStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'left',
+          type: Union(VariableDeclaration, ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'right',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      ForStatement.typeName = 'ForStatement';
+      ForStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ForStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'init',
+          type: Maybe(Union(VariableDeclaration, Expression))
+        },
+        {
+          name: 'test',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'update',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      IfStatement.typeName = 'IfStatement';
+      IfStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'IfStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'consequent',
+          type: Statement
+        },
+        {
+          name: 'alternate',
+          type: Maybe(Statement)
+        }
+      ];
+      LabeledStatement.typeName = 'LabeledStatement';
+      LabeledStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LabeledStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'label',
+          type: STRING
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      ReturnStatement.typeName = 'ReturnStatement';
+      ReturnStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ReturnStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Maybe(Expression)
+        }
+      ];
+      SwitchStatement.typeName = 'SwitchStatement';
+      SwitchStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'discriminant',
+          type: Expression
+        },
+        {
+          name: 'cases',
+          type: List(SwitchCase)
+        }
+      ];
+      SwitchStatementWithDefault.typeName = 'SwitchStatementWithDefault';
+      SwitchStatementWithDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchStatementWithDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'discriminant',
+          type: Expression
+        },
+        {
+          name: 'preDefaultCases',
+          type: List(SwitchCase)
+        },
+        {
+          name: 'defaultCase',
+          type: SwitchDefault
+        },
+        {
+          name: 'postDefaultCases',
+          type: List(SwitchCase)
+        }
+      ];
+      ThrowStatement.typeName = 'ThrowStatement';
+      ThrowStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ThrowStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      TryCatchStatement.typeName = 'TryCatchStatement';
+      TryCatchStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TryCatchStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Block
+        },
+        {
+          name: 'catchClause',
+          type: CatchClause
+        }
+      ];
+      TryFinallyStatement.typeName = 'TryFinallyStatement';
+      TryFinallyStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TryFinallyStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Block
+        },
+        {
+          name: 'catchClause',
+          type: Maybe(CatchClause)
+        },
+        {
+          name: 'finalizer',
+          type: Block
+        }
+      ];
+      VariableDeclarationStatement.typeName = 'VariableDeclarationStatement';
+      VariableDeclarationStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'VariableDeclarationStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'declaration',
+          type: VariableDeclaration
+        }
+      ];
+      WhileStatement.typeName = 'WhileStatement';
+      WhileStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'WhileStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      WithStatement.typeName = 'WithStatement';
+      WithStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'WithStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'object',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      Block.typeName = 'Block';
+      Block.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Block'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'statements',
+          type: List(Statement)
+        }
+      ];
+      CatchClause.typeName = 'CatchClause';
+      CatchClause.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'CatchClause'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'body',
+          type: Block
+        }
+      ];
+      Directive.typeName = 'Directive';
+      Directive.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Directive'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'rawValue',
+          type: STRING
+        }
+      ];
+      FormalParameters.typeName = 'FormalParameters';
+      FormalParameters.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FormalParameters'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'items',
+          type: List(Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault))
+        },
+        {
+          name: 'rest',
+          type: Maybe(BindingIdentifier)
+        }
+      ];
+      FunctionBody.typeName = 'FunctionBody';
+      FunctionBody.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FunctionBody'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'directives',
+          type: List(Directive)
+        },
+        {
+          name: 'statements',
+          type: List(Statement)
+        }
+      ];
+      FunctionDeclaration.typeName = 'FunctionDeclaration';
+      FunctionDeclaration.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FunctionDeclaration'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isGenerator',
+          type: BOOLEAN
+        },
+        {
+          name: 'name',
+          type: BindingIdentifier
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      Script.typeName = 'Script';
+      Script.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Script'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'directives',
+          type: List(Directive)
+        },
+        {
+          name: 'statements',
+          type: List(Statement)
+        }
+      ];
+      SpreadElement.typeName = 'SpreadElement';
+      SpreadElement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SpreadElement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      Super.typeName = 'Super';
+      Super.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Super'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      SwitchCase.typeName = 'SwitchCase';
+      SwitchCase.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchCase'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'consequent',
+          type: List(Statement)
+        }
+      ];
+      SwitchDefault.typeName = 'SwitchDefault';
+      SwitchDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'consequent',
+          type: List(Statement)
+        }
+      ];
+      TemplateElement.typeName = 'TemplateElement';
+      TemplateElement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TemplateElement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'rawValue',
+          type: STRING
+        }
+      ];
+      VariableDeclaration.typeName = 'VariableDeclaration';
+      VariableDeclaration.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'VariableDeclaration'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'kind',
+          type: VariableDeclarationKind
+        },
+        {
+          name: 'declarators',
+          type: List(VariableDeclarator)
+        }
+      ];
+      VariableDeclarator.typeName = 'VariableDeclarator';
+      VariableDeclarator.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'VariableDeclarator'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'init',
+          type: Maybe(Expression)
+        }
+      ];
+      return SPEC;
+    }();
+  });
+  require.define('/node_modules/shift-reducer/dist/clone-reducer.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
+    var CloneReducer = function CloneReducer() {
+      _classCallCheck(this, CloneReducer);
+    };
+    exports['default'] = CloneReducer;
+    for (var typeName in _shiftSpec['default']) {
+      var type = _shiftSpec['default'][typeName];
+      Object.defineProperty(CloneReducer.prototype, 'reduce' + typeName, {
+        value: function value(node, state) {
+          return state;
+        }
+      });
+    }
+  });
+  global.codegen = require('/dist/index.js');
+}.call(this, this));

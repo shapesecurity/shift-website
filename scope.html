@@ -12,6 +12,50 @@
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
     <link href="css/css.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
+
+    <!-- highlight.js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/magula.min.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- ace editor -->
+    <script src="bower_components/ace-builds/src-min/ace.js"></script>
+    <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
+    <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
+
+    <script src="js/shift-parser.js"></script>
+    <script src="js/shift-codegen.js"></script>
+    <script src="js/shift-scope.js"></script>
+
+    <style>
+      #demo1 {
+        resize: vertical;
+      }
+      #demo1 .editor {
+        width: 50%;
+      }
+      #demo1 .output-container {
+        width: 50%;
+      }
+      .code-binding, .code-identifier {
+        border-bottom: 1px dashed;
+      }
+      .var-decl {
+        background-color: rgba(0,0,205,.2);
+      }
+      .var-write {
+        background-color: rgba(0,0,205,.6);
+      }
+      .var-read {
+        background-color: rgba(255,0,0,.6);
+      }
+      .var-read.var-write {
+        background-color: rgba(127,0,255,.6);
+      }
+    </style>
   </head>
 
   <body>
@@ -37,9 +81,44 @@
 
         <hr />
 
-        <p class="text-center">
-        <img src="http://mediaserver.pulse2.com/wp-content/uploads/2012/12/Under_construction.jpg" alt="Under Construction" />
-        </p>
+        <section id="demo">
+          <h3>Demo</h3>
+
+          <p>
+            The program on the left is rendered on the right. Mousing over any identifier will highlight it
+            all other identifiers which refer to the same variable, color-coded by type of access (declaration, read, or write).
+          </p>
+
+          <div class="demo" id="demo1">
+          <div class="editor" spellcheck="false">function name(name = 0){
+  var name = name;
+  {
+    let name = 1;
+    ++name;
+  }
+}
+</div>
+            <div class="output-container">
+              <div class="output" style="white-space: pre"></div>
+              <div class="error-message"></div>
+            </div>
+            <script src="js/scope/main.js"></script>
+          </div>
+        </section>
+
+        <section id="installation">
+          <h3>Installation</h3>
+
+          <pre><code class="nohighlight">npm install shift-scope</code></pre>
+        </section>
+
+        <section id="usage">
+          <h3>Usage</h3>
+
+          <pre><code class="javascript">import analyze from "shift-scope";
+let globalScope = analyze(/* Shift AST */);</code></pre>
+
+        </section>
 
       </div>
 
