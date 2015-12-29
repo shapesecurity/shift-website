@@ -40,6 +40,9 @@ var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
 var outputContainer = document.querySelector("#demo1 .output-container");
 
+var radio = document.querySelector("#script-radio");
+var radio2 = document.querySelector("#module-radio");
+
 function displayError(exception) {
   hideError();
   error.textContent = exception.description;
@@ -81,8 +84,9 @@ session.setUseWrapMode(false);
 
 function onChange() {
   var code = editor.getValue();
+  var parseFn = radio.checked ? parser.parseScript : parser.parseModule;
   try {
-    var ast = parser.parseModule(code, { loc: false, earlyErrors : true });
+    var ast = parseFn(code, { loc: false, earlyErrors : true });
   } catch (ex) {
     displayError(ex);
     return;
@@ -91,5 +95,7 @@ function onChange() {
 }
 
 editor.getSession().on('change', debounce(onChange, 300));
+radio.addEventListener('change', onChange);
+radio2.addEventListener('change', onChange);
 
 window.addEventListener('polymer-ready', onChange);
