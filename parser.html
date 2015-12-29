@@ -44,6 +44,12 @@
       #demo1 .output-container {
         width: 60%;
       }
+      .program-radio-label {
+        font-size: medium;
+      }
+      #program-radio {
+        margin-bottom: -10px;
+      }
     </style>
   </head>
 
@@ -76,6 +82,15 @@
           <p>
             This demo shows a rendering of the parser output on the right. You may
             edit its input on the left.
+          </p>
+
+          <p id="program-radio" class="text-center">
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="script-radio" value="script" checked> Script
+            </label>
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="module-radio" value="module"> Module
+            </label>
           </p>
 
           <div class="demo" id="demo1">
