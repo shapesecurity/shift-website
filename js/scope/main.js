@@ -66,7 +66,6 @@ function hideError() {
 function render(program) {
   hideError();
   output.innerHTML = program;
-  hljs.highlightBlock(output);
 }
 
 var session = editor.getSession();
