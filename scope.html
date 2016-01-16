@@ -17,9 +17,9 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
 
     <!-- highlight.js -->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/magula.min.css" rel="stylesheet"/>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/grayscale.min.css" rel="stylesheet"/>
+    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>-->
+    <!--<script>hljs.initHighlightingOnLoad();</script>-->
 
     <!-- ace editor -->
     <script src="bower_components/ace-builds/src-min/ace.js"></script>
@@ -46,23 +46,37 @@
       #program-radio {
         margin-bottom: -10px;
       }
+      .output {
+        font-family: 'Source Code Pro';
+        font-size: 10pt;
+        color: #666;
+        line-height: normal;
+        padding: 5px;
+      }
       .code-binding, .code-identifier {
+        font-weight: bold;
         background-color: white;
         cursor: help;
-        padding: 1px 4px;
+        padding: 0 3px;
         border: 1px dotted #666;
+        border-radius: 2px;
+        color: black;
       }
       .var-write {
-        background-color: rgba(0,0,205,.6);
+        background-color: #FEAA5B;
+        color: black;
       }
       .var-read {
-        background-color: rgba(255,0,0,.6);
+        background-color: #909A50;
+        color: white;
       }
       .var-read.var-write {
-        background-color: rgba(127,0,255,.6);
+        background-color: #1A697A;
+        color: white;
       }
-      .var-decl {
-        background-color: rgba(0,0,205,.2);
+      span.var-decl {
+        background-color: #B02A6A;
+        color: white;
       }
     </style>
   </head>
@@ -108,11 +122,16 @@
           </p>
 
           <div class="demo" id="demo1">
-          <div class="editor" spellcheck="false">let f = x(1);
-f(2);
-function x(x, y = () => x){
-  let {z} = {z:3};
-  return x => x + y() - z++;
+          <div class="editor" spellcheck="false">function bytes(n, maxBytes) {
+  if (maxBytes == null) {
+    maxBytes = Math.max(1, Math.ceil(Math.log2(n + 1) / 8));
+  }
+  var rv = Array(maxBytes);
+  for (var bIndex = maxBytes - 1; bIndex &gt;= 0; --bIndex) {
+    rv[bIndex] = n &amp; 0xFF;
+    n &gt;&gt;&gt;= 8;
+  }
+  return rv;
 }
 </div>
             <div class="output-container">
