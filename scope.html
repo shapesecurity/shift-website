@@ -46,7 +46,7 @@
         font-size: 10pt;
         color: #666;
         line-height: normal;
-        padding: 5px;
+        padding: 3px 0 0 5px;
       }
       .code-binding, .code-identifier {
         font-family: 'Source Code Pro';
@@ -55,7 +55,7 @@
         background-color: white;
         cursor: help;
         padding: 0 3px;
-        border: 1px dotted #666;
+        border: 1px dotted #888;
         border-radius: 2px;
         color: black;
       }
@@ -105,6 +105,24 @@
 
         <hr />
 
+        <section id="introduction">
+          <h3>Introduction</h3>
+
+          <p>
+            The Shift Scope Analyser produces a data structure called a scope
+            tree that represents all of the scoping information of a given
+            program. Each element of the scope tree represents a single scope
+            in the analysed program, and contains many pieces of information,
+            including:
+          </p>
+          <ul>
+            <li>the scope type (there are 11 of them!)
+            <li>the AST node associated with the scope
+            <li>variables declared within that scope, each of which points to its declarations and references
+            <li>whether the scope contains a <code>with</code> statement or direct call to eval, making it dynamic
+          </ul>
+        </section>
+
         <section id="demo">
           <h3>Demo</h3>
 
@@ -112,9 +130,9 @@
             The program entered on the left will be rendered on the right. Mousing over any identifier will highlight
             all other identifiers which refer to the same variable, color-coded by type:
             <span class="code-identifier var-decl">declarations</span>,
-            <span class="code-identifier var-read">read references</span>,
-            <span class="code-identifier var-write">write references</span>, and
-            <span class="code-identifier var-read var-write">read/write references</span>.
+            <span class="code-identifier var-read">read&nbsp;references</span>,
+            <span class="code-identifier var-write">write&nbsp;references</span>, and
+            <span class="code-identifier var-read var-write">read-write&nbsp;references</span>.
           </p>
 
           <p id="program-radio" class="text-center">
