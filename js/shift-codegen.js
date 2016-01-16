@@ -655,7 +655,7 @@
         return _monoidalReducer.default;
       }
     });
-    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
     var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
@@ -694,7 +694,7 @@
       return transformWithSpec(reducer, reducible, _shiftSpec2.default[reducible.type]);
     }
   });
-  require.define('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+  require.define('/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
     Object.defineProperty(exports, '__esModule', { value: true });
     exports.default = function () {
       var SPEC = {};
@@ -2710,7 +2710,7 @@
         return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj;
       };
     Object.defineProperty(exports, '__esModule', { value: true });
-    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
     var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
@@ -2816,7 +2816,7 @@
   require.define('/node_modules/shift-reducer/dist/clone-reducer.js', function (module, exports, __dirname, __filename) {
     'use strict';
     Object.defineProperty(exports, '__esModule', { value: true });
-    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
     var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
@@ -2954,6 +2954,7 @@
       case 'ObjectExpression':
       case 'ThisExpression':
         return Precedence.Primary;
+      case 'ArrowExpression':
       case 'AssignmentExpression':
       case 'CompoundAssignmentExpression':
       case 'YieldExpression':
