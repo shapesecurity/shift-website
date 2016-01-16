@@ -82,6 +82,10 @@ session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
 
+if (/^\?code=/.test(location.search)) {
+  session.setValue(decodeURIComponent(location.search.slice(6)));
+}
+
 
 var lookup;
 var identifiers = [];
