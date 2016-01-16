@@ -76,7 +76,7 @@ editor.setOption("fontSize", "10pt");
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/textmate");
 editor.setWrapBehavioursEnabled(false);
-session.setMode("ace/mode/json");
+session.setMode("ace/mode/javascript");
 session.setOption("useWorker", false);
 session.setTabSize(2);
 session.setUseSoftTabs(true);
