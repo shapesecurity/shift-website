@@ -49,6 +49,8 @@
         padding: 5px;
       }
       .code-binding, .code-identifier {
+        font-family: 'Source Code Pro';
+        font-size: 10pt;
         font-weight: bold;
         background-color: white;
         cursor: help;
@@ -57,21 +59,25 @@
         border-radius: 2px;
         color: black;
       }
-      .var-write {
-        background-color: #FEAA5B;
-        color: black;
-      }
       .var-read {
         background-color: #909A50;
         color: white;
+      }
+      .var-write {
+        background-color: #FEAA5B;
+        color: black;
       }
       .var-read.var-write {
         background-color: #1A697A;
         color: white;
       }
-      span.var-decl {
+      .var-decl {
         background-color: #B02A6A;
         color: white;
+      }
+      .var-read, .var-write, .var-decl {
+        border-color: black;
+        border-style: solid;
       }
     </style>
   </head>
@@ -103,8 +109,12 @@
           <h3>Demo</h3>
 
           <p>
-            The program on the left is rendered on the right. Mousing over any identifier will highlight it
-            all other identifiers which refer to the same variable, color-coded by type of access (declaration, read, or write).
+            The program on the left is rendered on the right. Mousing over any identifier will highlight
+            all other identifiers which refer to the same variable, color-coded by type:
+            <span class="code-identifier var-decl">declarations</span>,
+            <span class="code-identifier var-read">read references</span>,
+            <span class="code-identifier var-write">write references</span>, and
+            <span class="code-identifier var-read var-write">read/write references</span>.
           </p>
 
           <p id="program-radio" class="text-center">
@@ -159,7 +169,6 @@ let globalScope = analyze(/* Shift AST */);</code></pre>
         <p>&copy; 2015 Shape Security, Inc.</p>
       </div>
     </div>
-
 
   </body>
 </html>

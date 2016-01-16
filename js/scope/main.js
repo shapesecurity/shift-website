@@ -114,15 +114,15 @@ function setHighlight(identifier) {
 
 function unhighlight() {
   hideError();
-  var eles = document.querySelectorAll('.var-decl');
+  var eles = document.querySelectorAll('#demo1 .var-decl');
   for (var i = 0; i < eles.length; ++i) {
     eles[i].classList.remove('var-decl');
   }
-  eles = document.querySelectorAll('.var-write');
+  eles = document.querySelectorAll('#demo1 .var-write');
   for (var i = 0; i < eles.length; ++i) {
     eles[i].classList.remove('var-write');
   }
-  eles = document.querySelectorAll('.var-read');
+  eles = document.querySelectorAll('#demo1 .var-read');
   for (var i = 0; i < eles.length; ++i) {
     eles[i].classList.remove('var-read');
   }
