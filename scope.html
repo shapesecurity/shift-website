@@ -40,11 +40,14 @@
       #demo1 .output-container {
         width: 50%;
       }
+      .program-radio-label {
+        font-size: medium;
+      }
+      #program-radio {
+        margin-bottom: -10px;
+      }
       .code-binding, .code-identifier {
         border-bottom: 1px dashed;
-      }
-      .var-decl {
-        background-color: rgba(0,0,205,.2);
       }
       .var-write {
         background-color: rgba(0,0,205,.6);
@@ -54,6 +57,9 @@
       }
       .var-read.var-write {
         background-color: rgba(127,0,255,.6);
+      }
+      .var-decl {
+        background-color: rgba(0,0,205,.2);
       }
     </style>
   </head>
@@ -89,13 +95,21 @@
             all other identifiers which refer to the same variable, color-coded by type of access (declaration, read, or write).
           </p>
 
+          <p id="program-radio" class="text-center">
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="script-radio" value="script" checked> Script
+            </label>
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="module-radio" value="module"> Module
+            </label>
+          </p>
+
           <div class="demo" id="demo1">
-          <div class="editor" spellcheck="false">function name(name = 0){
-  var name = name;
-  {
-    let name = 1;
-    ++name;
-  }
+          <div class="editor" spellcheck="false">let f = x(1);
+f(2);
+function x(x, y = () => x){
+  let {z} = {z:3};
+  return x => x + y() - z++;
 }
 </div>
             <div class="output-container">

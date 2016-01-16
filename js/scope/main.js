@@ -40,6 +40,9 @@ var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
 var outputContainer = document.querySelector("#demo1 .output-container");
 
+var radio = document.querySelector("#script-radio");
+var radio2 = document.querySelector("#module-radio");
+
 function displayError(exception) {
   unhighlight();
   hideError();
@@ -127,7 +130,7 @@ function unhighlight() {
 }
 
 function mouseOverHandler(e) {
-  let current = e.target;
+  var current = e.target;
   while (current && !(current.classList.contains('code-binding') || current.classList.contains('code-identifier'))) {
     current = current.parentElement;
   }
@@ -143,10 +146,24 @@ output.addEventListener("mouseout", mouseOutHandler);
 
 function WebGen() {
   var webGen = new codegen.FormattedCodeGen;
-  webGen.reduceLiteralStringExpression = function(string) {
-    var rep = codegen.FormattedCodeGen.prototype.reduceLiteralStringExpression.call(this, string);
-    rep.token = rep.token.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+  webGen.reduceLiteralRegExpExpression = function(node) {
+    var rep = codegen.FormattedCodeGen.prototype.reduceLiteralRegExpExpression.call(this, node);
+    rep.token = rep.token.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return rep;
+  }
+  webGen.reduceLiteralStringExpression = function(node) {
+    var rep = codegen.FormattedCodeGen.prototype.reduceLiteralStringExpression.call(this, node);
+    rep.token = rep.token.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return rep;
+  };
+  webGen.reduceTemplateExpression = function(node, obj) {
+    for (var i = 0; i < node.elements.length; ++i) {
+      if (node.elements[i].type === "TemplateElement") {
+        node.elements[i].rawValue = node.elements[i].rawValue.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+    }
+    return codegen.FormattedCodeGen.prototype.reduceTemplateExpression.call(this, node, obj);
   };
   webGen.reduceBindingIdentifier = function(binding) {
     var rep = codegen.FormattedCodeGen.prototype.reduceBindingIdentifier.call(this, binding);
@@ -173,8 +190,9 @@ function WebGen() {
 
 function onChange() {
   var code = editor.getValue();
+  var parseFn = radio.checked ? parser.parseScript : parser.parseModule;
   try {
-    var ast = parser.parseScript(code);
+    var ast = parseFn(code);
     lookup = new scope.ScopeLookup(scope.default(ast));
     identifiers = [];
     var program = codegen.default(ast, new WebGen);
@@ -186,5 +204,7 @@ function onChange() {
 }
 
 editor.getSession().on('change', debounce(onChange, 300));
+radio.addEventListener('change', onChange);
+radio2.addEventListener('change', onChange);
 
 window.addEventListener('DOMContentLoaded', onChange);

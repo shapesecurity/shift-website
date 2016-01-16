@@ -53,7 +53,7 @@
   require.define('/dist/index.js', function (module, exports, __dirname, __filename) {
     'use strict';
     Object.defineProperty(exports, '__esModule', { value: true });
-    exports.Accessibility = exports.DeclarationType = exports.ScopeType = exports.ScopeLookup = undefined;
+    exports.serialize = exports.Accessibility = exports.DeclarationType = exports.ScopeType = exports.ScopeLookup = undefined;
     var _scopeLookup = require('/dist/scope-lookup.js', module);
     Object.defineProperty(exports, 'ScopeLookup', {
       enumerable: true,
@@ -80,6 +80,13 @@
       enumerable: true,
       get: function get() {
         return _reference.Accessibility;
+      }
+    });
+    var _scopeSerializer = require('/dist/scope-serializer.js', module);
+    Object.defineProperty(exports, 'serialize', {
+      enumerable: true,
+      get: function get() {
+        return _scopeSerializer.serialize;
       }
     });
     exports.default = analyze;
@@ -1646,7 +1653,7 @@
     };
     Object.defineProperty(exports, '__esModule', { value: true });
     var _multimap = require('/node_modules/multimap/index.js', module);
-    var _MultiMap = _interopRequireWildcard(_multimap);
+    var _multimap2 = _interopRequireDefault(_multimap);
     var _shiftReducer = require('/node_modules/shift-reducer/dist/index.js', module);
     var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
     var _scopeState = require('/dist/scope-state.js', module);
@@ -1654,23 +1661,12 @@
     var _reference = require('/dist/reference.js', module);
     var _declaration = require('/dist/declaration.js', module);
     var _scope = require('/dist/scope.js', module);
+    var _es6Set = require('/node_modules/es6-set/index.js', module);
+    var _es6Set2 = _interopRequireDefault(_es6Set);
+    var _strictnessReducer = require('/dist/strictness-reducer.js', module);
+    var _strictnessReducer2 = _interopRequireDefault(_strictnessReducer);
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      } else {
-        var newObj = {};
-        if (obj != null) {
-          for (var key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key))
-              newObj[key] = obj[key];
-          }
-        }
-        newObj.default = obj;
-        return newObj;
-      }
     }
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
@@ -1698,17 +1694,6 @@
       if (superClass)
         Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
     }
-    var MultiMap = _MultiMap.default;
-    var reduce = _shiftReducer2.default.default;
-    function finishFunction(fnNode, params, body) {
-      var isArrowFn = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
-      var fnType = isArrowFn ? _scope.ScopeType.ARROW_FUNCTION : _scope.ScopeType.FUNCTION;
-      if (params.hasParameterExpressions) {
-        return params.withoutParameterExpressions().concat(body.finish(fnNode, fnType, !isArrowFn)).finish(fnNode, _scope.ScopeType.PARAMETERS);
-      } else {
-        return params.concat(body).finish(fnNode, fnType, !isArrowFn);
-      }
-    }
     function getFunctionDeclarations(statements) {
       return statements.filter(function (s) {
         return s.type === 'FunctionDeclaration';
@@ -1718,17 +1703,35 @@
     }
     var ScopeAnalyzer = function (_MonoidalReducer) {
         _inherits(ScopeAnalyzer, _MonoidalReducer);
-        function ScopeAnalyzer() {
+        function ScopeAnalyzer(program) {
           _classCallCheck(this, ScopeAnalyzer);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(ScopeAnalyzer).call(this, _scopeState2.default));
+          var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ScopeAnalyzer).call(this, _scopeState2.default));
+          _this.sloppySet = program.type === 'Script' ? _strictnessReducer2.default.analyze(program) : new _es6Set2.default;
+          return _this;
         }
         _createClass(ScopeAnalyzer, [
+          {
+            key: 'finishFunction',
+            value: function finishFunction(fnNode, params, body) {
+              var isArrowFn = fnNode.type === 'ArrowExpression';
+              var fnType = isArrowFn ? _scope.ScopeType.ARROW_FUNCTION : _scope.ScopeType.FUNCTION;
+              var opts = {
+                  shouldResolveArguments: !isArrowFn,
+                  shouldB33: this.sloppySet.has(fnNode)
+                };
+              if (params.hasParameterExpressions) {
+                return params.withoutParameterExpressions().concat(body.finish(fnNode, fnType, opts)).finish(fnNode, _scope.ScopeType.PARAMETERS);
+              } else {
+                return params.concat(body).finish(fnNode, fnType, opts);
+              }
+            }
+          },
           {
             key: 'reduceArrowExpression',
             value: function reduceArrowExpression(node, _ref) {
               var params = _ref.params;
               var body = _ref.body;
-              return finishFunction(node, params, body, true);
+              return this.finishFunction(node, params, body);
             }
           },
           {
@@ -1814,7 +1817,7 @@
               var _super = _ref8.super;
               var elements = _ref8.elements;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceClassDeclaration', this).call(this, node, {
-                name: name.addDeclarations(_declaration.DeclarationType.CLASS_NAME),
+                name: name.addDeclarations(_declaration.DeclarationType.CLASS_DECLARATION),
                 super: _super,
                 elements: elements
               });
@@ -1914,7 +1917,7 @@
               var name = _ref16.name;
               var params = _ref16.params;
               var body = _ref16.body;
-              return name.concat(finishFunction(node, params, body)).addFunctionDeclaration();
+              return name.concat(this.finishFunction(node, params, body)).addFunctionDeclaration();
             }
           },
           {
@@ -1923,7 +1926,7 @@
               var name = _ref17.name;
               var params = _ref17.params;
               var body = _ref17.body;
-              var s = finishFunction(node, params, body);
+              var s = this.finishFunction(node, params, body);
               if (name) {
                 return name.concat(s).addDeclarations(_declaration.DeclarationType.FUNCTION_NAME).finish(node, _scope.ScopeType.FUNCTION_NAME);
               }
@@ -1935,16 +1938,19 @@
             value: function reduceGetter(node, _ref18) {
               var name = _ref18.name;
               var body = _ref18.body;
-              return name.concat(body.finish(node, _scope.ScopeType.FUNCTION, true));
+              return name.concat(body.finish(node, _scope.ScopeType.FUNCTION, {
+                shouldResolveArguments: true,
+                shouldB33: this.sloppySet.has(node)
+              }));
             }
           },
           {
             key: 'reduceIdentifierExpression',
             value: function reduceIdentifierExpression(node) {
               return new _scopeState2.default({
-                freeIdentifiers: new MultiMap([[
+                freeIdentifiers: new _multimap2.default([[
                     node.name,
-                    new _reference.ReadReference(node)
+                    new _reference.Reference(node, _reference.Accessibility.READ)
                   ]])
               });
             }
@@ -1970,19 +1976,32 @@
             }
           },
           {
+            key: 'reduceImport',
+            value: function reduceImport(node, _ref20) {
+              var moduleSpecifier = _ref20.moduleSpecifier;
+              var defaultBinding = _ref20.defaultBinding;
+              var namedImports = _ref20.namedImports;
+              return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceImport', this).call(this, node, {
+                moduleSpecifier: moduleSpecifier,
+                defaultBinding: defaultBinding,
+                namedImports: namedImports
+              }).addDeclarations(_declaration.DeclarationType.IMPORT);
+            }
+          },
+          {
             key: 'reduceMethod',
-            value: function reduceMethod(node, _ref20) {
-              var name = _ref20.name;
-              var params = _ref20.params;
-              var body = _ref20.body;
-              return name.concat(finishFunction(node, params, body));
+            value: function reduceMethod(node, _ref21) {
+              var name = _ref21.name;
+              var params = _ref21.params;
+              var body = _ref21.body;
+              return name.concat(this.finishFunction(node, params, body));
             }
           },
           {
             key: 'reduceModule',
-            value: function reduceModule(node, _ref21) {
-              var directives = _ref21.directives;
-              var items = _ref21.items;
+            value: function reduceModule(node, _ref22) {
+              var directives = _ref22.directives;
+              var items = _ref22.items;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceModule', this).call(this, node, {
                 directives: directives,
                 items: items
@@ -1991,9 +2010,9 @@
           },
           {
             key: 'reduceScript',
-            value: function reduceScript(node, _ref22) {
-              var directives = _ref22.directives;
-              var statements = _ref22.statements;
+            value: function reduceScript(node, _ref23) {
+              var directives = _ref23.directives;
+              var statements = _ref23.statements;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceScript', this).call(this, node, {
                 directives: directives,
                 statements: statements
@@ -2002,21 +2021,21 @@
           },
           {
             key: 'reduceSetter',
-            value: function reduceSetter(node, _ref23) {
-              var name = _ref23.name;
-              var param = _ref23.param;
-              var body = _ref23.body;
+            value: function reduceSetter(node, _ref24) {
+              var name = _ref24.name;
+              var param = _ref24.param;
+              var body = _ref24.body;
               if (param.hasParameterExpressions) {
                 param = param.finish(node, _scope.ScopeType.PARAMETER_EXPRESSION);
               }
-              return name.concat(finishFunction(node, param.addDeclarations(_declaration.DeclarationType.PARAMETER), body));
+              return name.concat(this.finishFunction(node, param.addDeclarations(_declaration.DeclarationType.PARAMETER), body));
             }
           },
           {
             key: 'reduceSwitchCase',
-            value: function reduceSwitchCase(node, _ref24) {
-              var test = _ref24.test;
-              var consequent = _ref24.consequent;
+            value: function reduceSwitchCase(node, _ref25) {
+              var test = _ref25.test;
+              var consequent = _ref25.consequent;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceSwitchCase', this).call(this, node, {
                 test: test,
                 consequent: consequent
@@ -2025,37 +2044,37 @@
           },
           {
             key: 'reduceSwitchDefault',
-            value: function reduceSwitchDefault(node, _ref25) {
-              var consequent = _ref25.consequent;
+            value: function reduceSwitchDefault(node, _ref26) {
+              var consequent = _ref26.consequent;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceSwitchDefault', this).call(this, node, { consequent: consequent }).finish(node, _scope.ScopeType.BLOCK).withPotentialVarFunctions(getFunctionDeclarations(node.consequent));
             }
           },
           {
             key: 'reduceUpdateExpression',
-            value: function reduceUpdateExpression(node, _ref26) {
-              var operand = _ref26.operand;
+            value: function reduceUpdateExpression(node, _ref27) {
+              var operand = _ref27.operand;
               return operand.addReferences(_reference.Accessibility.READWRITE);
             }
           },
           {
             key: 'reduceVariableDeclaration',
-            value: function reduceVariableDeclaration(node, _ref27) {
-              var declarators = _ref27.declarators;
+            value: function reduceVariableDeclaration(node, _ref28) {
+              var declarators = _ref28.declarators;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceVariableDeclaration', this).call(this, node, { declarators: declarators }).addDeclarations(_declaration.DeclarationType.fromVarDeclKind(node.kind), true);
             }
           },
           {
             key: 'reduceVariableDeclarationStatement',
-            value: function reduceVariableDeclarationStatement(node, _ref28) {
-              var declaration = _ref28.declaration;
+            value: function reduceVariableDeclarationStatement(node, _ref29) {
+              var declaration = _ref29.declaration;
               return declaration.withoutBindingsForParent();
             }
           },
           {
             key: 'reduceVariableDeclarator',
-            value: function reduceVariableDeclarator(node, _ref29) {
-              var binding = _ref29.binding;
-              var init = _ref29.init;
+            value: function reduceVariableDeclarator(node, _ref30) {
+              var binding = _ref30.binding;
+              var init = _ref30.init;
               var s = _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceVariableDeclarator', this).call(this, node, {
                   binding: binding,
                   init: init
@@ -2068,9 +2087,9 @@
           },
           {
             key: 'reduceWithStatement',
-            value: function reduceWithStatement(node, _ref30) {
-              var object = _ref30.object;
-              var body = _ref30.body;
+            value: function reduceWithStatement(node, _ref31) {
+              var object = _ref31.object;
+              var body = _ref31.body;
               return _get(Object.getPrototypeOf(ScopeAnalyzer.prototype), 'reduceWithStatement', this).call(this, node, {
                 object: object,
                 body: body.finish(node, _scope.ScopeType.WITH)
@@ -2080,14 +2099,14 @@
         ], [{
             key: 'analyze',
             value: function analyze(program) {
-              return reduce(new this, program).children[0];
+              return (0, _shiftReducer2.default)(new this(program), program).children[0];
             }
           }]);
         return ScopeAnalyzer;
       }(_shiftReducer.MonoidalReducer);
     exports.default = ScopeAnalyzer;
   });
-  require.define('/dist/scope.js', function (module, exports, __dirname, __filename) {
+  require.define('/dist/strictness-reducer.js', function (module, exports, __dirname, __filename) {
     'use strict';
     var _createClass = function () {
         function defineProperties(target, props) {
@@ -2108,991 +2127,310 @@
           return Constructor;
         };
       }();
-    Object.defineProperty(exports, '__esModule', { value: true });
-    exports.GlobalScope = exports.Scope = exports.ScopeType = undefined;
-    var _es6Map = require('/node_modules/es6-map/index.js', module);
-    var _es6Map2 = _interopRequireDefault(_es6Map);
-    var _variable = require('/dist/variable.js', module);
-    var _variable2 = _interopRequireDefault(_variable);
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function _possibleConstructorReturn(self, call) {
-      if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== 'function' && superClass !== null) {
-        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          enumerable: false,
-          writable: true,
-          configurable: true
+    var _get = function get(object, property, receiver) {
+      if (object === null)
+        object = Function.prototype;
+      var desc = Object.getOwnPropertyDescriptor(object, property);
+      if (desc === undefined) {
+        var parent = Object.getPrototypeOf(object);
+        if (parent === null) {
+          return undefined;
+        } else {
+          return get(parent, property, receiver);
         }
-      });
-      if (superClass)
-        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var ScopeType = exports.ScopeType = function ScopeType(name) {
-        _classCallCheck(this, ScopeType);
-        this.name = name;
-      };
-    ScopeType.GLOBAL = new ScopeType('global');
-    ScopeType.MODULE = new ScopeType('module');
-    ScopeType.SCRIPT = new ScopeType('script');
-    ScopeType.ARROW_FUNCTION = new ScopeType('arrow function');
-    ScopeType.FUNCTION = new ScopeType('function');
-    ScopeType.FUNCTION_NAME = new ScopeType('function name');
-    ScopeType.PARAMETERS = new ScopeType('parameters');
-    ScopeType.PARAMETER_EXPRESSION = new ScopeType('parameter expression');
-    ScopeType.WITH = new ScopeType('with');
-    ScopeType.CATCH = new ScopeType('catch');
-    ScopeType.BLOCK = new ScopeType('block');
-    ScopeType.CLASS_NAME = new ScopeType('class name');
-    var Scope = exports.Scope = function () {
-        function Scope(children, variables, through, type, isDynamic, astNode) {
-          var _this = this;
-          _classCallCheck(this, Scope);
-          this.children = children;
-          this.through = through;
-          this.type = type;
-          this.astNode = astNode;
-          this.variables = new _es6Map2.default;
-          variables.forEach(function (v) {
-            return _this.variables.set(v.name, v);
-          });
-          this.variableList = [];
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
-          try {
-            for (var _iterator = this.variables.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var x = _step.value;
-              this.variableList.push(x);
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
-          }
-          this.dynamic = isDynamic || type === ScopeType.WITH || type === ScopeType.GLOBAL;
-        }
-        _createClass(Scope, [
-          {
-            key: 'isGlobal',
-            value: function isGlobal() {
-              return this.type === ScopeType.GLOBAL;
-            }
-          },
-          {
-            key: 'lookupVariable',
-            value: function lookupVariable(name) {
-              return this.variables.get(name);
-            }
-          },
-          {
-            key: 'findVariables',
-            value: function findVariables(identifier) {
-            }
-          }
-        ]);
-        return Scope;
-      }();
-    var GlobalScope = exports.GlobalScope = function (_Scope) {
-        _inherits(GlobalScope, _Scope);
-        function GlobalScope(children, variables, through, astNode) {
-          _classCallCheck(this, GlobalScope);
-          var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(GlobalScope).call(this, children, variables, through, ScopeType.GLOBAL, true, astNode));
-          through.forEachEntry(function (v, k) {
-            _this2.variables.set(k, new _variable2.default(k, v, []));
-          });
-          _this2.variableList = [];
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
-          try {
-            for (var _iterator2 = _this2.variables.values()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var x = _step2.value;
-              _this2.variableList.push(x);
-            }
-          } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
-              }
-            } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
-              }
-            }
-          }
-          return _this2;
-        }
-        return GlobalScope;
-      }(Scope);
-  });
-  require.define('/dist/variable.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    Object.defineProperty(exports, '__esModule', { value: true });
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var Variable = function Variable(name, references, declarations) {
-      _classCallCheck(this, Variable);
-      this.name = name;
-      this.references = references;
-      this.declarations = declarations;
-    };
-    exports.default = Variable;
-  });
-  require.define('/node_modules/es6-map/index.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    module.exports = require('/node_modules/es6-map/is-implemented.js', module)() ? Map : require('/node_modules/es6-map/polyfill.js', module);
-  });
-  require.define('/dist/declaration.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    Object.defineProperty(exports, '__esModule', { value: true });
-    function _possibleConstructorReturn(self, call) {
-      if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== 'function' && superClass !== null) {
-        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var DeclarationType = exports.DeclarationType = function DeclarationType(name, isBlockScoped) {
-        _classCallCheck(this, DeclarationType);
-        this.name = name;
-        this.isBlockScoped = !!isBlockScoped;
-        this.isFunctionScoped = !isBlockScoped;
-      };
-    var BlockScopedDeclaration = exports.BlockScopedDeclaration = function (_DeclarationType) {
-        _inherits(BlockScopedDeclaration, _DeclarationType);
-        function BlockScopedDeclaration(name) {
-          _classCallCheck(this, BlockScopedDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(BlockScopedDeclaration).call(this, name, true));
-        }
-        return BlockScopedDeclaration;
-      }(DeclarationType);
-    var FunctionScopedDeclaration = exports.FunctionScopedDeclaration = function (_DeclarationType2) {
-        _inherits(FunctionScopedDeclaration, _DeclarationType2);
-        function FunctionScopedDeclaration(name) {
-          _classCallCheck(this, FunctionScopedDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(FunctionScopedDeclaration).call(this, name, false));
-        }
-        return FunctionScopedDeclaration;
-      }(DeclarationType);
-    DeclarationType.VAR = new FunctionScopedDeclaration('var');
-    DeclarationType.CONST = new BlockScopedDeclaration('const');
-    DeclarationType.LET = new BlockScopedDeclaration('let');
-    DeclarationType.FUNCTION_DECLARATION = new BlockScopedDeclaration('function declaration');
-    DeclarationType.FUNCTION_NAME = new BlockScopedDeclaration('function name');
-    DeclarationType.CLASS_NAME = new BlockScopedDeclaration('class name');
-    DeclarationType.PARAMETER = new FunctionScopedDeclaration('parameter');
-    DeclarationType.CATCH_PARAMETER = new BlockScopedDeclaration('catch parameter');
-    DeclarationType.fromVarDeclKind = function (variableDeclarationKind) {
-      switch (variableDeclarationKind) {
-      case 'var':
-        return DeclarationType.VAR;
-      case 'const':
-        return DeclarationType.CONST;
-      case 'let':
-        return DeclarationType.LET;
-      default:
-        throw new Error('Invalid VariableDeclarationKind: ' + JSON.stringify(variableDeclarationKind));
-      }
-    };
-    var Declaration = exports.Declaration = function Declaration(node, type) {
-        _classCallCheck(this, Declaration);
-        this.node = node;
-        this.type = type;
-      };
-    var VarDeclaration = exports.VarDeclaration = function (_Declaration) {
-        _inherits(VarDeclaration, _Declaration);
-        function VarDeclaration(node) {
-          _classCallCheck(this, VarDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(VarDeclaration).call(this, node, DeclarationType.VAR));
-        }
-        return VarDeclaration;
-      }(Declaration);
-    var ConstDeclaration = exports.ConstDeclaration = function (_Declaration2) {
-        _inherits(ConstDeclaration, _Declaration2);
-        function ConstDeclaration(node) {
-          _classCallCheck(this, ConstDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(ConstDeclaration).call(this, node, DeclarationType.CONST));
-        }
-        return ConstDeclaration;
-      }(Declaration);
-    var LetDeclaration = exports.LetDeclaration = function (_Declaration3) {
-        _inherits(LetDeclaration, _Declaration3);
-        function LetDeclaration(node) {
-          _classCallCheck(this, LetDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(LetDeclaration).call(this, node, DeclarationType.LET));
-        }
-        return LetDeclaration;
-      }(Declaration);
-    var FunctionNameDeclaration = exports.FunctionNameDeclaration = function (_Declaration4) {
-        _inherits(FunctionNameDeclaration, _Declaration4);
-        function FunctionNameDeclaration(node) {
-          _classCallCheck(this, FunctionNameDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(FunctionNameDeclaration).call(this, node, DeclarationType.FUNCTION_NAME));
-        }
-        return FunctionNameDeclaration;
-      }(Declaration);
-    var ParameterDeclaration = exports.ParameterDeclaration = function (_Declaration5) {
-        _inherits(ParameterDeclaration, _Declaration5);
-        function ParameterDeclaration(node) {
-          _classCallCheck(this, ParameterDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(ParameterDeclaration).call(this, node, DeclarationType.PARAMETER));
-        }
-        return ParameterDeclaration;
-      }(Declaration);
-    var CatchDeclaration = exports.CatchDeclaration = function (_Declaration6) {
-        _inherits(CatchDeclaration, _Declaration6);
-        function CatchDeclaration(node) {
-          _classCallCheck(this, CatchDeclaration);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(CatchDeclaration).call(this, node, DeclarationType.CATCH));
-        }
-        return CatchDeclaration;
-      }(Declaration);
-  });
-  require.define('/dist/reference.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    Object.defineProperty(exports, '__esModule', { value: true });
-    function _possibleConstructorReturn(self, call) {
-      if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      }
-      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== 'function' && superClass !== null) {
-        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var Accessibility = exports.Accessibility = function Accessibility(isRead, isWrite) {
-        _classCallCheck(this, Accessibility);
-        this.isRead = !!isRead;
-        this.isWrite = !!isWrite;
-        this.isReadWrite = !!(isRead && isWrite);
-      };
-    Accessibility.READ = new Accessibility(true, false);
-    Accessibility.WRITE = new Accessibility(false, true);
-    Accessibility.READWRITE = new Accessibility(true, true);
-    var Reference = exports.Reference = function Reference(node, accessibility) {
-        _classCallCheck(this, Reference);
-        this.node = node;
-        this.accessibility = accessibility;
-      };
-    var ReadReference = exports.ReadReference = function (_Reference) {
-        _inherits(ReadReference, _Reference);
-        function ReadReference(node) {
-          _classCallCheck(this, ReadReference);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(ReadReference).call(this, node, Accessibility.READ));
-        }
-        return ReadReference;
-      }(Reference);
-    var WriteReference = exports.WriteReference = function (_Reference2) {
-        _inherits(WriteReference, _Reference2);
-        function WriteReference(node) {
-          _classCallCheck(this, WriteReference);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(WriteReference).call(this, node, Accessibility.WRITE));
-        }
-        return WriteReference;
-      }(Reference);
-    var ReadWriteReference = exports.ReadWriteReference = function (_Reference3) {
-        _inherits(ReadWriteReference, _Reference3);
-        function ReadWriteReference(node) {
-          _classCallCheck(this, ReadWriteReference);
-          return _possibleConstructorReturn(this, Object.getPrototypeOf(ReadWriteReference).call(this, node, Accessibility.READWRITE));
-        }
-        return ReadWriteReference;
-      }(Reference);
-  });
-  require.define('/dist/scope-state.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ('value' in descriptor)
-              descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps)
-            defineProperties(Constructor.prototype, protoProps);
-          if (staticProps)
-            defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-    Object.defineProperty(exports, '__esModule', { value: true });
-    var _multimap = require('/node_modules/multimap/index.js', module);
-    var _MultiMap = _interopRequireWildcard(_multimap);
-    var _declaration = require('/dist/declaration.js', module);
-    var _reference = require('/dist/reference.js', module);
-    var _scope = require('/dist/scope.js', module);
-    var _variable = require('/dist/variable.js', module);
-    var _variable2 = _interopRequireDefault(_variable);
-    function _interopRequireDefault(obj) {
-      return obj && obj.__esModule ? obj : { default: obj };
-    }
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
+      } else if ('value' in desc) {
+        return desc.value;
       } else {
-        var newObj = {};
-        if (obj != null) {
-          for (var key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key))
-              newObj[key] = obj[key];
-          }
+        var getter = desc.get;
+        if (getter === undefined) {
+          return undefined;
         }
-        newObj.default = obj;
-        return newObj;
+        return getter.call(receiver);
       }
+    };
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _es6Set = require('/node_modules/es6-set/index.js', module);
+    var _es6Set2 = _interopRequireDefault(_es6Set);
+    var _shiftReducer = require('/node_modules/shift-reducer/dist/index.js', module);
+    var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
     }
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
       }
     }
-    var MultiMap = _MultiMap.default;
-    function merge(multiMap, otherMultiMap) {
-      otherMultiMap.forEachEntry(function (v, k) {
-        multiMap.set.apply(multiMap, [k].concat(v));
-      });
-      return multiMap;
+    function _possibleConstructorReturn(self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
     }
-    function resolveArguments(freeIdentifiers, variables) {
-      var args = freeIdentifiers.get('arguments') || [];
-      freeIdentifiers.delete('arguments');
-      return variables.concat(new _variable2.default('arguments', args, []));
-    }
-    function resolveDeclarations(freeIdentifiers, decls, variables) {
-      decls.forEachEntry(function (declarations, name) {
-        var references = freeIdentifiers.get(name) || [];
-        variables = variables.concat(new _variable2.default(name, references, declarations));
-        freeIdentifiers.delete(name);
-      });
-      return variables;
-    }
-    var ScopeState = function () {
-        function ScopeState() {
-          var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-          var _ref$freeIdentifiers = _ref.freeIdentifiers;
-          var freeIdentifiers = _ref$freeIdentifiers === undefined ? new MultiMap : _ref$freeIdentifiers;
-          var _ref$functionScopedDe = _ref.functionScopedDeclarations;
-          var functionScopedDeclarations = _ref$functionScopedDe === undefined ? new MultiMap : _ref$functionScopedDe;
-          var _ref$blockScopedDecla = _ref.blockScopedDeclarations;
-          var blockScopedDeclarations = _ref$blockScopedDecla === undefined ? new MultiMap : _ref$blockScopedDecla;
-          var _ref$functionDeclarat = _ref.functionDeclarations;
-          var functionDeclarations = _ref$functionDeclarat === undefined ? new MultiMap : _ref$functionDeclarat;
-          var _ref$children = _ref.children;
-          var children = _ref$children === undefined ? [] : _ref$children;
-          var _ref$dynamic = _ref.dynamic;
-          var dynamic = _ref$dynamic === undefined ? false : _ref$dynamic;
-          var _ref$bindingsForParen = _ref.bindingsForParent;
-          var bindingsForParent = _ref$bindingsForParen === undefined ? [] : _ref$bindingsForParen;
-          var _ref$potentiallyVarSc = _ref.potentiallyVarScopedFunctionDeclarations;
-          var potentiallyVarScopedFunctionDeclarations = _ref$potentiallyVarSc === undefined ? new MultiMap : _ref$potentiallyVarSc;
-          var _ref$hasParameterExpr = _ref.hasParameterExpressions;
-          var hasParameterExpressions = _ref$hasParameterExpr === undefined ? false : _ref$hasParameterExpr;
-          _classCallCheck(this, ScopeState);
-          this.freeIdentifiers = freeIdentifiers;
-          this.functionScopedDeclarations = functionScopedDeclarations;
-          this.blockScopedDeclarations = blockScopedDeclarations;
-          this.functionDeclarations = functionDeclarations;
-          this.children = children;
-          this.dynamic = dynamic;
-          this.bindingsForParent = bindingsForParent;
-          this.potentiallyVarScopedFunctionDeclarations = potentiallyVarScopedFunctionDeclarations;
-          this.hasParameterExpressions = hasParameterExpressions;
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
         }
-        _createClass(ScopeState, [
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    var StrictnessReducer = function (_MonoidalReducer) {
+        _inherits(StrictnessReducer, _MonoidalReducer);
+        function StrictnessReducer() {
+          _classCallCheck(this, StrictnessReducer);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(StrictnessReducer).call(this, SetMonoid));
+        }
+        _createClass(StrictnessReducer, [
+          {
+            key: 'reduceArrowExpression',
+            value: function reduceArrowExpression(node, _ref) {
+              var params = _ref.params;
+              var body = _ref.body;
+              if (node.body.type === 'FunctionBody' && hasStrict(node.body.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceArrowExpression', this).call(this, node, {
+                params: params,
+                body: body
+              }).add(node);
+            }
+          },
+          {
+            key: 'reduceClassDeclaration',
+            value: function reduceClassDeclaration(node, _ref2) {
+              var name = _ref2.name;
+              var _super = _ref2.super;
+              var elements = _ref2.elements;
+              return SetMonoid.empty();
+            }
+          },
+          {
+            key: 'reduceClassExpression',
+            value: function reduceClassExpression(node, _ref3) {
+              var name = _ref3.name;
+              var _super = _ref3.super;
+              var elements = _ref3.elements;
+              return SetMonoid.empty();
+            }
+          },
+          {
+            key: 'reduceFunctionDeclaration',
+            value: function reduceFunctionDeclaration(node, _ref4) {
+              var name = _ref4.name;
+              var params = _ref4.params;
+              var body = _ref4.body;
+              if (hasStrict(node.body.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceFunctionDeclaration', this).call(this, node, {
+                name: name,
+                params: params,
+                body: body
+              }).add(node);
+            }
+          },
+          {
+            key: 'reduceFunctionExpression',
+            value: function reduceFunctionExpression(node, _ref5) {
+              var name = _ref5.name;
+              var params = _ref5.params;
+              var body = _ref5.body;
+              if (hasStrict(node.body.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceFunctionExpression', this).call(this, node, {
+                name: name,
+                params: params,
+                body: body
+              }).add(node);
+            }
+          },
+          {
+            key: 'reduceGetter',
+            value: function reduceGetter(node, _ref6) {
+              var name = _ref6.name;
+              var body = _ref6.body;
+              if (hasStrict(node.body.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceGetter', this).call(this, node, {
+                name: name,
+                body: body
+              }).add(node);
+            }
+          },
+          {
+            key: 'reduceMethod',
+            value: function reduceMethod(node, _ref7) {
+              var name = _ref7.name;
+              var params = _ref7.params;
+              var body = _ref7.body;
+              if (hasStrict(node.body.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceMethod', this).call(this, node, {
+                name: name,
+                params: params,
+                body: body
+              }).add(node);
+            }
+          },
+          {
+            key: 'reduceScript',
+            value: function reduceScript(node, _ref8) {
+              var directives = _ref8.directives;
+              var statements = _ref8.statements;
+              if (hasStrict(node.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceScript', this).call(this, node, {
+                directives: directives,
+                statements: statements
+              }).add(node);
+            }
+          },
+          {
+            key: 'reduceSetter',
+            value: function reduceSetter(node, _ref9) {
+              var name = _ref9.name;
+              var param = _ref9.param;
+              var body = _ref9.body;
+              if (hasStrict(node.body.directives)) {
+                return SetMonoid.empty();
+              }
+              return _get(Object.getPrototypeOf(StrictnessReducer.prototype), 'reduceSetter', this).call(this, node, {
+                name: name,
+                param: param,
+                body: body
+              }).add(node);
+            }
+          }
+        ], [{
+            key: 'analyze',
+            value: function analyze(script) {
+              return (0, _shiftReducer2.default)(new this, script).extract();
+            }
+          }]);
+        return StrictnessReducer;
+      }(_shiftReducer.MonoidalReducer);
+    exports.default = StrictnessReducer;
+    function hasStrict(directives) {
+      return directives.some(function (d) {
+        return d.rawValue === 'use strict';
+      });
+    }
+    function merge(s1, s2) {
+      var out = new _es6Set2.default;
+      s1.forEach(function (v) {
+        return out.add(v);
+      });
+      s2.forEach(function (v) {
+        return out.add(v);
+      });
+      return out;
+    }
+    var SetMonoid = function () {
+        function SetMonoid(set) {
+          _classCallCheck(this, SetMonoid);
+          this.set = set;
+        }
+        _createClass(SetMonoid, [
           {
             key: 'concat',
             value: function concat(b) {
-              if (this === b) {
-                return this;
-              }
-              return new ScopeState({
-                freeIdentifiers: merge(merge(new MultiMap, this.freeIdentifiers), b.freeIdentifiers),
-                functionScopedDeclarations: merge(merge(new MultiMap, this.functionScopedDeclarations), b.functionScopedDeclarations),
-                blockScopedDeclarations: merge(merge(new MultiMap, this.blockScopedDeclarations), b.blockScopedDeclarations),
-                functionDeclarations: merge(merge(new MultiMap, this.functionDeclarations), b.functionDeclarations),
-                children: this.children.concat(b.children),
-                dynamic: this.dynamic || b.dynamic,
-                bindingsForParent: this.bindingsForParent.concat(b.bindingsForParent),
-                potentiallyVarScopedFunctionDeclarations: merge(merge(new MultiMap, this.potentiallyVarScopedFunctionDeclarations), b.potentiallyVarScopedFunctionDeclarations),
-                hasParameterExpressions: this.hasParameterExpressions || b.hasParameterExpressions
-              });
+              return new SetMonoid(merge(this.set, b.set));
             }
           },
           {
-            key: 'addDeclarations',
-            value: function addDeclarations(kind) {
-              var keepBindingsForParent = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-              var declMap = new MultiMap;
-              merge(declMap, kind.isBlockScoped ? this.blockScopedDeclarations : this.functionScopedDeclarations);
-              this.bindingsForParent.forEach(function (binding) {
-                return declMap.set(binding.name, new _declaration.Declaration(binding, kind));
-              });
-              var s = new ScopeState(this);
-              if (kind.isBlockScoped) {
-                s.blockScopedDeclarations = declMap;
-              } else {
-                s.functionScopedDeclarations = declMap;
-              }
-              if (!keepBindingsForParent) {
-                s.bindingsForParent = [];
-              }
-              return s;
+            key: 'extract',
+            value: function extract() {
+              return this.set;
             }
           },
           {
-            key: 'addFunctionDeclaration',
-            value: function addFunctionDeclaration() {
-              var binding = this.bindingsForParent[0];
-              var s = new ScopeState(this);
-              merge(s.functionDeclarations, new MultiMap([[
-                  binding.name,
-                  new _declaration.Declaration(binding, _declaration.DeclarationType.FUNCTION_DECLARATION)
-                ]]));
-              s.bindingsForParent = [];
-              return s;
-            }
-          },
-          {
-            key: 'addReferences',
-            value: function addReferences(accessibility) {
-              var keepBindingsForParent = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-              var freeMap = new MultiMap;
-              merge(freeMap, this.freeIdentifiers);
-              this.bindingsForParent.forEach(function (binding) {
-                return freeMap.set(binding.name, new _reference.Reference(binding, accessibility));
-              });
-              var s = new ScopeState(this);
-              s.freeIdentifiers = freeMap;
-              if (!keepBindingsForParent) {
-                s.bindingsForParent = [];
-              }
-              return s;
-            }
-          },
-          {
-            key: 'taint',
-            value: function taint() {
-              var s = new ScopeState(this);
-              s.dynamic = true;
-              return s;
-            }
-          },
-          {
-            key: 'withoutBindingsForParent',
-            value: function withoutBindingsForParent() {
-              var s = new ScopeState(this);
-              s.bindingsForParent = [];
-              return s;
-            }
-          },
-          {
-            key: 'withParameterExpressions',
-            value: function withParameterExpressions() {
-              var s = new ScopeState(this);
-              s.hasParameterExpressions = true;
-              return s;
-            }
-          },
-          {
-            key: 'withoutParameterExpressions',
-            value: function withoutParameterExpressions() {
-              var s = new ScopeState(this);
-              s.hasParameterExpressions = false;
-              return s;
-            }
-          },
-          {
-            key: 'withPotentialVarFunctions',
-            value: function withPotentialVarFunctions(functions) {
-              var pvsfd = merge(new MultiMap, this.potentiallyVarScopedFunctionDeclarations);
-              functions.forEach(function (f) {
-                return pvsfd.set(f.name, f);
-              });
-              var s = new ScopeState(this);
-              s.potentiallyVarScopedFunctionDeclarations = pvsfd;
-              return s;
-            }
-          },
-          {
-            key: 'finish',
-            value: function finish(astNode, scopeType) {
-              var shouldResolveArguments = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-              var variables = [];
-              var functionScoped = new MultiMap;
-              var freeIdentifiers = merge(new MultiMap, this.freeIdentifiers);
-              var pvsfd = merge(new MultiMap, this.potentiallyVarScopedFunctionDeclarations);
-              var children = this.children;
-              this.blockScopedDeclarations.forEachEntry(function (v, k) {
-                pvsfd.delete(k);
-              });
-              this.functionDeclarations.forEachEntry(function (v, k) {
-                var existing = pvsfd.get(k);
-                if (existing && (v.length > 1 || v[0].node !== existing)) {
-                  pvsfd.delete(k);
-                }
-              });
-              switch (scopeType) {
-              case _scope.ScopeType.BLOCK:
-              case _scope.ScopeType.CATCH:
-              case _scope.ScopeType.WITH:
-              case _scope.ScopeType.FUNCTION_NAME:
-              case _scope.ScopeType.PARAMETER_EXPRESSION:
-                variables = resolveDeclarations(freeIdentifiers, this.blockScopedDeclarations, variables);
-                merge(functionScoped, this.functionScopedDeclarations);
-                break;
-              case _scope.ScopeType.PARAMETERS:
-              case _scope.ScopeType.ARROW_FUNCTION:
-              case _scope.ScopeType.FUNCTION:
-              case _scope.ScopeType.MODULE:
-              case _scope.ScopeType.SCRIPT:
-                var declarations = new MultiMap;
-                if (scopeType === _scope.ScopeType.SCRIPT) {
-                  children = [new _scope.Scope(children, resolveDeclarations(freeIdentifiers, this.blockScopedDeclarations, []), freeIdentifiers, _scope.ScopeType.SCRIPT, this.dynamic, astNode)];
-                } else {
-                  merge(declarations, this.blockScopedDeclarations);
-                }
-                if (shouldResolveArguments) {
-                  declarations.set('arguments');
-                }
-                merge(declarations, this.functionScopedDeclarations);
-                merge(declarations, this.functionDeclarations);
-                if (scopeType === _scope.ScopeType.ARROW_FUNCTION || scopeType === _scope.ScopeType.FUNCTION) {
-                  merge(declarations, pvsfd);
-                }
-                pvsfd = new MultiMap;
-                variables = resolveDeclarations(freeIdentifiers, declarations, variables);
-                if (scopeType === _scope.ScopeType.MODULE) {
-                  children = [new _scope.Scope(children, variables, freeIdentifiers, _scope.ScopeType.MODULE, this.dynamic, astNode)];
-                  variables = [];
-                }
-                break;
-              default:
-                throw new Error('not reached');
-              }
-              var scope = scopeType === _scope.ScopeType.SCRIPT || scopeType === _scope.ScopeType.MODULE ? new _scope.GlobalScope(children, variables, freeIdentifiers, astNode) : new _scope.Scope(children, variables, freeIdentifiers, scopeType, this.dynamic, astNode);
-              return new ScopeState({
-                freeIdentifiers: freeIdentifiers,
-                functionScopedDeclarations: functionScoped,
-                children: [scope],
-                bindingsForParent: this.bindingsForParent,
-                potentiallyVarScopedFunctionDeclarations: pvsfd,
-                hasParameterExpressions: this.hasParameterExpressions
-              });
+            key: 'add',
+            value: function add(e) {
+              this.set.add(e);
+              return this;
             }
           }
         ], [{
             key: 'empty',
             value: function empty() {
-              return new ScopeState({});
+              return new SetMonoid(new _es6Set2.default);
             }
           }]);
-        return ScopeState;
+        return SetMonoid;
       }();
-    exports.default = ScopeState;
-  });
-  require.define('/node_modules/multimap/index.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var Multimap = function () {
-        var mapCtor;
-        if (typeof Map !== 'undefined') {
-          mapCtor = Map;
-        }
-        function Multimap(iterable) {
-          var self = this;
-          self._map = mapCtor;
-          if (Multimap.Map) {
-            self._map = Multimap.Map;
-          }
-          self._ = self._map ? new self._map : {};
-          if (iterable) {
-            iterable.forEach(function (i) {
-              self.set(i[0], i[1]);
-            });
-          }
-        }
-        Multimap.prototype.get = function (key) {
-          return this._map ? this._.get(key) : this._[key];
-        };
-        Multimap.prototype.set = function (key, val) {
-          var args = Array.prototype.slice.call(arguments);
-          key = args.shift();
-          var entry = this.get(key);
-          if (!entry) {
-            entry = [];
-            if (this._map)
-              this._.set(key, entry);
-            else
-              this._[key] = entry;
-          }
-          Array.prototype.push.apply(entry, args);
-          return this;
-        };
-        Multimap.prototype.delete = function (key, val) {
-          if (!this.has(key))
-            return false;
-          if (arguments.length == 1) {
-            this._map ? this._.delete(key) : delete this._[key];
-            return true;
-          } else {
-            var entry = this.get(key);
-            var idx = entry.indexOf(val);
-            if (idx != -1) {
-              entry.splice(idx, 1);
-              return true;
-            }
-          }
-          return false;
-        };
-        Multimap.prototype.has = function (key, val) {
-          var hasKey = this._map ? this._.has(key) : this._.hasOwnProperty(key);
-          if (arguments.length == 1 || !hasKey)
-            return hasKey;
-          var entry = this.get(key) || [];
-          return entry.indexOf(val) != -1;
-        };
-        Multimap.prototype.keys = function () {
-          if (this._map)
-            return this._.keys();
-          return makeIterator(Object.keys(this._));
-        };
-        Multimap.prototype.values = function () {
-          var vals = [];
-          this.forEachEntry(function (entry) {
-            Array.prototype.push.apply(vals, entry);
-          });
-          return makeIterator(vals);
-        };
-        Multimap.prototype.forEachEntry = function (iter) {
-          var self = this;
-          var keys = self.keys();
-          var next;
-          while (!(next = keys.next()).done) {
-            iter(self.get(next.value), next.value, self);
-          }
-        };
-        Multimap.prototype.forEach = function (iter) {
-          var self = this;
-          self.forEachEntry(function (entry, key) {
-            entry.forEach(function (item) {
-              iter(item, key, self);
-            });
-          });
-        };
-        Multimap.prototype.clear = function () {
-          if (this._map) {
-            this._.clear();
-          } else {
-            this._ = {};
-          }
-        };
-        Object.defineProperty(Multimap.prototype, 'size', {
-          configurable: false,
-          enumerable: true,
-          get: function () {
-            var self = this;
-            var keys = self.keys();
-            var next, total = 0;
-            while (!(next = keys.next()).done) {
-              total += self.get(next.value).length;
-            }
-            return total;
-          }
-        });
-        function makeIterator(array) {
-          var nextIndex = 0;
-          return {
-            next: function () {
-              return nextIndex < array.length ? {
-                value: array[nextIndex++],
-                done: false
-              } : { done: true };
-            }
-          };
-        }
-        return Multimap;
-      }();
-    if (typeof exports === 'object' && module && module.exports)
-      module.exports = Multimap;
-    else if (typeof define === 'function' && define.amd)
-      define(function () {
-        return Multimap;
-      });
   });
   require.define('/node_modules/shift-reducer/dist/index.js', function (module, exports, __dirname, __filename) {
     'use strict';
-    exports['default'] = reduce;
-    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
-    function transformWithSpec(_x, _x2, _x3) {
-      var _left;
-      var _again = true;
-      _function:
-        while (_again) {
-          var transformer = _x, node = _x2, spec = _x3;
-          _again = false;
-          switch (spec.typeName) {
-          case 'Enum':
-          case 'String':
-          case 'Number':
-          case 'Boolean':
-          case 'SourceSpan':
-            return node;
-          case 'Const':
-            _x = transformer;
-            _x2 = node;
-            _x3 = spec.argument;
-            _again = true;
-            continue _function;
-          case 'Maybe':
-            if (!(_left = node)) {
-              return _left;
-            }
-            _x = transformer;
-            _x2 = node;
-            _x3 = spec.argument;
-            _again = true;
-            continue _function;
-          case 'List':
-            return node.map(function (e) {
-              return transformWithSpec(transformer, e, spec.argument);
-            });
-          case 'Union':
-            _x = transformer;
-            _x2 = node;
-            _x3 = _shiftSpec['default'][node.type];
-            _again = true;
-            continue _function;
-          default:
-            var state = {};
-            spec.fields.forEach(function (field) {
-              var v = transformWithSpec(transformer, node[field.name], field.type);
-              state[field.name] = v == null ? null : v;
-            });
-            if (typeof transformer['reduce' + node.type] !== 'function') {
-              throw new Error('Encountered ' + node.type + ', which the provided reducer does not handle.');
-            }
-            return transformer['reduce' + node.type](node, state);
-          }
-        }
-    }
-    function reduce(reducer, reducible) {
-      return transformWithSpec(reducer, reducible, _shiftSpec['default'][reducible.type]);
-    }
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.MonoidalReducer = exports.CloneReducer = undefined;
+    exports.default = reduce;
     var _cloneReducer = require('/node_modules/shift-reducer/dist/clone-reducer.js', module);
     Object.defineProperty(exports, 'CloneReducer', {
       enumerable: true,
       get: function get() {
-        return _cloneReducer['default'];
+        return _cloneReducer.default;
       }
     });
     var _monoidalReducer = require('/node_modules/shift-reducer/dist/monoidal-reducer.js', module);
     Object.defineProperty(exports, 'MonoidalReducer', {
       enumerable: true,
       get: function get() {
-        return _monoidalReducer['default'];
+        return _monoidalReducer.default;
       }
     });
-  });
-  require.define('/node_modules/shift-reducer/dist/monoidal-reducer.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ('value' in descriptor)
-              descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
+    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function transformWithSpec(transformer, node, spec) {
+      switch (spec.typeName) {
+      case 'Enum':
+      case 'String':
+      case 'Number':
+      case 'Boolean':
+      case 'SourceSpan':
+        return node;
+      case 'Const':
+        return transformWithSpec(transformer, node, spec.argument);
+      case 'Maybe':
+        return node && transformWithSpec(transformer, node, spec.argument);
+      case 'List':
+        return node.map(function (e) {
+          return transformWithSpec(transformer, e, spec.argument);
+        });
+      case 'Union':
+        return transformWithSpec(transformer, node, _shiftSpec2.default[node.type]);
+      default:
+        var state = {};
+        spec.fields.forEach(function (field) {
+          var v = transformWithSpec(transformer, node[field.name], field.type);
+          state[field.name] = v == null ? null : v;
+        });
+        if (typeof transformer['reduce' + node.type] !== 'function') {
+          throw new Error('Encountered ' + node.type + ', which the provided reducer does not handle.');
         }
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps)
-            defineProperties(Constructor.prototype, protoProps);
-          if (staticProps)
-            defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
+        return transformer['reduce' + node.type](node, state);
       }
     }
-    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
-    var methods = {};
-    function id(x) {
-      return x;
+    function reduce(reducer, reducible) {
+      return transformWithSpec(reducer, reducible, _shiftSpec2.default[reducible.type]);
     }
-    function handlerForFieldOfType(_x) {
-      var _again = true;
-      _function:
-        while (_again) {
-          var type = _x;
-          _again = false;
-          switch (type.typeName) {
-          case 'Enum':
-          case 'String':
-          case 'Boolean':
-          case 'Number':
-          case 'SourceSpan':
-            return null;
-          case 'Const':
-            _x = type.argument;
-            _again = true;
-            continue _function;
-          case 'Maybe': {
-              var _ret = function () {
-                  var subHandler = handlerForFieldOfType(type.argument);
-                  if (subHandler == null)
-                    return { v: null };
-                  return {
-                    v: function (t) {
-                      return t == null ? this.identity : subHandler.call(this, t);
-                    }
-                  };
-                }();
-              if (typeof _ret === 'object')
-                return _ret.v;
-            }
-          case 'List': {
-              var _ret2 = function () {
-                  var subHandler = handlerForFieldOfType(type.argument);
-                  if (subHandler == null)
-                    return { v: null };
-                  return {
-                    v: function (t) {
-                      var _this = this;
-                      return this.fold(t.map(function (x) {
-                        return subHandler.call(_this, x);
-                      }));
-                    }
-                  };
-                }();
-              if (typeof _ret2 === 'object')
-                return _ret2.v;
-            }
-          default:
-            return id;
-          }
-        }
-    }
-    var _loop = function (typeName) {
-      var type = _shiftSpec['default'][typeName];
-      var handlers = {};
-      type.fields.forEach(function (field) {
-        var handler = handlerForFieldOfType(field.type);
-        if (handler != null)
-          handlers[field.name] = handler;
-      });
-      var fieldNames = Object.keys(handlers);
-      methods['reduce' + typeName] = {
-        value: function value(node, state) {
-          var _this2 = this;
-          return this.fold(fieldNames.map(function (fieldName) {
-            return handlers[fieldName].call(_this2, state[fieldName]);
-          }));
-        }
-      };
-    };
-    for (var typeName in _shiftSpec['default']) {
-      _loop(typeName);
-    }
-    var MonoidalReducer = function () {
-        function MonoidalReducer(monoid) {
-          _classCallCheck(this, MonoidalReducer);
-          this.identity = monoid.empty();
-          var concat = monoid.prototype && monoid.prototype.concat || monoid.concat;
-          this.append = function (a, b) {
-            return concat.call(a, b);
-          };
-        }
-        _createClass(MonoidalReducer, [{
-            key: 'fold',
-            value: function fold(list, a) {
-              var _this3 = this;
-              return list.reduce(function (memo, x) {
-                return _this3.append(memo, x);
-              }, a == null ? this.identity : a);
-            }
-          }]);
-        return MonoidalReducer;
-      }();
-    exports['default'] = MonoidalReducer;
-    Object.defineProperties(MonoidalReducer.prototype, methods);
   });
-  require.define('/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+  require.define('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+    Object.defineProperty(exports, '__esModule', { value: true });
     exports.default = function () {
       var SPEC = {};
       var BOOLEAN = { typeName: 'Boolean' };
@@ -5080,26 +4418,3438 @@
       return SPEC;
     }();
   });
-  require.define('/node_modules/shift-reducer/dist/clone-reducer.js', function (module, exports, __dirname, __filename) {
+  require.define('/node_modules/shift-reducer/dist/monoidal-reducer.js', function (module, exports, __dirname, __filename) {
     'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    var _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function (obj) {
+        return typeof obj;
+      } : function (obj) {
+        return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj;
+      };
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
       }
     }
-    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
+    var methods = {};
+    function id(x) {
+      return x;
+    }
+    function handlerForFieldOfType(type) {
+      switch (type.typeName) {
+      case 'Enum':
+      case 'String':
+      case 'Boolean':
+      case 'Number':
+      case 'SourceSpan':
+        return null;
+      case 'Const':
+        return handlerForFieldOfType(type.argument);
+      case 'Maybe': {
+          var _ret = function () {
+              var subHandler = handlerForFieldOfType(type.argument);
+              if (subHandler == null)
+                return { v: null };
+              return {
+                v: function v(t) {
+                  return t == null ? this.identity : subHandler.call(this, t);
+                }
+              };
+            }();
+          if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object')
+            return _ret.v;
+        }
+      case 'List': {
+          var _ret2 = function () {
+              var subHandler = handlerForFieldOfType(type.argument);
+              if (subHandler == null)
+                return { v: null };
+              return {
+                v: function v(t) {
+                  var _this = this;
+                  return this.fold(t.map(function (x) {
+                    return subHandler.call(_this, x);
+                  }));
+                }
+              };
+            }();
+          if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === 'object')
+            return _ret2.v;
+        }
+      default:
+        return id;
+      }
+    }
+    var _loop = function _loop(typeName) {
+      var type = _shiftSpec2.default[typeName];
+      var handlers = {};
+      type.fields.forEach(function (field) {
+        var handler = handlerForFieldOfType(field.type);
+        if (handler != null)
+          handlers[field.name] = handler;
+      });
+      var fieldNames = Object.keys(handlers);
+      methods['reduce' + typeName] = {
+        value: function value(node, state) {
+          var _this3 = this;
+          return this.fold(fieldNames.map(function (fieldName) {
+            return handlers[fieldName].call(_this3, state[fieldName]);
+          }));
+        }
+      };
+    };
+    for (var typeName in _shiftSpec2.default) {
+      _loop(typeName);
+    }
+    var MonoidalReducer = function () {
+        function MonoidalReducer(monoid) {
+          _classCallCheck(this, MonoidalReducer);
+          this.identity = monoid.empty();
+          var concat = monoid.prototype && monoid.prototype.concat || monoid.concat;
+          this.append = function (a, b) {
+            return concat.call(a, b);
+          };
+        }
+        _createClass(MonoidalReducer, [{
+            key: 'fold',
+            value: function fold(list, a) {
+              var _this2 = this;
+              return list.reduce(function (memo, x) {
+                return _this2.append(memo, x);
+              }, a == null ? this.identity : a);
+            }
+          }]);
+        return MonoidalReducer;
+      }();
+    exports.default = MonoidalReducer;
+    Object.defineProperties(MonoidalReducer.prototype, methods);
+  });
+  require.define('/node_modules/shift-reducer/dist/clone-reducer.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
     var CloneReducer = function CloneReducer() {
       _classCallCheck(this, CloneReducer);
     };
-    exports['default'] = CloneReducer;
-    for (var typeName in _shiftSpec['default']) {
-      var type = _shiftSpec['default'][typeName];
+    exports.default = CloneReducer;
+    for (var typeName in _shiftSpec2.default) {
+      var type = _shiftSpec2.default[typeName];
       Object.defineProperty(CloneReducer.prototype, 'reduce' + typeName, {
         value: function value(node, state) {
           return state;
         }
       });
     }
+  });
+  require.define('/node_modules/es6-set/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = require('/node_modules/es6-set/is-implemented.js', module)() ? Set : require('/node_modules/es6-set/polyfill.js', module);
+  });
+  require.define('/node_modules/es6-set/polyfill.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var clear = require('/node_modules/es5-ext/array/#/clear.js', module), eIndexOf = require('/node_modules/es5-ext/array/#/e-index-of.js', module), setPrototypeOf = require('/node_modules/es5-ext/object/set-prototype-of/index.js', module), callable = require('/node_modules/es5-ext/object/valid-callable.js', module), d = require('/node_modules/d/index.js', module), ee = require('/node_modules/event-emitter/index.js', module), Symbol = require('/node_modules/es6-set/node_modules/es6-symbol/index.js', module), iterator = require('/node_modules/es6-iterator/valid-iterable.js', module), forOf = require('/node_modules/es6-iterator/for-of.js', module), Iterator = require('/node_modules/es6-set/lib/iterator.js', module), isNative = require('/node_modules/es6-set/is-native-implemented.js', module), call = Function.prototype.call, defineProperty = Object.defineProperty, getPrototypeOf = Object.getPrototypeOf, SetPoly, getValues;
+    module.exports = SetPoly = function () {
+      var iterable = arguments[0], self;
+      if (!(this instanceof SetPoly))
+        throw new TypeError("Constructor requires 'new'");
+      if (isNative && setPrototypeOf)
+        self = setPrototypeOf(new Set, getPrototypeOf(this));
+      else
+        self = this;
+      if (iterable != null)
+        iterator(iterable);
+      defineProperty(self, '__setData__', d('c', []));
+      if (!iterable)
+        return self;
+      forOf(iterable, function (value) {
+        if (eIndexOf.call(this, value) !== -1)
+          return;
+        this.push(value);
+      }, self.__setData__);
+      return self;
+    };
+    if (isNative) {
+      if (setPrototypeOf)
+        setPrototypeOf(SetPoly, Set);
+      SetPoly.prototype = Object.create(Set.prototype, { constructor: d(SetPoly) });
+    }
+    ee(Object.defineProperties(SetPoly.prototype, {
+      add: d(function (value) {
+        if (this.has(value))
+          return this;
+        this.emit('_add', this.__setData__.push(value) - 1, value);
+        return this;
+      }),
+      clear: d(function () {
+        if (!this.__setData__.length)
+          return;
+        clear.call(this.__setData__);
+        this.emit('_clear');
+      }),
+      delete: d(function (value) {
+        var index = eIndexOf.call(this.__setData__, value);
+        if (index === -1)
+          return false;
+        this.__setData__.splice(index, 1);
+        this.emit('_delete', index, value);
+        return true;
+      }),
+      entries: d(function () {
+        return new Iterator(this, 'key+value');
+      }),
+      forEach: d(function (cb) {
+        var thisArg = arguments[1], iterator, result, value;
+        callable(cb);
+        iterator = this.values();
+        result = iterator._next();
+        while (result !== undefined) {
+          value = iterator._resolve(result);
+          call.call(cb, thisArg, value, value, this);
+          result = iterator._next();
+        }
+      }),
+      has: d(function (value) {
+        return eIndexOf.call(this.__setData__, value) !== -1;
+      }),
+      keys: d(getValues = function () {
+        return this.values();
+      }),
+      size: d.gs(function () {
+        return this.__setData__.length;
+      }),
+      values: d(function () {
+        return new Iterator(this);
+      }),
+      toString: d(function () {
+        return '[object Set]';
+      })
+    }));
+    defineProperty(SetPoly.prototype, Symbol.iterator, d(getValues));
+    defineProperty(SetPoly.prototype, Symbol.toStringTag, d('c', 'Set'));
+  });
+  require.define('/node_modules/es6-set/is-native-implemented.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = function () {
+      if (typeof Set === 'undefined')
+        return false;
+      return Object.prototype.toString.call(Set.prototype) === '[object Set]';
+    }();
+  });
+  require.define('/node_modules/es6-set/lib/iterator.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var setPrototypeOf = require('/node_modules/es5-ext/object/set-prototype-of/index.js', module), contains = require('/node_modules/es5-ext/string/#/contains/index.js', module), d = require('/node_modules/d/index.js', module), Iterator = require('/node_modules/es6-iterator/index.js', module), toStringTagSymbol = require('/node_modules/es6-set/node_modules/es6-symbol/index.js', module).toStringTag, defineProperty = Object.defineProperty, SetIterator;
+    SetIterator = module.exports = function (set, kind) {
+      if (!(this instanceof SetIterator))
+        return new SetIterator(set, kind);
+      Iterator.call(this, set.__setData__, set);
+      if (!kind)
+        kind = 'value';
+      else if (contains.call(kind, 'key+value'))
+        kind = 'key+value';
+      else
+        kind = 'value';
+      defineProperty(this, '__kind__', d('', kind));
+    };
+    if (setPrototypeOf)
+      setPrototypeOf(SetIterator, Iterator);
+    SetIterator.prototype = Object.create(Iterator.prototype, {
+      constructor: d(SetIterator),
+      _resolve: d(function (i) {
+        if (this.__kind__ === 'value')
+          return this.__list__[i];
+        return [
+          this.__list__[i],
+          this.__list__[i]
+        ];
+      }),
+      toString: d(function () {
+        return '[object Set Iterator]';
+      })
+    });
+    defineProperty(SetIterator.prototype, toStringTagSymbol, d('c', 'Set Iterator'));
+  });
+  require.define('/node_modules/es6-set/node_modules/es6-symbol/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = require('/node_modules/es6-set/node_modules/es6-symbol/is-implemented.js', module)() ? Symbol : require('/node_modules/es6-set/node_modules/es6-symbol/polyfill.js', module);
+  });
+  require.define('/node_modules/es6-set/node_modules/es6-symbol/polyfill.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var d = require('/node_modules/d/index.js', module), validateSymbol = require('/node_modules/es6-set/node_modules/es6-symbol/validate-symbol.js', module), create = Object.create, defineProperties = Object.defineProperties, defineProperty = Object.defineProperty, objPrototype = Object.prototype, NativeSymbol, SymbolPolyfill, HiddenSymbol, globalSymbols = create(null);
+    if (typeof Symbol === 'function')
+      NativeSymbol = Symbol;
+    var generateName = function () {
+        var created = create(null);
+        return function (desc) {
+          var postfix = 0, name, ie11BugWorkaround;
+          while (created[desc + (postfix || '')])
+            ++postfix;
+          desc += postfix || '';
+          created[desc] = true;
+          name = '@@' + desc;
+          defineProperty(objPrototype, name, d.gs(null, function (value) {
+            if (ie11BugWorkaround)
+              return;
+            ie11BugWorkaround = true;
+            defineProperty(this, name, d(value));
+            ie11BugWorkaround = false;
+          }));
+          return name;
+        };
+      }();
+    HiddenSymbol = function Symbol(description) {
+      if (this instanceof HiddenSymbol)
+        throw new TypeError('TypeError: Symbol is not a constructor');
+      return SymbolPolyfill(description);
+    };
+    module.exports = SymbolPolyfill = function Symbol(description) {
+      var symbol;
+      if (this instanceof Symbol)
+        throw new TypeError('TypeError: Symbol is not a constructor');
+      symbol = create(HiddenSymbol.prototype);
+      description = description === undefined ? '' : String(description);
+      return defineProperties(symbol, {
+        __description__: d('', description),
+        __name__: d('', generateName(description))
+      });
+    };
+    defineProperties(SymbolPolyfill, {
+      for: d(function (key) {
+        if (globalSymbols[key])
+          return globalSymbols[key];
+        return globalSymbols[key] = SymbolPolyfill(String(key));
+      }),
+      keyFor: d(function (s) {
+        var key;
+        validateSymbol(s);
+        for (key in globalSymbols)
+          if (globalSymbols[key] === s)
+            return key;
+      }),
+      hasInstance: d('', NativeSymbol && NativeSymbol.hasInstance || SymbolPolyfill('hasInstance')),
+      isConcatSpreadable: d('', NativeSymbol && NativeSymbol.isConcatSpreadable || SymbolPolyfill('isConcatSpreadable')),
+      iterator: d('', NativeSymbol && NativeSymbol.iterator || SymbolPolyfill('iterator')),
+      match: d('', NativeSymbol && NativeSymbol.match || SymbolPolyfill('match')),
+      replace: d('', NativeSymbol && NativeSymbol.replace || SymbolPolyfill('replace')),
+      search: d('', NativeSymbol && NativeSymbol.search || SymbolPolyfill('search')),
+      species: d('', NativeSymbol && NativeSymbol.species || SymbolPolyfill('species')),
+      split: d('', NativeSymbol && NativeSymbol.split || SymbolPolyfill('split')),
+      toPrimitive: d('', NativeSymbol && NativeSymbol.toPrimitive || SymbolPolyfill('toPrimitive')),
+      toStringTag: d('', NativeSymbol && NativeSymbol.toStringTag || SymbolPolyfill('toStringTag')),
+      unscopables: d('', NativeSymbol && NativeSymbol.unscopables || SymbolPolyfill('unscopables'))
+    });
+    defineProperties(HiddenSymbol.prototype, {
+      constructor: d(SymbolPolyfill),
+      toString: d('', function () {
+        return this.__name__;
+      })
+    });
+    defineProperties(SymbolPolyfill.prototype, {
+      toString: d(function () {
+        return 'Symbol (' + validateSymbol(this).__description__ + ')';
+      }),
+      valueOf: d(function () {
+        return validateSymbol(this);
+      })
+    });
+    defineProperty(SymbolPolyfill.prototype, SymbolPolyfill.toPrimitive, d('', function () {
+      return validateSymbol(this);
+    }));
+    defineProperty(SymbolPolyfill.prototype, SymbolPolyfill.toStringTag, d('c', 'Symbol'));
+    defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toStringTag, d('c', SymbolPolyfill.prototype[SymbolPolyfill.toStringTag]));
+    defineProperty(HiddenSymbol.prototype, SymbolPolyfill.toPrimitive, d('c', SymbolPolyfill.prototype[SymbolPolyfill.toPrimitive]));
+  });
+  require.define('/node_modules/es6-set/node_modules/es6-symbol/validate-symbol.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var isSymbol = require('/node_modules/es6-set/node_modules/es6-symbol/is-symbol.js', module);
+    module.exports = function (value) {
+      if (!isSymbol(value))
+        throw new TypeError(value + ' is not a symbol');
+      return value;
+    };
+  });
+  require.define('/node_modules/es6-set/node_modules/es6-symbol/is-symbol.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = function (x) {
+      return x && (typeof x === 'symbol' || x['@@toStringTag'] === 'Symbol') || false;
+    };
+  });
+  require.define('/node_modules/es6-set/node_modules/es6-symbol/is-implemented.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = function () {
+      var symbol;
+      if (typeof Symbol !== 'function')
+        return false;
+      symbol = Symbol('test symbol');
+      try {
+        String(symbol);
+      } catch (e) {
+        return false;
+      }
+      if (typeof Symbol.iterator === 'symbol')
+        return true;
+      if (typeof Symbol.isConcatSpreadable !== 'object')
+        return false;
+      if (typeof Symbol.iterator !== 'object')
+        return false;
+      if (typeof Symbol.toPrimitive !== 'object')
+        return false;
+      if (typeof Symbol.toStringTag !== 'object')
+        return false;
+      if (typeof Symbol.unscopables !== 'object')
+        return false;
+      return true;
+    };
+  });
+  require.define('/node_modules/es6-set/is-implemented.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = function () {
+      var set, iterator, result;
+      if (typeof Set !== 'function')
+        return false;
+      set = new Set([
+        'raz',
+        'dwa',
+        'trzy'
+      ]);
+      if (String(set) !== '[object Set]')
+        return false;
+      if (set.size !== 3)
+        return false;
+      if (typeof set.add !== 'function')
+        return false;
+      if (typeof set.clear !== 'function')
+        return false;
+      if (typeof set.delete !== 'function')
+        return false;
+      if (typeof set.entries !== 'function')
+        return false;
+      if (typeof set.forEach !== 'function')
+        return false;
+      if (typeof set.has !== 'function')
+        return false;
+      if (typeof set.keys !== 'function')
+        return false;
+      if (typeof set.values !== 'function')
+        return false;
+      iterator = set.values();
+      result = iterator.next();
+      if (result.done !== false)
+        return false;
+      if (result.value !== 'raz')
+        return false;
+      return true;
+    };
+  });
+  require.define('/dist/scope.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.GlobalScope = exports.Scope = exports.ScopeType = undefined;
+    var _es6Map = require('/node_modules/es6-map/index.js', module);
+    var _es6Map2 = _interopRequireDefault(_es6Map);
+    var _variable = require('/dist/variable.js', module);
+    var _variable2 = _interopRequireDefault(_variable);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var ScopeType = exports.ScopeType = function ScopeType(name) {
+        _classCallCheck(this, ScopeType);
+        this.name = name;
+      };
+    ScopeType.GLOBAL = new ScopeType('Global');
+    ScopeType.MODULE = new ScopeType('Module');
+    ScopeType.SCRIPT = new ScopeType('Script');
+    ScopeType.ARROW_FUNCTION = new ScopeType('ArrowFunction');
+    ScopeType.FUNCTION = new ScopeType('Function');
+    ScopeType.FUNCTION_NAME = new ScopeType('FunctionName');
+    ScopeType.CLASS_NAME = new ScopeType('ClassName');
+    ScopeType.PARAMETERS = new ScopeType('Parameters');
+    ScopeType.PARAMETER_EXPRESSION = new ScopeType('ParameterExpression');
+    ScopeType.WITH = new ScopeType('With');
+    ScopeType.CATCH = new ScopeType('Catch');
+    ScopeType.BLOCK = new ScopeType('Block');
+    var Scope = exports.Scope = function () {
+        function Scope(children, variables, through, type, isDynamic, astNode) {
+          var _this = this;
+          _classCallCheck(this, Scope);
+          this.children = children;
+          this.through = through;
+          this.type = type;
+          this.astNode = astNode;
+          this.variables = new _es6Map2.default;
+          variables.forEach(function (v) {
+            return _this.variables.set(v.name, v);
+          });
+          this.variableList = [];
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+          try {
+            for (var _iterator = this.variables.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var x = _step.value;
+              this.variableList.push(x);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+          this.dynamic = isDynamic || type === ScopeType.WITH || type === ScopeType.GLOBAL;
+        }
+        _createClass(Scope, [
+          {
+            key: 'isGlobal',
+            value: function isGlobal() {
+              return this.type === ScopeType.GLOBAL;
+            }
+          },
+          {
+            key: 'lookupVariable',
+            value: function lookupVariable(name) {
+              return this.variables.get(name);
+            }
+          }
+        ]);
+        return Scope;
+      }();
+    var GlobalScope = exports.GlobalScope = function (_Scope) {
+        _inherits(GlobalScope, _Scope);
+        function GlobalScope(children, variables, through, astNode) {
+          _classCallCheck(this, GlobalScope);
+          var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(GlobalScope).call(this, children, variables, through, ScopeType.GLOBAL, true, astNode));
+          through.forEachEntry(function (v, k) {
+            _this2.variables.set(k, new _variable2.default(k, v, []));
+          });
+          _this2.variableList = [];
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+          try {
+            for (var _iterator2 = _this2.variables.values()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var x = _step2.value;
+              _this2.variableList.push(x);
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+          return _this2;
+        }
+        return GlobalScope;
+      }(Scope);
+  });
+  require.define('/dist/variable.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    Object.defineProperty(exports, '__esModule', { value: true });
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var Variable = function Variable(name, references, declarations) {
+      _classCallCheck(this, Variable);
+      this.name = name;
+      this.references = references;
+      this.declarations = declarations;
+    };
+    exports.default = Variable;
+  });
+  require.define('/node_modules/es6-map/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    module.exports = require('/node_modules/es6-map/is-implemented.js', module)() ? Map : require('/node_modules/es6-map/polyfill.js', module);
+  });
+  require.define('/dist/declaration.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    Object.defineProperty(exports, '__esModule', { value: true });
+    function _possibleConstructorReturn(self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var DeclarationType = exports.DeclarationType = function DeclarationType(name, isBlockScoped) {
+        _classCallCheck(this, DeclarationType);
+        this.name = name;
+        this.isBlockScoped = !!isBlockScoped;
+        this.isFunctionScoped = !isBlockScoped;
+      };
+    var BlockScopedDeclaration = exports.BlockScopedDeclaration = function (_DeclarationType) {
+        _inherits(BlockScopedDeclaration, _DeclarationType);
+        function BlockScopedDeclaration(name) {
+          _classCallCheck(this, BlockScopedDeclaration);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(BlockScopedDeclaration).call(this, name, true));
+        }
+        return BlockScopedDeclaration;
+      }(DeclarationType);
+    var FunctionScopedDeclaration = exports.FunctionScopedDeclaration = function (_DeclarationType2) {
+        _inherits(FunctionScopedDeclaration, _DeclarationType2);
+        function FunctionScopedDeclaration(name) {
+          _classCallCheck(this, FunctionScopedDeclaration);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(FunctionScopedDeclaration).call(this, name, false));
+        }
+        return FunctionScopedDeclaration;
+      }(DeclarationType);
+    DeclarationType.VAR = new FunctionScopedDeclaration('Var');
+    DeclarationType.CONST = new BlockScopedDeclaration('Const');
+    DeclarationType.LET = new BlockScopedDeclaration('Let');
+    DeclarationType.FUNCTION_DECLARATION = new BlockScopedDeclaration('FunctionDeclaration');
+    DeclarationType.FUNCTION_VAR_DECLARATION = new FunctionScopedDeclaration('FunctionB33');
+    DeclarationType.FUNCTION_NAME = new BlockScopedDeclaration('FunctionExpressionName');
+    DeclarationType.CLASS_DECLARATION = new BlockScopedDeclaration('ClassDeclaration');
+    DeclarationType.CLASS_NAME = new BlockScopedDeclaration('ClassExpressionName');
+    DeclarationType.PARAMETER = new FunctionScopedDeclaration('Parameter');
+    DeclarationType.CATCH_PARAMETER = new BlockScopedDeclaration('CatchParam');
+    DeclarationType.IMPORT = new BlockScopedDeclaration('Import');
+    DeclarationType.fromVarDeclKind = function (variableDeclarationKind) {
+      switch (variableDeclarationKind) {
+      case 'var':
+        return DeclarationType.VAR;
+      case 'const':
+        return DeclarationType.CONST;
+      case 'let':
+        return DeclarationType.LET;
+      default:
+        throw new Error('Invalid VariableDeclarationKind: ' + JSON.stringify(variableDeclarationKind));
+      }
+    };
+    var Declaration = exports.Declaration = function Declaration(node, type) {
+        _classCallCheck(this, Declaration);
+        this.node = node;
+        this.type = type;
+      };
+  });
+  require.define('/dist/reference.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    Object.defineProperty(exports, '__esModule', { value: true });
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var Accessibility = exports.Accessibility = function Accessibility(isRead, isWrite) {
+        _classCallCheck(this, Accessibility);
+        this.isRead = !!isRead;
+        this.isWrite = !!isWrite;
+        this.isReadWrite = !!(isRead && isWrite);
+      };
+    Accessibility.READ = new Accessibility(true, false);
+    Accessibility.WRITE = new Accessibility(false, true);
+    Accessibility.READWRITE = new Accessibility(true, true);
+    var Reference = exports.Reference = function Reference(node, accessibility) {
+        _classCallCheck(this, Reference);
+        this.node = node;
+        this.accessibility = accessibility;
+      };
+  });
+  require.define('/dist/scope-state.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _multimap = require('/node_modules/multimap/index.js', module);
+    var _multimap2 = _interopRequireDefault(_multimap);
+    var _declaration = require('/dist/declaration.js', module);
+    var _reference = require('/dist/reference.js', module);
+    var _scope = require('/dist/scope.js', module);
+    var _variable = require('/dist/variable.js', module);
+    var _variable2 = _interopRequireDefault(_variable);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    function merge(multiMap, otherMultiMap) {
+      otherMultiMap.forEachEntry(function (v, k) {
+        multiMap.set.apply(multiMap, [k].concat(v));
+      });
+      return multiMap;
+    }
+    function resolveDeclarations(freeIdentifiers, decls, variables) {
+      decls.forEachEntry(function (declarations, name) {
+        var references = freeIdentifiers.get(name) || [];
+        variables = variables.concat(new _variable2.default(name, references, declarations));
+        freeIdentifiers.delete(name);
+      });
+      return variables;
+    }
+    var ScopeState = function () {
+        function ScopeState() {
+          var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+          var _ref$freeIdentifiers = _ref.freeIdentifiers;
+          var freeIdentifiers = _ref$freeIdentifiers === undefined ? new _multimap2.default : _ref$freeIdentifiers;
+          var _ref$functionScopedDe = _ref.functionScopedDeclarations;
+          var functionScopedDeclarations = _ref$functionScopedDe === undefined ? new _multimap2.default : _ref$functionScopedDe;
+          var _ref$blockScopedDecla = _ref.blockScopedDeclarations;
+          var blockScopedDeclarations = _ref$blockScopedDecla === undefined ? new _multimap2.default : _ref$blockScopedDecla;
+          var _ref$functionDeclarat = _ref.functionDeclarations;
+          var functionDeclarations = _ref$functionDeclarat === undefined ? new _multimap2.default : _ref$functionDeclarat;
+          var _ref$children = _ref.children;
+          var children = _ref$children === undefined ? [] : _ref$children;
+          var _ref$dynamic = _ref.dynamic;
+          var dynamic = _ref$dynamic === undefined ? false : _ref$dynamic;
+          var _ref$bindingsForParen = _ref.bindingsForParent;
+          var bindingsForParent = _ref$bindingsForParen === undefined ? [] : _ref$bindingsForParen;
+          var _ref$potentiallyVarSc = _ref.potentiallyVarScopedFunctionDeclarations;
+          var potentiallyVarScopedFunctionDeclarations = _ref$potentiallyVarSc === undefined ? new _multimap2.default : _ref$potentiallyVarSc;
+          var _ref$hasParameterExpr = _ref.hasParameterExpressions;
+          var hasParameterExpressions = _ref$hasParameterExpr === undefined ? false : _ref$hasParameterExpr;
+          _classCallCheck(this, ScopeState);
+          this.freeIdentifiers = freeIdentifiers;
+          this.functionScopedDeclarations = functionScopedDeclarations;
+          this.blockScopedDeclarations = blockScopedDeclarations;
+          this.functionDeclarations = functionDeclarations;
+          this.children = children;
+          this.dynamic = dynamic;
+          this.bindingsForParent = bindingsForParent;
+          this.potentiallyVarScopedFunctionDeclarations = potentiallyVarScopedFunctionDeclarations;
+          this.hasParameterExpressions = hasParameterExpressions;
+        }
+        _createClass(ScopeState, [
+          {
+            key: 'concat',
+            value: function concat(b) {
+              if (this === b) {
+                return this;
+              }
+              return new ScopeState({
+                freeIdentifiers: merge(merge(new _multimap2.default, this.freeIdentifiers), b.freeIdentifiers),
+                functionScopedDeclarations: merge(merge(new _multimap2.default, this.functionScopedDeclarations), b.functionScopedDeclarations),
+                blockScopedDeclarations: merge(merge(new _multimap2.default, this.blockScopedDeclarations), b.blockScopedDeclarations),
+                functionDeclarations: merge(merge(new _multimap2.default, this.functionDeclarations), b.functionDeclarations),
+                children: this.children.concat(b.children),
+                dynamic: this.dynamic || b.dynamic,
+                bindingsForParent: this.bindingsForParent.concat(b.bindingsForParent),
+                potentiallyVarScopedFunctionDeclarations: merge(merge(new _multimap2.default, this.potentiallyVarScopedFunctionDeclarations), b.potentiallyVarScopedFunctionDeclarations),
+                hasParameterExpressions: this.hasParameterExpressions || b.hasParameterExpressions
+              });
+            }
+          },
+          {
+            key: 'addDeclarations',
+            value: function addDeclarations(kind) {
+              var keepBindingsForParent = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+              var declMap = new _multimap2.default;
+              merge(declMap, kind.isBlockScoped ? this.blockScopedDeclarations : this.functionScopedDeclarations);
+              this.bindingsForParent.forEach(function (binding) {
+                return declMap.set(binding.name, new _declaration.Declaration(binding, kind));
+              });
+              var s = new ScopeState(this);
+              if (kind.isBlockScoped) {
+                s.blockScopedDeclarations = declMap;
+              } else {
+                s.functionScopedDeclarations = declMap;
+              }
+              if (!keepBindingsForParent) {
+                s.bindingsForParent = [];
+              }
+              return s;
+            }
+          },
+          {
+            key: 'addFunctionDeclaration',
+            value: function addFunctionDeclaration() {
+              var binding = this.bindingsForParent[0];
+              var s = new ScopeState(this);
+              merge(s.functionDeclarations, new _multimap2.default([[
+                  binding.name,
+                  new _declaration.Declaration(binding, _declaration.DeclarationType.FUNCTION_DECLARATION)
+                ]]));
+              s.bindingsForParent = [];
+              return s;
+            }
+          },
+          {
+            key: 'addReferences',
+            value: function addReferences(accessibility) {
+              var keepBindingsForParent = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+              var freeMap = new _multimap2.default;
+              merge(freeMap, this.freeIdentifiers);
+              this.bindingsForParent.forEach(function (binding) {
+                return freeMap.set(binding.name, new _reference.Reference(binding, accessibility));
+              });
+              var s = new ScopeState(this);
+              s.freeIdentifiers = freeMap;
+              if (!keepBindingsForParent) {
+                s.bindingsForParent = [];
+              }
+              return s;
+            }
+          },
+          {
+            key: 'taint',
+            value: function taint() {
+              var s = new ScopeState(this);
+              s.dynamic = true;
+              return s;
+            }
+          },
+          {
+            key: 'withoutBindingsForParent',
+            value: function withoutBindingsForParent() {
+              var s = new ScopeState(this);
+              s.bindingsForParent = [];
+              return s;
+            }
+          },
+          {
+            key: 'withParameterExpressions',
+            value: function withParameterExpressions() {
+              var s = new ScopeState(this);
+              s.hasParameterExpressions = true;
+              return s;
+            }
+          },
+          {
+            key: 'withoutParameterExpressions',
+            value: function withoutParameterExpressions() {
+              var s = new ScopeState(this);
+              s.hasParameterExpressions = false;
+              return s;
+            }
+          },
+          {
+            key: 'withPotentialVarFunctions',
+            value: function withPotentialVarFunctions(functions) {
+              var pvsfd = merge(new _multimap2.default, this.potentiallyVarScopedFunctionDeclarations);
+              functions.forEach(function (f) {
+                return pvsfd.set(f.name, new _declaration.Declaration(f, _declaration.DeclarationType.FUNCTION_VAR_DECLARATION));
+              });
+              var s = new ScopeState(this);
+              s.potentiallyVarScopedFunctionDeclarations = pvsfd;
+              return s;
+            }
+          },
+          {
+            key: 'finish',
+            value: function finish(astNode, scopeType) {
+              var _ref2 = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+              var _ref2$shouldResolveAr = _ref2.shouldResolveArguments;
+              var shouldResolveArguments = _ref2$shouldResolveAr === undefined ? false : _ref2$shouldResolveAr;
+              var _ref2$shouldB = _ref2.shouldB33;
+              var shouldB33 = _ref2$shouldB === undefined ? false : _ref2$shouldB;
+              var variables = [];
+              var functionScoped = new _multimap2.default;
+              var freeIdentifiers = merge(new _multimap2.default, this.freeIdentifiers);
+              var pvsfd = merge(new _multimap2.default, this.potentiallyVarScopedFunctionDeclarations);
+              var children = this.children;
+              this.blockScopedDeclarations.forEachEntry(function (v, k) {
+                pvsfd.delete(k);
+              });
+              this.functionDeclarations.forEachEntry(function (v, k) {
+                var existing = pvsfd.get(k);
+                if (existing && (v.length > 1 || v[0].node !== existing[0].node)) {
+                  pvsfd.delete(k);
+                }
+              });
+              var declarations = new _multimap2.default;
+              switch (scopeType) {
+              case _scope.ScopeType.BLOCK:
+              case _scope.ScopeType.CATCH:
+              case _scope.ScopeType.WITH:
+              case _scope.ScopeType.FUNCTION_NAME:
+              case _scope.ScopeType.PARAMETER_EXPRESSION:
+                merge(declarations, this.blockScopedDeclarations);
+                merge(declarations, this.functionDeclarations);
+                variables = resolveDeclarations(freeIdentifiers, declarations, variables);
+                merge(functionScoped, this.functionScopedDeclarations);
+                break;
+              case _scope.ScopeType.PARAMETERS:
+              case _scope.ScopeType.ARROW_FUNCTION:
+              case _scope.ScopeType.FUNCTION:
+              case _scope.ScopeType.MODULE:
+              case _scope.ScopeType.SCRIPT:
+                if (scopeType === _scope.ScopeType.SCRIPT) {
+                  children = [new _scope.Scope(children, resolveDeclarations(freeIdentifiers, this.blockScopedDeclarations, []), merge(new _multimap2.default, freeIdentifiers), _scope.ScopeType.SCRIPT, this.dynamic, astNode)];
+                } else {
+                  merge(declarations, this.blockScopedDeclarations);
+                }
+                if (shouldResolveArguments) {
+                  declarations.set('arguments');
+                }
+                merge(declarations, this.functionScopedDeclarations);
+                merge(declarations, this.functionDeclarations);
+                if (shouldB33) {
+                  merge(declarations, pvsfd);
+                }
+                pvsfd = new _multimap2.default;
+                variables = resolveDeclarations(freeIdentifiers, declarations, variables);
+                if (scopeType === _scope.ScopeType.MODULE) {
+                  children = [new _scope.Scope(children, variables, freeIdentifiers, _scope.ScopeType.MODULE, this.dynamic, astNode)];
+                  variables = [];
+                }
+                break;
+              default:
+                throw new Error('not reached');
+              }
+              var scope = scopeType === _scope.ScopeType.SCRIPT || scopeType === _scope.ScopeType.MODULE ? new _scope.GlobalScope(children, variables, freeIdentifiers, astNode) : new _scope.Scope(children, variables, freeIdentifiers, scopeType, this.dynamic, astNode);
+              return new ScopeState({
+                freeIdentifiers: freeIdentifiers,
+                functionScopedDeclarations: functionScoped,
+                children: [scope],
+                bindingsForParent: this.bindingsForParent,
+                potentiallyVarScopedFunctionDeclarations: pvsfd,
+                hasParameterExpressions: this.hasParameterExpressions
+              });
+            }
+          }
+        ], [{
+            key: 'empty',
+            value: function empty() {
+              return new ScopeState({});
+            }
+          }]);
+        return ScopeState;
+      }();
+    exports.default = ScopeState;
+  });
+  require.define('/node_modules/multimap/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var Multimap = function () {
+        var mapCtor;
+        if (typeof Map !== 'undefined') {
+          mapCtor = Map;
+        }
+        function Multimap(iterable) {
+          var self = this;
+          self._map = mapCtor;
+          if (Multimap.Map) {
+            self._map = Multimap.Map;
+          }
+          self._ = self._map ? new self._map : {};
+          if (iterable) {
+            iterable.forEach(function (i) {
+              self.set(i[0], i[1]);
+            });
+          }
+        }
+        Multimap.prototype.get = function (key) {
+          return this._map ? this._.get(key) : this._[key];
+        };
+        Multimap.prototype.set = function (key, val) {
+          var args = Array.prototype.slice.call(arguments);
+          key = args.shift();
+          var entry = this.get(key);
+          if (!entry) {
+            entry = [];
+            if (this._map)
+              this._.set(key, entry);
+            else
+              this._[key] = entry;
+          }
+          Array.prototype.push.apply(entry, args);
+          return this;
+        };
+        Multimap.prototype.delete = function (key, val) {
+          if (!this.has(key))
+            return false;
+          if (arguments.length == 1) {
+            this._map ? this._.delete(key) : delete this._[key];
+            return true;
+          } else {
+            var entry = this.get(key);
+            var idx = entry.indexOf(val);
+            if (idx != -1) {
+              entry.splice(idx, 1);
+              return true;
+            }
+          }
+          return false;
+        };
+        Multimap.prototype.has = function (key, val) {
+          var hasKey = this._map ? this._.has(key) : this._.hasOwnProperty(key);
+          if (arguments.length == 1 || !hasKey)
+            return hasKey;
+          var entry = this.get(key) || [];
+          return entry.indexOf(val) != -1;
+        };
+        Multimap.prototype.keys = function () {
+          if (this._map)
+            return this._.keys();
+          return makeIterator(Object.keys(this._));
+        };
+        Multimap.prototype.values = function () {
+          var vals = [];
+          this.forEachEntry(function (entry) {
+            Array.prototype.push.apply(vals, entry);
+          });
+          return makeIterator(vals);
+        };
+        Multimap.prototype.forEachEntry = function (iter) {
+          var self = this;
+          var keys = self.keys();
+          var next;
+          while (!(next = keys.next()).done) {
+            iter(self.get(next.value), next.value, self);
+          }
+        };
+        Multimap.prototype.forEach = function (iter) {
+          var self = this;
+          self.forEachEntry(function (entry, key) {
+            entry.forEach(function (item) {
+              iter(item, key, self);
+            });
+          });
+        };
+        Multimap.prototype.clear = function () {
+          if (this._map) {
+            this._.clear();
+          } else {
+            this._ = {};
+          }
+        };
+        Object.defineProperty(Multimap.prototype, 'size', {
+          configurable: false,
+          enumerable: true,
+          get: function () {
+            var self = this;
+            var keys = self.keys();
+            var next, total = 0;
+            while (!(next = keys.next()).done) {
+              total += self.get(next.value).length;
+            }
+            return total;
+          }
+        });
+        function makeIterator(array) {
+          var nextIndex = 0;
+          return {
+            next: function () {
+              return nextIndex < array.length ? {
+                value: array[nextIndex++],
+                done: false
+              } : { done: true };
+            }
+          };
+        }
+        return Multimap;
+      }();
+    if (typeof exports === 'object' && module && module.exports)
+      module.exports = Multimap;
+    else if (typeof define === 'function' && define.amd)
+      define(function () {
+        return Multimap;
+      });
+  });
+  require.define('/dist/scope-serializer.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.serialize = serialize;
+    var _es6Map = require('/node_modules/es6-map/index.js', module);
+    var _es6Map2 = _interopRequireDefault(_es6Map);
+    var _flattener = require('/dist/flattener.js', module);
+    var _flattener2 = _interopRequireDefault(_flattener);
+    var _reference = require('/dist/reference.js', module);
+    var _declaration = require('/dist/declaration.js', module);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    function serialize(scope) {
+      return new Serializer(scope).serialize();
+    }
+    var Serializer = function () {
+        function Serializer(scope) {
+          var _this = this;
+          _classCallCheck(this, Serializer);
+          this.scope = scope;
+          var nodes = _flattener2.default.flatten(scope.astNode);
+          this.ids = new _es6Map2.default;
+          nodes.forEach(function (n) {
+            return _this.ids.set(n, _this.ids.size);
+          });
+          this.declarationCompare = declarationCompare.bind(this, this.ids);
+          this.referenceCompare = referenceCompare.bind(this, this.ids);
+          this.variableCompare = variableCompare.bind(this, this.ids);
+        }
+        _createClass(Serializer, [
+          {
+            key: 'serialize',
+            value: function serialize() {
+              return this.serializeScope(this.scope);
+            }
+          },
+          {
+            key: 'serializeScope',
+            value: function serializeScope(scope) {
+              return '{"node": "' + this.serializeNode(scope.astNode) + '"' + (', "type": "' + scope.type.name + '"') + (', "isDynamic": ' + scope.dynamic) + (', "through": ' + this.serializeReferenceList(this.collectThrough(scope.through))) + (', "variables": ' + this.serializeVariableList(scope.variableList)) + (', "children": [' + scope.children.map(this.serializeScope.bind(this)).join(', ') + ']') + '}';
+            }
+          },
+          {
+            key: 'serializeNode',
+            value: function serializeNode(node) {
+              if (node.type === 'IdentifierExpression') {
+                return 'IdentifierExpression(' + node.name + ')_' + this.ids.get(node);
+              } else if (node.type === 'BindingIdentifier') {
+                return 'BindingIdentifier(' + node.name + ')_' + this.ids.get(node);
+              } else {
+                return node.type + '_' + this.ids.get(node);
+              }
+            }
+          },
+          {
+            key: 'collectThrough',
+            value: function collectThrough(through) {
+              var references = [];
+              through.forEach(function (v, k) {
+                return references.push(v);
+              });
+              return references.sort(this.referenceCompare);
+            }
+          },
+          {
+            key: 'serializeReference',
+            value: function serializeReference(reference) {
+              return '{"node": "' + this.serializeNode(reference.node) + '"' + (', "accessibility": "' + (reference.accessibility.isRead ? 'Read' : '') + (reference.accessibility.isWrite ? 'Write' : '') + '"') + '}';
+            }
+          },
+          {
+            key: 'serializeReferenceList',
+            value: function serializeReferenceList(references) {
+              return '[' + references.map(this.serializeReference.bind(this)).join(', ') + ']';
+            }
+          },
+          {
+            key: 'serializeDeclaration',
+            value: function serializeDeclaration(declaration) {
+              return '{"node": "' + this.serializeNode(declaration.node) + '"' + (', "kind": "' + declaration.type.name + '"') + '}';
+            }
+          },
+          {
+            key: 'serializeVariable',
+            value: function serializeVariable(variable) {
+              return '{"name": "' + variable.name + '"' + (', "references": ' + this.serializeReferenceList(variable.references)) + (', "declarations": [' + variable.declarations.map(this.serializeDeclaration.bind(this)).join(', ') + ']') + '}';
+            }
+          },
+          {
+            key: 'serializeVariableList',
+            value: function serializeVariableList(variables) {
+              variables = variables.slice(0).sort(this.variableCompare);
+              return '[' + variables.map(this.serializeVariable.bind(this)).join(', ') + ']';
+            }
+          }
+        ]);
+        return Serializer;
+      }();
+    function declarationCompare(ids, d1, d2) {
+      function kindToInd(kind) {
+        switch (kind) {
+        case _declaration.DeclarationType.VAR:
+          return 0;
+        case _declaration.DeclarationType.CONST:
+          return 1;
+        case _declaration.DeclarationType.LET:
+          return 2;
+        case _declaration.DeclarationType.FUNCTION_DECLARATION:
+          return 3;
+        case _declaration.DeclarationType.FUNCTION_VAR_DECLARATION:
+          return 4;
+        case _declaration.DeclarationType.FUNCTION_NAME:
+          return 5;
+        case _declaration.DeclarationType.CLASS_NAME:
+          return 6;
+        case _declaration.DeclarationType.PARAMETER:
+          return 7;
+        case _declaration.DeclarationType.CATCH_PARAMETER:
+          return 8;
+        case _declaration.DeclarationType.IMPORT:
+          return 9;
+        default:
+          throw 'Unrecognized declaration type';
+        }
+      }
+      var comparison = kindToInd(d1.type) - kindToInd(d2.type);
+      if (comparison != 0) {
+        return comparison;
+      }
+      return ids.get(d1.node) - ids.get(d2.node);
+    }
+    function referenceCompare(ids, r1, r2) {
+      var comparison = (r1.accessibility.isRead ? 1 : 0) + (r1.accessibility.isWrite ? 2 : 0) - ((r2.accessibility.isRead ? 1 : 0) + (r2.accessibility.isWrite ? 2 : 0));
+      if (comparison != 0) {
+        return comparison;
+      }
+      return ids.get(r1.node) - ids.get(r2.node);
+    }
+    function variableCompare(ids, v1, v2) {
+      if (v1.name < v2.name) {
+        return -1;
+      }
+      if (v1.name > v2.name) {
+        return 1;
+      }
+      var comparison = v1.declarations.length - v2.declarations.length;
+      if (comparison != 0) {
+        return comparison;
+      }
+      comparison = v1.references.length - v2.references.length;
+      if (comparison != 0) {
+        return comparison;
+      }
+      for (var i = 0; i < v1.declarations.length; ++i) {
+        var d1 = v1.declarations[i];
+        var d2 = v2.declarations[i];
+        comparison = declarationCompare(ids, v1, v2);
+        if (comparison != 0) {
+          return comparison;
+        }
+      }
+    }
+  });
+  require.define('/dist/flattener.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _shiftReducer = require('/node_modules/shift-reducer/dist/index.js', module);
+    var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
+    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    var Flattener = function (_MonoidalReducer) {
+        _inherits(Flattener, _MonoidalReducer);
+        function Flattener() {
+          _classCallCheck(this, Flattener);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(Flattener).call(this, ListMonoid));
+        }
+        _createClass(Flattener, null, [{
+            key: 'flatten',
+            value: function flatten(node) {
+              return (0, _shiftReducer2.default)(new this, node).extract();
+            }
+          }]);
+        return Flattener;
+      }(_shiftReducer.MonoidalReducer);
+    exports.default = Flattener;
+    var _loop = function _loop(typeName) {
+      var type = _shiftSpec2.default[typeName];
+      Object.defineProperty(Flattener.prototype, 'reduce' + typeName, {
+        value: function value(node, state) {
+          return new ListMonoid([node]).concat(_shiftReducer.MonoidalReducer.prototype['reduce' + typeName].call(this, node, state));
+        }
+      });
+    };
+    for (var typeName in _shiftSpec2.default) {
+      _loop(typeName);
+    }
+    var ListMonoid = function () {
+        function ListMonoid(list) {
+          _classCallCheck(this, ListMonoid);
+          this.list = list;
+        }
+        _createClass(ListMonoid, [
+          {
+            key: 'concat',
+            value: function concat(b) {
+              return new ListMonoid(this.list.concat(b.list));
+            }
+          },
+          {
+            key: 'extract',
+            value: function extract() {
+              return this.list;
+            }
+          }
+        ], [{
+            key: 'empty',
+            value: function empty() {
+              return new ListMonoid([]);
+            }
+          }]);
+        return ListMonoid;
+      }();
+  });
+  require.define('/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.default = function () {
+      var SPEC = {};
+      var BOOLEAN = { typeName: 'Boolean' };
+      var DOUBLE = { typeName: 'Number' };
+      var STRING = { typeName: 'String' };
+      function Maybe(arg) {
+        return {
+          typeName: 'Maybe',
+          argument: arg
+        };
+      }
+      function List(arg) {
+        return {
+          typeName: 'List',
+          argument: arg
+        };
+      }
+      function Const(arg) {
+        return {
+          typeName: 'Const',
+          argument: arg
+        };
+      }
+      function Union() {
+        return {
+          typeName: 'Union',
+          arguments: [].slice.call(arguments, 0)
+        };
+      }
+      var TYPE_INDICATOR = {
+          typeName: 'Enum',
+          values: [
+            'ArrayBinding',
+            'ArrayExpression',
+            'ArrowExpression',
+            'AssignmentExpression',
+            'BinaryExpression',
+            'BindingIdentifier',
+            'BindingProperty',
+            'BindingPropertyIdentifier',
+            'BindingPropertyProperty',
+            'BindingWithDefault',
+            'Block',
+            'BlockStatement',
+            'BreakStatement',
+            'CallExpression',
+            'CatchClause',
+            'Class',
+            'ClassDeclaration',
+            'ClassElement',
+            'ClassExpression',
+            'CompoundAssignmentExpression',
+            'ComputedMemberExpression',
+            'ComputedPropertyName',
+            'ConditionalExpression',
+            'ContinueStatement',
+            'DataProperty',
+            'DebuggerStatement',
+            'Directive',
+            'DoWhileStatement',
+            'EmptyStatement',
+            'Export',
+            'ExportAllFrom',
+            'ExportDeclaration',
+            'ExportDefault',
+            'ExportFrom',
+            'ExportSpecifier',
+            'Expression',
+            'ExpressionStatement',
+            'ForInStatement',
+            'ForOfStatement',
+            'ForStatement',
+            'FormalParameters',
+            'Function',
+            'FunctionBody',
+            'FunctionDeclaration',
+            'FunctionExpression',
+            'Getter',
+            'IdentifierExpression',
+            'IfStatement',
+            'Import',
+            'ImportDeclaration',
+            'ImportNamespace',
+            'ImportSpecifier',
+            'IterationStatement',
+            'LabeledStatement',
+            'LiteralBooleanExpression',
+            'LiteralInfinityExpression',
+            'LiteralNullExpression',
+            'LiteralNumericExpression',
+            'LiteralRegExpExpression',
+            'LiteralStringExpression',
+            'MemberExpression',
+            'Method',
+            'MethodDefinition',
+            'Module',
+            'NamedObjectProperty',
+            'NewExpression',
+            'NewTargetExpression',
+            'Node',
+            'ObjectBinding',
+            'ObjectExpression',
+            'ObjectProperty',
+            'PropertyName',
+            'ReturnStatement',
+            'Script',
+            'Setter',
+            'ShorthandProperty',
+            'SourceLocation',
+            'SourceSpan',
+            'SpreadElement',
+            'Statement',
+            'StaticMemberExpression',
+            'StaticPropertyName',
+            'Super',
+            'SwitchCase',
+            'SwitchDefault',
+            'SwitchStatement',
+            'SwitchStatementWithDefault',
+            'TemplateElement',
+            'TemplateExpression',
+            'ThisExpression',
+            'ThrowStatement',
+            'TryCatchStatement',
+            'TryFinallyStatement',
+            'UnaryExpression',
+            'UpdateExpression',
+            'VariableDeclaration',
+            'VariableDeclarationStatement',
+            'VariableDeclarator',
+            'WhileStatement',
+            'WithStatement',
+            'YieldExpression',
+            'YieldGeneratorExpression'
+          ]
+        };
+      var VariableDeclarationKind = {
+          typeName: 'Enum',
+          values: [
+            'var',
+            'let',
+            'const'
+          ]
+        };
+      var CompoundAssignmentOperator = {
+          typeName: 'Enum',
+          values: [
+            '+=',
+            '-=',
+            '*=',
+            '/=',
+            '%=',
+            '<<=',
+            '>>=',
+            '>>>=',
+            '|=',
+            '^=',
+            '&='
+          ]
+        };
+      var BinaryOperator = {
+          typeName: 'Enum',
+          values: [
+            '==',
+            '!=',
+            '===',
+            '!==',
+            '<',
+            '<=',
+            '>',
+            '>=',
+            'in',
+            'instanceof',
+            '<<',
+            '>>',
+            '>>>',
+            '+',
+            '-',
+            '*',
+            '/',
+            '%',
+            ',',
+            '||',
+            '&&',
+            '|',
+            '^',
+            '&'
+          ]
+        };
+      var UnaryOperator = {
+          typeName: 'Enum',
+          values: [
+            '+',
+            '-',
+            '!',
+            '~',
+            'typeof',
+            'void',
+            'delete'
+          ]
+        };
+      var UpdateOperator = {
+          typeName: 'Enum',
+          values: [
+            '++',
+            '--'
+          ]
+        };
+      var SourceLocation = SPEC.SourceLocation = {};
+      var SourceSpan = SPEC.SourceSpan = {};
+      var BindingWithDefault = SPEC.BindingWithDefault = {};
+      var BindingIdentifier = SPEC.BindingIdentifier = {};
+      var ArrayBinding = SPEC.ArrayBinding = {};
+      var ObjectBinding = SPEC.ObjectBinding = {};
+      var BindingPropertyIdentifier = SPEC.BindingPropertyIdentifier = {};
+      var BindingPropertyProperty = SPEC.BindingPropertyProperty = {};
+      var ClassExpression = SPEC.ClassExpression = {};
+      var ClassDeclaration = SPEC.ClassDeclaration = {};
+      var ClassElement = SPEC.ClassElement = {};
+      var Module = SPEC.Module = {};
+      var Import = SPEC.Import = {};
+      var ImportNamespace = SPEC.ImportNamespace = {};
+      var ImportSpecifier = SPEC.ImportSpecifier = {};
+      var ExportAllFrom = SPEC.ExportAllFrom = {};
+      var ExportFrom = SPEC.ExportFrom = {};
+      var Export = SPEC.Export = {};
+      var ExportDefault = SPEC.ExportDefault = {};
+      var ExportSpecifier = SPEC.ExportSpecifier = {};
+      var Method = SPEC.Method = {};
+      var Getter = SPEC.Getter = {};
+      var Setter = SPEC.Setter = {};
+      var DataProperty = SPEC.DataProperty = {};
+      var ShorthandProperty = SPEC.ShorthandProperty = {};
+      var ComputedPropertyName = SPEC.ComputedPropertyName = {};
+      var StaticPropertyName = SPEC.StaticPropertyName = {};
+      var LiteralBooleanExpression = SPEC.LiteralBooleanExpression = {};
+      var LiteralInfinityExpression = SPEC.LiteralInfinityExpression = {};
+      var LiteralNullExpression = SPEC.LiteralNullExpression = {};
+      var LiteralNumericExpression = SPEC.LiteralNumericExpression = {};
+      var LiteralRegExpExpression = SPEC.LiteralRegExpExpression = {};
+      var LiteralStringExpression = SPEC.LiteralStringExpression = {};
+      var ArrayExpression = SPEC.ArrayExpression = {};
+      var ArrowExpression = SPEC.ArrowExpression = {};
+      var AssignmentExpression = SPEC.AssignmentExpression = {};
+      var BinaryExpression = SPEC.BinaryExpression = {};
+      var CallExpression = SPEC.CallExpression = {};
+      var CompoundAssignmentExpression = SPEC.CompoundAssignmentExpression = {};
+      var ComputedMemberExpression = SPEC.ComputedMemberExpression = {};
+      var ConditionalExpression = SPEC.ConditionalExpression = {};
+      var FunctionExpression = SPEC.FunctionExpression = {};
+      var IdentifierExpression = SPEC.IdentifierExpression = {};
+      var NewExpression = SPEC.NewExpression = {};
+      var NewTargetExpression = SPEC.NewTargetExpression = {};
+      var ObjectExpression = SPEC.ObjectExpression = {};
+      var UnaryExpression = SPEC.UnaryExpression = {};
+      var StaticMemberExpression = SPEC.StaticMemberExpression = {};
+      var TemplateExpression = SPEC.TemplateExpression = {};
+      var ThisExpression = SPEC.ThisExpression = {};
+      var UpdateExpression = SPEC.UpdateExpression = {};
+      var YieldExpression = SPEC.YieldExpression = {};
+      var YieldGeneratorExpression = SPEC.YieldGeneratorExpression = {};
+      var BlockStatement = SPEC.BlockStatement = {};
+      var BreakStatement = SPEC.BreakStatement = {};
+      var ContinueStatement = SPEC.ContinueStatement = {};
+      var DebuggerStatement = SPEC.DebuggerStatement = {};
+      var DoWhileStatement = SPEC.DoWhileStatement = {};
+      var EmptyStatement = SPEC.EmptyStatement = {};
+      var ExpressionStatement = SPEC.ExpressionStatement = {};
+      var ForInStatement = SPEC.ForInStatement = {};
+      var ForOfStatement = SPEC.ForOfStatement = {};
+      var ForStatement = SPEC.ForStatement = {};
+      var IfStatement = SPEC.IfStatement = {};
+      var LabeledStatement = SPEC.LabeledStatement = {};
+      var ReturnStatement = SPEC.ReturnStatement = {};
+      var SwitchStatement = SPEC.SwitchStatement = {};
+      var SwitchStatementWithDefault = SPEC.SwitchStatementWithDefault = {};
+      var ThrowStatement = SPEC.ThrowStatement = {};
+      var TryCatchStatement = SPEC.TryCatchStatement = {};
+      var TryFinallyStatement = SPEC.TryFinallyStatement = {};
+      var VariableDeclarationStatement = SPEC.VariableDeclarationStatement = {};
+      var WhileStatement = SPEC.WhileStatement = {};
+      var WithStatement = SPEC.WithStatement = {};
+      var Block = SPEC.Block = {};
+      var CatchClause = SPEC.CatchClause = {};
+      var Directive = SPEC.Directive = {};
+      var FormalParameters = SPEC.FormalParameters = {};
+      var FunctionBody = SPEC.FunctionBody = {};
+      var FunctionDeclaration = SPEC.FunctionDeclaration = {};
+      var Script = SPEC.Script = {};
+      var SpreadElement = SPEC.SpreadElement = {};
+      var Super = SPEC.Super = {};
+      var SwitchCase = SPEC.SwitchCase = {};
+      var SwitchDefault = SPEC.SwitchDefault = {};
+      var TemplateElement = SPEC.TemplateElement = {};
+      var VariableDeclaration = SPEC.VariableDeclaration = {};
+      var VariableDeclarator = SPEC.VariableDeclarator = {};
+      var Class = Union(ClassExpression, ClassDeclaration);
+      var BindingProperty = Union(BindingPropertyIdentifier, BindingPropertyProperty);
+      var ExportDeclaration = Union(ExportAllFrom, ExportFrom, Export, ExportDefault);
+      var ImportDeclaration = Union(Import, ImportNamespace);
+      var MethodDefinition = Union(Method, Getter, Setter);
+      var NamedObjectProperty = Union(MethodDefinition, DataProperty);
+      var ObjectProperty = Union(NamedObjectProperty, ShorthandProperty);
+      var PropertyName = Union(ComputedPropertyName, StaticPropertyName);
+      var MemberExpression = Union(ComputedMemberExpression, StaticMemberExpression);
+      var Expression = Union(MemberExpression, ClassExpression, LiteralBooleanExpression, LiteralInfinityExpression, LiteralNullExpression, LiteralNumericExpression, LiteralRegExpExpression, LiteralStringExpression, ArrayExpression, ArrowExpression, AssignmentExpression, BinaryExpression, CallExpression, CompoundAssignmentExpression, ConditionalExpression, FunctionExpression, IdentifierExpression, NewExpression, NewTargetExpression, ObjectExpression, UnaryExpression, TemplateExpression, ThisExpression, UpdateExpression, YieldExpression, YieldGeneratorExpression);
+      var IterationStatement = Union(DoWhileStatement, ForInStatement, ForOfStatement, ForStatement, WhileStatement);
+      var Statement = Union(IterationStatement, ClassDeclaration, BlockStatement, BreakStatement, ContinueStatement, DebuggerStatement, EmptyStatement, ExpressionStatement, IfStatement, LabeledStatement, ReturnStatement, SwitchStatement, SwitchStatementWithDefault, ThrowStatement, TryCatchStatement, TryFinallyStatement, VariableDeclarationStatement, WithStatement, FunctionDeclaration);
+      var Node = Union(Statement, Expression, PropertyName, ObjectProperty, ImportDeclaration, ExportDeclaration, BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding, BindingProperty, ClassElement, Module, ImportSpecifier, ExportSpecifier, Block, CatchClause, Directive, FormalParameters, FunctionBody, Script, SpreadElement, Super, SwitchCase, SwitchDefault, TemplateElement, VariableDeclaration, VariableDeclarator);
+      var Function = Union(FunctionExpression, FunctionDeclaration);
+      SourceLocation.typeName = 'SourceLocation';
+      SourceLocation.fields = [
+        {
+          name: 'line',
+          type: DOUBLE
+        },
+        {
+          name: 'column',
+          type: DOUBLE
+        },
+        {
+          name: 'offset',
+          type: DOUBLE
+        }
+      ];
+      SourceSpan.typeName = 'SourceSpan';
+      SourceSpan.fields = [
+        {
+          name: 'source',
+          type: Maybe(STRING)
+        },
+        {
+          name: 'start',
+          type: SourceLocation
+        },
+        {
+          name: 'end',
+          type: SourceLocation
+        }
+      ];
+      BindingWithDefault.typeName = 'BindingWithDefault';
+      BindingWithDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingWithDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'init',
+          type: Expression
+        }
+      ];
+      BindingIdentifier.typeName = 'BindingIdentifier';
+      BindingIdentifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingIdentifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: STRING
+        }
+      ];
+      ArrayBinding.typeName = 'ArrayBinding';
+      ArrayBinding.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ArrayBinding'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'elements',
+          type: List(Maybe(Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault)))
+        },
+        {
+          name: 'restElement',
+          type: Maybe(Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression))
+        }
+      ];
+      ObjectBinding.typeName = 'ObjectBinding';
+      ObjectBinding.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ObjectBinding'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'properties',
+          type: List(BindingProperty)
+        }
+      ];
+      BindingPropertyIdentifier.typeName = 'BindingPropertyIdentifier';
+      BindingPropertyIdentifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingPropertyIdentifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: BindingIdentifier
+        },
+        {
+          name: 'init',
+          type: Maybe(Expression)
+        }
+      ];
+      BindingPropertyProperty.typeName = 'BindingPropertyProperty';
+      BindingPropertyProperty.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BindingPropertyProperty'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault)
+        }
+      ];
+      ClassExpression.typeName = 'ClassExpression';
+      ClassExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ClassExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'super',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'elements',
+          type: List(ClassElement)
+        }
+      ];
+      ClassDeclaration.typeName = 'ClassDeclaration';
+      ClassDeclaration.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ClassDeclaration'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: BindingIdentifier
+        },
+        {
+          name: 'super',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'elements',
+          type: List(ClassElement)
+        }
+      ];
+      ClassElement.typeName = 'ClassElement';
+      ClassElement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ClassElement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isStatic',
+          type: BOOLEAN
+        },
+        {
+          name: 'method',
+          type: MethodDefinition
+        }
+      ];
+      Module.typeName = 'Module';
+      Module.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Module'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'directives',
+          type: List(Directive)
+        },
+        {
+          name: 'items',
+          type: List(Union(ImportDeclaration, ExportDeclaration, Statement))
+        }
+      ];
+      Import.typeName = 'Import';
+      Import.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Import'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: STRING
+        },
+        {
+          name: 'defaultBinding',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'namedImports',
+          type: List(ImportSpecifier)
+        }
+      ];
+      ImportNamespace.typeName = 'ImportNamespace';
+      ImportNamespace.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ImportNamespace'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: STRING
+        },
+        {
+          name: 'defaultBinding',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'namespaceBinding',
+          type: BindingIdentifier
+        }
+      ];
+      ImportSpecifier.typeName = 'ImportSpecifier';
+      ImportSpecifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ImportSpecifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: Maybe(STRING)
+        },
+        {
+          name: 'binding',
+          type: BindingIdentifier
+        }
+      ];
+      ExportAllFrom.typeName = 'ExportAllFrom';
+      ExportAllFrom.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportAllFrom'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: STRING
+        }
+      ];
+      ExportFrom.typeName = 'ExportFrom';
+      ExportFrom.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportFrom'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'namedExports',
+          type: List(ExportSpecifier)
+        },
+        {
+          name: 'moduleSpecifier',
+          type: Maybe(STRING)
+        }
+      ];
+      Export.typeName = 'Export';
+      Export.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Export'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'declaration',
+          type: Union(FunctionDeclaration, ClassDeclaration, VariableDeclaration)
+        }
+      ];
+      ExportDefault.typeName = 'ExportDefault';
+      ExportDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Union(FunctionDeclaration, ClassDeclaration, Expression)
+        }
+      ];
+      ExportSpecifier.typeName = 'ExportSpecifier';
+      ExportSpecifier.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExportSpecifier'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: Maybe(STRING)
+        },
+        {
+          name: 'exportedName',
+          type: STRING
+        }
+      ];
+      Method.typeName = 'Method';
+      Method.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Method'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'isGenerator',
+          type: BOOLEAN
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      Getter.typeName = 'Getter';
+      Getter.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Getter'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      Setter.typeName = 'Setter';
+      Setter.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Setter'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'param',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault)
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      DataProperty.typeName = 'DataProperty';
+      DataProperty.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'DataProperty'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: PropertyName
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ShorthandProperty.typeName = 'ShorthandProperty';
+      ShorthandProperty.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ShorthandProperty'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: STRING
+        }
+      ];
+      ComputedPropertyName.typeName = 'ComputedPropertyName';
+      ComputedPropertyName.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ComputedPropertyName'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      StaticPropertyName.typeName = 'StaticPropertyName';
+      StaticPropertyName.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'StaticPropertyName'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: STRING
+        }
+      ];
+      LiteralBooleanExpression.typeName = 'LiteralBooleanExpression';
+      LiteralBooleanExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralBooleanExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: BOOLEAN
+        }
+      ];
+      LiteralInfinityExpression.typeName = 'LiteralInfinityExpression';
+      LiteralInfinityExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralInfinityExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      LiteralNullExpression.typeName = 'LiteralNullExpression';
+      LiteralNullExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralNullExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      LiteralNumericExpression.typeName = 'LiteralNumericExpression';
+      LiteralNumericExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralNumericExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: DOUBLE
+        }
+      ];
+      LiteralRegExpExpression.typeName = 'LiteralRegExpExpression';
+      LiteralRegExpExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralRegExpExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'pattern',
+          type: STRING
+        },
+        {
+          name: 'flags',
+          type: STRING
+        }
+      ];
+      LiteralStringExpression.typeName = 'LiteralStringExpression';
+      LiteralStringExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LiteralStringExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'value',
+          type: STRING
+        }
+      ];
+      ArrayExpression.typeName = 'ArrayExpression';
+      ArrayExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ArrayExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'elements',
+          type: List(Maybe(Union(SpreadElement, Expression)))
+        }
+      ];
+      ArrowExpression.typeName = 'ArrowExpression';
+      ArrowExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ArrowExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: Union(FunctionBody, Expression)
+        }
+      ];
+      AssignmentExpression.typeName = 'AssignmentExpression';
+      AssignmentExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'AssignmentExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      BinaryExpression.typeName = 'BinaryExpression';
+      BinaryExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BinaryExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'operator',
+          type: BinaryOperator
+        },
+        {
+          name: 'left',
+          type: Expression
+        },
+        {
+          name: 'right',
+          type: Expression
+        }
+      ];
+      CallExpression.typeName = 'CallExpression';
+      CallExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'CallExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'callee',
+          type: Union(Expression, Super)
+        },
+        {
+          name: 'arguments',
+          type: List(Union(SpreadElement, Expression))
+        }
+      ];
+      CompoundAssignmentExpression.typeName = 'CompoundAssignmentExpression';
+      CompoundAssignmentExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'CompoundAssignmentExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'operator',
+          type: CompoundAssignmentOperator
+        },
+        {
+          name: 'binding',
+          type: Union(BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ComputedMemberExpression.typeName = 'ComputedMemberExpression';
+      ComputedMemberExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ComputedMemberExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'object',
+          type: Union(Expression, Super)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ConditionalExpression.typeName = 'ConditionalExpression';
+      ConditionalExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ConditionalExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'consequent',
+          type: Expression
+        },
+        {
+          name: 'alternate',
+          type: Expression
+        }
+      ];
+      FunctionExpression.typeName = 'FunctionExpression';
+      FunctionExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FunctionExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isGenerator',
+          type: BOOLEAN
+        },
+        {
+          name: 'name',
+          type: Maybe(BindingIdentifier)
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      IdentifierExpression.typeName = 'IdentifierExpression';
+      IdentifierExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'IdentifierExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'name',
+          type: STRING
+        }
+      ];
+      NewExpression.typeName = 'NewExpression';
+      NewExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'NewExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'callee',
+          type: Expression
+        },
+        {
+          name: 'arguments',
+          type: List(Union(SpreadElement, Expression))
+        }
+      ];
+      NewTargetExpression.typeName = 'NewTargetExpression';
+      NewTargetExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'NewTargetExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      ObjectExpression.typeName = 'ObjectExpression';
+      ObjectExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ObjectExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'properties',
+          type: List(ObjectProperty)
+        }
+      ];
+      UnaryExpression.typeName = 'UnaryExpression';
+      UnaryExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'UnaryExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'operator',
+          type: UnaryOperator
+        },
+        {
+          name: 'operand',
+          type: Expression
+        }
+      ];
+      StaticMemberExpression.typeName = 'StaticMemberExpression';
+      StaticMemberExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'StaticMemberExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'object',
+          type: Union(Expression, Super)
+        },
+        {
+          name: 'property',
+          type: STRING
+        }
+      ];
+      TemplateExpression.typeName = 'TemplateExpression';
+      TemplateExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TemplateExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'tag',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'elements',
+          type: List(Union(Expression, TemplateElement))
+        }
+      ];
+      ThisExpression.typeName = 'ThisExpression';
+      ThisExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ThisExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      UpdateExpression.typeName = 'UpdateExpression';
+      UpdateExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'UpdateExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isPrefix',
+          type: BOOLEAN
+        },
+        {
+          name: 'operator',
+          type: UpdateOperator
+        },
+        {
+          name: 'operand',
+          type: Union(BindingIdentifier, MemberExpression)
+        }
+      ];
+      YieldExpression.typeName = 'YieldExpression';
+      YieldExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'YieldExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Maybe(Expression)
+        }
+      ];
+      YieldGeneratorExpression.typeName = 'YieldGeneratorExpression';
+      YieldGeneratorExpression.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'YieldGeneratorExpression'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      BlockStatement.typeName = 'BlockStatement';
+      BlockStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BlockStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'block',
+          type: Block
+        }
+      ];
+      BreakStatement.typeName = 'BreakStatement';
+      BreakStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'BreakStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'label',
+          type: Maybe(STRING)
+        }
+      ];
+      ContinueStatement.typeName = 'ContinueStatement';
+      ContinueStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ContinueStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'label',
+          type: Maybe(STRING)
+        }
+      ];
+      DebuggerStatement.typeName = 'DebuggerStatement';
+      DebuggerStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'DebuggerStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      DoWhileStatement.typeName = 'DoWhileStatement';
+      DoWhileStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'DoWhileStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Statement
+        },
+        {
+          name: 'test',
+          type: Expression
+        }
+      ];
+      EmptyStatement.typeName = 'EmptyStatement';
+      EmptyStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'EmptyStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      ExpressionStatement.typeName = 'ExpressionStatement';
+      ExpressionStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ExpressionStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      ForInStatement.typeName = 'ForInStatement';
+      ForInStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ForInStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'left',
+          type: Union(VariableDeclaration, ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'right',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      ForOfStatement.typeName = 'ForOfStatement';
+      ForOfStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ForOfStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'left',
+          type: Union(VariableDeclaration, ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'right',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      ForStatement.typeName = 'ForStatement';
+      ForStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ForStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'init',
+          type: Maybe(Union(VariableDeclaration, Expression))
+        },
+        {
+          name: 'test',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'update',
+          type: Maybe(Expression)
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      IfStatement.typeName = 'IfStatement';
+      IfStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'IfStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'consequent',
+          type: Statement
+        },
+        {
+          name: 'alternate',
+          type: Maybe(Statement)
+        }
+      ];
+      LabeledStatement.typeName = 'LabeledStatement';
+      LabeledStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'LabeledStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'label',
+          type: STRING
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      ReturnStatement.typeName = 'ReturnStatement';
+      ReturnStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ReturnStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Maybe(Expression)
+        }
+      ];
+      SwitchStatement.typeName = 'SwitchStatement';
+      SwitchStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'discriminant',
+          type: Expression
+        },
+        {
+          name: 'cases',
+          type: List(SwitchCase)
+        }
+      ];
+      SwitchStatementWithDefault.typeName = 'SwitchStatementWithDefault';
+      SwitchStatementWithDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchStatementWithDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'discriminant',
+          type: Expression
+        },
+        {
+          name: 'preDefaultCases',
+          type: List(SwitchCase)
+        },
+        {
+          name: 'defaultCase',
+          type: SwitchDefault
+        },
+        {
+          name: 'postDefaultCases',
+          type: List(SwitchCase)
+        }
+      ];
+      ThrowStatement.typeName = 'ThrowStatement';
+      ThrowStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'ThrowStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      TryCatchStatement.typeName = 'TryCatchStatement';
+      TryCatchStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TryCatchStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Block
+        },
+        {
+          name: 'catchClause',
+          type: CatchClause
+        }
+      ];
+      TryFinallyStatement.typeName = 'TryFinallyStatement';
+      TryFinallyStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TryFinallyStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'body',
+          type: Block
+        },
+        {
+          name: 'catchClause',
+          type: Maybe(CatchClause)
+        },
+        {
+          name: 'finalizer',
+          type: Block
+        }
+      ];
+      VariableDeclarationStatement.typeName = 'VariableDeclarationStatement';
+      VariableDeclarationStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'VariableDeclarationStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'declaration',
+          type: VariableDeclaration
+        }
+      ];
+      WhileStatement.typeName = 'WhileStatement';
+      WhileStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'WhileStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      WithStatement.typeName = 'WithStatement';
+      WithStatement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'WithStatement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'object',
+          type: Expression
+        },
+        {
+          name: 'body',
+          type: Statement
+        }
+      ];
+      Block.typeName = 'Block';
+      Block.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Block'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'statements',
+          type: List(Statement)
+        }
+      ];
+      CatchClause.typeName = 'CatchClause';
+      CatchClause.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'CatchClause'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'body',
+          type: Block
+        }
+      ];
+      Directive.typeName = 'Directive';
+      Directive.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Directive'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'rawValue',
+          type: STRING
+        }
+      ];
+      FormalParameters.typeName = 'FormalParameters';
+      FormalParameters.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FormalParameters'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'items',
+          type: List(Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression, BindingWithDefault))
+        },
+        {
+          name: 'rest',
+          type: Maybe(BindingIdentifier)
+        }
+      ];
+      FunctionBody.typeName = 'FunctionBody';
+      FunctionBody.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FunctionBody'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'directives',
+          type: List(Directive)
+        },
+        {
+          name: 'statements',
+          type: List(Statement)
+        }
+      ];
+      FunctionDeclaration.typeName = 'FunctionDeclaration';
+      FunctionDeclaration.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'FunctionDeclaration'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'isGenerator',
+          type: BOOLEAN
+        },
+        {
+          name: 'name',
+          type: BindingIdentifier
+        },
+        {
+          name: 'params',
+          type: FormalParameters
+        },
+        {
+          name: 'body',
+          type: FunctionBody
+        }
+      ];
+      Script.typeName = 'Script';
+      Script.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Script'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'directives',
+          type: List(Directive)
+        },
+        {
+          name: 'statements',
+          type: List(Statement)
+        }
+      ];
+      SpreadElement.typeName = 'SpreadElement';
+      SpreadElement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SpreadElement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'expression',
+          type: Expression
+        }
+      ];
+      Super.typeName = 'Super';
+      Super.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'Super'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        }
+      ];
+      SwitchCase.typeName = 'SwitchCase';
+      SwitchCase.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchCase'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'test',
+          type: Expression
+        },
+        {
+          name: 'consequent',
+          type: List(Statement)
+        }
+      ];
+      SwitchDefault.typeName = 'SwitchDefault';
+      SwitchDefault.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'SwitchDefault'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'consequent',
+          type: List(Statement)
+        }
+      ];
+      TemplateElement.typeName = 'TemplateElement';
+      TemplateElement.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'TemplateElement'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'rawValue',
+          type: STRING
+        }
+      ];
+      VariableDeclaration.typeName = 'VariableDeclaration';
+      VariableDeclaration.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'VariableDeclaration'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'kind',
+          type: VariableDeclarationKind
+        },
+        {
+          name: 'declarators',
+          type: List(VariableDeclarator)
+        }
+      ];
+      VariableDeclarator.typeName = 'VariableDeclarator';
+      VariableDeclarator.fields = [
+        {
+          name: 'type',
+          type: Const(TYPE_INDICATOR),
+          value: 'VariableDeclarator'
+        },
+        {
+          name: 'loc',
+          type: Maybe(SourceSpan)
+        },
+        {
+          name: 'binding',
+          type: Union(ObjectBinding, ArrayBinding, BindingIdentifier, MemberExpression)
+        },
+        {
+          name: 'init',
+          type: Maybe(Expression)
+        }
+      ];
+      return SPEC;
+    }();
   });
   require.define('/dist/scope-lookup.js', function (module, exports, __dirname, __filename) {
     'use strict';
@@ -5124,35 +7874,22 @@
       }();
     Object.defineProperty(exports, '__esModule', { value: true });
     var _multimap = require('/node_modules/multimap/index.js', module);
-    var _MultiMap = _interopRequireWildcard(_multimap);
+    var _multimap2 = _interopRequireDefault(_multimap);
     var _scope = require('/dist/scope.js', module);
-    function _interopRequireWildcard(obj) {
-      if (obj && obj.__esModule) {
-        return obj;
-      } else {
-        var newObj = {};
-        if (obj != null) {
-          for (var key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key))
-              newObj[key] = obj[key];
-          }
-        }
-        newObj.default = obj;
-        return newObj;
-      }
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
     }
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
       }
     }
-    var MultiMap = _MultiMap.default;
     var ScopeLookup = function () {
         function ScopeLookup(globalScope) {
           var _this = this;
           _classCallCheck(this, ScopeLookup);
           this.scope = globalScope;
-          this.variableMap = new MultiMap;
+          this.variableMap = new _multimap2.default;
           var addVariable = function addVariable(v) {
             v.declarations.forEach(function (decl) {
               return _this.variableMap.set(decl.node, v);
@@ -5163,8 +7900,8 @@
               }
             });
           };
-          (function getVariables(scope) {
-            scope.children.forEach(getVariables);
+          (function addVariables(scope) {
+            scope.children.forEach(addVariables);
             scope.variables.forEach(addVariable);
           }(globalScope));
         }

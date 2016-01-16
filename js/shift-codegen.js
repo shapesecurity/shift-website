@@ -52,21 +52,14 @@
     }();
   require.define('/dist/index.js', function (module, exports, __dirname, __filename) {
     'use strict';
-    exports['default'] = codeGen;
-    var _shiftReducer = require('/node_modules/shift-reducer/dist/index.js', module);
-    var _token_stream = require('/dist/token_stream.js', module);
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.SemiOp = exports.CommaSep = exports.Semi = exports.Seq = exports.ContainsIn = exports.NoIn = exports.Brace = exports.Bracket = exports.Paren = exports.NumberCodeRep = exports.Token = exports.Empty = exports.CodeRep = exports.escapeStringLiteral = exports.getPrecedence = exports.Precedence = exports.Sep = exports.FormattedCodeGen = exports.ExtensibleCodeGen = exports.MinimalCodeGen = undefined;
+    exports.default = codeGen;
     var _minimalCodegen = require('/dist/minimal-codegen.js', module);
-    function codeGen(script) {
-      var generator = arguments.length <= 1 || arguments[1] === undefined ? new _minimalCodegen['default'] : arguments[1];
-      var ts = new _token_stream.TokenStream;
-      var rep = (0, _shiftReducer['default'])(generator, script);
-      rep.emit(ts);
-      return ts.result;
-    }
     Object.defineProperty(exports, 'MinimalCodeGen', {
       enumerable: true,
       get: function get() {
-        return _minimalCodegen['default'];
+        return _minimalCodegen.default;
       }
     });
     var _formattedCodegen = require('/dist/formatted-codegen.js', module);
@@ -88,1667 +81,120 @@
         return _formattedCodegen.Sep;
       }
     });
-  });
-  require.define('/dist/formatted-codegen.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var _get = function get(_x, _x2, _x3) {
-      var _again = true;
-      _function:
-        while (_again) {
-          var object = _x, property = _x2, receiver = _x3;
-          _again = false;
-          if (object === null)
-            object = Function.prototype;
-          var desc = Object.getOwnPropertyDescriptor(object, property);
-          if (desc === undefined) {
-            var parent = Object.getPrototypeOf(object);
-            if (parent === null) {
-              return undefined;
-            } else {
-              _x = parent;
-              _x2 = property;
-              _x3 = receiver;
-              _again = true;
-              desc = parent = undefined;
-              continue _function;
-            }
-          } else if ('value' in desc) {
-            return desc.value;
-          } else {
-            var getter = desc.get;
-            if (getter === undefined) {
-              return undefined;
-            }
-            return getter.call(receiver);
-          }
-        }
-    };
-    var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ('value' in descriptor)
-              descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps)
-            defineProperties(Constructor.prototype, protoProps);
-          if (staticProps)
-            defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-    function _toConsumableArray(arr) {
-      if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
-          arr2[i] = arr[i];
-        return arr2;
-      } else {
-        return Array.from(arr);
-      }
-    }
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== 'function' && superClass !== null) {
-        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var _objectAssign = require('/node_modules/object-assign/index.js', module);
-    var objectAssign = _objectAssign;
-    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
     var _coderep = require('/dist/coderep.js', module);
-    function empty() {
-      return new _coderep.Empty;
-    }
-    function noIn(rep) {
-      return new _coderep.NoIn(rep);
-    }
-    function markContainsIn(state) {
-      return state.containsIn ? new _coderep.ContainsIn(state) : state;
-    }
-    function seq() {
-      for (var _len = arguments.length, reps = Array(_len), _key = 0; _key < _len; _key++) {
-        reps[_key] = arguments[_key];
+    Object.defineProperty(exports, 'Precedence', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Precedence;
       }
-      return new _coderep.Seq(reps);
-    }
-    function isEmpty(codeRep) {
-      return codeRep instanceof _coderep.Empty || codeRep instanceof Linebreak || codeRep instanceof _coderep.Seq && codeRep.children.every(isEmpty);
-    }
-    var Sep = {};
-    var separatorNames = [
-        'ARRAY_EMPTY',
-        'ARRAY_BEFORE_COMMA',
-        'ARRAY_AFTER_COMMA',
-        'SPREAD',
-        'BEFORE_DEFAULT_EQUALS',
-        'AFTER_DEFAULT_EQUALS',
-        'REST',
-        'OBJECT_BEFORE_COMMA',
-        'OBJECT_AFTER_COMMA',
-        'BEFORE_PROP',
-        'AFTER_PROP',
-        'BEFORE_JUMP_LABEL',
-        'ARGS_BEFORE_COMMA',
-        'ARGS_AFTER_COMMA',
-        'CALL',
-        'BEFORE_CATCH_BINDING',
-        'AFTER_CATCH_BINDING',
-        'BEFORE_CLASS_NAME',
-        'BEFORE_EXTENDS',
-        'AFTER_EXTENDS',
-        'BEFORE_CLASS_DECLARATION_ELEMENTS',
-        'BEFORE_CLASS_EXPRESSION_ELEMENTS',
-        'AFTER_STATIC',
-        'BEFORE_CLASS_ELEMENT',
-        'AFTER_CLASS_ELEMENT',
-        'BEFORE_TERNARY_QUESTION',
-        'AFTER_TERNARY_QUESTION',
-        'BEFORE_TERNARY_COLON',
-        'AFTER_TERNARY_COLON',
-        'COMPUTED_MEMBER_EXPRESSION',
-        'AFTER_DO',
-        'BEFORE_DOWHILE_WHILE',
-        'AFTER_DOWHILE_WHILE',
-        'AFTER_FORIN_FOR',
-        'BEFORE_FORIN_IN',
-        'AFTER_FORIN_FOR',
-        'BEFORE_FORIN_BODY',
-        'AFTER_FOROF_FOR',
-        'BEFORE_FOROF_OF',
-        'AFTER_FOROF_FOR',
-        'BEFORE_FOROF_BODY',
-        'AFTER_FOR_FOR',
-        'BEFORE_FOR_INIT',
-        'AFTER_FOR_INIT',
-        'EMPTY_FOR_INIT',
-        'BEFORE_FOR_TEST',
-        'AFTER_FOR_TEST',
-        'EMPTY_FOR_TEST',
-        'BEFORE_FOR_UPDATE',
-        'AFTER_FOR_UPDATE',
-        'EMPTY_FOR_UPDATE',
-        'BEFORE_FOR_BODY',
-        'BEFORE_GENERATOR_STAR',
-        'AFTER_GENERATOR_STAR',
-        'BEFORE_FUNCTION_PARAMS',
-        'BEFORE_FUNCTION_DECLARATION_BODY',
-        'BEFORE_FUNCTION_EXPRESSION_BODY',
-        'AFTER_FUNCTION_DIRECTIVES',
-        'BEFORE_ARROW',
-        'AFTER_ARROW',
-        'AFTER_GET',
-        'BEFORE_GET_PARAMS',
-        'BEFORE_GET_BODY',
-        'AFTER_IF',
-        'AFTER_IF_TEST',
-        'BEFORE_ELSE',
-        'AFTER_ELSE',
-        'PARAMETER_BEFORE_COMMA',
-        'PARAMETER_AFTER_COMMA',
-        'NAMED_IMPORT_BEFORE_COMMA',
-        'NAMED_IMPORT_AFTER_COMMA',
-        'IMPORT_BEFORE_COMMA',
-        'IMPORT_AFTER_COMMA',
-        'BEFORE_IMPORT_BINDINGS',
-        'BEFORE_IMPORT_MODULE',
-        'AFTER_IMPORT_BINDINGS',
-        'AFTER_FROM',
-        'BEFORE_IMPORT_NAMESPACE',
-        'BEFORE_IMPORT_STAR',
-        'AFTER_IMPORT_STAR',
-        'AFTER_IMPORT_AS',
-        'AFTER_NAMESPACE_BINDING',
-        'BEFORE_IMPORT_AS',
-        'AFTER_IMPORT_AS',
-        'EXPORTS_BEFORE_COMMA',
-        'EXPORTS_AFTER_COMMA',
-        'BEFORE_EXPORT_STAR',
-        'AFTER_EXPORT_STAR',
-        'BEFORE_EXPORT_BINDINGS',
-        'AFTER_EXPORT_BINDINGS',
-        'AFTER_EXPORT',
-        'EXPORT_DEFAULT',
-        'AFTER_EXPORT_DEFAULT',
-        'BEFORE_EXPORT_AS',
-        'AFTER_EXPORT_AS',
-        'BEFORE_LABEL_COLON',
-        'AFTER_LABEL_COLON',
-        'AFTER_METHOD_GENERATOR_STAR',
-        'AFTER_METHOD_NAME',
-        'BEFORE_METHOD_BODY',
-        'AFTER_MODULE_DIRECTIVES',
-        'AFTER_NEW',
-        'BEFORE_NEW_ARGS',
-        'EMPTY_NEW_CALL',
-        'NEW_TARGET_BEFORE_DOT',
-        'NEW_TARGET_AFTER_DOT',
-        'RETURN',
-        'AFTER_SET',
-        'BEFORE_SET_PARAMS',
-        'BEFORE_SET_BODY',
-        'AFTER_SCRIPT_DIRECTIVES',
-        'BEFORE_STATIC_MEMBER_DOT',
-        'AFTER_STATIC_MEMBER_DOT',
-        'BEFORE_CASE_TEST',
-        'AFTER_CASE_TEST',
-        'BEFORE_CASE_BODY',
-        'AFTER_CASE_BODY',
-        'DEFAULT',
-        'AFTER_DEFAULT_BODY',
-        'BEFORE_SWITCH_DISCRIM',
-        'BEFORE_SWITCH_BODY',
-        'TEMPLATE_TAG',
-        'BEFORE_TEMPLATE_EXPRESSION',
-        'AFTER_TEMPLATE_EXPRESSION',
-        'THROW',
-        'AFTER_TRY',
-        'BEFORE_CATCH',
-        'BEFORE_FINALLY',
-        'AFTER_FINALLY',
-        'VARIABLE_DECLARATION',
-        'YIELD',
-        'BEFORE_YIELD_STAR',
-        'AFTER_YIELD_STAR',
-        'DECLARATORS_BEFORE_COMMA',
-        'DECLARATORS_AFTER_COMMA',
-        'BEFORE_INIT_EQUALS',
-        'AFTER_INIT_EQUALS',
-        'AFTER_WHILE',
-        'BEFORE_WHILE_BODY',
-        'AFTER_WITH',
-        'BEFORE_WITH_BODY',
-        'PAREN_AVOIDING_DIRECTIVE_BEFORE',
-        'PAREN_AVOIDING_DIRECTIVE_AFTER',
-        'PRECEDENCE_BEFORE',
-        'PRECEDENCE_AFTER',
-        'EXPRESSION_PAREN_BEFORE',
-        'EXPRESSION_PAREN_AFTER',
-        'CALL_PAREN_BEFORE',
-        'CALL_PAREN_AFTER',
-        'CALL_PAREN_EMPTY',
-        'CATCH_PAREN_BEFORE',
-        'CATCH_PAREN_AFTER',
-        'DO_WHILE_TEST_PAREN_BEFORE',
-        'DO_WHILE_TEST_PAREN_AFTER',
-        'EXPRESSION_STATEMENT_PAREN_BEFORE',
-        'EXPRESSION_STATEMENT_PAREN_AFTER',
-        'FOR_IN_LET_PAREN_BEFORE',
-        'FOR_IN_LET_PAREN_AFTER',
-        'FOR_IN_PAREN_BEFORE',
-        'FOR_IN_PAREN_AFTER',
-        'FOR_OF_LET_PAREN_BEFORE',
-        'FOR_OF_LET_PAREN_AFTER',
-        'FOR_OF_PAREN_BEFORE',
-        'FOR_OF_PAREN_AFTER',
-        'FOR_PAREN_BEFORE',
-        'FOR_PAREN_AFTER',
-        'PARAMETERS_PAREN_BEFORE',
-        'PARAMETERS_PAREN_AFTER',
-        'PARAMETERS_PAREN_EMPTY',
-        'ARROW_PARAMETERS_PAREN_BEFORE',
-        'ARROW_PARAMETERS_PAREN_AFTER',
-        'ARROW_PARAMETERS_PAREN_EMPTY',
-        'ARROW_BODY_PAREN_BEFORE',
-        'ARROW_BODY_PAREN_AFTER',
-        'GETTER_PARAMS',
-        'IF_PAREN_BEFORE',
-        'IF_PAREN_AFTER',
-        'EXPORT_PAREN_BEFORE',
-        'EXPORT_PAREN_AFTER',
-        'NEW_CALLEE_PAREN_BEFORE',
-        'NEW_CALLEE_PAREN_AFTER',
-        'NEW_PAREN_BEFORE',
-        'NEW_PAREN_AFTER',
-        'NEW_PAREN_EMPTY',
-        'SETTER_PARAM_BEFORE',
-        'SETTER_PARAM_AFTER',
-        'SWITCH_DISCRIM_PAREN_BEFORE',
-        'SWITCH_DISCRIM_PAREN_AFTER',
-        'WHILE_TEST_PAREN_BEFORE',
-        'WHILE_TEST_PAREN_AFTER',
-        'WITH_PAREN_BEFORE',
-        'WITH_PAREN_AFTER',
-        'OBJECT_BRACE_INITIAL',
-        'OBJECT_BRACE_FINAL',
-        'OBJECT_EMPTY',
-        'BLOCK_BRACE_INITIAL',
-        'BLOCK_BRACE_FINAL',
-        'BLOCK_EMPTY',
-        'CLASS_BRACE_INITIAL',
-        'CLASS_BRACE_FINAL',
-        'CLASS_EMPTY',
-        'CLASS_EXPRESSION_BRACE_INITIAL',
-        'CLASS_EXPRESSION_BRACE_FINAL',
-        'CLASS_EXPRESSION_BRACE_EMPTY',
-        'FUNCTION_BRACE_INITIAL',
-        'FUNCTION_BRACE_FINAL',
-        'FUNCTION_EMPTY',
-        'FUNCTION_EXPRESSION_BRACE_INITIAL',
-        'FUNCTION_EXPRESSION_BRACE_FINAL',
-        'FUNCTION_EXPRESSION_EMPTY',
-        'ARROW_BRACE_INITIAL, ARROW_BRACE_FINAL, ARROW_BRACE_EMPTY',
-        'GET_BRACE_INTIAL',
-        'GET_BRACE_FINAL',
-        'GET_BRACE_EMPTY',
-        'MISSING_ELSE_INTIIAL',
-        'MISSING_ELSE_FINAL',
-        'MISSING_ELSE_EMPTY',
-        'IMPORT_BRACE_INTIAL',
-        'IMPORT_BRACE_FINAL',
-        'IMPORT_BRACE_EMPTY',
-        'EXPORT_BRACE_INITIAL',
-        'EXPORT_BRACE_FINAL',
-        'EXPORT_BRACE_EMPTY',
-        'METHOD_BRACE_INTIAL',
-        'METHOD_BRACE_FINAL',
-        'METHOD_BRACE_EMPTY',
-        'SET_BRACE_INTIIAL',
-        'SET_BRACE_FINAL',
-        'SET_BRACE_EMPTY',
-        'SWITCH_BRACE_INTIAL',
-        'SWITCH_BRACE_FINAL',
-        'SWITCH_BRACE_EMPTY',
-        'ARRAY_INITIAL',
-        'ARRAY_FINAL',
-        'COMPUTED_MEMBER_BRACKET_INTIAL',
-        'COMPUTED_MEMBER_BRACKET_FINAL',
-        'COMPUTED_PROPERTY_BRACKET_INTIAL',
-        'COMPUTED_PROPERTY_BRACKET_FINAL'
-      ];
-    for (var i = 0; i < separatorNames.length; ++i) {
-      Sep[separatorNames[i]] = { type: separatorNames[i] };
-    }
-    Sep.BEFORE_ASSIGN_OP = function (op) {
-      return {
-        type: 'BEFORE_ASSIGN_OP',
-        op: op
-      };
-    };
-    Sep.AFTER_ASSIGN_OP = function (op) {
-      return {
-        type: 'AFTER_ASSIGN_OP',
-        op: op
-      };
-    };
-    Sep.BEFORE_BINOP = function (op) {
-      return {
-        type: 'BEFORE_BINOP',
-        op: op
-      };
-    };
-    Sep.AFTER_BINOP = function (op) {
-      return {
-        type: 'AFTER_BINOP',
-        op: op
-      };
-    };
-    Sep.BEFORE_POSTFIX = function (op) {
-      return {
-        type: 'BEFORE_POSTFIX',
-        op: op
-      };
-    };
-    Sep.UNARY = function (op) {
-      return {
-        type: 'UNARY',
-        op: op
-      };
-    };
-    Sep.AFTER_STATEMENT = function (node) {
-      return {
-        type: 'AFTER_STATEMENT',
-        node: node
-      };
-    };
-    Sep.BEFORE_FUNCTION_NAME = function (node) {
-      return {
-        type: 'BEFORE_FUNCTION_NAME',
-        node: node
-      };
-    };
-    exports.Sep = Sep;
-    var ExtensibleCodeGen = function () {
-        function ExtensibleCodeGen() {
-          _classCallCheck(this, ExtensibleCodeGen);
-        }
-        _createClass(ExtensibleCodeGen, [
-          {
-            key: 'parenToAvoidBeingDirective',
-            value: function parenToAvoidBeingDirective(element, original) {
-              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
-                return seq(this.paren(original.children[0], Sep.PAREN_AVOIDING_DIRECTIVE_BEFORE, Sep.PAREN_AVOIDING_DIRECTIVE_AFTER), this.semiOp());
-              }
-              return original;
-            }
-          },
-          {
-            key: 't',
-            value: function t(token) {
-              return new _coderep.Token(token);
-            }
-          },
-          {
-            key: 'p',
-            value: function p(node, precedence, a) {
-              return (0, _coderep.getPrecedence)(node) < precedence ? this.paren(a, Sep.PRECEDENCE_BEFORE, Sep.PRECEDENCE_AFTER) : a;
-            }
-          },
-          {
-            key: 'getAssignmentExpr',
-            value: function getAssignmentExpr(state) {
-              return state ? state.containsGroup ? this.paren(state, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER) : state : empty();
-            }
-          },
-          {
-            key: 'paren',
-            value: function paren(rep, first, last, empty) {
-              if (isEmpty(rep)) {
-                return new _coderep.Paren(this.sep(empty));
-              }
-              return new _coderep.Paren(seq(this.sep(first), rep, this.sep(last)));
-            }
-          },
-          {
-            key: 'brace',
-            value: function brace(rep, node, first, last, empty) {
-              if (isEmpty(rep)) {
-                return new _coderep.Brace(this.sep(empty));
-              }
-              return new _coderep.Brace(seq(this.sep(first), rep, this.sep(last)));
-            }
-          },
-          {
-            key: 'bracket',
-            value: function bracket(rep, first, last, empty) {
-              if (isEmpty(rep)) {
-                return new _coderep.Bracket(this.sep(empty));
-              }
-              return new _coderep.Bracket(seq(this.sep(first), rep, this.sep(last)));
-            }
-          },
-          {
-            key: 'commaSep',
-            value: function commaSep(pieces, before, after) {
-              var _this = this;
-              var first = true;
-              pieces = pieces.map(function (p) {
-                if (first) {
-                  first = false;
-                  return p;
-                } else {
-                  return seq(_this.sep(before), _this.t(','), _this.sep(after), p);
-                }
-              });
-              return seq.apply(undefined, _toConsumableArray(pieces));
-            }
-          },
-          {
-            key: 'semiOp',
-            value: function semiOp() {
-              return new _coderep.SemiOp;
-            }
-          },
-          {
-            key: 'sep',
-            value: function sep(kind) {
-              return new _coderep.Empty;
-            }
-          },
-          {
-            key: 'reduceArrayExpression',
-            value: function reduceArrayExpression(node, _ref) {
-              var _this2 = this;
-              var elements = _ref.elements;
-              if (elements.length === 0) {
-                return this.bracket(empty(), null, null, Sep.ARRAY_EMPTY);
-              }
-              var content = this.commaSep(elements.map(function (e) {
-                  return _this2.getAssignmentExpr(e);
-                }), Sep.ARRAY_BEFORE_COMMA, Sep.ARRAY_AFTER_COMMA);
-              if (elements.length > 0 && elements[elements.length - 1] == null) {
-                content = seq(content, this.sep(Sep.ARRAY_BEFORE_COMMA), this.t(','), this.sep(Sep.ARRAY_AFTER_COMMA));
-              }
-              return this.bracket(content, Sep.ARRAY_INITIAL, Sep.ARRAY_FINAL);
-            }
-          },
-          {
-            key: 'reduceSpreadElement',
-            value: function reduceSpreadElement(node, _ref2) {
-              var expression = _ref2.expression;
-              return seq(this.t('...'), this.sep(Sep.SPREAD), this.p(node.expression, _coderep.Precedence.Assignment, expression));
-            }
-          },
-          {
-            key: 'reduceAssignmentExpression',
-            value: function reduceAssignmentExpression(node, _ref3) {
-              var binding = _ref3.binding;
-              var expression = _ref3.expression;
-              var leftCode = binding;
-              var rightCode = expression;
-              var containsIn = expression.containsIn;
-              var startsWithCurly = binding.startsWithCurly;
-              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
-              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
-                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
-                containsIn = false;
-              }
-              return objectAssign(seq(leftCode, this.sep(Sep.BEFORE_ASSIGN_OP('=')), this.t('='), this.sep(Sep.AFTER_ASSIGN_OP('=')), rightCode), {
-                containsIn: containsIn,
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceCompoundAssignmentExpression',
-            value: function reduceCompoundAssignmentExpression(node, _ref4) {
-              var binding = _ref4.binding;
-              var expression = _ref4.expression;
-              var leftCode = binding;
-              var rightCode = expression;
-              var containsIn = expression.containsIn;
-              var startsWithCurly = binding.startsWithCurly;
-              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
-              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
-                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
-                containsIn = false;
-              }
-              return objectAssign(seq(leftCode, this.sep(Sep.BEFORE_ASSIGN_OP(node.operator)), this.t(node.operator), this.sep(Sep.AFTER_ASSIGN_OP(node.operator)), rightCode), {
-                containsIn: containsIn,
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceBinaryExpression',
-            value: function reduceBinaryExpression(node, _ref5) {
-              var left = _ref5.left;
-              var right = _ref5.right;
-              var leftCode = left;
-              var startsWithCurly = left.startsWithCurly;
-              var startsWithLetSquareBracket = left.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = left.startsWithFunctionOrClass;
-              var leftContainsIn = left.containsIn;
-              if ((0, _coderep.getPrecedence)(node.left) < (0, _coderep.getPrecedence)(node)) {
-                leftCode = this.paren(leftCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
-                startsWithCurly = false;
-                startsWithLetSquareBracket = false;
-                startsWithFunctionOrClass = false;
-                leftContainsIn = false;
-              }
-              var rightCode = right;
-              var rightContainsIn = right.containsIn;
-              if ((0, _coderep.getPrecedence)(node.right) <= (0, _coderep.getPrecedence)(node)) {
-                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
-                rightContainsIn = false;
-              }
-              return objectAssign(seq(leftCode, this.sep(Sep.BEFORE_BINOP(node.operator)), this.t(node.operator), this.sep(Sep.AFTER_BINOP(node.operator)), rightCode), {
-                containsIn: leftContainsIn || rightContainsIn || node.operator === 'in',
-                containsGroup: node.operator == ',',
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceBindingWithDefault',
-            value: function reduceBindingWithDefault(node, _ref6) {
-              var binding = _ref6.binding;
-              var init = _ref6.init;
-              return seq(binding, this.sep(Sep.BEFORE_DEFAULT_EQUALS), this.t('='), this.sep(Sep.AFTER_DEFAULT_EQUALS), init);
-            }
-          },
-          {
-            key: 'reduceBindingIdentifier',
-            value: function reduceBindingIdentifier(node) {
-              var a = this.t(node.name);
-              if (node.name === 'let') {
-                a.startsWithLet = true;
-              }
-              return a;
-            }
-          },
-          {
-            key: 'reduceArrayBinding',
-            value: function reduceArrayBinding(node, _ref7) {
-              var _this3 = this;
-              var elements = _ref7.elements;
-              var restElement = _ref7.restElement;
-              var content = undefined;
-              if (elements.length === 0) {
-                content = restElement == null ? empty() : seq(this.t('...'), this.sep(Sep.REST), restElement);
-              } else {
-                elements = elements.concat(restElement == null ? [] : [seq(this.t('...'), this.sep(Sep.REST), restElement)]);
-                content = this.commaSep(elements.map(function (e) {
-                  return _this3.getAssignmentExpr(e);
-                }), Sep.ARRAY_BEFORE_COMMA, Sep.ARRAY_AFTER_COMMA);
-                if (elements.length > 0 && elements[elements.length - 1] == null) {
-                  content = seq(content, this.sep(Sep.ARRAY_BEFORE_COMMA), this.t(','), this.sep(Sep.ARRAY_AFTER_COMMA));
-                }
-              }
-              return this.bracket(content, Sep.ARRAY_INITIAL, Sep.ARRAY_FINAL, Sep.ARRAY_EMPTY);
-            }
-          },
-          {
-            key: 'reduceObjectBinding',
-            value: function reduceObjectBinding(node, _ref8) {
-              var properties = _ref8.properties;
-              var state = this.brace(this.commaSep(properties, Sep.OBJECT_BEFORE_COMMA, Sep.OBJECT_AFTER_COMMA), node, Sep.OBJECT_BRACE_INITIAL, Sep.OBJECT_BRACE_FINAL, Sep.OBJECT_EMPTY);
-              state.startsWithCurly = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceBindingPropertyIdentifier',
-            value: function reduceBindingPropertyIdentifier(node, _ref9) {
-              var binding = _ref9.binding;
-              var init = _ref9.init;
-              if (node.init == null)
-                return binding;
-              return seq(binding, this.sep(Sep.BEFORE_DEFAULT_EQUALS), this.t('='), this.sep(Sep.AFTER_DEFAULT_EQUALS), init);
-            }
-          },
-          {
-            key: 'reduceBindingPropertyProperty',
-            value: function reduceBindingPropertyProperty(node, _ref10) {
-              var name = _ref10.name;
-              var binding = _ref10.binding;
-              return seq(name, this.sep(Sep.BEFORE_PROP), this.t(':'), this.sep(Sep.AFTER_PROP), binding);
-            }
-          },
-          {
-            key: 'reduceBlock',
-            value: function reduceBlock(node, _ref11) {
-              var statements = _ref11.statements;
-              return this.brace(seq.apply(undefined, _toConsumableArray(statements)), node, Sep.BLOCK_BRACE_INITIAL, Sep.BLOCK_BRACE_FINAL, Sep.BLOCK_EMPTY);
-            }
-          },
-          {
-            key: 'reduceBlockStatement',
-            value: function reduceBlockStatement(node, _ref12) {
-              var block = _ref12.block;
-              return seq(block, this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceBreakStatement',
-            value: function reduceBreakStatement(node, _ref13) {
-              var label = _ref13.label;
-              return seq(this.t('break'), label ? seq(this.sep(Sep.BEFORE_JUMP_LABEL), this.t(label)) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceCallExpression',
-            value: function reduceCallExpression(node, _ref14) {
-              var callee = _ref14.callee;
-              var args = _ref14.arguments;
-              return objectAssign(seq(this.p(node.callee, (0, _coderep.getPrecedence)(node), callee), this.sep(Sep.CALL), this.paren(this.commaSep(args, Sep.ARGS_BEFORE_COMMA, Sep.ARGS_AFTER_COMMA), Sep.CALL_PAREN_BEFORE, Sep.CALL_PAREN_AFTER, Sep.CALL_PAREN_EMPTY)), {
-                startsWithCurly: callee.startsWithCurly,
-                startsWithLetSquareBracket: callee.startsWithLetSquareBracket,
-                startsWithFunctionOrClass: callee.startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceCatchClause',
-            value: function reduceCatchClause(node, _ref15) {
-              var binding = _ref15.binding;
-              var body = _ref15.body;
-              return seq(this.t('catch'), this.sep(Sep.BEFORE_CATCH_BINDING), this.paren(binding, Sep.CATCH_PAREN_BEFORE, Sep.CATCH_PAREN_AFTER), this.sep(Sep.AFTER_CATCH_BINDING), body);
-            }
-          },
-          {
-            key: 'reduceClassDeclaration',
-            value: function reduceClassDeclaration(node, _ref16) {
-              var name = _ref16.name;
-              var _super = _ref16['super'];
-              var elements = _ref16.elements;
-              var state = seq(this.t('class'), this.sep(Sep.BEFORE_CLASS_NAME), name);
-              if (_super != null) {
-                state = seq(state, this.sep(Sep.BEFORE_EXTENDS), this.t('extends'), this.sep(Sep.AFTER_EXTENDS), _super);
-              }
-              state = seq(state, this.sep(Sep.BEFORE_CLASS_DECLARATION_ELEMENTS), this.brace(seq.apply(undefined, _toConsumableArray(elements)), node, Sep.CLASS_BRACE_INITIAL, Sep.CLASS_BRACE_FINAL, Sep.CLASS_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
-              return state;
-            }
-          },
-          {
-            key: 'reduceClassExpression',
-            value: function reduceClassExpression(node, _ref17) {
-              var name = _ref17.name;
-              var _super = _ref17['super'];
-              var elements = _ref17.elements;
-              var state = this.t('class');
-              if (name != null) {
-                state = seq(state, this.sep(Sep.BEFORE_CLASS_NAME), name);
-              }
-              if (_super != null) {
-                state = seq(state, this.sep(Sep.BEFORE_EXTENDS), this.t('extends'), this.sep(Sep.AFTER_EXTENDS), _super);
-              }
-              state = seq(state, this.sep(Sep.BEFORE_CLASS_EXPRESSION_ELEMENTS), this.brace(seq.apply(undefined, _toConsumableArray(elements)), node, Sep.CLASS_EXPRESSION_BRACE_INITIAL, Sep.CLASS_EXPRESSION_BRACE_FINAL, Sep.CLASS_EXPRESSION_BRACE_EMPTY));
-              state.startsWithFunctionOrClass = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceClassElement',
-            value: function reduceClassElement(node, _ref18) {
-              var method = _ref18.method;
-              method = seq(this.sep(Sep.BEFORE_CLASS_ELEMENT), method, this.sep(Sep.AFTER_CLASS_ELEMENT));
-              if (!node.isStatic)
-                return method;
-              return seq(this.t('static'), this.sep(Sep.AFTER_STATIC), method);
-            }
-          },
-          {
-            key: 'reduceComputedMemberExpression',
-            value: function reduceComputedMemberExpression(node, _ref19) {
-              var object = _ref19.object;
-              var expression = _ref19.expression;
-              var startsWithLetSquareBracket = object.startsWithLetSquareBracket || node.object.type === 'IdentifierExpression' && node.object.name === 'let';
-              return objectAssign(seq(this.p(node.object, (0, _coderep.getPrecedence)(node), object), this.sep(Sep.COMPUTED_MEMBER_EXPRESSION), this.bracket(expression, Sep.COMPUTED_MEMBER_BRACKET_INTIAL, Sep.COMPUTED_MEMBER_BRACKET_FINAL)), {
-                startsWithLet: object.startsWithLet,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithCurly: object.startsWithCurly,
-                startsWithFunctionOrClass: object.startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceComputedPropertyName',
-            value: function reduceComputedPropertyName(node, _ref20) {
-              var expression = _ref20.expression;
-              return this.bracket(expression, Sep.COMPUTED_PROPERTY_BRACKET_INTIAL, Sep.COMPUTED_PROPERTY_BRACKET_FINAL);
-            }
-          },
-          {
-            key: 'reduceConditionalExpression',
-            value: function reduceConditionalExpression(node, _ref21) {
-              var test = _ref21.test;
-              var consequent = _ref21.consequent;
-              var alternate = _ref21.alternate;
-              var containsIn = test.containsIn || alternate.containsIn;
-              var startsWithCurly = test.startsWithCurly;
-              var startsWithLetSquareBracket = test.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = test.startsWithFunctionOrClass;
-              return objectAssign(seq(this.p(node.test, _coderep.Precedence.LogicalOR, test), this.sep(Sep.BEFORE_TERNARY_QUESTION), this.t('?'), this.sep(Sep.AFTER_TERNARY_QUESTION), this.p(node.consequent, _coderep.Precedence.Assignment, consequent), this.sep(Sep.BEFORE_TERNARY_COLON), this.t(':'), this.sep(Sep.AFTER_TERNARY_COLON), this.p(node.alternate, _coderep.Precedence.Assignment, alternate)), {
-                containsIn: containsIn,
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceContinueStatement',
-            value: function reduceContinueStatement(node, _ref22) {
-              var label = _ref22.label;
-              return seq(this.t('continue'), label ? seq(this.sep(Sep.BEFORE_JUMP_LABEL), this.t(label)) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceDataProperty',
-            value: function reduceDataProperty(node, _ref23) {
-              var name = _ref23.name;
-              var expression = _ref23.expression;
-              return seq(name, this.sep(Sep.BEFORE_PROP), this.t(':'), this.sep(Sep.AFTER_PROP), this.getAssignmentExpr(expression));
-            }
-          },
-          {
-            key: 'reduceDebuggerStatement',
-            value: function reduceDebuggerStatement(node) {
-              return seq(this.t('debugger'), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceDoWhileStatement',
-            value: function reduceDoWhileStatement(node, _ref24) {
-              var body = _ref24.body;
-              var test = _ref24.test;
-              return seq(this.t('do'), this.sep(Sep.AFTER_DO), body, this.sep(Sep.BEFORE_DOWHILE_WHILE), this.t('while'), this.sep(Sep.AFTER_DOWHILE_WHILE), this.paren(test, Sep.DO_WHILE_TEST_PAREN_BEFORE, Sep.DO_WHILE_TEST_PAREN_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceEmptyStatement',
-            value: function reduceEmptyStatement(node) {
-              return seq(this.t(';'), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceExpressionStatement',
-            value: function reduceExpressionStatement(node, _ref25) {
-              var expression = _ref25.expression;
-              var needsParens = expression.startsWithCurly || expression.startsWithLetSquareBracket || expression.startsWithFunctionOrClass;
-              return seq(needsParens ? this.paren(expression, Sep.EXPRESSION_STATEMENT_PAREN_BEFORE, Sep.EXPRESSION_STATEMENT_PAREN_AFTER) : expression, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceForInStatement',
-            value: function reduceForInStatement(node, _ref26) {
-              var left = _ref26.left;
-              var right = _ref26.right;
-              var body = _ref26.body;
-              var leftP = left;
-              switch (node.left.type) {
-              case 'VariableDeclaration':
-                leftP = noIn(markContainsIn(left));
-                break;
-              case 'BindingIdentifier':
-                if (node.left.name === 'let') {
-                  leftP = this.paren(left, Sep.FOR_IN_LET_PAREN_BEFORE, Sep.FOR_IN_LET_PAREN_BEFORE);
-                }
-                break;
-              }
-              return objectAssign(seq(this.t('for'), this.sep(Sep.AFTER_FORIN_FOR), this.paren(seq(leftP, this.sep(Sep.BEFORE_FORIN_IN), this.t('in'), this.sep(Sep.AFTER_FORIN_FOR), right), Sep.FOR_IN_PAREN_BEFORE, Sep.FOR_IN_PAREN_AFTER), this.sep(Sep.BEFORE_FORIN_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceForOfStatement',
-            value: function reduceForOfStatement(node, _ref27) {
-              var left = _ref27.left;
-              var right = _ref27.right;
-              var body = _ref27.body;
-              left = node.left.type === 'VariableDeclaration' ? noIn(markContainsIn(left)) : left;
-              return objectAssign(seq(this.t('for'), this.sep(Sep.AFTER_FOROF_FOR), this.paren(seq(left.startsWithLet ? this.paren(left, Sep.FOR_OF_LET_PAREN_BEFORE, Sep.FOR_OF_LET_PAREN_AFTER) : left, this.sep(Sep.BEFORE_FOROF_OF), this.t('of'), this.sep(Sep.AFTER_FOROF_FOR), right), Sep.FOR_OF_PAREN_BEFORE, Sep.FOR_OF_PAREN_AFTER), this.sep(Sep.BEFORE_FOROF_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceForStatement',
-            value: function reduceForStatement(node, _ref28) {
-              var init = _ref28.init;
-              var test = _ref28.test;
-              var update = _ref28.update;
-              var body = _ref28.body;
-              return objectAssign(seq(this.t('for'), this.sep(Sep.AFTER_FOR_FOR), this.paren(seq(this.sep(Sep.BEFORE_FOR_INIT), seq(init ? seq(this.sep(Sep.BEFORE_FOR_INIT), noIn(markContainsIn(init)), this.sep(Sep.AFTER_FOR_INIT)) : this.sep(Sep.EMPTY_FOR_INIT), this.t(';'), test ? seq(this.sep(Sep.BEFORE_FOR_TEST), test, this.sep(Sep.AFTER_FOR_TEST)) : this.sep(Sep.EMPTY_FOR_TEST), this.t(';'), update ? seq(this.sep(Sep.BEFORE_FOR_UPDATE), update, this.sep(Sep.AFTER_FOR_UPDATE)) : this.sep(Sep.EMPTY_FOR_UPDATE))), Sep.FOR_PAREN_BEFORE, Sep.FOR_PAREN_AFTER), this.sep(Sep.BEFORE_FOR_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceFunctionBody',
-            value: function reduceFunctionBody(node, _ref29) {
-              var directives = _ref29.directives;
-              var statements = _ref29.statements;
-              if (statements.length) {
-                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
-              }
-              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_FUNCTION_DIRECTIVES) : empty()], _toConsumableArray(statements)));
-            }
-          },
-          {
-            key: 'reduceFunctionDeclaration',
-            value: function reduceFunctionDeclaration(node, _ref30) {
-              var name = _ref30.name;
-              var params = _ref30.params;
-              var body = _ref30.body;
-              return seq(this.t('function'), node.isGenerator ? seq(this.sep(Sep.BEFORE_GENERATOR_STAR), this.t('*'), this.sep(Sep.AFTER_GENERATOR_STAR)) : empty(), this.sep(Sep.BEFORE_FUNCTION_NAME(node)), node.name.name === '*default*' ? empty() : name, this.sep(Sep.BEFORE_FUNCTION_PARAMS), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_FUNCTION_DECLARATION_BODY), this.brace(body, node, Sep.FUNCTION_BRACE_INITIAL, Sep.FUNCTION_BRACE_FINAL, Sep.FUNCTION_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceFunctionExpression',
-            value: function reduceFunctionExpression(node, _ref31) {
-              var name = _ref31.name;
-              var params = _ref31.params;
-              var body = _ref31.body;
-              var state = seq(this.t('function'), node.isGenerator ? seq(this.sep(Sep.BEFORE_GENERATOR_STAR), this.t('*'), this.sep(Sep.AFTER_GENERATOR_STAR)) : empty(), this.sep(Sep.BEFORE_FUNCTION_NAME(node)), name ? name : empty(), this.sep(Sep.BEFORE_FUNCTION_PARAMS), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_FUNCTION_EXPRESSION_BODY), this.brace(body, node, Sep.FUNCTION_EXPRESSION_BRACE_INITIAL, Sep.FUNCTION_EXPRESSION_BRACE_FINAL, Sep.FUNCTION_EXPRESSION_EMPTY));
-              state.startsWithFunctionOrClass = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceFormalParameters',
-            value: function reduceFormalParameters(node, _ref32) {
-              var items = _ref32.items;
-              var rest = _ref32.rest;
-              return this.commaSep(items.concat(rest == null ? [] : [seq(this.t('...'), this.sep(Sep.REST), rest)]), Sep.PARAMETER_BEFORE_COMMA, Sep.PARAMETER_AFTER_COMMA);
-            }
-          },
-          {
-            key: 'reduceArrowExpression',
-            value: function reduceArrowExpression(node, _ref33) {
-              var params = _ref33.params;
-              var body = _ref33.body;
-              if (node.params.rest != null || node.params.items.length !== 1 || node.params.items[0].type !== 'BindingIdentifier') {
-                params = this.paren(params, Sep.ARROW_PARAMETERS_PAREN_BEFORE, Sep.ARROW_PARAMETERS_PAREN_AFTER, Sep.ARROW_PARAMETERS_PAREN_EMPTY);
-              }
-              if (node.body.type === 'FunctionBody') {
-                body = this.brace(body, node, Sep.ARROW_BRACE_INITIAL, Sep.ARROW_BRACE_FINAL, Sep.ARROW_BRACE_EMPTY);
-              } else if (body.startsWithCurly) {
-                body = this.paren(body, Sep.ARROW_BODY_PAREN_BEFORE, Sep.ARROW_BODY_PAREN_AFTER);
-              }
-              return seq(params, this.sep(Sep.BEFORE_ARROW), this.t('=>'), this.sep(Sep.AFTER_ARROW), this.p(node.body, _coderep.Precedence.Assignment, body));
-            }
-          },
-          {
-            key: 'reduceGetter',
-            value: function reduceGetter(node, _ref34) {
-              var name = _ref34.name;
-              var body = _ref34.body;
-              return seq(this.t('get'), this.sep(Sep.AFTER_GET), name, this.sep(Sep.BEFORE_GET_PARAMS), this.paren(empty(), null, null, Sep.GETTER_PARAMS), this.sep(Sep.BEFORE_GET_BODY), this.brace(body, node, Sep.GET_BRACE_INTIAL, Sep.GET_BRACE_FINAL, Sep.GET_BRACE_EMPTY));
-            }
-          },
-          {
-            key: 'reduceIdentifierExpression',
-            value: function reduceIdentifierExpression(node) {
-              var a = this.t(node.name);
-              if (node.name === 'let') {
-                a.startsWithLet = true;
-              }
-              return a;
-            }
-          },
-          {
-            key: 'reduceIfStatement',
-            value: function reduceIfStatement(node, _ref35) {
-              var test = _ref35.test;
-              var consequent = _ref35.consequent;
-              var alternate = _ref35.alternate;
-              if (alternate && consequent.endsWithMissingElse) {
-                consequent = this.brace(consequent, node, Sep.MISSING_ELSE_INTIIAL, Sep.MISSING_ELSE_FINAL, Sep.MISSING_ELSE_EMPTY);
-              }
-              return objectAssign(seq(this.t('if'), this.sep(Sep.AFTER_IF), this.paren(test, Sep.IF_PAREN_BEFORE, Sep.IF_PAREN_AFTER), this.sep(Sep.AFTER_IF_TEST), consequent, alternate ? seq(this.sep(Sep.BEFORE_ELSE), this.t('else'), this.sep(Sep.AFTER_ELSE), alternate) : empty(), this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
-            }
-          },
-          {
-            key: 'reduceImport',
-            value: function reduceImport(node, _ref36) {
-              var defaultBinding = _ref36.defaultBinding;
-              var namedImports = _ref36.namedImports;
-              var bindings = [];
-              if (defaultBinding != null) {
-                bindings.push(defaultBinding);
-              }
-              if (namedImports.length > 0) {
-                bindings.push(this.brace(this.commaSep(namedImports, Sep.NAMED_IMPORT_BEFORE_COMMA, Sep.NAMED_IMPORT_AFTER_COMMA), node, Sep.IMPORT_BRACE_INTIAL, Sep.IMPORT_BRACE_FINAL, Sep.IMPORT_BRACE_EMPTY));
-              }
-              if (bindings.length === 0) {
-                return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_MODULE), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-              }
-              return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_BINDINGS), this.commaSep(bindings, Sep.IMPORT_BEFORE_COMMA, Sep.IMPORT_AFTER_COMMA), this.sep(Sep.AFTER_IMPORT_BINDINGS), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceImportNamespace',
-            value: function reduceImportNamespace(node, _ref37) {
-              var defaultBinding = _ref37.defaultBinding;
-              var namespaceBinding = _ref37.namespaceBinding;
-              return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_NAMESPACE), defaultBinding == null ? empty() : seq(defaultBinding, this.sep(Sep.IMPORT_BEFORE_COMMA), this.t(','), this.sep(Sep.IMPORT_AFTER_COMMA)), this.sep(Sep.BEFORE_IMPORT_STAR), this.t('*'), this.sep(Sep.AFTER_IMPORT_STAR), this.t('as'), this.sep(Sep.AFTER_IMPORT_AS), namespaceBinding, this.sep(Sep.AFTER_NAMESPACE_BINDING), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceImportSpecifier',
-            value: function reduceImportSpecifier(node, _ref38) {
-              var binding = _ref38.binding;
-              if (node.name == null)
-                return binding;
-              return seq(this.t(node.name), this.sep(Sep.BEFORE_IMPORT_AS), this.t('as'), this.sep(Sep.AFTER_IMPORT_AS), binding);
-            }
-          },
-          {
-            key: 'reduceExportAllFrom',
-            value: function reduceExportAllFrom(node) {
-              return seq(this.t('export'), this.sep(Sep.BEFORE_EXPORT_STAR), this.t('*'), this.sep(Sep.AFTER_EXPORT_STAR), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceExportFrom',
-            value: function reduceExportFrom(node, _ref39) {
-              var namedExports = _ref39.namedExports;
-              return seq(this.t('export'), this.sep(Sep.BEFORE_EXPORT_BINDINGS), this.brace(this.commaSep(namedExports, Sep.EXPORTS_BEFORE_COMMA, Sep.EXPORTS_AFTER_COMMA), node, Sep.EXPORT_BRACE_INITIAL, Sep.EXPORT_BRACE_FINAL, Sep.EXPORT_BRACE_EMPTY), node.moduleSpecifier == null ? empty() : seq(this.sep(Sep.AFTER_EXPORT_BINDINGS), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node))));
-            }
-          },
-          {
-            key: 'reduceExport',
-            value: function reduceExport(node, _ref40) {
-              var declaration = _ref40.declaration;
-              switch (node.declaration.type) {
-              case 'FunctionDeclaration':
-              case 'ClassDeclaration':
-                break;
-              default:
-                declaration = seq(declaration, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-              }
-              return seq(this.t('export'), this.sep(Sep.AFTER_EXPORT), declaration);
-            }
-          },
-          {
-            key: 'reduceExportDefault',
-            value: function reduceExportDefault(node, _ref41) {
-              var body = _ref41.body;
-              body = body.startsWithFunctionOrClass ? this.paren(body, Sep.EXPORT_PAREN_BEFORE, Sep.EXPORT_PAREN_AFTER) : body;
-              switch (node.body.type) {
-              case 'FunctionDeclaration':
-              case 'ClassDeclaration':
-                break;
-              default:
-                body = seq(body, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-              }
-              return seq(this.t('export'), this.sep(Sep.EXPORT_DEFAULT), this.t('default'), this.sep(Sep.AFTER_EXPORT_DEFAULT), body);
-            }
-          },
-          {
-            key: 'reduceExportSpecifier',
-            value: function reduceExportSpecifier(node) {
-              if (node.name == null)
-                return this.t(node.exportedName);
-              return seq(this.t(node.name), this.sep(Sep.BEFORE_EXPORT_AS), this.t('as'), this.sep(Sep.AFTER_EXPORT_AS), this.t(node.exportedName));
-            }
-          },
-          {
-            key: 'reduceLabeledStatement',
-            value: function reduceLabeledStatement(node, _ref42) {
-              var label = _ref42.label;
-              var body = _ref42.body;
-              return objectAssign(seq(this.t(label), this.sep(Sep.BEFORE_LABEL_COLON), this.t(':'), this.sep(Sep.AFTER_LABEL_COLON), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceLiteralBooleanExpression',
-            value: function reduceLiteralBooleanExpression(node) {
-              return this.t(node.value.toString());
-            }
-          },
-          {
-            key: 'reduceLiteralNullExpression',
-            value: function reduceLiteralNullExpression(node) {
-              return this.t('null');
-            }
-          },
-          {
-            key: 'reduceLiteralInfinityExpression',
-            value: function reduceLiteralInfinityExpression(node) {
-              return this.t('2e308');
-            }
-          },
-          {
-            key: 'reduceLiteralNumericExpression',
-            value: function reduceLiteralNumericExpression(node) {
-              return new _coderep.NumberCodeRep(node.value);
-            }
-          },
-          {
-            key: 'reduceLiteralRegExpExpression',
-            value: function reduceLiteralRegExpExpression(node) {
-              return this.t('/' + node.pattern + '/' + node.flags);
-            }
-          },
-          {
-            key: 'reduceLiteralStringExpression',
-            value: function reduceLiteralStringExpression(node) {
-              return this.t((0, _coderep.escapeStringLiteral)(node.value));
-            }
-          },
-          {
-            key: 'reduceMethod',
-            value: function reduceMethod(node, _ref43) {
-              var name = _ref43.name;
-              var params = _ref43.params;
-              var body = _ref43.body;
-              return seq(node.isGenerator ? seq(this.t('*'), this.sep(Sep.AFTER_METHOD_GENERATOR_STAR)) : empty(), name, this.sep(Sep.AFTER_METHOD_NAME), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_METHOD_BODY), this.brace(body, node, Sep.METHOD_BRACE_INTIAL, Sep.METHOD_BRACE_FINAL, Sep.METHOD_BRACE_EMPTY));
-            }
-          },
-          {
-            key: 'reduceModule',
-            value: function reduceModule(node, _ref44) {
-              var directives = _ref44.directives;
-              var items = _ref44.items;
-              if (items.length) {
-                items[0] = this.parenToAvoidBeingDirective(node.items[0], items[0]);
-              }
-              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_MODULE_DIRECTIVES) : empty()], _toConsumableArray(items)));
-            }
-          },
-          {
-            key: 'reduceNewExpression',
-            value: function reduceNewExpression(node, _ref45) {
-              var callee = _ref45.callee;
-              var args = _ref45.arguments;
-              var calleeRep = (0, _coderep.getPrecedence)(node.callee) == _coderep.Precedence.Call ? this.paren(callee, Sep.NEW_CALLEE_PAREN_BEFORE, Sep.NEW_CALLEE_PAREN_AFTER) : this.p(node.callee, (0, _coderep.getPrecedence)(node), callee);
-              return seq(this.t('new'), this.sep(Sep.AFTER_NEW), calleeRep, this.sep(Sep.BEFORE_NEW_ARGS), args.length === 0 ? this.sep(Sep.EMPTY_NEW_CALL) : this.paren(this.commaSep(args, Sep.ARGS_BEFORE_COMMA, Sep.ARGS_AFTER_COMMA), Sep.NEW_PAREN_BEFORE, Sep.NEW_PAREN_AFTER, Sep.NEW_PAREN_EMPTY));
-            }
-          },
-          {
-            key: 'reduceNewTargetExpression',
-            value: function reduceNewTargetExpression() {
-              return seq(this.t('new'), this.sep(Sep.NEW_TARGET_BEFORE_DOT), this.t('.'), this.sep(Sep.NEW_TARGET_AFTER_DOT), this.t('target'));
-            }
-          },
-          {
-            key: 'reduceObjectExpression',
-            value: function reduceObjectExpression(node, _ref46) {
-              var properties = _ref46.properties;
-              var state = this.brace(this.commaSep(properties, Sep.OBJECT_BEFORE_COMMA, Sep.OBJECT_AFTER_COMMA), node, Sep.OBJECT_BRACE_INITIAL, Sep.OBJECT_BRACE_FINAL, Sep.OBJECT_EMPTY);
-              state.startsWithCurly = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceUpdateExpression',
-            value: function reduceUpdateExpression(node, _ref47) {
-              var operand = _ref47.operand;
-              if (node.isPrefix) {
-                return this.reduceUnaryExpression.apply(this, arguments);
-              } else {
-                return objectAssign(seq(this.p(node.operand, _coderep.Precedence.New, operand), this.sep(Sep.BEFORE_POSTFIX(node.operator)), this.t(node.operator)), {
-                  startsWithCurly: operand.startsWithCurly,
-                  startsWithLetSquareBracket: operand.startsWithLetSquareBracket,
-                  startsWithFunctionOrClass: operand.startsWithFunctionOrClass
-                });
-              }
-            }
-          },
-          {
-            key: 'reduceUnaryExpression',
-            value: function reduceUnaryExpression(node, _ref48) {
-              var operand = _ref48.operand;
-              return seq(this.t(node.operator), this.sep(Sep.UNARY(node.operator)), this.p(node.operand, (0, _coderep.getPrecedence)(node), operand));
-            }
-          },
-          {
-            key: 'reduceReturnStatement',
-            value: function reduceReturnStatement(node, _ref49) {
-              var expression = _ref49.expression;
-              return seq(this.t('return'), expression ? seq(this.sep(Sep.RETURN), expression) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceScript',
-            value: function reduceScript(node, _ref50) {
-              var directives = _ref50.directives;
-              var statements = _ref50.statements;
-              if (statements.length) {
-                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
-              }
-              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_SCRIPT_DIRECTIVES) : empty()], _toConsumableArray(statements)));
-            }
-          },
-          {
-            key: 'reduceSetter',
-            value: function reduceSetter(node, _ref51) {
-              var name = _ref51.name;
-              var param = _ref51.param;
-              var body = _ref51.body;
-              return seq(this.t('set'), this.sep(Sep.AFTER_SET), name, this.sep(Sep.BEFORE_SET_PARAMS), this.paren(param, Sep.SETTER_PARAM_BEFORE, Sep.SETTER_PARAM_AFTER), this.sep(Sep.BEFORE_SET_BODY), this.brace(body, node, Sep.SET_BRACE_INTIIAL, Sep.SET_BRACE_FINAL, Sep.SET_BRACE_EMPTY));
-            }
-          },
-          {
-            key: 'reduceShorthandProperty',
-            value: function reduceShorthandProperty(node) {
-              return this.t(node.name);
-            }
-          },
-          {
-            key: 'reduceStaticMemberExpression',
-            value: function reduceStaticMemberExpression(node, _ref52) {
-              var object = _ref52.object;
-              var property = _ref52.property;
-              var state = seq(this.p(node.object, (0, _coderep.getPrecedence)(node), object), this.sep(Sep.BEFORE_STATIC_MEMBER_DOT), this.t('.'), this.sep(Sep.AFTER_STATIC_MEMBER_DOT), this.t(property));
-              state.startsWithLet = object.startsWithLet;
-              state.startsWithCurly = object.startsWithCurly;
-              state.startsWithLetSquareBracket = object.startsWithLetSquareBracket;
-              state.startsWithFunctionOrClass = object.startsWithFunctionOrClass;
-              return state;
-            }
-          },
-          {
-            key: 'reduceStaticPropertyName',
-            value: function reduceStaticPropertyName(node) {
-              var n;
-              if (_esutils.keyword.isIdentifierNameES6(node.value)) {
-                return this.t(node.value);
-              } else if (n = parseFloat(node.value), n === n) {
-                return new _coderep.NumberCodeRep(n);
-              }
-              return this.t((0, _coderep.escapeStringLiteral)(node.value));
-            }
-          },
-          {
-            key: 'reduceSuper',
-            value: function reduceSuper() {
-              return this.t('super');
-            }
-          },
-          {
-            key: 'reduceSwitchCase',
-            value: function reduceSwitchCase(node, _ref53) {
-              var test = _ref53.test;
-              var consequent = _ref53.consequent;
-              return seq(this.t('case'), this.sep(Sep.BEFORE_CASE_TEST), test, this.sep(Sep.AFTER_CASE_TEST), this.t(':'), this.sep(Sep.BEFORE_CASE_BODY), seq.apply(undefined, _toConsumableArray(consequent)), this.sep(Sep.AFTER_CASE_BODY));
-            }
-          },
-          {
-            key: 'reduceSwitchDefault',
-            value: function reduceSwitchDefault(node, _ref54) {
-              var consequent = _ref54.consequent;
-              return seq(this.t('default'), this.sep(Sep.DEFAULT), this.t(':'), this.sep(Sep.BEFORE_CASE_BODY), seq.apply(undefined, _toConsumableArray(consequent)), this.sep(Sep.AFTER_DEFAULT_BODY));
-            }
-          },
-          {
-            key: 'reduceSwitchStatement',
-            value: function reduceSwitchStatement(node, _ref55) {
-              var discriminant = _ref55.discriminant;
-              var cases = _ref55.cases;
-              return seq(this.t('switch'), this.sep(Sep.BEFORE_SWITCH_DISCRIM), this.paren(discriminant, Sep.SWITCH_DISCRIM_PAREN_BEFORE, Sep.SWITCH_DISCRIM_PAREN_AFTER), this.sep(Sep.BEFORE_SWITCH_BODY), this.brace(seq.apply(undefined, _toConsumableArray(cases)), node, Sep.SWITCH_BRACE_INTIAL, Sep.SWITCH_BRACE_FINAL, Sep.SWITCH_BRACE_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceSwitchStatementWithDefault',
-            value: function reduceSwitchStatementWithDefault(node, _ref56) {
-              var discriminant = _ref56.discriminant;
-              var preDefaultCases = _ref56.preDefaultCases;
-              var defaultCase = _ref56.defaultCase;
-              var postDefaultCases = _ref56.postDefaultCases;
-              return seq(this.t('switch'), this.sep(Sep.BEFORE_SWITCH_DISCRIM), this.paren(discriminant, Sep.SWITCH_DISCRIM_PAREN_BEFORE, Sep.SWITCH_DISCRIM_PAREN_AFTER), this.sep(Sep.BEFORE_SWITCH_BODY), this.brace(seq.apply(undefined, _toConsumableArray(preDefaultCases).concat([defaultCase], _toConsumableArray(postDefaultCases))), node, Sep.SWITCH_BRACE_INTIAL, Sep.SWITCH_BRACE_FINAL, Sep.SWITCH_BRACE_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceTemplateExpression',
-            value: function reduceTemplateExpression(node, _ref57) {
-              var tag = _ref57.tag;
-              var elements = _ref57.elements;
-              var state = node.tag == null ? empty() : this.p(node.tag, (0, _coderep.getPrecedence)(node), tag, this.sep(Sep.TEMPLATE_TAG));
-              var templateData = '';
-              state = seq(state, this.t('`'));
-              for (var i = 0, l = node.elements.length; i < l; ++i) {
-                if (node.elements[i].type === 'TemplateElement') {
-                  var d = '';
-                  if (i > 0)
-                    d += '}';
-                  d += node.elements[i].rawValue;
-                  if (i < l - 1)
-                    d += '${';
-                  state = seq(state, this.t(d));
-                } else {
-                  state = seq(state, this.sep(Sep.BEFORE_TEMPLATE_EXPRESSION), elements[i], this.sep(Sep.AFTER_TEMPLATE_EXPRESSION));
-                }
-              }
-              state = seq(state, this.t('`'));
-              if (node.tag != null) {
-                state.startsWithCurly = tag.startsWithCurly;
-                state.startsWithLetSquareBracket = tag.startsWithLetSquareBracket;
-                state.startsWithFunctionOrClass = tag.startsWithFunctionOrClass;
-              }
-              return state;
-            }
-          },
-          {
-            key: 'reduceTemplateElement',
-            value: function reduceTemplateElement(node) {
-              return this.t(node.rawValue);
-            }
-          },
-          {
-            key: 'reduceThisExpression',
-            value: function reduceThisExpression(node) {
-              return this.t('this');
-            }
-          },
-          {
-            key: 'reduceThrowStatement',
-            value: function reduceThrowStatement(node, _ref58) {
-              var expression = _ref58.expression;
-              return seq(this.t('throw'), this.sep(Sep.THROW), expression, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceTryCatchStatement',
-            value: function reduceTryCatchStatement(node, _ref59) {
-              var body = _ref59.body;
-              var catchClause = _ref59.catchClause;
-              return seq(this.t('try'), this.sep(Sep.AFTER_TRY), body, this.sep(Sep.BEFORE_CATCH), catchClause, this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceTryFinallyStatement',
-            value: function reduceTryFinallyStatement(node, _ref60) {
-              var body = _ref60.body;
-              var catchClause = _ref60.catchClause;
-              var finalizer = _ref60.finalizer;
-              return seq(this.t('try'), this.sep(Sep.AFTER_TRY), body, catchClause ? seq(this.sep(Sep.BEFORE_CATCH), catchClause) : empty(), this.sep(Sep.BEFORE_FINALLY), this.t('finally'), this.sep(Sep.AFTER_FINALLY), finalizer, this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceYieldExpression',
-            value: function reduceYieldExpression(node, _ref61) {
-              var expression = _ref61.expression;
-              if (node.expression == null)
-                return this.t('yield');
-              return seq(this.t('yield'), this.sep(Sep.YIELD), this.p(node.expression, (0, _coderep.getPrecedence)(node), expression));
-            }
-          },
-          {
-            key: 'reduceYieldGeneratorExpression',
-            value: function reduceYieldGeneratorExpression(node, _ref62) {
-              var expression = _ref62.expression;
-              return seq(this.t('yield'), this.sep(Sep.BEFORE_YIELD_STAR), this.t('*'), this.sep(Sep.AFTER_YIELD_STAR), this.p(node.expression, (0, _coderep.getPrecedence)(node), expression));
-            }
-          },
-          {
-            key: 'reduceDirective',
-            value: function reduceDirective(node) {
-              var delim = /^(?:[^"\\]|\\.)*$/.test(node.rawValue) ? '"' : "'";
-              return seq(this.t(delim + node.rawValue + delim), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceVariableDeclaration',
-            value: function reduceVariableDeclaration(node, _ref63) {
-              var declarators = _ref63.declarators;
-              return seq(this.t(node.kind), this.sep(Sep.VARIABLE_DECLARATION), this.commaSep(declarators, Sep.DECLARATORS_BEFORE_COMMA, Sep.DECLARATORS_AFTER_COMMA));
-            }
-          },
-          {
-            key: 'reduceVariableDeclarationStatement',
-            value: function reduceVariableDeclarationStatement(node, _ref64) {
-              var declaration = _ref64.declaration;
-              return seq(declaration, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceVariableDeclarator',
-            value: function reduceVariableDeclarator(node, _ref65) {
-              var binding = _ref65.binding;
-              var init = _ref65.init;
-              var containsIn = init && init.containsIn && !init.containsGroup;
-              if (init) {
-                if (init.containsGroup) {
-                  init = this.paren(init, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
-                } else {
-                  init = markContainsIn(init);
-                }
-              }
-              return objectAssign(init == null ? binding : seq(binding, this.sep(Sep.BEFORE_INIT_EQUALS), this.t('='), this.sep(Sep.AFTER_INIT_EQUALS), init), { containsIn: containsIn });
-            }
-          },
-          {
-            key: 'reduceWhileStatement',
-            value: function reduceWhileStatement(node, _ref66) {
-              var test = _ref66.test;
-              var body = _ref66.body;
-              return objectAssign(seq(this.t('while'), this.sep(Sep.AFTER_WHILE), this.paren(test, Sep.WHILE_TEST_PAREN_BEFORE, Sep.WHILE_TEST_PAREN_AFTER), this.sep(Sep.BEFORE_WHILE_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceWithStatement',
-            value: function reduceWithStatement(node, _ref67) {
-              var object = _ref67.object;
-              var body = _ref67.body;
-              return objectAssign(seq(this.t('with'), this.sep(Sep.AFTER_WITH), this.paren(object, Sep.WITH_PAREN_BEFORE, Sep.WITH_PAREN_AFTER), this.sep(Sep.BEFORE_WITH_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          }
-        ]);
-        return ExtensibleCodeGen;
-      }();
-    exports.ExtensibleCodeGen = ExtensibleCodeGen;
-    var INDENT = '  ';
-    var Linebreak = function (_CodeRep) {
-        _inherits(Linebreak, _CodeRep);
-        function Linebreak() {
-          _classCallCheck(this, Linebreak);
-          _get(Object.getPrototypeOf(Linebreak.prototype), 'constructor', this).call(this);
-          this.indentation = 0;
-        }
-        _createClass(Linebreak, [{
-            key: 'emit',
-            value: function emit(ts) {
-              ts.put('\n');
-              for (var i = 0; i < this.indentation; ++i) {
-                ts.put(INDENT);
-              }
-            }
-          }]);
-        return Linebreak;
-      }(_coderep.CodeRep);
-    function withoutTrailingLinebreak(state) {
-      if (state && state instanceof _coderep.Seq) {
-        var lastChild = state.children[state.children.length - 1];
-        while (lastChild instanceof _coderep.Empty) {
-          state.children.pop();
-          lastChild = state.children[state.children.length - 1];
-        }
-        if (lastChild instanceof _coderep.Seq) {
-          withoutTrailingLinebreak(lastChild);
-        } else if (lastChild instanceof Linebreak) {
-          state.children.pop();
-        }
+    });
+    Object.defineProperty(exports, 'getPrecedence', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.getPrecedence;
       }
-      return state;
-    }
-    function indent(rep, includingFinal) {
-      var finalLinebreak = undefined;
-      function indentNode(node) {
-        if (node instanceof Linebreak) {
-          finalLinebreak = node;
-          ++node.indentation;
-        }
+    });
+    Object.defineProperty(exports, 'escapeStringLiteral', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.escapeStringLiteral;
       }
-      rep.forEach(indentNode);
-      if (!includingFinal) {
-        --finalLinebreak.indentation;
+    });
+    Object.defineProperty(exports, 'CodeRep', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.CodeRep;
       }
-      return rep;
+    });
+    Object.defineProperty(exports, 'Empty', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Empty;
+      }
+    });
+    Object.defineProperty(exports, 'Token', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Token;
+      }
+    });
+    Object.defineProperty(exports, 'NumberCodeRep', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.NumberCodeRep;
+      }
+    });
+    Object.defineProperty(exports, 'Paren', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Paren;
+      }
+    });
+    Object.defineProperty(exports, 'Bracket', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Bracket;
+      }
+    });
+    Object.defineProperty(exports, 'Brace', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Brace;
+      }
+    });
+    Object.defineProperty(exports, 'NoIn', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.NoIn;
+      }
+    });
+    Object.defineProperty(exports, 'ContainsIn', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.ContainsIn;
+      }
+    });
+    Object.defineProperty(exports, 'Seq', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Seq;
+      }
+    });
+    Object.defineProperty(exports, 'Semi', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.Semi;
+      }
+    });
+    Object.defineProperty(exports, 'CommaSep', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.CommaSep;
+      }
+    });
+    Object.defineProperty(exports, 'SemiOp', {
+      enumerable: true,
+      get: function get() {
+        return _coderep.SemiOp;
+      }
+    });
+    var _shiftReducer = require('/node_modules/shift-reducer/dist/index.js', module);
+    var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
+    var _token_stream = require('/dist/token_stream.js', module);
+    var _minimalCodegen2 = _interopRequireDefault(_minimalCodegen);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
     }
-    var FormattedCodeGen = function (_ExtensibleCodeGen) {
-        _inherits(FormattedCodeGen, _ExtensibleCodeGen);
-        function FormattedCodeGen() {
-          _classCallCheck(this, FormattedCodeGen);
-          _get(Object.getPrototypeOf(FormattedCodeGen.prototype), 'constructor', this).apply(this, arguments);
-        }
-        _createClass(FormattedCodeGen, [
-          {
-            key: 'parenToAvoidBeingDirective',
-            value: function parenToAvoidBeingDirective(element, original) {
-              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
-                return seq(this.paren(original.children[0], Sep.PAREN_AVOIDING_DIRECTIVE_BEFORE, Sep.PAREN_AVOIDING_DIRECTIVE_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(element)));
-              }
-              return original;
-            }
-          },
-          {
-            key: 'brace',
-            value: function brace(rep, node) {
-              if (isEmpty(rep)) {
-                return this.t('{}');
-              }
-              switch (node.type) {
-              case 'ObjectBinding':
-              case 'Import':
-              case 'ExportFrom':
-              case 'ObjectExpression':
-                return new _coderep.Brace(rep);
-              }
-              rep = seq(new Linebreak, rep);
-              indent(rep, false);
-              return new _coderep.Brace(rep);
-            }
-          },
-          {
-            key: 'reduceDoWhileStatement',
-            value: function reduceDoWhileStatement(node, _ref68) {
-              var body = _ref68.body;
-              var test = _ref68.test;
-              return seq(this.t('do'), this.sep(Sep.AFTER_DO), withoutTrailingLinebreak(body), this.sep(Sep.BEFORE_DOWHILE_WHILE), this.t('while'), this.sep(Sep.AFTER_DOWHILE_WHILE), this.paren(test, Sep.DO_WHILE_TEST_PAREN_BEFORE, Sep.DO_WHILE_TEST_PAREN_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
-            }
-          },
-          {
-            key: 'reduceIfStatement',
-            value: function reduceIfStatement(node, _ref69) {
-              var test = _ref69.test;
-              var consequent = _ref69.consequent;
-              var alternate = _ref69.alternate;
-              if (alternate && consequent.endsWithMissingElse) {
-                consequent = this.brace(consequent, node);
-              }
-              return objectAssign(seq(this.t('if'), this.sep(Sep.AFTER_IF), this.paren(test, Sep.IF_PAREN_BEFORE, Sep.IF_PAREN_AFTER), this.sep(Sep.AFTER_IF_TEST), withoutTrailingLinebreak(consequent), alternate ? seq(this.sep(Sep.BEFORE_ELSE), this.t('else'), this.sep(Sep.AFTER_ELSE), withoutTrailingLinebreak(alternate)) : empty(), this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
-            }
-          },
-          {
-            key: 'reduceSwitchCase',
-            value: function reduceSwitchCase(node, _ref70) {
-              var test = _ref70.test;
-              var consequent = _ref70.consequent;
-              consequent = indent(withoutTrailingLinebreak(seq.apply(undefined, [this.sep(Sep.BEFORE_CASE_BODY)].concat(_toConsumableArray(consequent)))), true);
-              return seq(this.t('case'), this.sep(Sep.BEFORE_CASE_TEST), test, this.sep(Sep.AFTER_CASE_TEST), this.t(':'), consequent, this.sep(Sep.AFTER_CASE_BODY));
-            }
-          },
-          {
-            key: 'reduceSwitchDefault',
-            value: function reduceSwitchDefault(node, _ref71) {
-              var consequent = _ref71.consequent;
-              consequent = indent(withoutTrailingLinebreak(seq.apply(undefined, [this.sep(Sep.BEFORE_CASE_BODY)].concat(_toConsumableArray(consequent)))), true);
-              return seq(this.t('default'), this.sep(Sep.DEFAULT), this.t(':'), consequent, this.sep(Sep.AFTER_DEFAULT_BODY));
-            }
-          },
-          {
-            key: 'sep',
-            value: function sep(separator) {
-              switch (separator.type) {
-              case 'ARRAY_AFTER_COMMA':
-              case 'OBJECT_AFTER_COMMA':
-              case 'ARGS_AFTER_COMMA':
-              case 'PARAMETER_AFTER_COMMA':
-              case 'DECLARATORS_AFTER_COMMA':
-              case 'NAMED_IMPORT_AFTER_COMMA':
-              case 'IMPORT_AFTER_COMMA':
-              case 'BEFORE_DEFAULT_EQUALS':
-              case 'AFTER_DEFAULT_EQUALS':
-              case 'AFTER_PROP':
-              case 'BEFORE_JUMP_LABEL':
-              case 'BEFORE_CATCH':
-              case 'BEFORE_CATCH_BINDING':
-              case 'AFTER_CATCH_BINDING':
-              case 'BEFORE_CLASS_NAME':
-              case 'BEFORE_EXTENDS':
-              case 'AFTER_EXTENDS':
-              case 'BEFORE_CLASS_DECLARATION_ELEMENTS':
-              case 'BEFORE_CLASS_EXPRESSION_ELEMENTS':
-              case 'AFTER_STATIC':
-              case 'BEFORE_TERNARY_QUESTION':
-              case 'AFTER_TERNARY_QUESTION':
-              case 'BEFORE_TERNARY_COLON':
-              case 'AFTER_TERNARY_COLON':
-              case 'AFTER_DO':
-              case 'BEFORE_DOWHILE_WHILE':
-              case 'AFTER_DOWHILE_WHILE':
-              case 'AFTER_FORIN_FOR':
-              case 'BEFORE_FORIN_IN':
-              case 'AFTER_FORIN_FOR':
-              case 'BEFORE_FORIN_BODY':
-              case 'AFTER_FOROF_FOR':
-              case 'BEFORE_FOROF_OF':
-              case 'AFTER_FOROF_FOR':
-              case 'BEFORE_FOROF_BODY':
-              case 'AFTER_FOR_FOR':
-              case 'BEFORE_FOR_TEST':
-              case 'BEFORE_FOR_UPDATE':
-              case 'BEFORE_FOR_BODY':
-              case 'AFTER_GENERATOR_STAR':
-              case 'BEFORE_FUNCTION_DECLARATION_BODY':
-              case 'BEFORE_FUNCTION_EXPRESSION_BODY':
-              case 'BEFORE_ARROW':
-              case 'AFTER_ARROW':
-              case 'AFTER_GET':
-              case 'BEFORE_GET_BODY':
-              case 'AFTER_IF':
-              case 'AFTER_IF_TEST':
-              case 'BEFORE_ELSE':
-              case 'AFTER_ELSE':
-              case 'BEFORE_IMPORT_BINDINGS':
-              case 'BEFORE_IMPORT_MODULE':
-              case 'AFTER_IMPORT_BINDINGS':
-              case 'AFTER_FROM':
-              case 'BEFORE_IMPORT_NAMESPACE':
-              case 'BEFORE_IMPORT_STAR':
-              case 'AFTER_IMPORT_STAR':
-              case 'AFTER_IMPORT_AS':
-              case 'AFTER_NAMESPACE_BINDING':
-              case 'BEFORE_IMPORT_AS':
-              case 'AFTER_IMPORT_AS':
-              case 'EXPORTS_AFTER_COMMA':
-              case 'BEFORE_EXPORT_STAR':
-              case 'AFTER_EXPORT_STAR':
-              case 'BEFORE_EXPORT_BINDINGS':
-              case 'AFTER_EXPORT_BINDINGS':
-              case 'AFTER_EXPORT':
-              case 'AFTER_EXPORT_DEFAULT':
-              case 'BEFORE_EXPORT_AS':
-              case 'AFTER_EXPORT_AS':
-              case 'AFTER_LABEL_COLON':
-              case 'BEFORE_METHOD_BODY':
-              case 'AFTER_NEW':
-              case 'RETURN':
-              case 'AFTER_SET':
-              case 'BEFORE_SET_BODY':
-              case 'BEFORE_SET_PARAMS':
-              case 'BEFORE_CASE_TEST':
-              case 'BEFORE_SWITCH_DISCRIM':
-              case 'BEFORE_SWITCH_BODY':
-              case 'THROW':
-              case 'AFTER_TRY':
-              case 'BEFORE_CATCH':
-              case 'BEFORE_FINALLY':
-              case 'AFTER_FINALLY':
-              case 'VARIABLE_DECLARATION':
-              case 'YIELD':
-              case 'AFTER_YIELD_STAR':
-              case 'DECLARATORS_AFTER_COMMA':
-              case 'BEFORE_INIT_EQUALS':
-              case 'AFTER_INIT_EQUALS':
-              case 'AFTER_WHILE':
-              case 'BEFORE_WHILE_BODY':
-              case 'AFTER_WITH':
-              case 'BEFORE_WITH_BODY':
-              case 'BEFORE_FUNCTION_NAME':
-              case 'AFTER_BINOP':
-              case 'BEFORE_ASSIGN_OP':
-              case 'AFTER_ASSIGN_OP':
-                return this.t(' ');
-              case 'AFTER_STATEMENT':
-                switch (separator.node.type) {
-                case 'ForInStatement':
-                case 'ForOfStatement':
-                case 'ForStatement':
-                case 'WhileStatement':
-                case 'WithStatement':
-                  return empty();
-                default:
-                  return new Linebreak;
-                }
-              case 'AFTER_CLASS_ELEMENT':
-              case 'BEFORE_CASE_BODY':
-              case 'AFTER_CASE_BODY':
-              case 'AFTER_DEFAULT_BODY':
-                return new Linebreak;
-              case 'BEFORE_BINOP':
-                return separator.op === ',' ? empty() : this.t(' ');
-              case 'UNARY':
-                return separator.op === 'delete' || separator.op === 'void' || separator.op === 'typeof' ? this.t(' ') : empty();
-              default:
-                return empty();
-              }
-            }
-          }
-        ]);
-        return FormattedCodeGen;
-      }(ExtensibleCodeGen);
-    exports.FormattedCodeGen = FormattedCodeGen;
+    function codeGen(script) {
+      var generator = arguments.length <= 1 || arguments[1] === undefined ? new _minimalCodegen2.default : arguments[1];
+      var ts = new _token_stream.TokenStream;
+      var rep = (0, _shiftReducer2.default)(generator, script);
+      rep.emit(ts);
+      return ts.result;
+    }
   });
-  require.define('/dist/coderep.js', function (module, exports, __dirname, __filename) {
+  require.define('/dist/token_stream.js', function (module, exports, __dirname, __filename) {
     'use strict';
-    var _get = function get(_x, _x2, _x3) {
-      var _again = true;
-      _function:
-        while (_again) {
-          var object = _x, property = _x2, receiver = _x3;
-          _again = false;
-          if (object === null)
-            object = Function.prototype;
-          var desc = Object.getOwnPropertyDescriptor(object, property);
-          if (desc === undefined) {
-            var parent = Object.getPrototypeOf(object);
-            if (parent === null) {
-              return undefined;
-            } else {
-              _x = parent;
-              _x2 = property;
-              _x3 = receiver;
-              _again = true;
-              desc = parent = undefined;
-              continue _function;
-            }
-          } else if ('value' in desc) {
-            return desc.value;
-          } else {
-            var getter = desc.get;
-            if (getter === undefined) {
-              return undefined;
-            }
-            return getter.call(receiver);
-          }
-        }
-    };
     var _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -1768,490 +214,92 @@
           return Constructor;
         };
       }();
-    exports.getPrecedence = getPrecedence;
-    exports.escapeStringLiteral = escapeStringLiteral;
-    function _inherits(subClass, superClass) {
-      if (typeof superClass !== 'function' && superClass !== null) {
-        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
-      }
-      subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-          value: subClass,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      });
-      if (superClass)
-        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.TokenStream = undefined;
+    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
       }
     }
-    var Precedence = {
-        Sequence: 0,
-        Yield: 1,
-        Assignment: 1,
-        Conditional: 2,
-        ArrowFunction: 2,
-        LogicalOR: 3,
-        LogicalAND: 4,
-        BitwiseOR: 5,
-        BitwiseXOR: 6,
-        BitwiseAND: 7,
-        Equality: 8,
-        Relational: 9,
-        BitwiseSHIFT: 10,
-        Additive: 11,
-        Multiplicative: 12,
-        Prefix: 13,
-        Postfix: 14,
-        New: 15,
-        Call: 16,
-        TaggedTemplate: 17,
-        Member: 18,
-        Primary: 19
-      };
-    exports.Precedence = Precedence;
-    var BinaryPrecedence = {
-        ',': Precedence.Sequence,
-        '||': Precedence.LogicalOR,
-        '&&': Precedence.LogicalAND,
-        '|': Precedence.BitwiseOR,
-        '^': Precedence.BitwiseXOR,
-        '&': Precedence.BitwiseAND,
-        '==': Precedence.Equality,
-        '!=': Precedence.Equality,
-        '===': Precedence.Equality,
-        '!==': Precedence.Equality,
-        '<': Precedence.Relational,
-        '>': Precedence.Relational,
-        '<=': Precedence.Relational,
-        '>=': Precedence.Relational,
-        'in': Precedence.Relational,
-        'instanceof': Precedence.Relational,
-        '<<': Precedence.BitwiseSHIFT,
-        '>>': Precedence.BitwiseSHIFT,
-        '>>>': Precedence.BitwiseSHIFT,
-        '+': Precedence.Additive,
-        '-': Precedence.Additive,
-        '*': Precedence.Multiplicative,
-        '%': Precedence.Multiplicative,
-        '/': Precedence.Multiplicative
-      };
-    function getPrecedence(_x4) {
-      var _again2 = true;
-      _function2:
-        while (_again2) {
-          var node = _x4;
-          _again2 = false;
-          switch (node.type) {
-          case 'ArrayExpression':
-          case 'FunctionExpression':
-          case 'IdentifierExpression':
-          case 'LiteralBooleanExpression':
-          case 'LiteralNullExpression':
-          case 'LiteralNumericExpression':
-          case 'LiteralInfinityExpression':
-          case 'LiteralRegExpExpression':
-          case 'LiteralStringExpression':
-          case 'ObjectExpression':
-          case 'ThisExpression':
-            return Precedence.Primary;
-          case 'AssignmentExpression':
-          case 'CompoundAssignmentExpression':
-          case 'YieldExpression':
-          case 'YieldGeneratorExpression':
-            return Precedence.Assignment;
-          case 'ConditionalExpression':
-            return Precedence.Conditional;
-          case 'ComputedMemberExpression':
-          case 'StaticMemberExpression':
-            switch (node.object.type) {
-            case 'CallExpression':
-            case 'ComputedMemberExpression':
-            case 'StaticMemberExpression':
-            case 'TemplateExpression':
-              _x4 = node.object;
-              _again2 = true;
-              continue _function2;
-            default:
-              return Precedence.Member;
-            }
-          case 'TemplateExpression':
-            if (node.tag == null)
-              return Precedence.Member;
-            switch (node.tag.type) {
-            case 'CallExpression':
-            case 'ComputedMemberExpression':
-            case 'StaticMemberExpression':
-            case 'TemplateExpression':
-              _x4 = node.tag;
-              _again2 = true;
-              continue _function2;
-            default:
-              return Precedence.Member;
-            }
-          case 'BinaryExpression':
-            return BinaryPrecedence[node.operator];
-          case 'CallExpression':
-            return Precedence.Call;
-          case 'NewExpression':
-            return node.arguments.length === 0 ? Precedence.New : Precedence.Member;
-          case 'UpdateExpression':
-            return node.isPrefix ? Precedence.Prefix : Precedence.Postfix;
-          case 'UnaryExpression':
-            return Precedence.Prefix;
-          }
-        }
-    }
-    function escapeStringLiteral(stringValue) {
-      var result = '';
-      var nSingle = 0, nDouble = 0;
-      for (var i = 0, l = stringValue.length; i < l; ++i) {
-        var ch = stringValue[i];
-        if (ch === '"') {
-          ++nDouble;
-        } else if (ch === "'") {
-          ++nSingle;
-        }
+    function numberDot(fragment) {
+      if (fragment.indexOf('.') < 0 && fragment.indexOf('e') < 0) {
+        return '..';
       }
-      var delim = nDouble > nSingle ? "'" : '"';
-      result += delim;
-      for (var i = 0; i < stringValue.length; i++) {
-        var ch = stringValue.charAt(i);
-        switch (ch) {
-        case delim:
-          result += '\\' + delim;
-          break;
-        case '\b':
-          result += '\\b';
-          break;
-        case '\t':
-          result += '\\t';
-          break;
-        case '\n':
-          result += '\\n';
-          break;
-        case '\x0B':
-          result += '\\v';
-          break;
-        case '\f':
-          result += '\\f';
-          break;
-        case '\r':
-          result += '\\r';
-          break;
-        case '\\':
-          result += '\\\\';
-          break;
-        case '\u2028':
-          result += '\\u2028';
-          break;
-        case '\u2029':
-          result += '\\u2029';
-          break;
-        default:
-          result += ch;
-          break;
-        }
-      }
-      result += delim;
-      return result;
+      return '.';
     }
-    var CodeRep = function () {
-        function CodeRep() {
-          _classCallCheck(this, CodeRep);
-          this.containsIn = false;
-          this.containsGroup = false;
-          this.startsWithCurly = false;
-          this.startsWithFunctionOrClass = false;
-          this.startsWithLet = false;
-          this.startsWithLetSquareBracket = false;
-          this.endsWithMissingElse = false;
+    function renderNumber(n) {
+      var s;
+      if (n >= 1e3 && n % 10 === 0) {
+        s = n.toString(10);
+        if (/[eE]/.test(s)) {
+          return s.replace(/[eE]\+/, 'e');
         }
-        _createClass(CodeRep, [{
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-            }
-          }]);
-        return CodeRep;
-      }();
-    exports.CodeRep = CodeRep;
-    var Empty = function (_CodeRep) {
-        _inherits(Empty, _CodeRep);
-        function Empty() {
-          _classCallCheck(this, Empty);
-          _get(Object.getPrototypeOf(Empty.prototype), 'constructor', this).call(this);
+        return n.toString(10).replace(/0+$/, function (match) {
+          return 'e' + match.length;
+        });
+      } else if (n % 1 === 0) {
+        if (n > 1e15 && n < 1e20) {
+          return '0x' + n.toString(16).toUpperCase();
         }
-        _createClass(Empty, [{
-            key: 'emit',
-            value: function emit() {
-            }
-          }]);
-        return Empty;
-      }(CodeRep);
-    exports.Empty = Empty;
-    var Token = function (_CodeRep2) {
-        _inherits(Token, _CodeRep2);
-        function Token(token) {
-          _classCallCheck(this, Token);
-          _get(Object.getPrototypeOf(Token.prototype), 'constructor', this).call(this);
-          this.token = token;
+        return n.toString(10).replace(/[eE]\+/, 'e');
+      } else {
+        return n.toString(10).replace(/^0\./, '.').replace(/[eE]\+/, 'e');
+      }
+    }
+    var TokenStream = exports.TokenStream = function () {
+        function TokenStream() {
+          _classCallCheck(this, TokenStream);
+          this.result = '';
+          this.lastNumber = null;
+          this.lastChar = null;
+          this.optionalSemi = false;
         }
-        _createClass(Token, [{
-            key: 'emit',
-            value: function emit(ts) {
-              ts.put(this.token);
-            }
-          }]);
-        return Token;
-      }(CodeRep);
-    exports.Token = Token;
-    var NumberCodeRep = function (_CodeRep3) {
-        _inherits(NumberCodeRep, _CodeRep3);
-        function NumberCodeRep(number) {
-          _classCallCheck(this, NumberCodeRep);
-          _get(Object.getPrototypeOf(NumberCodeRep.prototype), 'constructor', this).call(this);
-          this.number = number;
-        }
-        _createClass(NumberCodeRep, [{
-            key: 'emit',
-            value: function emit(ts) {
-              ts.putNumber(this.number);
-            }
-          }]);
-        return NumberCodeRep;
-      }(CodeRep);
-    exports.NumberCodeRep = NumberCodeRep;
-    var Paren = function (_CodeRep4) {
-        _inherits(Paren, _CodeRep4);
-        function Paren(expr) {
-          _classCallCheck(this, Paren);
-          _get(Object.getPrototypeOf(Paren.prototype), 'constructor', this).call(this);
-          this.expr = expr;
-        }
-        _createClass(Paren, [
+        _createClass(TokenStream, [
           {
-            key: 'emit',
-            value: function emit(ts) {
-              ts.put('(');
-              this.expr.emit(ts, false);
-              ts.put(')');
+            key: 'putNumber',
+            value: function putNumber(number) {
+              var tokenStr = renderNumber(number);
+              this.put(tokenStr);
+              this.lastNumber = tokenStr;
             }
           },
           {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.expr.forEach(f);
-            }
-          }
-        ]);
-        return Paren;
-      }(CodeRep);
-    exports.Paren = Paren;
-    var Bracket = function (_CodeRep5) {
-        _inherits(Bracket, _CodeRep5);
-        function Bracket(expr) {
-          _classCallCheck(this, Bracket);
-          _get(Object.getPrototypeOf(Bracket.prototype), 'constructor', this).call(this);
-          this.expr = expr;
-        }
-        _createClass(Bracket, [
-          {
-            key: 'emit',
-            value: function emit(ts) {
-              ts.put('[');
-              this.expr.emit(ts, false);
-              ts.put(']');
+            key: 'putOptionalSemi',
+            value: function putOptionalSemi() {
+              this.optionalSemi = true;
             }
           },
           {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.expr.forEach(f);
-            }
-          }
-        ]);
-        return Bracket;
-      }(CodeRep);
-    exports.Bracket = Bracket;
-    var Brace = function (_CodeRep6) {
-        _inherits(Brace, _CodeRep6);
-        function Brace(expr) {
-          _classCallCheck(this, Brace);
-          _get(Object.getPrototypeOf(Brace.prototype), 'constructor', this).call(this);
-          this.expr = expr;
-        }
-        _createClass(Brace, [
-          {
-            key: 'emit',
-            value: function emit(ts) {
-              ts.put('{');
-              this.expr.emit(ts, false);
-              ts.put('}');
-            }
-          },
-          {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.expr.forEach(f);
-            }
-          }
-        ]);
-        return Brace;
-      }(CodeRep);
-    exports.Brace = Brace;
-    var NoIn = function (_CodeRep7) {
-        _inherits(NoIn, _CodeRep7);
-        function NoIn(expr) {
-          _classCallCheck(this, NoIn);
-          _get(Object.getPrototypeOf(NoIn.prototype), 'constructor', this).call(this);
-          this.expr = expr;
-        }
-        _createClass(NoIn, [
-          {
-            key: 'emit',
-            value: function emit(ts) {
-              this.expr.emit(ts, true);
-            }
-          },
-          {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.expr.forEach(f);
-            }
-          }
-        ]);
-        return NoIn;
-      }(CodeRep);
-    exports.NoIn = NoIn;
-    var ContainsIn = function (_CodeRep8) {
-        _inherits(ContainsIn, _CodeRep8);
-        function ContainsIn(expr) {
-          _classCallCheck(this, ContainsIn);
-          _get(Object.getPrototypeOf(ContainsIn.prototype), 'constructor', this).call(this);
-          this.expr = expr;
-        }
-        _createClass(ContainsIn, [
-          {
-            key: 'emit',
-            value: function emit(ts, noIn) {
-              if (noIn) {
-                ts.put('(');
-                this.expr.emit(ts, false);
-                ts.put(')');
-              } else {
-                this.expr.emit(ts, false);
-              }
-            }
-          },
-          {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.expr.forEach(f);
-            }
-          }
-        ]);
-        return ContainsIn;
-      }(CodeRep);
-    exports.ContainsIn = ContainsIn;
-    var Seq = function (_CodeRep9) {
-        _inherits(Seq, _CodeRep9);
-        function Seq(children) {
-          _classCallCheck(this, Seq);
-          _get(Object.getPrototypeOf(Seq.prototype), 'constructor', this).call(this);
-          this.children = children;
-        }
-        _createClass(Seq, [
-          {
-            key: 'emit',
-            value: function emit(ts, noIn) {
-              this.children.forEach(function (cr) {
-                return cr.emit(ts, noIn);
-              });
-            }
-          },
-          {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.children.forEach(function (x) {
-                return x.forEach(f);
-              });
-            }
-          }
-        ]);
-        return Seq;
-      }(CodeRep);
-    exports.Seq = Seq;
-    var Semi = function (_Token) {
-        _inherits(Semi, _Token);
-        function Semi() {
-          _classCallCheck(this, Semi);
-          _get(Object.getPrototypeOf(Semi.prototype), 'constructor', this).call(this, ';');
-        }
-        return Semi;
-      }(Token);
-    exports.Semi = Semi;
-    var CommaSep = function (_CodeRep10) {
-        _inherits(CommaSep, _CodeRep10);
-        function CommaSep(children) {
-          _classCallCheck(this, CommaSep);
-          _get(Object.getPrototypeOf(CommaSep.prototype), 'constructor', this).call(this);
-          this.children = children;
-        }
-        _createClass(CommaSep, [
-          {
-            key: 'emit',
-            value: function emit(ts, noIn) {
-              var first = true;
-              this.children.forEach(function (cr) {
-                if (first) {
-                  first = false;
-                } else {
-                  ts.put(',');
+            key: 'put',
+            value: function put(tokenStr) {
+              if (this.optionalSemi) {
+                this.optionalSemi = false;
+                if (tokenStr !== '}') {
+                  this.put(';');
                 }
-                cr.emit(ts, noIn);
-              });
-            }
-          },
-          {
-            key: 'forEach',
-            value: function forEach(f) {
-              f(this);
-              this.children.forEach(function (x) {
-                return x.forEach(f);
-              });
+              }
+              if (this.lastNumber !== null && tokenStr.length == 1) {
+                if (tokenStr === '.') {
+                  this.result += numberDot(this.lastNumber);
+                  this.lastNumber = null;
+                  this.lastChar = '.';
+                  return;
+                }
+              }
+              this.lastNumber = null;
+              var rightChar = tokenStr.charAt(0);
+              var lastChar = this.lastChar;
+              this.lastChar = tokenStr.charAt(tokenStr.length - 1);
+              if (lastChar && ((lastChar == '+' || lastChar == '-') && lastChar == rightChar || _esutils.code.isIdentifierPartES6(lastChar.charCodeAt(0)) && _esutils.code.isIdentifierPartES6(rightChar.charCodeAt(0)) || lastChar == '/' && rightChar == 'i')) {
+                this.result += ' ';
+              }
+              this.result += tokenStr;
             }
           }
         ]);
-        return CommaSep;
-      }(CodeRep);
-    exports.CommaSep = CommaSep;
-    var SemiOp = function (_CodeRep11) {
-        _inherits(SemiOp, _CodeRep11);
-        function SemiOp() {
-          _classCallCheck(this, SemiOp);
-          _get(Object.getPrototypeOf(SemiOp.prototype), 'constructor', this).call(this);
-        }
-        _createClass(SemiOp, [{
-            key: 'emit',
-            value: function emit(ts) {
-              ts.putOptionalSemi();
-            }
-          }]);
-        return SemiOp;
-      }(CodeRep);
-    exports.SemiOp = SemiOp;
+        return TokenStream;
+      }();
   });
   require.define('/node_modules/esutils/lib/utils.js', function (module, exports, __dirname, __filename) {
     (function () {
@@ -2588,1332 +636,66 @@
       };
     }());
   });
-  require.define('/node_modules/object-assign/index.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-    function ToObject(val) {
-      if (val == null) {
-        throw new TypeError('Object.assign cannot be called with null or undefined');
-      }
-      return Object(val);
-    }
-    function ownEnumerableKeys(obj) {
-      var keys = Object.getOwnPropertyNames(obj);
-      if (Object.getOwnPropertySymbols) {
-        keys = keys.concat(Object.getOwnPropertySymbols(obj));
-      }
-      return keys.filter(function (key) {
-        return propIsEnumerable.call(obj, key);
-      });
-    }
-    module.exports = Object.assign || function (target, source) {
-      var from;
-      var keys;
-      var to = ToObject(target);
-      for (var s = 1; s < arguments.length; s++) {
-        from = arguments[s];
-        keys = ownEnumerableKeys(Object(from));
-        for (var i = 0; i < keys.length; i++) {
-          to[keys[i]] = from[keys[i]];
-        }
-      }
-      return to;
-    };
-  });
-  require.define('/dist/minimal-codegen.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ('value' in descriptor)
-              descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps)
-            defineProperties(Constructor.prototype, protoProps);
-          if (staticProps)
-            defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-    function _toConsumableArray(arr) {
-      if (Array.isArray(arr)) {
-        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++)
-          arr2[i] = arr[i];
-        return arr2;
-      } else {
-        return Array.from(arr);
-      }
-    }
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var _objectAssign = require('/node_modules/object-assign/index.js', module);
-    var objectAssign = _objectAssign;
-    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
-    var _coderep = require('/dist/coderep.js', module);
-    function p(node, precedence, a) {
-      return (0, _coderep.getPrecedence)(node) < precedence ? paren(a) : a;
-    }
-    function t(token) {
-      return new _coderep.Token(token);
-    }
-    function paren(rep) {
-      return new _coderep.Paren(rep);
-    }
-    function brace(rep) {
-      return new _coderep.Brace(rep);
-    }
-    function bracket(rep) {
-      return new _coderep.Bracket(rep);
-    }
-    function noIn(rep) {
-      return new _coderep.NoIn(rep);
-    }
-    function markContainsIn(state) {
-      return state.containsIn ? new _coderep.ContainsIn(state) : state;
-    }
-    function seq() {
-      for (var _len = arguments.length, reps = Array(_len), _key = 0; _key < _len; _key++) {
-        reps[_key] = arguments[_key];
-      }
-      return new _coderep.Seq(reps);
-    }
-    function semi() {
-      return new _coderep.Semi;
-    }
-    function semiOp() {
-      return new _coderep.SemiOp;
-    }
-    function empty() {
-      return new _coderep.Empty;
-    }
-    function commaSep(pieces) {
-      return new _coderep.CommaSep(pieces);
-    }
-    function getAssignmentExpr(state) {
-      return state ? state.containsGroup ? paren(state) : state : empty();
-    }
-    var MinimalCodeGen = function () {
-        function MinimalCodeGen() {
-          _classCallCheck(this, MinimalCodeGen);
-        }
-        _createClass(MinimalCodeGen, [
-          {
-            key: 'parenToAvoidBeingDirective',
-            value: function parenToAvoidBeingDirective(element, original) {
-              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
-                return seq(paren(original.children[0]), semiOp());
-              }
-              return original;
-            }
-          },
-          {
-            key: 'reduceArrayExpression',
-            value: function reduceArrayExpression(node, _ref) {
-              var elements = _ref.elements;
-              if (elements.length === 0) {
-                return bracket(empty());
-              }
-              var content = commaSep(elements.map(getAssignmentExpr));
-              if (elements.length > 0 && elements[elements.length - 1] == null) {
-                content = seq(content, t(','));
-              }
-              return bracket(content);
-            }
-          },
-          {
-            key: 'reduceSpreadElement',
-            value: function reduceSpreadElement(node, _ref2) {
-              var expression = _ref2.expression;
-              return seq(t('...'), p(node.expression, _coderep.Precedence.Assignment, expression));
-            }
-          },
-          {
-            key: 'reduceAssignmentExpression',
-            value: function reduceAssignmentExpression(node, _ref3) {
-              var binding = _ref3.binding;
-              var expression = _ref3.expression;
-              var leftCode = binding;
-              var rightCode = expression;
-              var containsIn = expression.containsIn;
-              var startsWithCurly = binding.startsWithCurly;
-              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
-              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
-                rightCode = paren(rightCode);
-                containsIn = false;
-              }
-              return objectAssign(seq(leftCode, t('='), rightCode), {
-                containsIn: containsIn,
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceCompoundAssignmentExpression',
-            value: function reduceCompoundAssignmentExpression(node, _ref4) {
-              var binding = _ref4.binding;
-              var expression = _ref4.expression;
-              var leftCode = binding;
-              var rightCode = expression;
-              var containsIn = expression.containsIn;
-              var startsWithCurly = binding.startsWithCurly;
-              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
-              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
-                rightCode = paren(rightCode);
-                containsIn = false;
-              }
-              return objectAssign(seq(leftCode, t(node.operator), rightCode), {
-                containsIn: containsIn,
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceBinaryExpression',
-            value: function reduceBinaryExpression(node, _ref5) {
-              var left = _ref5.left;
-              var right = _ref5.right;
-              var leftCode = left;
-              var startsWithCurly = left.startsWithCurly;
-              var startsWithLetSquareBracket = left.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = left.startsWithFunctionOrClass;
-              var leftContainsIn = left.containsIn;
-              if ((0, _coderep.getPrecedence)(node.left) < (0, _coderep.getPrecedence)(node)) {
-                leftCode = paren(leftCode);
-                startsWithCurly = false;
-                startsWithLetSquareBracket = false;
-                startsWithFunctionOrClass = false;
-                leftContainsIn = false;
-              }
-              var rightCode = right;
-              var rightContainsIn = right.containsIn;
-              if ((0, _coderep.getPrecedence)(node.right) <= (0, _coderep.getPrecedence)(node)) {
-                rightCode = paren(rightCode);
-                rightContainsIn = false;
-              }
-              return objectAssign(seq(leftCode, t(node.operator), rightCode), {
-                containsIn: leftContainsIn || rightContainsIn || node.operator === 'in',
-                containsGroup: node.operator == ',',
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceBindingWithDefault',
-            value: function reduceBindingWithDefault(node, _ref6) {
-              var binding = _ref6.binding;
-              var init = _ref6.init;
-              return seq(binding, t('='), init);
-            }
-          },
-          {
-            key: 'reduceBindingIdentifier',
-            value: function reduceBindingIdentifier(node) {
-              var a = t(node.name);
-              if (node.name === 'let') {
-                a.startsWithLet = true;
-              }
-              return a;
-            }
-          },
-          {
-            key: 'reduceArrayBinding',
-            value: function reduceArrayBinding(node, _ref7) {
-              var elements = _ref7.elements;
-              var restElement = _ref7.restElement;
-              var content = undefined;
-              if (elements.length === 0) {
-                content = restElement == null ? empty() : seq(t('...'), restElement);
-              } else {
-                elements = elements.concat(restElement == null ? [] : [seq(t('...'), restElement)]);
-                content = commaSep(elements.map(getAssignmentExpr));
-                if (elements.length > 0 && elements[elements.length - 1] == null) {
-                  content = seq(content, t(','));
-                }
-              }
-              return bracket(content);
-            }
-          },
-          {
-            key: 'reduceObjectBinding',
-            value: function reduceObjectBinding(node, _ref8) {
-              var properties = _ref8.properties;
-              var state = brace(commaSep(properties));
-              state.startsWithCurly = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceBindingPropertyIdentifier',
-            value: function reduceBindingPropertyIdentifier(node, _ref9) {
-              var binding = _ref9.binding;
-              var init = _ref9.init;
-              if (node.init == null)
-                return binding;
-              return seq(binding, t('='), init);
-            }
-          },
-          {
-            key: 'reduceBindingPropertyProperty',
-            value: function reduceBindingPropertyProperty(node, _ref10) {
-              var name = _ref10.name;
-              var binding = _ref10.binding;
-              return seq(name, t(':'), binding);
-            }
-          },
-          {
-            key: 'reduceBlock',
-            value: function reduceBlock(node, _ref11) {
-              var statements = _ref11.statements;
-              return brace(seq.apply(undefined, _toConsumableArray(statements)));
-            }
-          },
-          {
-            key: 'reduceBlockStatement',
-            value: function reduceBlockStatement(node, _ref12) {
-              var block = _ref12.block;
-              return block;
-            }
-          },
-          {
-            key: 'reduceBreakStatement',
-            value: function reduceBreakStatement(node, _ref13) {
-              var label = _ref13.label;
-              return seq(t('break'), label ? t(label) : empty(), semiOp());
-            }
-          },
-          {
-            key: 'reduceCallExpression',
-            value: function reduceCallExpression(node, _ref14) {
-              var callee = _ref14.callee;
-              var args = _ref14.arguments;
-              return objectAssign(seq(p(node.callee, (0, _coderep.getPrecedence)(node), callee), paren(commaSep(args))), {
-                startsWithCurly: callee.startsWithCurly,
-                startsWithLetSquareBracket: callee.startsWithLetSquareBracket,
-                startsWithFunctionOrClass: callee.startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceCatchClause',
-            value: function reduceCatchClause(node, _ref15) {
-              var binding = _ref15.binding;
-              var body = _ref15.body;
-              return seq(t('catch'), paren(binding), body);
-            }
-          },
-          {
-            key: 'reduceClassDeclaration',
-            value: function reduceClassDeclaration(node, _ref16) {
-              var name = _ref16.name;
-              var _super = _ref16['super'];
-              var elements = _ref16.elements;
-              var state = seq(t('class'), name);
-              if (_super != null) {
-                state = seq(state, t('extends'), _super);
-              }
-              state = seq.apply(undefined, [
-                state,
-                t('{')
-              ].concat(_toConsumableArray(elements), [t('}')]));
-              return state;
-            }
-          },
-          {
-            key: 'reduceClassExpression',
-            value: function reduceClassExpression(node, _ref17) {
-              var name = _ref17.name;
-              var _super = _ref17['super'];
-              var elements = _ref17.elements;
-              var state = t('class');
-              if (name != null) {
-                state = seq(state, name);
-              }
-              if (_super != null) {
-                state = seq(state, t('extends'), _super);
-              }
-              state = seq.apply(undefined, [
-                state,
-                t('{')
-              ].concat(_toConsumableArray(elements), [t('}')]));
-              state.startsWithFunctionOrClass = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceClassElement',
-            value: function reduceClassElement(node, _ref18) {
-              var method = _ref18.method;
-              if (!node.isStatic)
-                return method;
-              return seq(t('static'), method);
-            }
-          },
-          {
-            key: 'reduceComputedMemberExpression',
-            value: function reduceComputedMemberExpression(node, _ref19) {
-              var object = _ref19.object;
-              var expression = _ref19.expression;
-              var startsWithLetSquareBracket = object.startsWithLetSquareBracket || node.object.type === 'IdentifierExpression' && node.object.name === 'let';
-              return objectAssign(seq(p(node.object, (0, _coderep.getPrecedence)(node), object), bracket(expression)), {
-                startsWithLet: object.startsWithLet,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithCurly: object.startsWithCurly,
-                startsWithFunctionOrClass: object.startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceComputedPropertyName',
-            value: function reduceComputedPropertyName(node, _ref20) {
-              var expression = _ref20.expression;
-              return bracket(expression);
-            }
-          },
-          {
-            key: 'reduceConditionalExpression',
-            value: function reduceConditionalExpression(node, _ref21) {
-              var test = _ref21.test;
-              var consequent = _ref21.consequent;
-              var alternate = _ref21.alternate;
-              var containsIn = test.containsIn || alternate.containsIn;
-              var startsWithCurly = test.startsWithCurly;
-              var startsWithLetSquareBracket = test.startsWithLetSquareBracket;
-              var startsWithFunctionOrClass = test.startsWithFunctionOrClass;
-              return objectAssign(seq(p(node.test, _coderep.Precedence.LogicalOR, test), t('?'), p(node.consequent, _coderep.Precedence.Assignment, consequent), t(':'), p(node.alternate, _coderep.Precedence.Assignment, alternate)), {
-                containsIn: containsIn,
-                startsWithCurly: startsWithCurly,
-                startsWithLetSquareBracket: startsWithLetSquareBracket,
-                startsWithFunctionOrClass: startsWithFunctionOrClass
-              });
-            }
-          },
-          {
-            key: 'reduceContinueStatement',
-            value: function reduceContinueStatement(node, _ref22) {
-              var label = _ref22.label;
-              return seq(t('continue'), label ? t(label) : empty(), semiOp());
-            }
-          },
-          {
-            key: 'reduceDataProperty',
-            value: function reduceDataProperty(node, _ref23) {
-              var name = _ref23.name;
-              var expression = _ref23.expression;
-              return seq(name, t(':'), getAssignmentExpr(expression));
-            }
-          },
-          {
-            key: 'reduceDebuggerStatement',
-            value: function reduceDebuggerStatement(node) {
-              return seq(t('debugger'), semiOp());
-            }
-          },
-          {
-            key: 'reduceDoWhileStatement',
-            value: function reduceDoWhileStatement(node, _ref24) {
-              var body = _ref24.body;
-              var test = _ref24.test;
-              return seq(t('do'), body, t('while'), paren(test), semiOp());
-            }
-          },
-          {
-            key: 'reduceEmptyStatement',
-            value: function reduceEmptyStatement(node) {
-              return semi();
-            }
-          },
-          {
-            key: 'reduceExpressionStatement',
-            value: function reduceExpressionStatement(node, _ref25) {
-              var expression = _ref25.expression;
-              var needsParens = expression.startsWithCurly || expression.startsWithLetSquareBracket || expression.startsWithFunctionOrClass;
-              return seq(needsParens ? paren(expression) : expression, semiOp());
-            }
-          },
-          {
-            key: 'reduceForInStatement',
-            value: function reduceForInStatement(node, _ref26) {
-              var left = _ref26.left;
-              var right = _ref26.right;
-              var body = _ref26.body;
-              var leftP = left;
-              switch (node.left.type) {
-              case 'VariableDeclaration':
-                leftP = noIn(markContainsIn(left));
-                break;
-              case 'BindingIdentifier':
-                if (node.left.name === 'let') {
-                  leftP = paren(left);
-                }
-                break;
-              }
-              return objectAssign(seq(t('for'), paren(seq(leftP, t('in'), right)), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceForOfStatement',
-            value: function reduceForOfStatement(node, _ref27) {
-              var left = _ref27.left;
-              var right = _ref27.right;
-              var body = _ref27.body;
-              left = node.left.type === 'VariableDeclaration' ? noIn(markContainsIn(left)) : left;
-              return objectAssign(seq(t('for'), paren(seq(left.startsWithLet ? paren(left) : left, t('of'), right)), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceForStatement',
-            value: function reduceForStatement(node, _ref28) {
-              var init = _ref28.init;
-              var test = _ref28.test;
-              var update = _ref28.update;
-              var body = _ref28.body;
-              return objectAssign(seq(t('for'), paren(seq(init ? noIn(markContainsIn(init)) : empty(), semi(), test || empty(), semi(), update || empty())), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceFunctionBody',
-            value: function reduceFunctionBody(node, _ref29) {
-              var directives = _ref29.directives;
-              var statements = _ref29.statements;
-              if (statements.length) {
-                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
-              }
-              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(statements)));
-            }
-          },
-          {
-            key: 'reduceFunctionDeclaration',
-            value: function reduceFunctionDeclaration(node, _ref30) {
-              var name = _ref30.name;
-              var params = _ref30.params;
-              var body = _ref30.body;
-              return seq(t('function'), node.isGenerator ? t('*') : empty(), node.name.name === '*default*' ? empty() : name, paren(params), brace(body));
-            }
-          },
-          {
-            key: 'reduceFunctionExpression',
-            value: function reduceFunctionExpression(node, _ref31) {
-              var name = _ref31.name;
-              var params = _ref31.params;
-              var body = _ref31.body;
-              var state = seq(t('function'), node.isGenerator ? t('*') : empty(), name ? name : empty(), paren(params), brace(body));
-              state.startsWithFunctionOrClass = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceFormalParameters',
-            value: function reduceFormalParameters(node, _ref32) {
-              var items = _ref32.items;
-              var rest = _ref32.rest;
-              return commaSep(items.concat(rest == null ? [] : [seq(t('...'), rest)]));
-            }
-          },
-          {
-            key: 'reduceArrowExpression',
-            value: function reduceArrowExpression(node, _ref33) {
-              var params = _ref33.params;
-              var body = _ref33.body;
-              if (node.params.rest != null || node.params.items.length !== 1 || node.params.items[0].type !== 'BindingIdentifier') {
-                params = paren(params);
-              }
-              if (node.body.type === 'FunctionBody') {
-                body = brace(body);
-              } else if (body.startsWithCurly) {
-                body = paren(body);
-              }
-              return seq(params, t('=>'), p(node.body, _coderep.Precedence.Assignment, body));
-            }
-          },
-          {
-            key: 'reduceGetter',
-            value: function reduceGetter(node, _ref34) {
-              var name = _ref34.name;
-              var body = _ref34.body;
-              return seq(t('get'), name, paren(empty()), brace(body));
-            }
-          },
-          {
-            key: 'reduceIdentifierExpression',
-            value: function reduceIdentifierExpression(node) {
-              var a = t(node.name);
-              if (node.name === 'let') {
-                a.startsWithLet = true;
-              }
-              return a;
-            }
-          },
-          {
-            key: 'reduceIfStatement',
-            value: function reduceIfStatement(node, _ref35) {
-              var test = _ref35.test;
-              var consequent = _ref35.consequent;
-              var alternate = _ref35.alternate;
-              if (alternate && consequent.endsWithMissingElse) {
-                consequent = brace(consequent);
-              }
-              return objectAssign(seq(t('if'), paren(test), consequent, alternate ? seq(t('else'), alternate) : empty()), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
-            }
-          },
-          {
-            key: 'reduceImport',
-            value: function reduceImport(node, _ref36) {
-              var defaultBinding = _ref36.defaultBinding;
-              var namedImports = _ref36.namedImports;
-              var bindings = [];
-              if (defaultBinding != null) {
-                bindings.push(defaultBinding);
-              }
-              if (namedImports.length > 0) {
-                bindings.push(brace(commaSep(namedImports)));
-              }
-              if (bindings.length === 0) {
-                return seq(t('import'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
-              }
-              return seq(t('import'), commaSep(bindings), t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
-            }
-          },
-          {
-            key: 'reduceImportNamespace',
-            value: function reduceImportNamespace(node, _ref37) {
-              var defaultBinding = _ref37.defaultBinding;
-              var namespaceBinding = _ref37.namespaceBinding;
-              return seq(t('import'), defaultBinding == null ? empty() : seq(defaultBinding, t(',')), t('*'), t('as'), namespaceBinding, t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
-            }
-          },
-          {
-            key: 'reduceImportSpecifier',
-            value: function reduceImportSpecifier(node, _ref38) {
-              var binding = _ref38.binding;
-              if (node.name == null)
-                return binding;
-              return seq(t(node.name), t('as'), binding);
-            }
-          },
-          {
-            key: 'reduceExportAllFrom',
-            value: function reduceExportAllFrom(node) {
-              return seq(t('export'), t('*'), t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
-            }
-          },
-          {
-            key: 'reduceExportFrom',
-            value: function reduceExportFrom(node, _ref39) {
-              var namedExports = _ref39.namedExports;
-              return seq(t('export'), brace(commaSep(namedExports)), node.moduleSpecifier == null ? empty() : seq(t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp()));
-            }
-          },
-          {
-            key: 'reduceExport',
-            value: function reduceExport(node, _ref40) {
-              var declaration = _ref40.declaration;
-              switch (node.declaration.type) {
-              case 'FunctionDeclaration':
-              case 'ClassDeclaration':
-                break;
-              default:
-                declaration = seq(declaration, semiOp());
-              }
-              return seq(t('export'), declaration);
-            }
-          },
-          {
-            key: 'reduceExportDefault',
-            value: function reduceExportDefault(node, _ref41) {
-              var body = _ref41.body;
-              body = body.startsWithFunctionOrClass ? paren(body) : body;
-              switch (node.body.type) {
-              case 'FunctionDeclaration':
-              case 'ClassDeclaration':
-                break;
-              default:
-                body = seq(body, semiOp());
-              }
-              return seq(t('export default'), body);
-            }
-          },
-          {
-            key: 'reduceExportSpecifier',
-            value: function reduceExportSpecifier(node) {
-              if (node.name == null)
-                return t(node.exportedName);
-              return seq(t(node.name), t('as'), t(node.exportedName));
-            }
-          },
-          {
-            key: 'reduceLabeledStatement',
-            value: function reduceLabeledStatement(node, _ref42) {
-              var label = _ref42.label;
-              var body = _ref42.body;
-              return objectAssign(seq(t(label + ':'), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceLiteralBooleanExpression',
-            value: function reduceLiteralBooleanExpression(node) {
-              return t(node.value.toString());
-            }
-          },
-          {
-            key: 'reduceLiteralNullExpression',
-            value: function reduceLiteralNullExpression(node) {
-              return t('null');
-            }
-          },
-          {
-            key: 'reduceLiteralInfinityExpression',
-            value: function reduceLiteralInfinityExpression(node) {
-              return t('2e308');
-            }
-          },
-          {
-            key: 'reduceLiteralNumericExpression',
-            value: function reduceLiteralNumericExpression(node) {
-              return new _coderep.NumberCodeRep(node.value);
-            }
-          },
-          {
-            key: 'reduceLiteralRegExpExpression',
-            value: function reduceLiteralRegExpExpression(node) {
-              return t('/' + node.pattern + '/' + node.flags);
-            }
-          },
-          {
-            key: 'reduceLiteralStringExpression',
-            value: function reduceLiteralStringExpression(node) {
-              return t((0, _coderep.escapeStringLiteral)(node.value));
-            }
-          },
-          {
-            key: 'reduceMethod',
-            value: function reduceMethod(node, _ref43) {
-              var name = _ref43.name;
-              var params = _ref43.params;
-              var body = _ref43.body;
-              return seq(node.isGenerator ? t('*') : empty(), name, paren(params), brace(body));
-            }
-          },
-          {
-            key: 'reduceModule',
-            value: function reduceModule(node, _ref44) {
-              var directives = _ref44.directives;
-              var items = _ref44.items;
-              if (items.length) {
-                items[0] = this.parenToAvoidBeingDirective(node.items[0], items[0]);
-              }
-              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(items)));
-            }
-          },
-          {
-            key: 'reduceNewExpression',
-            value: function reduceNewExpression(node, _ref45) {
-              var callee = _ref45.callee;
-              var args = _ref45.arguments;
-              var calleeRep = (0, _coderep.getPrecedence)(node.callee) == _coderep.Precedence.Call ? paren(callee) : p(node.callee, (0, _coderep.getPrecedence)(node), callee);
-              return seq(t('new'), calleeRep, args.length === 0 ? empty() : paren(commaSep(args)));
-            }
-          },
-          {
-            key: 'reduceNewTargetExpression',
-            value: function reduceNewTargetExpression() {
-              return t('new.target');
-            }
-          },
-          {
-            key: 'reduceObjectExpression',
-            value: function reduceObjectExpression(node, _ref46) {
-              var properties = _ref46.properties;
-              var state = brace(commaSep(properties));
-              state.startsWithCurly = true;
-              return state;
-            }
-          },
-          {
-            key: 'reduceUpdateExpression',
-            value: function reduceUpdateExpression(node, _ref47) {
-              var operand = _ref47.operand;
-              if (node.isPrefix) {
-                return this.reduceUnaryExpression.apply(this, arguments);
-              } else {
-                return objectAssign(seq(p(node.operand, _coderep.Precedence.New, operand), t(node.operator)), {
-                  startsWithCurly: operand.startsWithCurly,
-                  startsWithLetSquareBracket: operand.startsWithLetSquareBracket,
-                  startsWithFunctionOrClass: operand.startsWithFunctionOrClass
-                });
-              }
-            }
-          },
-          {
-            key: 'reduceUnaryExpression',
-            value: function reduceUnaryExpression(node, _ref48) {
-              var operand = _ref48.operand;
-              return seq(t(node.operator), p(node.operand, (0, _coderep.getPrecedence)(node), operand));
-            }
-          },
-          {
-            key: 'reduceReturnStatement',
-            value: function reduceReturnStatement(node, _ref49) {
-              var expression = _ref49.expression;
-              return seq(t('return'), expression || empty(), semiOp());
-            }
-          },
-          {
-            key: 'reduceScript',
-            value: function reduceScript(node, _ref50) {
-              var directives = _ref50.directives;
-              var statements = _ref50.statements;
-              if (statements.length) {
-                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
-              }
-              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(statements)));
-            }
-          },
-          {
-            key: 'reduceSetter',
-            value: function reduceSetter(node, _ref51) {
-              var name = _ref51.name;
-              var param = _ref51.param;
-              var body = _ref51.body;
-              return seq(t('set'), name, paren(param), brace(body));
-            }
-          },
-          {
-            key: 'reduceShorthandProperty',
-            value: function reduceShorthandProperty(node) {
-              return t(node.name);
-            }
-          },
-          {
-            key: 'reduceStaticMemberExpression',
-            value: function reduceStaticMemberExpression(node, _ref52) {
-              var object = _ref52.object;
-              var property = _ref52.property;
-              var state = seq(p(node.object, (0, _coderep.getPrecedence)(node), object), t('.'), t(property));
-              state.startsWithLet = object.startsWithLet;
-              state.startsWithCurly = object.startsWithCurly;
-              state.startsWithLetSquareBracket = object.startsWithLetSquareBracket;
-              state.startsWithFunctionOrClass = object.startsWithFunctionOrClass;
-              return state;
-            }
-          },
-          {
-            key: 'reduceStaticPropertyName',
-            value: function reduceStaticPropertyName(node) {
-              var n;
-              if (_esutils.keyword.isIdentifierNameES6(node.value)) {
-                return t(node.value);
-              } else if (n = parseFloat(node.value), n === n) {
-                return new _coderep.NumberCodeRep(n);
-              }
-              return t((0, _coderep.escapeStringLiteral)(node.value));
-            }
-          },
-          {
-            key: 'reduceSuper',
-            value: function reduceSuper() {
-              return t('super');
-            }
-          },
-          {
-            key: 'reduceSwitchCase',
-            value: function reduceSwitchCase(node, _ref53) {
-              var test = _ref53.test;
-              var consequent = _ref53.consequent;
-              return seq(t('case'), test, t(':'), seq.apply(undefined, _toConsumableArray(consequent)));
-            }
-          },
-          {
-            key: 'reduceSwitchDefault',
-            value: function reduceSwitchDefault(node, _ref54) {
-              var consequent = _ref54.consequent;
-              return seq(t('default:'), seq.apply(undefined, _toConsumableArray(consequent)));
-            }
-          },
-          {
-            key: 'reduceSwitchStatement',
-            value: function reduceSwitchStatement(node, _ref55) {
-              var discriminant = _ref55.discriminant;
-              var cases = _ref55.cases;
-              return seq(t('switch'), paren(discriminant), brace(seq.apply(undefined, _toConsumableArray(cases))));
-            }
-          },
-          {
-            key: 'reduceSwitchStatementWithDefault',
-            value: function reduceSwitchStatementWithDefault(node, _ref56) {
-              var discriminant = _ref56.discriminant;
-              var preDefaultCases = _ref56.preDefaultCases;
-              var defaultCase = _ref56.defaultCase;
-              var postDefaultCases = _ref56.postDefaultCases;
-              return seq(t('switch'), paren(discriminant), brace(seq.apply(undefined, _toConsumableArray(preDefaultCases).concat([defaultCase], _toConsumableArray(postDefaultCases)))));
-            }
-          },
-          {
-            key: 'reduceTemplateExpression',
-            value: function reduceTemplateExpression(node, _ref57) {
-              var tag = _ref57.tag;
-              var elements = _ref57.elements;
-              var state = node.tag == null ? empty() : p(node.tag, (0, _coderep.getPrecedence)(node), tag);
-              var templateData = '';
-              state = seq(state, t('`'));
-              for (var i = 0, l = node.elements.length; i < l; ++i) {
-                if (node.elements[i].type === 'TemplateElement') {
-                  var d = '';
-                  if (i > 0)
-                    d += '}';
-                  d += node.elements[i].rawValue;
-                  if (i < l - 1)
-                    d += '${';
-                  state = seq(state, t(d));
-                } else {
-                  state = seq(state, elements[i]);
-                }
-              }
-              state = seq(state, t('`'));
-              if (node.tag != null) {
-                state.startsWithCurly = tag.startsWithCurly;
-                state.startsWithLetSquareBracket = tag.startsWithLetSquareBracket;
-                state.startsWithFunctionOrClass = tag.startsWithFunctionOrClass;
-              }
-              return state;
-            }
-          },
-          {
-            key: 'reduceTemplateElement',
-            value: function reduceTemplateElement(node) {
-              return t(node.rawValue);
-            }
-          },
-          {
-            key: 'reduceThisExpression',
-            value: function reduceThisExpression(node) {
-              return t('this');
-            }
-          },
-          {
-            key: 'reduceThrowStatement',
-            value: function reduceThrowStatement(node, _ref58) {
-              var expression = _ref58.expression;
-              return seq(t('throw'), expression, semiOp());
-            }
-          },
-          {
-            key: 'reduceTryCatchStatement',
-            value: function reduceTryCatchStatement(node, _ref59) {
-              var body = _ref59.body;
-              var catchClause = _ref59.catchClause;
-              return seq(t('try'), body, catchClause);
-            }
-          },
-          {
-            key: 'reduceTryFinallyStatement',
-            value: function reduceTryFinallyStatement(node, _ref60) {
-              var body = _ref60.body;
-              var catchClause = _ref60.catchClause;
-              var finalizer = _ref60.finalizer;
-              return seq(t('try'), body, catchClause || empty(), t('finally'), finalizer);
-            }
-          },
-          {
-            key: 'reduceYieldExpression',
-            value: function reduceYieldExpression(node, _ref61) {
-              var expression = _ref61.expression;
-              if (node.expression == null)
-                return t('yield');
-              return seq(t('yield'), p(node.expression, (0, _coderep.getPrecedence)(node), expression));
-            }
-          },
-          {
-            key: 'reduceYieldGeneratorExpression',
-            value: function reduceYieldGeneratorExpression(node, _ref62) {
-              var expression = _ref62.expression;
-              return seq(t('yield'), t('*'), p(node.expression, (0, _coderep.getPrecedence)(node), expression));
-            }
-          },
-          {
-            key: 'reduceDirective',
-            value: function reduceDirective(node) {
-              var delim = /^(?:[^"\\]|\\.)*$/.test(node.rawValue) ? '"' : "'";
-              return seq(t(delim + node.rawValue + delim), semiOp());
-            }
-          },
-          {
-            key: 'reduceVariableDeclaration',
-            value: function reduceVariableDeclaration(node, _ref63) {
-              var declarators = _ref63.declarators;
-              return seq(t(node.kind), commaSep(declarators));
-            }
-          },
-          {
-            key: 'reduceVariableDeclarationStatement',
-            value: function reduceVariableDeclarationStatement(node, _ref64) {
-              var declaration = _ref64.declaration;
-              return seq(declaration, semiOp());
-            }
-          },
-          {
-            key: 'reduceVariableDeclarator',
-            value: function reduceVariableDeclarator(node, _ref65) {
-              var binding = _ref65.binding;
-              var init = _ref65.init;
-              var containsIn = init && init.containsIn && !init.containsGroup;
-              if (init) {
-                if (init.containsGroup) {
-                  init = paren(init);
-                } else {
-                  init = markContainsIn(init);
-                }
-              }
-              return objectAssign(init == null ? binding : seq(binding, t('='), init), { containsIn: containsIn });
-            }
-          },
-          {
-            key: 'reduceWhileStatement',
-            value: function reduceWhileStatement(node, _ref66) {
-              var test = _ref66.test;
-              var body = _ref66.body;
-              return objectAssign(seq(t('while'), paren(test), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          },
-          {
-            key: 'reduceWithStatement',
-            value: function reduceWithStatement(node, _ref67) {
-              var object = _ref67.object;
-              var body = _ref67.body;
-              return objectAssign(seq(t('with'), paren(object), body), { endsWithMissingElse: body.endsWithMissingElse });
-            }
-          }
-        ]);
-        return MinimalCodeGen;
-      }();
-    exports['default'] = MinimalCodeGen;
-  });
-  require.define('/dist/token_stream.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ('value' in descriptor)
-              descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps)
-            defineProperties(Constructor.prototype, protoProps);
-          if (staticProps)
-            defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
-      }
-    }
-    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
-    function numberDot(fragment) {
-      if (fragment.indexOf('.') < 0 && fragment.indexOf('e') < 0) {
-        return '..';
-      }
-      return '.';
-    }
-    function renderNumber(n) {
-      var s;
-      if (n >= 1e3 && n % 10 === 0) {
-        s = n.toString(10);
-        if (/[eE]/.test(s)) {
-          return s.replace(/[eE]\+/, 'e');
-        }
-        return n.toString(10).replace(/0+$/, function (match) {
-          return 'e' + match.length;
-        });
-      } else if (n % 1 === 0) {
-        if (n > 1e15 && n < 1e20) {
-          return '0x' + n.toString(16).toUpperCase();
-        }
-        return n.toString(10).replace(/[eE]\+/, 'e');
-      } else {
-        return n.toString(10).replace(/^0\./, '.').replace(/[eE]\+/, 'e');
-      }
-    }
-    var TokenStream = function () {
-        function TokenStream() {
-          _classCallCheck(this, TokenStream);
-          this.result = '';
-          this.lastNumber = null;
-          this.lastChar = null;
-          this.optionalSemi = false;
-        }
-        _createClass(TokenStream, [
-          {
-            key: 'putNumber',
-            value: function putNumber(number) {
-              var tokenStr = renderNumber(number);
-              this.put(tokenStr);
-              this.lastNumber = tokenStr;
-            }
-          },
-          {
-            key: 'putOptionalSemi',
-            value: function putOptionalSemi() {
-              this.optionalSemi = true;
-            }
-          },
-          {
-            key: 'put',
-            value: function put(tokenStr) {
-              if (this.optionalSemi) {
-                this.optionalSemi = false;
-                if (tokenStr !== '}') {
-                  this.put(';');
-                }
-              }
-              if (this.lastNumber !== null && tokenStr.length == 1) {
-                if (tokenStr === '.') {
-                  this.result += numberDot(this.lastNumber);
-                  this.lastNumber = null;
-                  this.lastChar = '.';
-                  return;
-                }
-              }
-              this.lastNumber = null;
-              var rightChar = tokenStr.charAt(0);
-              var lastChar = this.lastChar;
-              this.lastChar = tokenStr.charAt(tokenStr.length - 1);
-              if (lastChar && ((lastChar == '+' || lastChar == '-') && lastChar == rightChar || _esutils.code.isIdentifierPartES6(lastChar.charCodeAt(0)) && _esutils.code.isIdentifierPartES6(rightChar.charCodeAt(0)) || lastChar == '/' && rightChar == 'i')) {
-                this.result += ' ';
-              }
-              this.result += tokenStr;
-            }
-          }
-        ]);
-        return TokenStream;
-      }();
-    exports.TokenStream = TokenStream;
-  });
   require.define('/node_modules/shift-reducer/dist/index.js', function (module, exports, __dirname, __filename) {
     'use strict';
-    exports['default'] = reduce;
-    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
-    function transformWithSpec(_x, _x2, _x3) {
-      var _left;
-      var _again = true;
-      _function:
-        while (_again) {
-          var transformer = _x, node = _x2, spec = _x3;
-          _again = false;
-          switch (spec.typeName) {
-          case 'Enum':
-          case 'String':
-          case 'Number':
-          case 'Boolean':
-          case 'SourceSpan':
-            return node;
-          case 'Const':
-            _x = transformer;
-            _x2 = node;
-            _x3 = spec.argument;
-            _again = true;
-            continue _function;
-          case 'Maybe':
-            if (!(_left = node)) {
-              return _left;
-            }
-            _x = transformer;
-            _x2 = node;
-            _x3 = spec.argument;
-            _again = true;
-            continue _function;
-          case 'List':
-            return node.map(function (e) {
-              return transformWithSpec(transformer, e, spec.argument);
-            });
-          case 'Union':
-            _x = transformer;
-            _x2 = node;
-            _x3 = _shiftSpec['default'][node.type];
-            _again = true;
-            continue _function;
-          default:
-            var state = {};
-            spec.fields.forEach(function (field) {
-              var v = transformWithSpec(transformer, node[field.name], field.type);
-              state[field.name] = v == null ? null : v;
-            });
-            if (typeof transformer['reduce' + node.type] !== 'function') {
-              throw new Error('Encountered ' + node.type + ', which the provided reducer does not handle.');
-            }
-            return transformer['reduce' + node.type](node, state);
-          }
-        }
-    }
-    function reduce(reducer, reducible) {
-      return transformWithSpec(reducer, reducible, _shiftSpec['default'][reducible.type]);
-    }
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.MonoidalReducer = exports.CloneReducer = undefined;
+    exports.default = reduce;
     var _cloneReducer = require('/node_modules/shift-reducer/dist/clone-reducer.js', module);
     Object.defineProperty(exports, 'CloneReducer', {
       enumerable: true,
       get: function get() {
-        return _cloneReducer['default'];
+        return _cloneReducer.default;
       }
     });
     var _monoidalReducer = require('/node_modules/shift-reducer/dist/monoidal-reducer.js', module);
     Object.defineProperty(exports, 'MonoidalReducer', {
       enumerable: true,
       get: function get() {
-        return _monoidalReducer['default'];
+        return _monoidalReducer.default;
       }
     });
-  });
-  require.define('/node_modules/shift-reducer/dist/monoidal-reducer.js', function (module, exports, __dirname, __filename) {
-    'use strict';
-    var _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ('value' in descriptor)
-              descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
+    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function transformWithSpec(transformer, node, spec) {
+      switch (spec.typeName) {
+      case 'Enum':
+      case 'String':
+      case 'Number':
+      case 'Boolean':
+      case 'SourceSpan':
+        return node;
+      case 'Const':
+        return transformWithSpec(transformer, node, spec.argument);
+      case 'Maybe':
+        return node && transformWithSpec(transformer, node, spec.argument);
+      case 'List':
+        return node.map(function (e) {
+          return transformWithSpec(transformer, e, spec.argument);
+        });
+      case 'Union':
+        return transformWithSpec(transformer, node, _shiftSpec2.default[node.type]);
+      default:
+        var state = {};
+        spec.fields.forEach(function (field) {
+          var v = transformWithSpec(transformer, node[field.name], field.type);
+          state[field.name] = v == null ? null : v;
+        });
+        if (typeof transformer['reduce' + node.type] !== 'function') {
+          throw new Error('Encountered ' + node.type + ', which the provided reducer does not handle.');
         }
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps)
-            defineProperties(Constructor.prototype, protoProps);
-          if (staticProps)
-            defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError('Cannot call a class as a function');
+        return transformer['reduce' + node.type](node, state);
       }
     }
-    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
-    var methods = {};
-    function id(x) {
-      return x;
+    function reduce(reducer, reducible) {
+      return transformWithSpec(reducer, reducible, _shiftSpec2.default[reducible.type]);
     }
-    function handlerForFieldOfType(_x) {
-      var _again = true;
-      _function:
-        while (_again) {
-          var type = _x;
-          _again = false;
-          switch (type.typeName) {
-          case 'Enum':
-          case 'String':
-          case 'Boolean':
-          case 'Number':
-          case 'SourceSpan':
-            return null;
-          case 'Const':
-            _x = type.argument;
-            _again = true;
-            continue _function;
-          case 'Maybe': {
-              var _ret = function () {
-                  var subHandler = handlerForFieldOfType(type.argument);
-                  if (subHandler == null)
-                    return { v: null };
-                  return {
-                    v: function (t) {
-                      return t == null ? this.identity : subHandler.call(this, t);
-                    }
-                  };
-                }();
-              if (typeof _ret === 'object')
-                return _ret.v;
-            }
-          case 'List': {
-              var _ret2 = function () {
-                  var subHandler = handlerForFieldOfType(type.argument);
-                  if (subHandler == null)
-                    return { v: null };
-                  return {
-                    v: function (t) {
-                      var _this = this;
-                      return this.fold(t.map(function (x) {
-                        return subHandler.call(_this, x);
-                      }));
-                    }
-                  };
-                }();
-              if (typeof _ret2 === 'object')
-                return _ret2.v;
-            }
-          default:
-            return id;
-          }
-        }
-    }
-    var _loop = function (typeName) {
-      var type = _shiftSpec['default'][typeName];
-      var handlers = {};
-      type.fields.forEach(function (field) {
-        var handler = handlerForFieldOfType(field.type);
-        if (handler != null)
-          handlers[field.name] = handler;
-      });
-      var fieldNames = Object.keys(handlers);
-      methods['reduce' + typeName] = {
-        value: function value(node, state) {
-          var _this2 = this;
-          return this.fold(fieldNames.map(function (fieldName) {
-            return handlers[fieldName].call(_this2, state[fieldName]);
-          }));
-        }
-      };
-    };
-    for (var typeName in _shiftSpec['default']) {
-      _loop(typeName);
-    }
-    var MonoidalReducer = function () {
-        function MonoidalReducer(monoid) {
-          _classCallCheck(this, MonoidalReducer);
-          this.identity = monoid.empty();
-          var concat = monoid.prototype && monoid.prototype.concat || monoid.concat;
-          this.append = function (a, b) {
-            return concat.call(a, b);
-          };
-        }
-        _createClass(MonoidalReducer, [{
-            key: 'fold',
-            value: function fold(list, a) {
-              var _this3 = this;
-              return list.reduce(function (memo, x) {
-                return _this3.append(memo, x);
-              }, a == null ? this.identity : a);
-            }
-          }]);
-        return MonoidalReducer;
-      }();
-    exports['default'] = MonoidalReducer;
-    Object.defineProperties(MonoidalReducer.prototype, methods);
   });
-  require.define('/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+  require.define('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', function (module, exports, __dirname, __filename) {
+    Object.defineProperty(exports, '__esModule', { value: true });
     exports.default = function () {
       var SPEC = {};
       var BOOLEAN = { typeName: 'Boolean' };
@@ -5901,26 +2683,3286 @@
       return SPEC;
     }();
   });
-  require.define('/node_modules/shift-reducer/dist/clone-reducer.js', function (module, exports, __dirname, __filename) {
+  require.define('/node_modules/shift-reducer/dist/monoidal-reducer.js', function (module, exports, __dirname, __filename) {
     'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    var _typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function (obj) {
+        return typeof obj;
+      } : function (obj) {
+        return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj;
+      };
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
       }
     }
-    var _shiftSpec = require('/node_modules/shift-spec/dist/index.js', module);
+    var methods = {};
+    function id(x) {
+      return x;
+    }
+    function handlerForFieldOfType(type) {
+      switch (type.typeName) {
+      case 'Enum':
+      case 'String':
+      case 'Boolean':
+      case 'Number':
+      case 'SourceSpan':
+        return null;
+      case 'Const':
+        return handlerForFieldOfType(type.argument);
+      case 'Maybe': {
+          var _ret = function () {
+              var subHandler = handlerForFieldOfType(type.argument);
+              if (subHandler == null)
+                return { v: null };
+              return {
+                v: function v(t) {
+                  return t == null ? this.identity : subHandler.call(this, t);
+                }
+              };
+            }();
+          if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === 'object')
+            return _ret.v;
+        }
+      case 'List': {
+          var _ret2 = function () {
+              var subHandler = handlerForFieldOfType(type.argument);
+              if (subHandler == null)
+                return { v: null };
+              return {
+                v: function v(t) {
+                  var _this = this;
+                  return this.fold(t.map(function (x) {
+                    return subHandler.call(_this, x);
+                  }));
+                }
+              };
+            }();
+          if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === 'object')
+            return _ret2.v;
+        }
+      default:
+        return id;
+      }
+    }
+    var _loop = function _loop(typeName) {
+      var type = _shiftSpec2.default[typeName];
+      var handlers = {};
+      type.fields.forEach(function (field) {
+        var handler = handlerForFieldOfType(field.type);
+        if (handler != null)
+          handlers[field.name] = handler;
+      });
+      var fieldNames = Object.keys(handlers);
+      methods['reduce' + typeName] = {
+        value: function value(node, state) {
+          var _this3 = this;
+          return this.fold(fieldNames.map(function (fieldName) {
+            return handlers[fieldName].call(_this3, state[fieldName]);
+          }));
+        }
+      };
+    };
+    for (var typeName in _shiftSpec2.default) {
+      _loop(typeName);
+    }
+    var MonoidalReducer = function () {
+        function MonoidalReducer(monoid) {
+          _classCallCheck(this, MonoidalReducer);
+          this.identity = monoid.empty();
+          var concat = monoid.prototype && monoid.prototype.concat || monoid.concat;
+          this.append = function (a, b) {
+            return concat.call(a, b);
+          };
+        }
+        _createClass(MonoidalReducer, [{
+            key: 'fold',
+            value: function fold(list, a) {
+              var _this2 = this;
+              return list.reduce(function (memo, x) {
+                return _this2.append(memo, x);
+              }, a == null ? this.identity : a);
+            }
+          }]);
+        return MonoidalReducer;
+      }();
+    exports.default = MonoidalReducer;
+    Object.defineProperties(MonoidalReducer.prototype, methods);
+  });
+  require.define('/node_modules/shift-reducer/dist/clone-reducer.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _shiftSpec = require('/node_modules/shift-reducer/node_modules/shift-spec/dist/index.js', module);
+    var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
     var CloneReducer = function CloneReducer() {
       _classCallCheck(this, CloneReducer);
     };
-    exports['default'] = CloneReducer;
-    for (var typeName in _shiftSpec['default']) {
-      var type = _shiftSpec['default'][typeName];
+    exports.default = CloneReducer;
+    for (var typeName in _shiftSpec2.default) {
+      var type = _shiftSpec2.default[typeName];
       Object.defineProperty(CloneReducer.prototype, 'reduce' + typeName, {
         value: function value(node, state) {
           return state;
         }
       });
     }
+  });
+  require.define('/dist/coderep.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.getPrecedence = getPrecedence;
+    exports.escapeStringLiteral = escapeStringLiteral;
+    function _possibleConstructorReturn(self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    var Precedence = {
+        Sequence: 0,
+        Yield: 1,
+        Assignment: 1,
+        Conditional: 2,
+        ArrowFunction: 2,
+        LogicalOR: 3,
+        LogicalAND: 4,
+        BitwiseOR: 5,
+        BitwiseXOR: 6,
+        BitwiseAND: 7,
+        Equality: 8,
+        Relational: 9,
+        BitwiseSHIFT: 10,
+        Additive: 11,
+        Multiplicative: 12,
+        Prefix: 13,
+        Postfix: 14,
+        New: 15,
+        Call: 16,
+        TaggedTemplate: 17,
+        Member: 18,
+        Primary: 19
+      };
+    exports.Precedence = Precedence;
+    var BinaryPrecedence = {
+        ',': Precedence.Sequence,
+        '||': Precedence.LogicalOR,
+        '&&': Precedence.LogicalAND,
+        '|': Precedence.BitwiseOR,
+        '^': Precedence.BitwiseXOR,
+        '&': Precedence.BitwiseAND,
+        '==': Precedence.Equality,
+        '!=': Precedence.Equality,
+        '===': Precedence.Equality,
+        '!==': Precedence.Equality,
+        '<': Precedence.Relational,
+        '>': Precedence.Relational,
+        '<=': Precedence.Relational,
+        '>=': Precedence.Relational,
+        'in': Precedence.Relational,
+        'instanceof': Precedence.Relational,
+        '<<': Precedence.BitwiseSHIFT,
+        '>>': Precedence.BitwiseSHIFT,
+        '>>>': Precedence.BitwiseSHIFT,
+        '+': Precedence.Additive,
+        '-': Precedence.Additive,
+        '*': Precedence.Multiplicative,
+        '%': Precedence.Multiplicative,
+        '/': Precedence.Multiplicative
+      };
+    function getPrecedence(node) {
+      switch (node.type) {
+      case 'ArrayExpression':
+      case 'FunctionExpression':
+      case 'IdentifierExpression':
+      case 'LiteralBooleanExpression':
+      case 'LiteralNullExpression':
+      case 'LiteralNumericExpression':
+      case 'LiteralInfinityExpression':
+      case 'LiteralRegExpExpression':
+      case 'LiteralStringExpression':
+      case 'ObjectExpression':
+      case 'ThisExpression':
+        return Precedence.Primary;
+      case 'AssignmentExpression':
+      case 'CompoundAssignmentExpression':
+      case 'YieldExpression':
+      case 'YieldGeneratorExpression':
+        return Precedence.Assignment;
+      case 'ConditionalExpression':
+        return Precedence.Conditional;
+      case 'ComputedMemberExpression':
+      case 'StaticMemberExpression':
+        switch (node.object.type) {
+        case 'CallExpression':
+        case 'ComputedMemberExpression':
+        case 'StaticMemberExpression':
+        case 'TemplateExpression':
+          return getPrecedence(node.object);
+        default:
+          return Precedence.Member;
+        }
+      case 'TemplateExpression':
+        if (node.tag == null)
+          return Precedence.Member;
+        switch (node.tag.type) {
+        case 'CallExpression':
+        case 'ComputedMemberExpression':
+        case 'StaticMemberExpression':
+        case 'TemplateExpression':
+          return getPrecedence(node.tag);
+        default:
+          return Precedence.Member;
+        }
+      case 'BinaryExpression':
+        return BinaryPrecedence[node.operator];
+      case 'CallExpression':
+        return Precedence.Call;
+      case 'NewExpression':
+        return node.arguments.length === 0 ? Precedence.New : Precedence.Member;
+      case 'UpdateExpression':
+        return node.isPrefix ? Precedence.Prefix : Precedence.Postfix;
+      case 'UnaryExpression':
+        return Precedence.Prefix;
+      }
+    }
+    function escapeStringLiteral(stringValue) {
+      var result = '';
+      var nSingle = 0, nDouble = 0;
+      for (var i = 0, l = stringValue.length; i < l; ++i) {
+        var ch = stringValue[i];
+        if (ch === '"') {
+          ++nDouble;
+        } else if (ch === "'") {
+          ++nSingle;
+        }
+      }
+      var delim = nDouble > nSingle ? "'" : '"';
+      result += delim;
+      for (var i = 0; i < stringValue.length; i++) {
+        var ch = stringValue.charAt(i);
+        switch (ch) {
+        case delim:
+          result += '\\' + delim;
+          break;
+        case '\b':
+          result += '\\b';
+          break;
+        case '\t':
+          result += '\\t';
+          break;
+        case '\n':
+          result += '\\n';
+          break;
+        case '\x0B':
+          result += '\\v';
+          break;
+        case '\f':
+          result += '\\f';
+          break;
+        case '\r':
+          result += '\\r';
+          break;
+        case '\\':
+          result += '\\\\';
+          break;
+        case '\u2028':
+          result += '\\u2028';
+          break;
+        case '\u2029':
+          result += '\\u2029';
+          break;
+        default:
+          result += ch;
+          break;
+        }
+      }
+      result += delim;
+      return result;
+    }
+    var CodeRep = exports.CodeRep = function () {
+        function CodeRep() {
+          _classCallCheck(this, CodeRep);
+          this.containsIn = false;
+          this.containsGroup = false;
+          this.startsWithCurly = false;
+          this.startsWithFunctionOrClass = false;
+          this.startsWithLet = false;
+          this.startsWithLetSquareBracket = false;
+          this.endsWithMissingElse = false;
+        }
+        _createClass(CodeRep, [{
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+            }
+          }]);
+        return CodeRep;
+      }();
+    var Empty = exports.Empty = function (_CodeRep) {
+        _inherits(Empty, _CodeRep);
+        function Empty() {
+          _classCallCheck(this, Empty);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(Empty).call(this));
+        }
+        _createClass(Empty, [{
+            key: 'emit',
+            value: function emit() {
+            }
+          }]);
+        return Empty;
+      }(CodeRep);
+    var Token = exports.Token = function (_CodeRep2) {
+        _inherits(Token, _CodeRep2);
+        function Token(token) {
+          _classCallCheck(this, Token);
+          var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Token).call(this));
+          _this2.token = token;
+          return _this2;
+        }
+        _createClass(Token, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put(this.token);
+            }
+          }]);
+        return Token;
+      }(CodeRep);
+    var NumberCodeRep = exports.NumberCodeRep = function (_CodeRep3) {
+        _inherits(NumberCodeRep, _CodeRep3);
+        function NumberCodeRep(number) {
+          _classCallCheck(this, NumberCodeRep);
+          var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(NumberCodeRep).call(this));
+          _this3.number = number;
+          return _this3;
+        }
+        _createClass(NumberCodeRep, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.putNumber(this.number);
+            }
+          }]);
+        return NumberCodeRep;
+      }(CodeRep);
+    var Paren = exports.Paren = function (_CodeRep4) {
+        _inherits(Paren, _CodeRep4);
+        function Paren(expr) {
+          _classCallCheck(this, Paren);
+          var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Paren).call(this));
+          _this4.expr = expr;
+          return _this4;
+        }
+        _createClass(Paren, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('(');
+              this.expr.emit(ts, false);
+              ts.put(')');
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return Paren;
+      }(CodeRep);
+    var Bracket = exports.Bracket = function (_CodeRep5) {
+        _inherits(Bracket, _CodeRep5);
+        function Bracket(expr) {
+          _classCallCheck(this, Bracket);
+          var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(Bracket).call(this));
+          _this5.expr = expr;
+          return _this5;
+        }
+        _createClass(Bracket, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('[');
+              this.expr.emit(ts, false);
+              ts.put(']');
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return Bracket;
+      }(CodeRep);
+    var Brace = exports.Brace = function (_CodeRep6) {
+        _inherits(Brace, _CodeRep6);
+        function Brace(expr) {
+          _classCallCheck(this, Brace);
+          var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(Brace).call(this));
+          _this6.expr = expr;
+          return _this6;
+        }
+        _createClass(Brace, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('{');
+              this.expr.emit(ts, false);
+              ts.put('}');
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return Brace;
+      }(CodeRep);
+    var NoIn = exports.NoIn = function (_CodeRep7) {
+        _inherits(NoIn, _CodeRep7);
+        function NoIn(expr) {
+          _classCallCheck(this, NoIn);
+          var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(NoIn).call(this));
+          _this7.expr = expr;
+          return _this7;
+        }
+        _createClass(NoIn, [
+          {
+            key: 'emit',
+            value: function emit(ts) {
+              this.expr.emit(ts, true);
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return NoIn;
+      }(CodeRep);
+    var ContainsIn = exports.ContainsIn = function (_CodeRep8) {
+        _inherits(ContainsIn, _CodeRep8);
+        function ContainsIn(expr) {
+          _classCallCheck(this, ContainsIn);
+          var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainsIn).call(this));
+          _this8.expr = expr;
+          return _this8;
+        }
+        _createClass(ContainsIn, [
+          {
+            key: 'emit',
+            value: function emit(ts, noIn) {
+              if (noIn) {
+                ts.put('(');
+                this.expr.emit(ts, false);
+                ts.put(')');
+              } else {
+                this.expr.emit(ts, false);
+              }
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.expr.forEach(f);
+            }
+          }
+        ]);
+        return ContainsIn;
+      }(CodeRep);
+    var Seq = exports.Seq = function (_CodeRep9) {
+        _inherits(Seq, _CodeRep9);
+        function Seq(children) {
+          _classCallCheck(this, Seq);
+          var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(Seq).call(this));
+          _this9.children = children;
+          return _this9;
+        }
+        _createClass(Seq, [
+          {
+            key: 'emit',
+            value: function emit(ts, noIn) {
+              this.children.forEach(function (cr) {
+                return cr.emit(ts, noIn);
+              });
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.children.forEach(function (x) {
+                return x.forEach(f);
+              });
+            }
+          }
+        ]);
+        return Seq;
+      }(CodeRep);
+    var Semi = exports.Semi = function (_Token) {
+        _inherits(Semi, _Token);
+        function Semi() {
+          _classCallCheck(this, Semi);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(Semi).call(this, ';'));
+        }
+        return Semi;
+      }(Token);
+    var CommaSep = exports.CommaSep = function (_CodeRep10) {
+        _inherits(CommaSep, _CodeRep10);
+        function CommaSep(children) {
+          _classCallCheck(this, CommaSep);
+          var _this11 = _possibleConstructorReturn(this, Object.getPrototypeOf(CommaSep).call(this));
+          _this11.children = children;
+          return _this11;
+        }
+        _createClass(CommaSep, [
+          {
+            key: 'emit',
+            value: function emit(ts, noIn) {
+              var first = true;
+              this.children.forEach(function (cr) {
+                if (first) {
+                  first = false;
+                } else {
+                  ts.put(',');
+                }
+                cr.emit(ts, noIn);
+              });
+            }
+          },
+          {
+            key: 'forEach',
+            value: function forEach(f) {
+              f(this);
+              this.children.forEach(function (x) {
+                return x.forEach(f);
+              });
+            }
+          }
+        ]);
+        return CommaSep;
+      }(CodeRep);
+    var SemiOp = exports.SemiOp = function (_CodeRep11) {
+        _inherits(SemiOp, _CodeRep11);
+        function SemiOp() {
+          _classCallCheck(this, SemiOp);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(SemiOp).call(this));
+        }
+        _createClass(SemiOp, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.putOptionalSemi();
+            }
+          }]);
+        return SemiOp;
+      }(CodeRep);
+  });
+  require.define('/dist/formatted-codegen.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    exports.FormattedCodeGen = exports.ExtensibleCodeGen = exports.Sep = undefined;
+    var _objectAssign = require('/node_modules/object-assign/index.js', module);
+    var _objectAssign2 = _interopRequireDefault(_objectAssign);
+    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
+    var _coderep = require('/dist/coderep.js', module);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _possibleConstructorReturn(self, call) {
+      if (!self) {
+        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+      }
+      return call && (typeof call === 'object' || typeof call === 'function') ? call : self;
+    }
+    function _inherits(subClass, superClass) {
+      if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+      }
+      subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+          value: subClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      if (superClass)
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+    }
+    function _toConsumableArray(arr) {
+      if (Array.isArray(arr)) {
+        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+          arr2[i] = arr[i];
+        }
+        return arr2;
+      } else {
+        return Array.from(arr);
+      }
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    function empty() {
+      return new _coderep.Empty;
+    }
+    function noIn(rep) {
+      return new _coderep.NoIn(rep);
+    }
+    function markContainsIn(state) {
+      return state.containsIn ? new _coderep.ContainsIn(state) : state;
+    }
+    function seq() {
+      for (var _len = arguments.length, reps = Array(_len), _key = 0; _key < _len; _key++) {
+        reps[_key] = arguments[_key];
+      }
+      return new _coderep.Seq(reps);
+    }
+    function isEmpty(codeRep) {
+      return codeRep instanceof _coderep.Empty || codeRep instanceof Linebreak || codeRep instanceof _coderep.Seq && codeRep.children.every(isEmpty);
+    }
+    var Sep = {};
+    var separatorNames = [
+        'ARRAY_EMPTY',
+        'ARRAY_BEFORE_COMMA',
+        'ARRAY_AFTER_COMMA',
+        'SPREAD',
+        'BEFORE_DEFAULT_EQUALS',
+        'AFTER_DEFAULT_EQUALS',
+        'REST',
+        'OBJECT_BEFORE_COMMA',
+        'OBJECT_AFTER_COMMA',
+        'BEFORE_PROP',
+        'AFTER_PROP',
+        'BEFORE_JUMP_LABEL',
+        'ARGS_BEFORE_COMMA',
+        'ARGS_AFTER_COMMA',
+        'CALL',
+        'BEFORE_CATCH_BINDING',
+        'AFTER_CATCH_BINDING',
+        'BEFORE_CLASS_NAME',
+        'BEFORE_EXTENDS',
+        'AFTER_EXTENDS',
+        'BEFORE_CLASS_DECLARATION_ELEMENTS',
+        'BEFORE_CLASS_EXPRESSION_ELEMENTS',
+        'AFTER_STATIC',
+        'BEFORE_CLASS_ELEMENT',
+        'AFTER_CLASS_ELEMENT',
+        'BEFORE_TERNARY_QUESTION',
+        'AFTER_TERNARY_QUESTION',
+        'BEFORE_TERNARY_COLON',
+        'AFTER_TERNARY_COLON',
+        'COMPUTED_MEMBER_EXPRESSION',
+        'AFTER_DO',
+        'BEFORE_DOWHILE_WHILE',
+        'AFTER_DOWHILE_WHILE',
+        'AFTER_FORIN_FOR',
+        'BEFORE_FORIN_IN',
+        'AFTER_FORIN_FOR',
+        'BEFORE_FORIN_BODY',
+        'AFTER_FOROF_FOR',
+        'BEFORE_FOROF_OF',
+        'AFTER_FOROF_FOR',
+        'BEFORE_FOROF_BODY',
+        'AFTER_FOR_FOR',
+        'BEFORE_FOR_INIT',
+        'AFTER_FOR_INIT',
+        'EMPTY_FOR_INIT',
+        'BEFORE_FOR_TEST',
+        'AFTER_FOR_TEST',
+        'EMPTY_FOR_TEST',
+        'BEFORE_FOR_UPDATE',
+        'AFTER_FOR_UPDATE',
+        'EMPTY_FOR_UPDATE',
+        'BEFORE_FOR_BODY',
+        'BEFORE_GENERATOR_STAR',
+        'AFTER_GENERATOR_STAR',
+        'BEFORE_FUNCTION_PARAMS',
+        'BEFORE_FUNCTION_DECLARATION_BODY',
+        'BEFORE_FUNCTION_EXPRESSION_BODY',
+        'AFTER_FUNCTION_DIRECTIVES',
+        'BEFORE_ARROW',
+        'AFTER_ARROW',
+        'AFTER_GET',
+        'BEFORE_GET_PARAMS',
+        'BEFORE_GET_BODY',
+        'AFTER_IF',
+        'AFTER_IF_TEST',
+        'BEFORE_ELSE',
+        'AFTER_ELSE',
+        'PARAMETER_BEFORE_COMMA',
+        'PARAMETER_AFTER_COMMA',
+        'NAMED_IMPORT_BEFORE_COMMA',
+        'NAMED_IMPORT_AFTER_COMMA',
+        'IMPORT_BEFORE_COMMA',
+        'IMPORT_AFTER_COMMA',
+        'BEFORE_IMPORT_BINDINGS',
+        'BEFORE_IMPORT_MODULE',
+        'AFTER_IMPORT_BINDINGS',
+        'AFTER_FROM',
+        'BEFORE_IMPORT_NAMESPACE',
+        'BEFORE_IMPORT_STAR',
+        'AFTER_IMPORT_STAR',
+        'AFTER_IMPORT_AS',
+        'AFTER_NAMESPACE_BINDING',
+        'BEFORE_IMPORT_AS',
+        'AFTER_IMPORT_AS',
+        'EXPORTS_BEFORE_COMMA',
+        'EXPORTS_AFTER_COMMA',
+        'BEFORE_EXPORT_STAR',
+        'AFTER_EXPORT_STAR',
+        'BEFORE_EXPORT_BINDINGS',
+        'AFTER_EXPORT_BINDINGS',
+        'AFTER_EXPORT',
+        'EXPORT_DEFAULT',
+        'AFTER_EXPORT_DEFAULT',
+        'BEFORE_EXPORT_AS',
+        'AFTER_EXPORT_AS',
+        'BEFORE_LABEL_COLON',
+        'AFTER_LABEL_COLON',
+        'AFTER_METHOD_GENERATOR_STAR',
+        'AFTER_METHOD_NAME',
+        'BEFORE_METHOD_BODY',
+        'AFTER_MODULE_DIRECTIVES',
+        'AFTER_NEW',
+        'BEFORE_NEW_ARGS',
+        'EMPTY_NEW_CALL',
+        'NEW_TARGET_BEFORE_DOT',
+        'NEW_TARGET_AFTER_DOT',
+        'RETURN',
+        'AFTER_SET',
+        'BEFORE_SET_PARAMS',
+        'BEFORE_SET_BODY',
+        'AFTER_SCRIPT_DIRECTIVES',
+        'BEFORE_STATIC_MEMBER_DOT',
+        'AFTER_STATIC_MEMBER_DOT',
+        'BEFORE_CASE_TEST',
+        'AFTER_CASE_TEST',
+        'BEFORE_CASE_BODY',
+        'AFTER_CASE_BODY',
+        'DEFAULT',
+        'AFTER_DEFAULT_BODY',
+        'BEFORE_SWITCH_DISCRIM',
+        'BEFORE_SWITCH_BODY',
+        'TEMPLATE_TAG',
+        'BEFORE_TEMPLATE_EXPRESSION',
+        'AFTER_TEMPLATE_EXPRESSION',
+        'THROW',
+        'AFTER_TRY',
+        'BEFORE_CATCH',
+        'BEFORE_FINALLY',
+        'AFTER_FINALLY',
+        'VARIABLE_DECLARATION',
+        'YIELD',
+        'BEFORE_YIELD_STAR',
+        'AFTER_YIELD_STAR',
+        'DECLARATORS_BEFORE_COMMA',
+        'DECLARATORS_AFTER_COMMA',
+        'BEFORE_INIT_EQUALS',
+        'AFTER_INIT_EQUALS',
+        'AFTER_WHILE',
+        'BEFORE_WHILE_BODY',
+        'AFTER_WITH',
+        'BEFORE_WITH_BODY',
+        'PAREN_AVOIDING_DIRECTIVE_BEFORE',
+        'PAREN_AVOIDING_DIRECTIVE_AFTER',
+        'PRECEDENCE_BEFORE',
+        'PRECEDENCE_AFTER',
+        'EXPRESSION_PAREN_BEFORE',
+        'EXPRESSION_PAREN_AFTER',
+        'CALL_PAREN_BEFORE',
+        'CALL_PAREN_AFTER',
+        'CALL_PAREN_EMPTY',
+        'CATCH_PAREN_BEFORE',
+        'CATCH_PAREN_AFTER',
+        'DO_WHILE_TEST_PAREN_BEFORE',
+        'DO_WHILE_TEST_PAREN_AFTER',
+        'EXPRESSION_STATEMENT_PAREN_BEFORE',
+        'EXPRESSION_STATEMENT_PAREN_AFTER',
+        'FOR_IN_LET_PAREN_BEFORE',
+        'FOR_IN_LET_PAREN_AFTER',
+        'FOR_IN_PAREN_BEFORE',
+        'FOR_IN_PAREN_AFTER',
+        'FOR_OF_LET_PAREN_BEFORE',
+        'FOR_OF_LET_PAREN_AFTER',
+        'FOR_OF_PAREN_BEFORE',
+        'FOR_OF_PAREN_AFTER',
+        'PARAMETERS_PAREN_BEFORE',
+        'PARAMETERS_PAREN_AFTER',
+        'PARAMETERS_PAREN_EMPTY',
+        'ARROW_PARAMETERS_PAREN_BEFORE',
+        'ARROW_PARAMETERS_PAREN_AFTER',
+        'ARROW_PARAMETERS_PAREN_EMPTY',
+        'ARROW_BODY_PAREN_BEFORE',
+        'ARROW_BODY_PAREN_AFTER',
+        'GETTER_PARAMS',
+        'IF_PAREN_BEFORE',
+        'IF_PAREN_AFTER',
+        'EXPORT_PAREN_BEFORE',
+        'EXPORT_PAREN_AFTER',
+        'NEW_CALLEE_PAREN_BEFORE',
+        'NEW_CALLEE_PAREN_AFTER',
+        'NEW_PAREN_BEFORE',
+        'NEW_PAREN_AFTER',
+        'NEW_PAREN_EMPTY',
+        'SETTER_PARAM_BEFORE',
+        'SETTER_PARAM_AFTER',
+        'SWITCH_DISCRIM_PAREN_BEFORE',
+        'SWITCH_DISCRIM_PAREN_AFTER',
+        'WHILE_TEST_PAREN_BEFORE',
+        'WHILE_TEST_PAREN_AFTER',
+        'WITH_PAREN_BEFORE',
+        'WITH_PAREN_AFTER',
+        'OBJECT_BRACE_INITIAL',
+        'OBJECT_BRACE_FINAL',
+        'OBJECT_EMPTY',
+        'BLOCK_BRACE_INITIAL',
+        'BLOCK_BRACE_FINAL',
+        'BLOCK_EMPTY',
+        'CLASS_BRACE_INITIAL',
+        'CLASS_BRACE_FINAL',
+        'CLASS_EMPTY',
+        'CLASS_EXPRESSION_BRACE_INITIAL',
+        'CLASS_EXPRESSION_BRACE_FINAL',
+        'CLASS_EXPRESSION_BRACE_EMPTY',
+        'FUNCTION_BRACE_INITIAL',
+        'FUNCTION_BRACE_FINAL',
+        'FUNCTION_EMPTY',
+        'FUNCTION_EXPRESSION_BRACE_INITIAL',
+        'FUNCTION_EXPRESSION_BRACE_FINAL',
+        'FUNCTION_EXPRESSION_EMPTY',
+        'ARROW_BRACE_INITIAL',
+        'ARROW_BRACE_FINAL',
+        'ARROW_BRACE_EMPTY',
+        'GET_BRACE_INTIAL',
+        'GET_BRACE_FINAL',
+        'GET_BRACE_EMPTY',
+        'MISSING_ELSE_INTIIAL',
+        'MISSING_ELSE_FINAL',
+        'MISSING_ELSE_EMPTY',
+        'IMPORT_BRACE_INTIAL',
+        'IMPORT_BRACE_FINAL',
+        'IMPORT_BRACE_EMPTY',
+        'EXPORT_BRACE_INITIAL',
+        'EXPORT_BRACE_FINAL',
+        'EXPORT_BRACE_EMPTY',
+        'METHOD_BRACE_INTIAL',
+        'METHOD_BRACE_FINAL',
+        'METHOD_BRACE_EMPTY',
+        'SET_BRACE_INTIIAL',
+        'SET_BRACE_FINAL',
+        'SET_BRACE_EMPTY',
+        'SWITCH_BRACE_INTIAL',
+        'SWITCH_BRACE_FINAL',
+        'SWITCH_BRACE_EMPTY',
+        'ARRAY_INITIAL',
+        'ARRAY_FINAL',
+        'COMPUTED_MEMBER_BRACKET_INTIAL',
+        'COMPUTED_MEMBER_BRACKET_FINAL',
+        'COMPUTED_PROPERTY_BRACKET_INTIAL',
+        'COMPUTED_PROPERTY_BRACKET_FINAL'
+      ];
+    for (var i = 0; i < separatorNames.length; ++i) {
+      Sep[separatorNames[i]] = { type: separatorNames[i] };
+    }
+    Sep.BEFORE_ASSIGN_OP = function (op) {
+      return {
+        type: 'BEFORE_ASSIGN_OP',
+        op: op
+      };
+    };
+    Sep.AFTER_ASSIGN_OP = function (op) {
+      return {
+        type: 'AFTER_ASSIGN_OP',
+        op: op
+      };
+    };
+    Sep.BEFORE_BINOP = function (op) {
+      return {
+        type: 'BEFORE_BINOP',
+        op: op
+      };
+    };
+    Sep.AFTER_BINOP = function (op) {
+      return {
+        type: 'AFTER_BINOP',
+        op: op
+      };
+    };
+    Sep.BEFORE_POSTFIX = function (op) {
+      return {
+        type: 'BEFORE_POSTFIX',
+        op: op
+      };
+    };
+    Sep.UNARY = function (op) {
+      return {
+        type: 'UNARY',
+        op: op
+      };
+    };
+    Sep.AFTER_STATEMENT = function (node) {
+      return {
+        type: 'AFTER_STATEMENT',
+        node: node
+      };
+    };
+    Sep.BEFORE_FUNCTION_NAME = function (node) {
+      return {
+        type: 'BEFORE_FUNCTION_NAME',
+        node: node
+      };
+    };
+    exports.Sep = Sep;
+    var ExtensibleCodeGen = exports.ExtensibleCodeGen = function () {
+        function ExtensibleCodeGen() {
+          _classCallCheck(this, ExtensibleCodeGen);
+        }
+        _createClass(ExtensibleCodeGen, [
+          {
+            key: 'parenToAvoidBeingDirective',
+            value: function parenToAvoidBeingDirective(element, original) {
+              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
+                return seq(this.paren(original.children[0], Sep.PAREN_AVOIDING_DIRECTIVE_BEFORE, Sep.PAREN_AVOIDING_DIRECTIVE_AFTER), this.semiOp());
+              }
+              return original;
+            }
+          },
+          {
+            key: 't',
+            value: function t(token) {
+              return new _coderep.Token(token);
+            }
+          },
+          {
+            key: 'p',
+            value: function p(node, precedence, a) {
+              return (0, _coderep.getPrecedence)(node) < precedence ? this.paren(a, Sep.PRECEDENCE_BEFORE, Sep.PRECEDENCE_AFTER) : a;
+            }
+          },
+          {
+            key: 'getAssignmentExpr',
+            value: function getAssignmentExpr(state) {
+              return state ? state.containsGroup ? this.paren(state, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER) : state : empty();
+            }
+          },
+          {
+            key: 'paren',
+            value: function paren(rep, first, last, empty) {
+              if (isEmpty(rep)) {
+                return new _coderep.Paren(this.sep(empty));
+              }
+              return new _coderep.Paren(seq(first ? this.sep(first) : new _coderep.Empty, rep, last ? this.sep(last) : new _coderep.Empty));
+            }
+          },
+          {
+            key: 'brace',
+            value: function brace(rep, node, first, last, empty) {
+              if (isEmpty(rep)) {
+                return new _coderep.Brace(this.sep(empty));
+              }
+              return new _coderep.Brace(seq(this.sep(first), rep, this.sep(last)));
+            }
+          },
+          {
+            key: 'bracket',
+            value: function bracket(rep, first, last, empty) {
+              if (isEmpty(rep)) {
+                return new _coderep.Bracket(this.sep(empty));
+              }
+              return new _coderep.Bracket(seq(this.sep(first), rep, this.sep(last)));
+            }
+          },
+          {
+            key: 'commaSep',
+            value: function commaSep(pieces, before, after) {
+              var _this = this;
+              var first = true;
+              pieces = pieces.map(function (p) {
+                if (first) {
+                  first = false;
+                  return p;
+                } else {
+                  return seq(_this.sep(before), _this.t(','), _this.sep(after), p);
+                }
+              });
+              return seq.apply(undefined, _toConsumableArray(pieces));
+            }
+          },
+          {
+            key: 'semiOp',
+            value: function semiOp() {
+              return new _coderep.SemiOp;
+            }
+          },
+          {
+            key: 'sep',
+            value: function sep(kind) {
+              return new _coderep.Empty;
+            }
+          },
+          {
+            key: 'reduceArrayExpression',
+            value: function reduceArrayExpression(node, _ref) {
+              var _this2 = this;
+              var elements = _ref.elements;
+              if (elements.length === 0) {
+                return this.bracket(empty(), null, null, Sep.ARRAY_EMPTY);
+              }
+              var content = this.commaSep(elements.map(function (e) {
+                  return _this2.getAssignmentExpr(e);
+                }), Sep.ARRAY_BEFORE_COMMA, Sep.ARRAY_AFTER_COMMA);
+              if (elements.length > 0 && elements[elements.length - 1] == null) {
+                content = seq(content, this.sep(Sep.ARRAY_BEFORE_COMMA), this.t(','), this.sep(Sep.ARRAY_AFTER_COMMA));
+              }
+              return this.bracket(content, Sep.ARRAY_INITIAL, Sep.ARRAY_FINAL);
+            }
+          },
+          {
+            key: 'reduceSpreadElement',
+            value: function reduceSpreadElement(node, _ref2) {
+              var expression = _ref2.expression;
+              return seq(this.t('...'), this.sep(Sep.SPREAD), this.p(node.expression, _coderep.Precedence.Assignment, expression));
+            }
+          },
+          {
+            key: 'reduceAssignmentExpression',
+            value: function reduceAssignmentExpression(node, _ref3) {
+              var binding = _ref3.binding;
+              var expression = _ref3.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                containsIn = false;
+              }
+              return (0, _objectAssign2.default)(seq(leftCode, this.sep(Sep.BEFORE_ASSIGN_OP('=')), this.t('='), this.sep(Sep.AFTER_ASSIGN_OP('=')), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCompoundAssignmentExpression',
+            value: function reduceCompoundAssignmentExpression(node, _ref4) {
+              var binding = _ref4.binding;
+              var expression = _ref4.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                containsIn = false;
+              }
+              return (0, _objectAssign2.default)(seq(leftCode, this.sep(Sep.BEFORE_ASSIGN_OP(node.operator)), this.t(node.operator), this.sep(Sep.AFTER_ASSIGN_OP(node.operator)), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBinaryExpression',
+            value: function reduceBinaryExpression(node, _ref5) {
+              var left = _ref5.left;
+              var right = _ref5.right;
+              var leftCode = left;
+              var startsWithCurly = left.startsWithCurly;
+              var startsWithLetSquareBracket = left.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = left.startsWithFunctionOrClass;
+              var leftContainsIn = left.containsIn;
+              if ((0, _coderep.getPrecedence)(node.left) < (0, _coderep.getPrecedence)(node)) {
+                leftCode = this.paren(leftCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                startsWithCurly = false;
+                startsWithLetSquareBracket = false;
+                startsWithFunctionOrClass = false;
+                leftContainsIn = false;
+              }
+              var rightCode = right;
+              var rightContainsIn = right.containsIn;
+              if ((0, _coderep.getPrecedence)(node.right) <= (0, _coderep.getPrecedence)(node)) {
+                rightCode = this.paren(rightCode, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                rightContainsIn = false;
+              }
+              return (0, _objectAssign2.default)(seq(leftCode, this.sep(Sep.BEFORE_BINOP(node.operator)), this.t(node.operator), this.sep(Sep.AFTER_BINOP(node.operator)), rightCode), {
+                containsIn: leftContainsIn || rightContainsIn || node.operator === 'in',
+                containsGroup: node.operator == ',',
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBindingWithDefault',
+            value: function reduceBindingWithDefault(node, _ref6) {
+              var binding = _ref6.binding;
+              var init = _ref6.init;
+              return seq(binding, this.sep(Sep.BEFORE_DEFAULT_EQUALS), this.t('='), this.sep(Sep.AFTER_DEFAULT_EQUALS), init);
+            }
+          },
+          {
+            key: 'reduceBindingIdentifier',
+            value: function reduceBindingIdentifier(node) {
+              var a = this.t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceArrayBinding',
+            value: function reduceArrayBinding(node, _ref7) {
+              var _this3 = this;
+              var elements = _ref7.elements;
+              var restElement = _ref7.restElement;
+              var content = undefined;
+              if (elements.length === 0) {
+                content = restElement == null ? empty() : seq(this.t('...'), this.sep(Sep.REST), restElement);
+              } else {
+                elements = elements.concat(restElement == null ? [] : [seq(this.t('...'), this.sep(Sep.REST), restElement)]);
+                content = this.commaSep(elements.map(function (e) {
+                  return _this3.getAssignmentExpr(e);
+                }), Sep.ARRAY_BEFORE_COMMA, Sep.ARRAY_AFTER_COMMA);
+                if (elements.length > 0 && elements[elements.length - 1] == null) {
+                  content = seq(content, this.sep(Sep.ARRAY_BEFORE_COMMA), this.t(','), this.sep(Sep.ARRAY_AFTER_COMMA));
+                }
+              }
+              return this.bracket(content, Sep.ARRAY_INITIAL, Sep.ARRAY_FINAL, Sep.ARRAY_EMPTY);
+            }
+          },
+          {
+            key: 'reduceObjectBinding',
+            value: function reduceObjectBinding(node, _ref8) {
+              var properties = _ref8.properties;
+              var state = this.brace(this.commaSep(properties, Sep.OBJECT_BEFORE_COMMA, Sep.OBJECT_AFTER_COMMA), node, Sep.OBJECT_BRACE_INITIAL, Sep.OBJECT_BRACE_FINAL, Sep.OBJECT_EMPTY);
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceBindingPropertyIdentifier',
+            value: function reduceBindingPropertyIdentifier(node, _ref9) {
+              var binding = _ref9.binding;
+              var init = _ref9.init;
+              if (node.init == null)
+                return binding;
+              return seq(binding, this.sep(Sep.BEFORE_DEFAULT_EQUALS), this.t('='), this.sep(Sep.AFTER_DEFAULT_EQUALS), init);
+            }
+          },
+          {
+            key: 'reduceBindingPropertyProperty',
+            value: function reduceBindingPropertyProperty(node, _ref10) {
+              var name = _ref10.name;
+              var binding = _ref10.binding;
+              return seq(name, this.sep(Sep.BEFORE_PROP), this.t(':'), this.sep(Sep.AFTER_PROP), binding);
+            }
+          },
+          {
+            key: 'reduceBlock',
+            value: function reduceBlock(node, _ref11) {
+              var statements = _ref11.statements;
+              return this.brace(seq.apply(undefined, _toConsumableArray(statements)), node, Sep.BLOCK_BRACE_INITIAL, Sep.BLOCK_BRACE_FINAL, Sep.BLOCK_EMPTY);
+            }
+          },
+          {
+            key: 'reduceBlockStatement',
+            value: function reduceBlockStatement(node, _ref12) {
+              var block = _ref12.block;
+              return seq(block, this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceBreakStatement',
+            value: function reduceBreakStatement(node, _ref13) {
+              var label = _ref13.label;
+              return seq(this.t('break'), label ? seq(this.sep(Sep.BEFORE_JUMP_LABEL), this.t(label)) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceCallExpression',
+            value: function reduceCallExpression(node, _ref14) {
+              var callee = _ref14.callee;
+              var args = _ref14.arguments;
+              return (0, _objectAssign2.default)(seq(this.p(node.callee, (0, _coderep.getPrecedence)(node), callee), this.sep(Sep.CALL), this.paren(this.commaSep(args, Sep.ARGS_BEFORE_COMMA, Sep.ARGS_AFTER_COMMA), Sep.CALL_PAREN_BEFORE, Sep.CALL_PAREN_AFTER, Sep.CALL_PAREN_EMPTY)), {
+                startsWithCurly: callee.startsWithCurly,
+                startsWithLetSquareBracket: callee.startsWithLetSquareBracket,
+                startsWithFunctionOrClass: callee.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCatchClause',
+            value: function reduceCatchClause(node, _ref15) {
+              var binding = _ref15.binding;
+              var body = _ref15.body;
+              return seq(this.t('catch'), this.sep(Sep.BEFORE_CATCH_BINDING), this.paren(binding, Sep.CATCH_PAREN_BEFORE, Sep.CATCH_PAREN_AFTER), this.sep(Sep.AFTER_CATCH_BINDING), body);
+            }
+          },
+          {
+            key: 'reduceClassDeclaration',
+            value: function reduceClassDeclaration(node, _ref16) {
+              var name = _ref16.name;
+              var _super = _ref16.super;
+              var elements = _ref16.elements;
+              var state = seq(this.t('class'), this.sep(Sep.BEFORE_CLASS_NAME), name);
+              if (_super != null) {
+                state = seq(state, this.sep(Sep.BEFORE_EXTENDS), this.t('extends'), this.sep(Sep.AFTER_EXTENDS), _super);
+              }
+              state = seq(state, this.sep(Sep.BEFORE_CLASS_DECLARATION_ELEMENTS), this.brace(seq.apply(undefined, _toConsumableArray(elements)), node, Sep.CLASS_BRACE_INITIAL, Sep.CLASS_BRACE_FINAL, Sep.CLASS_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassExpression',
+            value: function reduceClassExpression(node, _ref17) {
+              var name = _ref17.name;
+              var _super = _ref17.super;
+              var elements = _ref17.elements;
+              var state = this.t('class');
+              if (name != null) {
+                state = seq(state, this.sep(Sep.BEFORE_CLASS_NAME), name);
+              }
+              if (_super != null) {
+                state = seq(state, this.sep(Sep.BEFORE_EXTENDS), this.t('extends'), this.sep(Sep.AFTER_EXTENDS), _super);
+              }
+              state = seq(state, this.sep(Sep.BEFORE_CLASS_EXPRESSION_ELEMENTS), this.brace(seq.apply(undefined, _toConsumableArray(elements)), node, Sep.CLASS_EXPRESSION_BRACE_INITIAL, Sep.CLASS_EXPRESSION_BRACE_FINAL, Sep.CLASS_EXPRESSION_BRACE_EMPTY));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassElement',
+            value: function reduceClassElement(node, _ref18) {
+              var method = _ref18.method;
+              method = seq(this.sep(Sep.BEFORE_CLASS_ELEMENT), method, this.sep(Sep.AFTER_CLASS_ELEMENT));
+              if (!node.isStatic)
+                return method;
+              return seq(this.t('static'), this.sep(Sep.AFTER_STATIC), method);
+            }
+          },
+          {
+            key: 'reduceComputedMemberExpression',
+            value: function reduceComputedMemberExpression(node, _ref19) {
+              var object = _ref19.object;
+              var expression = _ref19.expression;
+              var startsWithLetSquareBracket = object.startsWithLetSquareBracket || node.object.type === 'IdentifierExpression' && node.object.name === 'let';
+              return (0, _objectAssign2.default)(seq(this.p(node.object, (0, _coderep.getPrecedence)(node), object), this.sep(Sep.COMPUTED_MEMBER_EXPRESSION), this.bracket(expression, Sep.COMPUTED_MEMBER_BRACKET_INTIAL, Sep.COMPUTED_MEMBER_BRACKET_FINAL)), {
+                startsWithLet: object.startsWithLet,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithCurly: object.startsWithCurly,
+                startsWithFunctionOrClass: object.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceComputedPropertyName',
+            value: function reduceComputedPropertyName(node, _ref20) {
+              var expression = _ref20.expression;
+              return this.bracket(expression, Sep.COMPUTED_PROPERTY_BRACKET_INTIAL, Sep.COMPUTED_PROPERTY_BRACKET_FINAL);
+            }
+          },
+          {
+            key: 'reduceConditionalExpression',
+            value: function reduceConditionalExpression(node, _ref21) {
+              var test = _ref21.test;
+              var consequent = _ref21.consequent;
+              var alternate = _ref21.alternate;
+              var containsIn = test.containsIn || alternate.containsIn;
+              var startsWithCurly = test.startsWithCurly;
+              var startsWithLetSquareBracket = test.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = test.startsWithFunctionOrClass;
+              return (0, _objectAssign2.default)(seq(this.p(node.test, _coderep.Precedence.LogicalOR, test), this.sep(Sep.BEFORE_TERNARY_QUESTION), this.t('?'), this.sep(Sep.AFTER_TERNARY_QUESTION), this.p(node.consequent, _coderep.Precedence.Assignment, consequent), this.sep(Sep.BEFORE_TERNARY_COLON), this.t(':'), this.sep(Sep.AFTER_TERNARY_COLON), this.p(node.alternate, _coderep.Precedence.Assignment, alternate)), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceContinueStatement',
+            value: function reduceContinueStatement(node, _ref22) {
+              var label = _ref22.label;
+              return seq(this.t('continue'), label ? seq(this.sep(Sep.BEFORE_JUMP_LABEL), this.t(label)) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceDataProperty',
+            value: function reduceDataProperty(node, _ref23) {
+              var name = _ref23.name;
+              var expression = _ref23.expression;
+              return seq(name, this.sep(Sep.BEFORE_PROP), this.t(':'), this.sep(Sep.AFTER_PROP), this.getAssignmentExpr(expression));
+            }
+          },
+          {
+            key: 'reduceDebuggerStatement',
+            value: function reduceDebuggerStatement(node) {
+              return seq(this.t('debugger'), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceDoWhileStatement',
+            value: function reduceDoWhileStatement(node, _ref24) {
+              var body = _ref24.body;
+              var test = _ref24.test;
+              return seq(this.t('do'), this.sep(Sep.AFTER_DO), body, this.sep(Sep.BEFORE_DOWHILE_WHILE), this.t('while'), this.sep(Sep.AFTER_DOWHILE_WHILE), this.paren(test, Sep.DO_WHILE_TEST_PAREN_BEFORE, Sep.DO_WHILE_TEST_PAREN_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceEmptyStatement',
+            value: function reduceEmptyStatement(node) {
+              return seq(this.t(';'), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceExpressionStatement',
+            value: function reduceExpressionStatement(node, _ref25) {
+              var expression = _ref25.expression;
+              var needsParens = expression.startsWithCurly || expression.startsWithLetSquareBracket || expression.startsWithFunctionOrClass;
+              return seq(needsParens ? this.paren(expression, Sep.EXPRESSION_STATEMENT_PAREN_BEFORE, Sep.EXPRESSION_STATEMENT_PAREN_AFTER) : expression, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceForInStatement',
+            value: function reduceForInStatement(node, _ref26) {
+              var left = _ref26.left;
+              var right = _ref26.right;
+              var body = _ref26.body;
+              var leftP = left;
+              switch (node.left.type) {
+              case 'VariableDeclaration':
+                leftP = noIn(markContainsIn(left));
+                break;
+              case 'BindingIdentifier':
+                if (node.left.name === 'let') {
+                  leftP = this.paren(left, Sep.FOR_IN_LET_PAREN_BEFORE, Sep.FOR_IN_LET_PAREN_BEFORE);
+                }
+                break;
+              }
+              return (0, _objectAssign2.default)(seq(this.t('for'), this.sep(Sep.AFTER_FORIN_FOR), this.paren(seq(leftP, this.sep(Sep.BEFORE_FORIN_IN), this.t('in'), this.sep(Sep.AFTER_FORIN_FOR), right), Sep.FOR_IN_PAREN_BEFORE, Sep.FOR_IN_PAREN_AFTER), this.sep(Sep.BEFORE_FORIN_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForOfStatement',
+            value: function reduceForOfStatement(node, _ref27) {
+              var left = _ref27.left;
+              var right = _ref27.right;
+              var body = _ref27.body;
+              left = node.left.type === 'VariableDeclaration' ? noIn(markContainsIn(left)) : left;
+              return (0, _objectAssign2.default)(seq(this.t('for'), this.sep(Sep.AFTER_FOROF_FOR), this.paren(seq(left.startsWithLet ? this.paren(left, Sep.FOR_OF_LET_PAREN_BEFORE, Sep.FOR_OF_LET_PAREN_AFTER) : left, this.sep(Sep.BEFORE_FOROF_OF), this.t('of'), this.sep(Sep.AFTER_FOROF_FOR), right), Sep.FOR_OF_PAREN_BEFORE, Sep.FOR_OF_PAREN_AFTER), this.sep(Sep.BEFORE_FOROF_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForStatement',
+            value: function reduceForStatement(node, _ref28) {
+              var init = _ref28.init;
+              var test = _ref28.test;
+              var update = _ref28.update;
+              var body = _ref28.body;
+              return (0, _objectAssign2.default)(seq(this.t('for'), this.sep(Sep.AFTER_FOR_FOR), this.paren(seq(init ? seq(this.sep(Sep.BEFORE_FOR_INIT), noIn(markContainsIn(init)), this.sep(Sep.AFTER_FOR_INIT)) : this.sep(Sep.EMPTY_FOR_INIT), this.t(';'), test ? seq(this.sep(Sep.BEFORE_FOR_TEST), test, this.sep(Sep.AFTER_FOR_TEST)) : this.sep(Sep.EMPTY_FOR_TEST), this.t(';'), update ? seq(this.sep(Sep.BEFORE_FOR_UPDATE), update, this.sep(Sep.AFTER_FOR_UPDATE)) : this.sep(Sep.EMPTY_FOR_UPDATE))), this.sep(Sep.BEFORE_FOR_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceFunctionBody',
+            value: function reduceFunctionBody(node, _ref29) {
+              var directives = _ref29.directives;
+              var statements = _ref29.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_FUNCTION_DIRECTIVES) : empty()], _toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceFunctionDeclaration',
+            value: function reduceFunctionDeclaration(node, _ref30) {
+              var name = _ref30.name;
+              var params = _ref30.params;
+              var body = _ref30.body;
+              return seq(this.t('function'), node.isGenerator ? seq(this.sep(Sep.BEFORE_GENERATOR_STAR), this.t('*'), this.sep(Sep.AFTER_GENERATOR_STAR)) : empty(), this.sep(Sep.BEFORE_FUNCTION_NAME(node)), node.name.name === '*default*' ? empty() : name, this.sep(Sep.BEFORE_FUNCTION_PARAMS), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_FUNCTION_DECLARATION_BODY), this.brace(body, node, Sep.FUNCTION_BRACE_INITIAL, Sep.FUNCTION_BRACE_FINAL, Sep.FUNCTION_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceFunctionExpression',
+            value: function reduceFunctionExpression(node, _ref31) {
+              var name = _ref31.name;
+              var params = _ref31.params;
+              var body = _ref31.body;
+              var state = seq(this.t('function'), node.isGenerator ? seq(this.sep(Sep.BEFORE_GENERATOR_STAR), this.t('*'), this.sep(Sep.AFTER_GENERATOR_STAR)) : empty(), this.sep(Sep.BEFORE_FUNCTION_NAME(node)), name ? name : empty(), this.sep(Sep.BEFORE_FUNCTION_PARAMS), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_FUNCTION_EXPRESSION_BODY), this.brace(body, node, Sep.FUNCTION_EXPRESSION_BRACE_INITIAL, Sep.FUNCTION_EXPRESSION_BRACE_FINAL, Sep.FUNCTION_EXPRESSION_EMPTY));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceFormalParameters',
+            value: function reduceFormalParameters(node, _ref32) {
+              var items = _ref32.items;
+              var rest = _ref32.rest;
+              return this.commaSep(items.concat(rest == null ? [] : [seq(this.t('...'), this.sep(Sep.REST), rest)]), Sep.PARAMETER_BEFORE_COMMA, Sep.PARAMETER_AFTER_COMMA);
+            }
+          },
+          {
+            key: 'reduceArrowExpression',
+            value: function reduceArrowExpression(node, _ref33) {
+              var params = _ref33.params;
+              var body = _ref33.body;
+              if (node.params.rest != null || node.params.items.length !== 1 || node.params.items[0].type !== 'BindingIdentifier') {
+                params = this.paren(params, Sep.ARROW_PARAMETERS_PAREN_BEFORE, Sep.ARROW_PARAMETERS_PAREN_AFTER, Sep.ARROW_PARAMETERS_PAREN_EMPTY);
+              }
+              if (node.body.type === 'FunctionBody') {
+                body = this.brace(body, node, Sep.ARROW_BRACE_INITIAL, Sep.ARROW_BRACE_FINAL, Sep.ARROW_BRACE_EMPTY);
+              } else if (body.startsWithCurly) {
+                body = this.paren(body, Sep.ARROW_BODY_PAREN_BEFORE, Sep.ARROW_BODY_PAREN_AFTER);
+              }
+              return seq(params, this.sep(Sep.BEFORE_ARROW), this.t('=>'), this.sep(Sep.AFTER_ARROW), this.p(node.body, _coderep.Precedence.Assignment, body));
+            }
+          },
+          {
+            key: 'reduceGetter',
+            value: function reduceGetter(node, _ref34) {
+              var name = _ref34.name;
+              var body = _ref34.body;
+              return seq(this.t('get'), this.sep(Sep.AFTER_GET), name, this.sep(Sep.BEFORE_GET_PARAMS), this.paren(empty(), null, null, Sep.GETTER_PARAMS), this.sep(Sep.BEFORE_GET_BODY), this.brace(body, node, Sep.GET_BRACE_INTIAL, Sep.GET_BRACE_FINAL, Sep.GET_BRACE_EMPTY));
+            }
+          },
+          {
+            key: 'reduceIdentifierExpression',
+            value: function reduceIdentifierExpression(node) {
+              var a = this.t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceIfStatement',
+            value: function reduceIfStatement(node, _ref35) {
+              var test = _ref35.test;
+              var consequent = _ref35.consequent;
+              var alternate = _ref35.alternate;
+              if (alternate && consequent.endsWithMissingElse) {
+                consequent = this.brace(consequent, node, Sep.MISSING_ELSE_INTIIAL, Sep.MISSING_ELSE_FINAL, Sep.MISSING_ELSE_EMPTY);
+              }
+              return (0, _objectAssign2.default)(seq(this.t('if'), this.sep(Sep.AFTER_IF), this.paren(test, Sep.IF_PAREN_BEFORE, Sep.IF_PAREN_AFTER), this.sep(Sep.AFTER_IF_TEST), consequent, alternate ? seq(this.sep(Sep.BEFORE_ELSE), this.t('else'), this.sep(Sep.AFTER_ELSE), alternate) : empty(), this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
+            }
+          },
+          {
+            key: 'reduceImport',
+            value: function reduceImport(node, _ref36) {
+              var defaultBinding = _ref36.defaultBinding;
+              var namedImports = _ref36.namedImports;
+              var bindings = [];
+              if (defaultBinding != null) {
+                bindings.push(defaultBinding);
+              }
+              if (namedImports.length > 0) {
+                bindings.push(this.brace(this.commaSep(namedImports, Sep.NAMED_IMPORT_BEFORE_COMMA, Sep.NAMED_IMPORT_AFTER_COMMA), node, Sep.IMPORT_BRACE_INTIAL, Sep.IMPORT_BRACE_FINAL, Sep.IMPORT_BRACE_EMPTY));
+              }
+              if (bindings.length === 0) {
+                return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_MODULE), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+              }
+              return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_BINDINGS), this.commaSep(bindings, Sep.IMPORT_BEFORE_COMMA, Sep.IMPORT_AFTER_COMMA), this.sep(Sep.AFTER_IMPORT_BINDINGS), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceImportNamespace',
+            value: function reduceImportNamespace(node, _ref37) {
+              var defaultBinding = _ref37.defaultBinding;
+              var namespaceBinding = _ref37.namespaceBinding;
+              return seq(this.t('import'), this.sep(Sep.BEFORE_IMPORT_NAMESPACE), defaultBinding == null ? empty() : seq(defaultBinding, this.sep(Sep.IMPORT_BEFORE_COMMA), this.t(','), this.sep(Sep.IMPORT_AFTER_COMMA)), this.sep(Sep.BEFORE_IMPORT_STAR), this.t('*'), this.sep(Sep.AFTER_IMPORT_STAR), this.t('as'), this.sep(Sep.AFTER_IMPORT_AS), namespaceBinding, this.sep(Sep.AFTER_NAMESPACE_BINDING), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceImportSpecifier',
+            value: function reduceImportSpecifier(node, _ref38) {
+              var binding = _ref38.binding;
+              if (node.name == null)
+                return binding;
+              return seq(this.t(node.name), this.sep(Sep.BEFORE_IMPORT_AS), this.t('as'), this.sep(Sep.AFTER_IMPORT_AS), binding);
+            }
+          },
+          {
+            key: 'reduceExportAllFrom',
+            value: function reduceExportAllFrom(node) {
+              return seq(this.t('export'), this.sep(Sep.BEFORE_EXPORT_STAR), this.t('*'), this.sep(Sep.AFTER_EXPORT_STAR), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceExportFrom',
+            value: function reduceExportFrom(node, _ref39) {
+              var namedExports = _ref39.namedExports;
+              return seq(this.t('export'), this.sep(Sep.BEFORE_EXPORT_BINDINGS), this.brace(this.commaSep(namedExports, Sep.EXPORTS_BEFORE_COMMA, Sep.EXPORTS_AFTER_COMMA), node, Sep.EXPORT_BRACE_INITIAL, Sep.EXPORT_BRACE_FINAL, Sep.EXPORT_BRACE_EMPTY), node.moduleSpecifier == null ? empty() : seq(this.sep(Sep.AFTER_EXPORT_BINDINGS), this.t('from'), this.sep(Sep.AFTER_FROM), this.t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node))));
+            }
+          },
+          {
+            key: 'reduceExport',
+            value: function reduceExport(node, _ref40) {
+              var declaration = _ref40.declaration;
+              switch (node.declaration.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                declaration = seq(declaration, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+              }
+              return seq(this.t('export'), this.sep(Sep.AFTER_EXPORT), declaration);
+            }
+          },
+          {
+            key: 'reduceExportDefault',
+            value: function reduceExportDefault(node, _ref41) {
+              var body = _ref41.body;
+              body = body.startsWithFunctionOrClass ? this.paren(body, Sep.EXPORT_PAREN_BEFORE, Sep.EXPORT_PAREN_AFTER) : body;
+              switch (node.body.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                body = seq(body, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+              }
+              return seq(this.t('export'), this.sep(Sep.EXPORT_DEFAULT), this.t('default'), this.sep(Sep.AFTER_EXPORT_DEFAULT), body);
+            }
+          },
+          {
+            key: 'reduceExportSpecifier',
+            value: function reduceExportSpecifier(node) {
+              if (node.name == null)
+                return this.t(node.exportedName);
+              return seq(this.t(node.name), this.sep(Sep.BEFORE_EXPORT_AS), this.t('as'), this.sep(Sep.AFTER_EXPORT_AS), this.t(node.exportedName));
+            }
+          },
+          {
+            key: 'reduceLabeledStatement',
+            value: function reduceLabeledStatement(node, _ref42) {
+              var label = _ref42.label;
+              var body = _ref42.body;
+              return (0, _objectAssign2.default)(seq(this.t(label), this.sep(Sep.BEFORE_LABEL_COLON), this.t(':'), this.sep(Sep.AFTER_LABEL_COLON), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceLiteralBooleanExpression',
+            value: function reduceLiteralBooleanExpression(node) {
+              return this.t(node.value.toString());
+            }
+          },
+          {
+            key: 'reduceLiteralNullExpression',
+            value: function reduceLiteralNullExpression(node) {
+              return this.t('null');
+            }
+          },
+          {
+            key: 'reduceLiteralInfinityExpression',
+            value: function reduceLiteralInfinityExpression(node) {
+              return this.t('2e308');
+            }
+          },
+          {
+            key: 'reduceLiteralNumericExpression',
+            value: function reduceLiteralNumericExpression(node) {
+              return new _coderep.NumberCodeRep(node.value);
+            }
+          },
+          {
+            key: 'reduceLiteralRegExpExpression',
+            value: function reduceLiteralRegExpExpression(node) {
+              return this.t('/' + node.pattern + '/' + node.flags);
+            }
+          },
+          {
+            key: 'reduceLiteralStringExpression',
+            value: function reduceLiteralStringExpression(node) {
+              return this.t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceMethod',
+            value: function reduceMethod(node, _ref43) {
+              var name = _ref43.name;
+              var params = _ref43.params;
+              var body = _ref43.body;
+              return seq(node.isGenerator ? seq(this.t('*'), this.sep(Sep.AFTER_METHOD_GENERATOR_STAR)) : empty(), name, this.sep(Sep.AFTER_METHOD_NAME), this.paren(params, Sep.PARAMETERS_PAREN_BEFORE, Sep.PARAMETERS_PAREN_AFTER, Sep.PARAMETERS_PAREN_EMPTY), this.sep(Sep.BEFORE_METHOD_BODY), this.brace(body, node, Sep.METHOD_BRACE_INTIAL, Sep.METHOD_BRACE_FINAL, Sep.METHOD_BRACE_EMPTY));
+            }
+          },
+          {
+            key: 'reduceModule',
+            value: function reduceModule(node, _ref44) {
+              var directives = _ref44.directives;
+              var items = _ref44.items;
+              if (items.length) {
+                items[0] = this.parenToAvoidBeingDirective(node.items[0], items[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_MODULE_DIRECTIVES) : empty()], _toConsumableArray(items)));
+            }
+          },
+          {
+            key: 'reduceNewExpression',
+            value: function reduceNewExpression(node, _ref45) {
+              var callee = _ref45.callee;
+              var args = _ref45.arguments;
+              var calleeRep = (0, _coderep.getPrecedence)(node.callee) == _coderep.Precedence.Call ? this.paren(callee, Sep.NEW_CALLEE_PAREN_BEFORE, Sep.NEW_CALLEE_PAREN_AFTER) : this.p(node.callee, (0, _coderep.getPrecedence)(node), callee);
+              return seq(this.t('new'), this.sep(Sep.AFTER_NEW), calleeRep, args.length === 0 ? this.sep(Sep.EMPTY_NEW_CALL) : seq(this.sep(Sep.BEFORE_NEW_ARGS), this.paren(this.commaSep(args, Sep.ARGS_BEFORE_COMMA, Sep.ARGS_AFTER_COMMA), Sep.NEW_PAREN_BEFORE, Sep.NEW_PAREN_AFTER, Sep.NEW_PAREN_EMPTY)));
+            }
+          },
+          {
+            key: 'reduceNewTargetExpression',
+            value: function reduceNewTargetExpression() {
+              return seq(this.t('new'), this.sep(Sep.NEW_TARGET_BEFORE_DOT), this.t('.'), this.sep(Sep.NEW_TARGET_AFTER_DOT), this.t('target'));
+            }
+          },
+          {
+            key: 'reduceObjectExpression',
+            value: function reduceObjectExpression(node, _ref46) {
+              var properties = _ref46.properties;
+              var state = this.brace(this.commaSep(properties, Sep.OBJECT_BEFORE_COMMA, Sep.OBJECT_AFTER_COMMA), node, Sep.OBJECT_BRACE_INITIAL, Sep.OBJECT_BRACE_FINAL, Sep.OBJECT_EMPTY);
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceUpdateExpression',
+            value: function reduceUpdateExpression(node, _ref47) {
+              var operand = _ref47.operand;
+              if (node.isPrefix) {
+                return this.reduceUnaryExpression.apply(this, arguments);
+              } else {
+                return (0, _objectAssign2.default)(seq(this.p(node.operand, _coderep.Precedence.New, operand), this.sep(Sep.BEFORE_POSTFIX(node.operator)), this.t(node.operator)), {
+                  startsWithCurly: operand.startsWithCurly,
+                  startsWithLetSquareBracket: operand.startsWithLetSquareBracket,
+                  startsWithFunctionOrClass: operand.startsWithFunctionOrClass
+                });
+              }
+            }
+          },
+          {
+            key: 'reduceUnaryExpression',
+            value: function reduceUnaryExpression(node, _ref48) {
+              var operand = _ref48.operand;
+              return seq(this.t(node.operator), this.sep(Sep.UNARY(node.operator)), this.p(node.operand, (0, _coderep.getPrecedence)(node), operand));
+            }
+          },
+          {
+            key: 'reduceReturnStatement',
+            value: function reduceReturnStatement(node, _ref49) {
+              var expression = _ref49.expression;
+              return seq(this.t('return'), expression ? seq(this.sep(Sep.RETURN), expression) : empty(), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceScript',
+            value: function reduceScript(node, _ref50) {
+              var directives = _ref50.directives;
+              var statements = _ref50.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat([directives.length ? this.sep(Sep.AFTER_SCRIPT_DIRECTIVES) : empty()], _toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceSetter',
+            value: function reduceSetter(node, _ref51) {
+              var name = _ref51.name;
+              var param = _ref51.param;
+              var body = _ref51.body;
+              return seq(this.t('set'), this.sep(Sep.AFTER_SET), name, this.sep(Sep.BEFORE_SET_PARAMS), this.paren(param, Sep.SETTER_PARAM_BEFORE, Sep.SETTER_PARAM_AFTER), this.sep(Sep.BEFORE_SET_BODY), this.brace(body, node, Sep.SET_BRACE_INTIIAL, Sep.SET_BRACE_FINAL, Sep.SET_BRACE_EMPTY));
+            }
+          },
+          {
+            key: 'reduceShorthandProperty',
+            value: function reduceShorthandProperty(node) {
+              return this.t(node.name);
+            }
+          },
+          {
+            key: 'reduceStaticMemberExpression',
+            value: function reduceStaticMemberExpression(node, _ref52) {
+              var object = _ref52.object;
+              var property = _ref52.property;
+              var state = seq(this.p(node.object, (0, _coderep.getPrecedence)(node), object), this.sep(Sep.BEFORE_STATIC_MEMBER_DOT), this.t('.'), this.sep(Sep.AFTER_STATIC_MEMBER_DOT), this.t(property));
+              state.startsWithLet = object.startsWithLet;
+              state.startsWithCurly = object.startsWithCurly;
+              state.startsWithLetSquareBracket = object.startsWithLetSquareBracket;
+              state.startsWithFunctionOrClass = object.startsWithFunctionOrClass;
+              return state;
+            }
+          },
+          {
+            key: 'reduceStaticPropertyName',
+            value: function reduceStaticPropertyName(node) {
+              var n;
+              if (_esutils.keyword.isIdentifierNameES6(node.value)) {
+                return this.t(node.value);
+              } else if (n = parseFloat(node.value), n === n) {
+                return new _coderep.NumberCodeRep(n);
+              }
+              return this.t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceSuper',
+            value: function reduceSuper() {
+              return this.t('super');
+            }
+          },
+          {
+            key: 'reduceSwitchCase',
+            value: function reduceSwitchCase(node, _ref53) {
+              var test = _ref53.test;
+              var consequent = _ref53.consequent;
+              return seq(this.t('case'), this.sep(Sep.BEFORE_CASE_TEST), test, this.sep(Sep.AFTER_CASE_TEST), this.t(':'), this.sep(Sep.BEFORE_CASE_BODY), seq.apply(undefined, _toConsumableArray(consequent)), this.sep(Sep.AFTER_CASE_BODY));
+            }
+          },
+          {
+            key: 'reduceSwitchDefault',
+            value: function reduceSwitchDefault(node, _ref54) {
+              var consequent = _ref54.consequent;
+              return seq(this.t('default'), this.sep(Sep.DEFAULT), this.t(':'), this.sep(Sep.BEFORE_CASE_BODY), seq.apply(undefined, _toConsumableArray(consequent)), this.sep(Sep.AFTER_DEFAULT_BODY));
+            }
+          },
+          {
+            key: 'reduceSwitchStatement',
+            value: function reduceSwitchStatement(node, _ref55) {
+              var discriminant = _ref55.discriminant;
+              var cases = _ref55.cases;
+              return seq(this.t('switch'), this.sep(Sep.BEFORE_SWITCH_DISCRIM), this.paren(discriminant, Sep.SWITCH_DISCRIM_PAREN_BEFORE, Sep.SWITCH_DISCRIM_PAREN_AFTER), this.sep(Sep.BEFORE_SWITCH_BODY), this.brace(seq.apply(undefined, _toConsumableArray(cases)), node, Sep.SWITCH_BRACE_INTIAL, Sep.SWITCH_BRACE_FINAL, Sep.SWITCH_BRACE_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceSwitchStatementWithDefault',
+            value: function reduceSwitchStatementWithDefault(node, _ref56) {
+              var discriminant = _ref56.discriminant;
+              var preDefaultCases = _ref56.preDefaultCases;
+              var defaultCase = _ref56.defaultCase;
+              var postDefaultCases = _ref56.postDefaultCases;
+              return seq(this.t('switch'), this.sep(Sep.BEFORE_SWITCH_DISCRIM), this.paren(discriminant, Sep.SWITCH_DISCRIM_PAREN_BEFORE, Sep.SWITCH_DISCRIM_PAREN_AFTER), this.sep(Sep.BEFORE_SWITCH_BODY), this.brace(seq.apply(undefined, _toConsumableArray(preDefaultCases).concat([defaultCase], _toConsumableArray(postDefaultCases))), node, Sep.SWITCH_BRACE_INTIAL, Sep.SWITCH_BRACE_FINAL, Sep.SWITCH_BRACE_EMPTY), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceTemplateExpression',
+            value: function reduceTemplateExpression(node, _ref57) {
+              var tag = _ref57.tag;
+              var elements = _ref57.elements;
+              var state = node.tag == null ? empty() : seq(this.p(node.tag, (0, _coderep.getPrecedence)(node), tag), this.sep(Sep.TEMPLATE_TAG));
+              var templateData = '';
+              state = seq(state, this.t('`'));
+              for (var i = 0, l = node.elements.length; i < l; ++i) {
+                if (node.elements[i].type === 'TemplateElement') {
+                  var d = '';
+                  if (i > 0)
+                    d += '}';
+                  d += node.elements[i].rawValue;
+                  if (i < l - 1)
+                    d += '${';
+                  state = seq(state, this.t(d));
+                } else {
+                  state = seq(state, this.sep(Sep.BEFORE_TEMPLATE_EXPRESSION), elements[i], this.sep(Sep.AFTER_TEMPLATE_EXPRESSION));
+                }
+              }
+              state = seq(state, this.t('`'));
+              if (node.tag != null) {
+                state.startsWithCurly = tag.startsWithCurly;
+                state.startsWithLetSquareBracket = tag.startsWithLetSquareBracket;
+                state.startsWithFunctionOrClass = tag.startsWithFunctionOrClass;
+              }
+              return state;
+            }
+          },
+          {
+            key: 'reduceTemplateElement',
+            value: function reduceTemplateElement(node) {
+              return this.t(node.rawValue);
+            }
+          },
+          {
+            key: 'reduceThisExpression',
+            value: function reduceThisExpression(node) {
+              return this.t('this');
+            }
+          },
+          {
+            key: 'reduceThrowStatement',
+            value: function reduceThrowStatement(node, _ref58) {
+              var expression = _ref58.expression;
+              return seq(this.t('throw'), this.sep(Sep.THROW), expression, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceTryCatchStatement',
+            value: function reduceTryCatchStatement(node, _ref59) {
+              var body = _ref59.body;
+              var catchClause = _ref59.catchClause;
+              return seq(this.t('try'), this.sep(Sep.AFTER_TRY), body, this.sep(Sep.BEFORE_CATCH), catchClause, this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceTryFinallyStatement',
+            value: function reduceTryFinallyStatement(node, _ref60) {
+              var body = _ref60.body;
+              var catchClause = _ref60.catchClause;
+              var finalizer = _ref60.finalizer;
+              return seq(this.t('try'), this.sep(Sep.AFTER_TRY), body, catchClause ? seq(this.sep(Sep.BEFORE_CATCH), catchClause) : empty(), this.sep(Sep.BEFORE_FINALLY), this.t('finally'), this.sep(Sep.AFTER_FINALLY), finalizer, this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceYieldExpression',
+            value: function reduceYieldExpression(node, _ref61) {
+              var expression = _ref61.expression;
+              if (node.expression == null)
+                return this.t('yield');
+              return seq(this.t('yield'), this.sep(Sep.YIELD), this.p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceYieldGeneratorExpression',
+            value: function reduceYieldGeneratorExpression(node, _ref62) {
+              var expression = _ref62.expression;
+              return seq(this.t('yield'), this.sep(Sep.BEFORE_YIELD_STAR), this.t('*'), this.sep(Sep.AFTER_YIELD_STAR), this.p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceDirective',
+            value: function reduceDirective(node) {
+              var delim = /^(?:[^"\\]|\\.)*$/.test(node.rawValue) ? '"' : "'";
+              return seq(this.t(delim + node.rawValue + delim), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceVariableDeclaration',
+            value: function reduceVariableDeclaration(node, _ref63) {
+              var declarators = _ref63.declarators;
+              return seq(this.t(node.kind), this.sep(Sep.VARIABLE_DECLARATION), this.commaSep(declarators, Sep.DECLARATORS_BEFORE_COMMA, Sep.DECLARATORS_AFTER_COMMA));
+            }
+          },
+          {
+            key: 'reduceVariableDeclarationStatement',
+            value: function reduceVariableDeclarationStatement(node, _ref64) {
+              var declaration = _ref64.declaration;
+              return seq(declaration, this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceVariableDeclarator',
+            value: function reduceVariableDeclarator(node, _ref65) {
+              var binding = _ref65.binding;
+              var init = _ref65.init;
+              var containsIn = init && init.containsIn && !init.containsGroup;
+              if (init) {
+                if (init.containsGroup) {
+                  init = this.paren(init, Sep.EXPRESSION_PAREN_BEFORE, Sep.EXPRESSION_PAREN_AFTER);
+                } else {
+                  init = markContainsIn(init);
+                }
+              }
+              return (0, _objectAssign2.default)(init == null ? binding : seq(binding, this.sep(Sep.BEFORE_INIT_EQUALS), this.t('='), this.sep(Sep.AFTER_INIT_EQUALS), init), { containsIn: containsIn });
+            }
+          },
+          {
+            key: 'reduceWhileStatement',
+            value: function reduceWhileStatement(node, _ref66) {
+              var test = _ref66.test;
+              var body = _ref66.body;
+              return (0, _objectAssign2.default)(seq(this.t('while'), this.sep(Sep.AFTER_WHILE), this.paren(test, Sep.WHILE_TEST_PAREN_BEFORE, Sep.WHILE_TEST_PAREN_AFTER), this.sep(Sep.BEFORE_WHILE_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceWithStatement',
+            value: function reduceWithStatement(node, _ref67) {
+              var object = _ref67.object;
+              var body = _ref67.body;
+              return (0, _objectAssign2.default)(seq(this.t('with'), this.sep(Sep.AFTER_WITH), this.paren(object, Sep.WITH_PAREN_BEFORE, Sep.WITH_PAREN_AFTER), this.sep(Sep.BEFORE_WITH_BODY), body, this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          }
+        ]);
+        return ExtensibleCodeGen;
+      }();
+    var INDENT = '  ';
+    var Linebreak = function (_CodeRep) {
+        _inherits(Linebreak, _CodeRep);
+        function Linebreak() {
+          _classCallCheck(this, Linebreak);
+          var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Linebreak).call(this));
+          _this4.indentation = 0;
+          return _this4;
+        }
+        _createClass(Linebreak, [{
+            key: 'emit',
+            value: function emit(ts) {
+              ts.put('\n');
+              for (var i = 0; i < this.indentation; ++i) {
+                ts.put(INDENT);
+              }
+            }
+          }]);
+        return Linebreak;
+      }(_coderep.CodeRep);
+    function withoutTrailingLinebreak(state) {
+      if (state && state instanceof _coderep.Seq) {
+        var lastChild = state.children[state.children.length - 1];
+        while (lastChild instanceof _coderep.Empty) {
+          state.children.pop();
+          lastChild = state.children[state.children.length - 1];
+        }
+        if (lastChild instanceof _coderep.Seq) {
+          withoutTrailingLinebreak(lastChild);
+        } else if (lastChild instanceof Linebreak) {
+          state.children.pop();
+        }
+      }
+      return state;
+    }
+    function indent(rep, includingFinal) {
+      var finalLinebreak = undefined;
+      function indentNode(node) {
+        if (node instanceof Linebreak) {
+          finalLinebreak = node;
+          ++node.indentation;
+        }
+      }
+      rep.forEach(indentNode);
+      if (!includingFinal) {
+        --finalLinebreak.indentation;
+      }
+      return rep;
+    }
+    var FormattedCodeGen = exports.FormattedCodeGen = function (_ExtensibleCodeGen) {
+        _inherits(FormattedCodeGen, _ExtensibleCodeGen);
+        function FormattedCodeGen() {
+          _classCallCheck(this, FormattedCodeGen);
+          return _possibleConstructorReturn(this, Object.getPrototypeOf(FormattedCodeGen).apply(this, arguments));
+        }
+        _createClass(FormattedCodeGen, [
+          {
+            key: 'parenToAvoidBeingDirective',
+            value: function parenToAvoidBeingDirective(element, original) {
+              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
+                return seq(this.paren(original.children[0], Sep.PAREN_AVOIDING_DIRECTIVE_BEFORE, Sep.PAREN_AVOIDING_DIRECTIVE_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(element)));
+              }
+              return original;
+            }
+          },
+          {
+            key: 'brace',
+            value: function brace(rep, node) {
+              if (isEmpty(rep)) {
+                return this.t('{}');
+              }
+              switch (node.type) {
+              case 'ObjectBinding':
+              case 'Import':
+              case 'ExportFrom':
+              case 'ObjectExpression':
+                return new _coderep.Brace(rep);
+              }
+              rep = seq(new Linebreak, rep);
+              indent(rep, false);
+              return new _coderep.Brace(rep);
+            }
+          },
+          {
+            key: 'reduceDoWhileStatement',
+            value: function reduceDoWhileStatement(node, _ref68) {
+              var body = _ref68.body;
+              var test = _ref68.test;
+              return seq(this.t('do'), this.sep(Sep.AFTER_DO), withoutTrailingLinebreak(body), this.sep(Sep.BEFORE_DOWHILE_WHILE), this.t('while'), this.sep(Sep.AFTER_DOWHILE_WHILE), this.paren(test, Sep.DO_WHILE_TEST_PAREN_BEFORE, Sep.DO_WHILE_TEST_PAREN_AFTER), this.semiOp(), this.sep(Sep.AFTER_STATEMENT(node)));
+            }
+          },
+          {
+            key: 'reduceIfStatement',
+            value: function reduceIfStatement(node, _ref69) {
+              var test = _ref69.test;
+              var consequent = _ref69.consequent;
+              var alternate = _ref69.alternate;
+              if (alternate && consequent.endsWithMissingElse) {
+                consequent = this.brace(consequent, node);
+              }
+              return (0, _objectAssign2.default)(seq(this.t('if'), this.sep(Sep.AFTER_IF), this.paren(test, Sep.IF_PAREN_BEFORE, Sep.IF_PAREN_AFTER), this.sep(Sep.AFTER_IF_TEST), withoutTrailingLinebreak(consequent), alternate ? seq(this.sep(Sep.BEFORE_ELSE), this.t('else'), this.sep(Sep.AFTER_ELSE), withoutTrailingLinebreak(alternate)) : empty(), this.sep(Sep.AFTER_STATEMENT(node))), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
+            }
+          },
+          {
+            key: 'reduceSwitchCase',
+            value: function reduceSwitchCase(node, _ref70) {
+              var test = _ref70.test;
+              var consequent = _ref70.consequent;
+              consequent = indent(withoutTrailingLinebreak(seq.apply(undefined, [this.sep(Sep.BEFORE_CASE_BODY)].concat(_toConsumableArray(consequent)))), true);
+              return seq(this.t('case'), this.sep(Sep.BEFORE_CASE_TEST), test, this.sep(Sep.AFTER_CASE_TEST), this.t(':'), consequent, this.sep(Sep.AFTER_CASE_BODY));
+            }
+          },
+          {
+            key: 'reduceSwitchDefault',
+            value: function reduceSwitchDefault(node, _ref71) {
+              var consequent = _ref71.consequent;
+              consequent = indent(withoutTrailingLinebreak(seq.apply(undefined, [this.sep(Sep.BEFORE_CASE_BODY)].concat(_toConsumableArray(consequent)))), true);
+              return seq(this.t('default'), this.sep(Sep.DEFAULT), this.t(':'), consequent, this.sep(Sep.AFTER_DEFAULT_BODY));
+            }
+          },
+          {
+            key: 'sep',
+            value: function sep(separator) {
+              switch (separator.type) {
+              case 'ARRAY_AFTER_COMMA':
+              case 'OBJECT_AFTER_COMMA':
+              case 'ARGS_AFTER_COMMA':
+              case 'PARAMETER_AFTER_COMMA':
+              case 'DECLARATORS_AFTER_COMMA':
+              case 'NAMED_IMPORT_AFTER_COMMA':
+              case 'IMPORT_AFTER_COMMA':
+              case 'BEFORE_DEFAULT_EQUALS':
+              case 'AFTER_DEFAULT_EQUALS':
+              case 'AFTER_PROP':
+              case 'BEFORE_JUMP_LABEL':
+              case 'BEFORE_CATCH':
+              case 'BEFORE_CATCH_BINDING':
+              case 'AFTER_CATCH_BINDING':
+              case 'BEFORE_CLASS_NAME':
+              case 'BEFORE_EXTENDS':
+              case 'AFTER_EXTENDS':
+              case 'BEFORE_CLASS_DECLARATION_ELEMENTS':
+              case 'BEFORE_CLASS_EXPRESSION_ELEMENTS':
+              case 'AFTER_STATIC':
+              case 'BEFORE_TERNARY_QUESTION':
+              case 'AFTER_TERNARY_QUESTION':
+              case 'BEFORE_TERNARY_COLON':
+              case 'AFTER_TERNARY_COLON':
+              case 'AFTER_DO':
+              case 'BEFORE_DOWHILE_WHILE':
+              case 'AFTER_DOWHILE_WHILE':
+              case 'AFTER_FORIN_FOR':
+              case 'BEFORE_FORIN_IN':
+              case 'AFTER_FORIN_FOR':
+              case 'BEFORE_FORIN_BODY':
+              case 'AFTER_FOROF_FOR':
+              case 'BEFORE_FOROF_OF':
+              case 'AFTER_FOROF_FOR':
+              case 'BEFORE_FOROF_BODY':
+              case 'AFTER_FOR_FOR':
+              case 'BEFORE_FOR_TEST':
+              case 'BEFORE_FOR_UPDATE':
+              case 'BEFORE_FOR_BODY':
+              case 'AFTER_GENERATOR_STAR':
+              case 'BEFORE_FUNCTION_DECLARATION_BODY':
+              case 'BEFORE_FUNCTION_EXPRESSION_BODY':
+              case 'BEFORE_ARROW':
+              case 'AFTER_ARROW':
+              case 'AFTER_GET':
+              case 'BEFORE_GET_BODY':
+              case 'AFTER_IF':
+              case 'AFTER_IF_TEST':
+              case 'BEFORE_ELSE':
+              case 'AFTER_ELSE':
+              case 'BEFORE_IMPORT_BINDINGS':
+              case 'BEFORE_IMPORT_MODULE':
+              case 'AFTER_IMPORT_BINDINGS':
+              case 'AFTER_FROM':
+              case 'BEFORE_IMPORT_NAMESPACE':
+              case 'BEFORE_IMPORT_STAR':
+              case 'AFTER_IMPORT_STAR':
+              case 'AFTER_IMPORT_AS':
+              case 'AFTER_NAMESPACE_BINDING':
+              case 'BEFORE_IMPORT_AS':
+              case 'AFTER_IMPORT_AS':
+              case 'EXPORTS_AFTER_COMMA':
+              case 'BEFORE_EXPORT_STAR':
+              case 'AFTER_EXPORT_STAR':
+              case 'BEFORE_EXPORT_BINDINGS':
+              case 'AFTER_EXPORT_BINDINGS':
+              case 'AFTER_EXPORT':
+              case 'AFTER_EXPORT_DEFAULT':
+              case 'BEFORE_EXPORT_AS':
+              case 'AFTER_EXPORT_AS':
+              case 'AFTER_LABEL_COLON':
+              case 'BEFORE_METHOD_BODY':
+              case 'AFTER_NEW':
+              case 'RETURN':
+              case 'AFTER_SET':
+              case 'BEFORE_SET_BODY':
+              case 'BEFORE_SET_PARAMS':
+              case 'BEFORE_CASE_TEST':
+              case 'BEFORE_SWITCH_DISCRIM':
+              case 'BEFORE_SWITCH_BODY':
+              case 'THROW':
+              case 'AFTER_TRY':
+              case 'BEFORE_CATCH':
+              case 'BEFORE_FINALLY':
+              case 'AFTER_FINALLY':
+              case 'VARIABLE_DECLARATION':
+              case 'YIELD':
+              case 'AFTER_YIELD_STAR':
+              case 'DECLARATORS_AFTER_COMMA':
+              case 'BEFORE_INIT_EQUALS':
+              case 'AFTER_INIT_EQUALS':
+              case 'AFTER_WHILE':
+              case 'BEFORE_WHILE_BODY':
+              case 'AFTER_WITH':
+              case 'BEFORE_WITH_BODY':
+              case 'BEFORE_FUNCTION_NAME':
+              case 'AFTER_BINOP':
+              case 'BEFORE_ASSIGN_OP':
+              case 'AFTER_ASSIGN_OP':
+                return this.t(' ');
+              case 'AFTER_STATEMENT':
+                switch (separator.node.type) {
+                case 'ForInStatement':
+                case 'ForOfStatement':
+                case 'ForStatement':
+                case 'WhileStatement':
+                case 'WithStatement':
+                  return empty();
+                default:
+                  return new Linebreak;
+                }
+              case 'AFTER_CLASS_ELEMENT':
+              case 'BEFORE_CASE_BODY':
+              case 'AFTER_CASE_BODY':
+              case 'AFTER_DEFAULT_BODY':
+                return new Linebreak;
+              case 'BEFORE_BINOP':
+                return separator.op === ',' ? empty() : this.t(' ');
+              case 'UNARY':
+                return separator.op === 'delete' || separator.op === 'void' || separator.op === 'typeof' ? this.t(' ') : empty();
+              default:
+                return empty();
+              }
+            }
+          }
+        ]);
+        return FormattedCodeGen;
+      }(ExtensibleCodeGen);
+  });
+  require.define('/node_modules/object-assign/index.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+    function ToObject(val) {
+      if (val == null) {
+        throw new TypeError('Object.assign cannot be called with null or undefined');
+      }
+      return Object(val);
+    }
+    function ownEnumerableKeys(obj) {
+      var keys = Object.getOwnPropertyNames(obj);
+      if (Object.getOwnPropertySymbols) {
+        keys = keys.concat(Object.getOwnPropertySymbols(obj));
+      }
+      return keys.filter(function (key) {
+        return propIsEnumerable.call(obj, key);
+      });
+    }
+    module.exports = Object.assign || function (target, source) {
+      var from;
+      var keys;
+      var to = ToObject(target);
+      for (var s = 1; s < arguments.length; s++) {
+        from = arguments[s];
+        keys = ownEnumerableKeys(Object(from));
+        for (var i = 0; i < keys.length; i++) {
+          to[keys[i]] = from[keys[i]];
+        }
+      }
+      return to;
+    };
+  });
+  require.define('/dist/minimal-codegen.js', function (module, exports, __dirname, __filename) {
+    'use strict';
+    var _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+              descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+          if (staticProps)
+            defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+    Object.defineProperty(exports, '__esModule', { value: true });
+    var _objectAssign = require('/node_modules/object-assign/index.js', module);
+    var _objectAssign2 = _interopRequireDefault(_objectAssign);
+    var _esutils = require('/node_modules/esutils/lib/utils.js', module);
+    var _coderep = require('/dist/coderep.js', module);
+    function _interopRequireDefault(obj) {
+      return obj && obj.__esModule ? obj : { default: obj };
+    }
+    function _toConsumableArray(arr) {
+      if (Array.isArray(arr)) {
+        for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+          arr2[i] = arr[i];
+        }
+        return arr2;
+      } else {
+        return Array.from(arr);
+      }
+    }
+    function _classCallCheck(instance, Constructor) {
+      if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+      }
+    }
+    function p(node, precedence, a) {
+      return (0, _coderep.getPrecedence)(node) < precedence ? paren(a) : a;
+    }
+    function t(token) {
+      return new _coderep.Token(token);
+    }
+    function paren(rep) {
+      return new _coderep.Paren(rep);
+    }
+    function brace(rep) {
+      return new _coderep.Brace(rep);
+    }
+    function bracket(rep) {
+      return new _coderep.Bracket(rep);
+    }
+    function noIn(rep) {
+      return new _coderep.NoIn(rep);
+    }
+    function markContainsIn(state) {
+      return state.containsIn ? new _coderep.ContainsIn(state) : state;
+    }
+    function seq() {
+      for (var _len = arguments.length, reps = Array(_len), _key = 0; _key < _len; _key++) {
+        reps[_key] = arguments[_key];
+      }
+      return new _coderep.Seq(reps);
+    }
+    function semi() {
+      return new _coderep.Semi;
+    }
+    function semiOp() {
+      return new _coderep.SemiOp;
+    }
+    function empty() {
+      return new _coderep.Empty;
+    }
+    function commaSep(pieces) {
+      return new _coderep.CommaSep(pieces);
+    }
+    function getAssignmentExpr(state) {
+      return state ? state.containsGroup ? paren(state) : state : empty();
+    }
+    var MinimalCodeGen = function () {
+        function MinimalCodeGen() {
+          _classCallCheck(this, MinimalCodeGen);
+        }
+        _createClass(MinimalCodeGen, [
+          {
+            key: 'parenToAvoidBeingDirective',
+            value: function parenToAvoidBeingDirective(element, original) {
+              if (element && element.type === 'ExpressionStatement' && element.expression.type === 'LiteralStringExpression') {
+                return seq(paren(original.children[0]), semiOp());
+              }
+              return original;
+            }
+          },
+          {
+            key: 'reduceArrayExpression',
+            value: function reduceArrayExpression(node, _ref) {
+              var elements = _ref.elements;
+              if (elements.length === 0) {
+                return bracket(empty());
+              }
+              var content = commaSep(elements.map(getAssignmentExpr));
+              if (elements.length > 0 && elements[elements.length - 1] == null) {
+                content = seq(content, t(','));
+              }
+              return bracket(content);
+            }
+          },
+          {
+            key: 'reduceSpreadElement',
+            value: function reduceSpreadElement(node, _ref2) {
+              var expression = _ref2.expression;
+              return seq(t('...'), p(node.expression, _coderep.Precedence.Assignment, expression));
+            }
+          },
+          {
+            key: 'reduceAssignmentExpression',
+            value: function reduceAssignmentExpression(node, _ref3) {
+              var binding = _ref3.binding;
+              var expression = _ref3.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = paren(rightCode);
+                containsIn = false;
+              }
+              return (0, _objectAssign2.default)(seq(leftCode, t('='), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCompoundAssignmentExpression',
+            value: function reduceCompoundAssignmentExpression(node, _ref4) {
+              var binding = _ref4.binding;
+              var expression = _ref4.expression;
+              var leftCode = binding;
+              var rightCode = expression;
+              var containsIn = expression.containsIn;
+              var startsWithCurly = binding.startsWithCurly;
+              var startsWithLetSquareBracket = binding.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = binding.startsWithFunctionOrClass;
+              if ((0, _coderep.getPrecedence)(node.expression) < (0, _coderep.getPrecedence)(node)) {
+                rightCode = paren(rightCode);
+                containsIn = false;
+              }
+              return (0, _objectAssign2.default)(seq(leftCode, t(node.operator), rightCode), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBinaryExpression',
+            value: function reduceBinaryExpression(node, _ref5) {
+              var left = _ref5.left;
+              var right = _ref5.right;
+              var leftCode = left;
+              var startsWithCurly = left.startsWithCurly;
+              var startsWithLetSquareBracket = left.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = left.startsWithFunctionOrClass;
+              var leftContainsIn = left.containsIn;
+              if ((0, _coderep.getPrecedence)(node.left) < (0, _coderep.getPrecedence)(node)) {
+                leftCode = paren(leftCode);
+                startsWithCurly = false;
+                startsWithLetSquareBracket = false;
+                startsWithFunctionOrClass = false;
+                leftContainsIn = false;
+              }
+              var rightCode = right;
+              var rightContainsIn = right.containsIn;
+              if ((0, _coderep.getPrecedence)(node.right) <= (0, _coderep.getPrecedence)(node)) {
+                rightCode = paren(rightCode);
+                rightContainsIn = false;
+              }
+              return (0, _objectAssign2.default)(seq(leftCode, t(node.operator), rightCode), {
+                containsIn: leftContainsIn || rightContainsIn || node.operator === 'in',
+                containsGroup: node.operator == ',',
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceBindingWithDefault',
+            value: function reduceBindingWithDefault(node, _ref6) {
+              var binding = _ref6.binding;
+              var init = _ref6.init;
+              return seq(binding, t('='), init);
+            }
+          },
+          {
+            key: 'reduceBindingIdentifier',
+            value: function reduceBindingIdentifier(node) {
+              var a = t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceArrayBinding',
+            value: function reduceArrayBinding(node, _ref7) {
+              var elements = _ref7.elements;
+              var restElement = _ref7.restElement;
+              var content = undefined;
+              if (elements.length === 0) {
+                content = restElement == null ? empty() : seq(t('...'), restElement);
+              } else {
+                elements = elements.concat(restElement == null ? [] : [seq(t('...'), restElement)]);
+                content = commaSep(elements.map(getAssignmentExpr));
+                if (elements.length > 0 && elements[elements.length - 1] == null) {
+                  content = seq(content, t(','));
+                }
+              }
+              return bracket(content);
+            }
+          },
+          {
+            key: 'reduceObjectBinding',
+            value: function reduceObjectBinding(node, _ref8) {
+              var properties = _ref8.properties;
+              var state = brace(commaSep(properties));
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceBindingPropertyIdentifier',
+            value: function reduceBindingPropertyIdentifier(node, _ref9) {
+              var binding = _ref9.binding;
+              var init = _ref9.init;
+              if (node.init == null)
+                return binding;
+              return seq(binding, t('='), init);
+            }
+          },
+          {
+            key: 'reduceBindingPropertyProperty',
+            value: function reduceBindingPropertyProperty(node, _ref10) {
+              var name = _ref10.name;
+              var binding = _ref10.binding;
+              return seq(name, t(':'), binding);
+            }
+          },
+          {
+            key: 'reduceBlock',
+            value: function reduceBlock(node, _ref11) {
+              var statements = _ref11.statements;
+              return brace(seq.apply(undefined, _toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceBlockStatement',
+            value: function reduceBlockStatement(node, _ref12) {
+              var block = _ref12.block;
+              return block;
+            }
+          },
+          {
+            key: 'reduceBreakStatement',
+            value: function reduceBreakStatement(node, _ref13) {
+              var label = _ref13.label;
+              return seq(t('break'), label ? t(label) : empty(), semiOp());
+            }
+          },
+          {
+            key: 'reduceCallExpression',
+            value: function reduceCallExpression(node, _ref14) {
+              var callee = _ref14.callee;
+              var args = _ref14.arguments;
+              return (0, _objectAssign2.default)(seq(p(node.callee, (0, _coderep.getPrecedence)(node), callee), paren(commaSep(args))), {
+                startsWithCurly: callee.startsWithCurly,
+                startsWithLetSquareBracket: callee.startsWithLetSquareBracket,
+                startsWithFunctionOrClass: callee.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceCatchClause',
+            value: function reduceCatchClause(node, _ref15) {
+              var binding = _ref15.binding;
+              var body = _ref15.body;
+              return seq(t('catch'), paren(binding), body);
+            }
+          },
+          {
+            key: 'reduceClassDeclaration',
+            value: function reduceClassDeclaration(node, _ref16) {
+              var name = _ref16.name;
+              var _super = _ref16.super;
+              var elements = _ref16.elements;
+              var state = seq(t('class'), name);
+              if (_super != null) {
+                state = seq(state, t('extends'), _super);
+              }
+              state = seq.apply(undefined, [
+                state,
+                t('{')
+              ].concat(_toConsumableArray(elements), [t('}')]));
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassExpression',
+            value: function reduceClassExpression(node, _ref17) {
+              var name = _ref17.name;
+              var _super = _ref17.super;
+              var elements = _ref17.elements;
+              var state = t('class');
+              if (name != null) {
+                state = seq(state, name);
+              }
+              if (_super != null) {
+                state = seq(state, t('extends'), _super);
+              }
+              state = seq.apply(undefined, [
+                state,
+                t('{')
+              ].concat(_toConsumableArray(elements), [t('}')]));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceClassElement',
+            value: function reduceClassElement(node, _ref18) {
+              var method = _ref18.method;
+              if (!node.isStatic)
+                return method;
+              return seq(t('static'), method);
+            }
+          },
+          {
+            key: 'reduceComputedMemberExpression',
+            value: function reduceComputedMemberExpression(node, _ref19) {
+              var object = _ref19.object;
+              var expression = _ref19.expression;
+              var startsWithLetSquareBracket = object.startsWithLetSquareBracket || node.object.type === 'IdentifierExpression' && node.object.name === 'let';
+              return (0, _objectAssign2.default)(seq(p(node.object, (0, _coderep.getPrecedence)(node), object), bracket(expression)), {
+                startsWithLet: object.startsWithLet,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithCurly: object.startsWithCurly,
+                startsWithFunctionOrClass: object.startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceComputedPropertyName',
+            value: function reduceComputedPropertyName(node, _ref20) {
+              var expression = _ref20.expression;
+              return bracket(expression);
+            }
+          },
+          {
+            key: 'reduceConditionalExpression',
+            value: function reduceConditionalExpression(node, _ref21) {
+              var test = _ref21.test;
+              var consequent = _ref21.consequent;
+              var alternate = _ref21.alternate;
+              var containsIn = test.containsIn || alternate.containsIn;
+              var startsWithCurly = test.startsWithCurly;
+              var startsWithLetSquareBracket = test.startsWithLetSquareBracket;
+              var startsWithFunctionOrClass = test.startsWithFunctionOrClass;
+              return (0, _objectAssign2.default)(seq(p(node.test, _coderep.Precedence.LogicalOR, test), t('?'), p(node.consequent, _coderep.Precedence.Assignment, consequent), t(':'), p(node.alternate, _coderep.Precedence.Assignment, alternate)), {
+                containsIn: containsIn,
+                startsWithCurly: startsWithCurly,
+                startsWithLetSquareBracket: startsWithLetSquareBracket,
+                startsWithFunctionOrClass: startsWithFunctionOrClass
+              });
+            }
+          },
+          {
+            key: 'reduceContinueStatement',
+            value: function reduceContinueStatement(node, _ref22) {
+              var label = _ref22.label;
+              return seq(t('continue'), label ? t(label) : empty(), semiOp());
+            }
+          },
+          {
+            key: 'reduceDataProperty',
+            value: function reduceDataProperty(node, _ref23) {
+              var name = _ref23.name;
+              var expression = _ref23.expression;
+              return seq(name, t(':'), getAssignmentExpr(expression));
+            }
+          },
+          {
+            key: 'reduceDebuggerStatement',
+            value: function reduceDebuggerStatement(node) {
+              return seq(t('debugger'), semiOp());
+            }
+          },
+          {
+            key: 'reduceDoWhileStatement',
+            value: function reduceDoWhileStatement(node, _ref24) {
+              var body = _ref24.body;
+              var test = _ref24.test;
+              return seq(t('do'), body, t('while'), paren(test), semiOp());
+            }
+          },
+          {
+            key: 'reduceEmptyStatement',
+            value: function reduceEmptyStatement(node) {
+              return semi();
+            }
+          },
+          {
+            key: 'reduceExpressionStatement',
+            value: function reduceExpressionStatement(node, _ref25) {
+              var expression = _ref25.expression;
+              var needsParens = expression.startsWithCurly || expression.startsWithLetSquareBracket || expression.startsWithFunctionOrClass;
+              return seq(needsParens ? paren(expression) : expression, semiOp());
+            }
+          },
+          {
+            key: 'reduceForInStatement',
+            value: function reduceForInStatement(node, _ref26) {
+              var left = _ref26.left;
+              var right = _ref26.right;
+              var body = _ref26.body;
+              var leftP = left;
+              switch (node.left.type) {
+              case 'VariableDeclaration':
+                leftP = noIn(markContainsIn(left));
+                break;
+              case 'BindingIdentifier':
+                if (node.left.name === 'let') {
+                  leftP = paren(left);
+                }
+                break;
+              }
+              return (0, _objectAssign2.default)(seq(t('for'), paren(seq(leftP, t('in'), right)), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForOfStatement',
+            value: function reduceForOfStatement(node, _ref27) {
+              var left = _ref27.left;
+              var right = _ref27.right;
+              var body = _ref27.body;
+              left = node.left.type === 'VariableDeclaration' ? noIn(markContainsIn(left)) : left;
+              return (0, _objectAssign2.default)(seq(t('for'), paren(seq(left.startsWithLet ? paren(left) : left, t('of'), right)), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceForStatement',
+            value: function reduceForStatement(node, _ref28) {
+              var init = _ref28.init;
+              var test = _ref28.test;
+              var update = _ref28.update;
+              var body = _ref28.body;
+              return (0, _objectAssign2.default)(seq(t('for'), paren(seq(init ? noIn(markContainsIn(init)) : empty(), semi(), test || empty(), semi(), update || empty())), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceFunctionBody',
+            value: function reduceFunctionBody(node, _ref29) {
+              var directives = _ref29.directives;
+              var statements = _ref29.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceFunctionDeclaration',
+            value: function reduceFunctionDeclaration(node, _ref30) {
+              var name = _ref30.name;
+              var params = _ref30.params;
+              var body = _ref30.body;
+              return seq(t('function'), node.isGenerator ? t('*') : empty(), node.name.name === '*default*' ? empty() : name, paren(params), brace(body));
+            }
+          },
+          {
+            key: 'reduceFunctionExpression',
+            value: function reduceFunctionExpression(node, _ref31) {
+              var name = _ref31.name;
+              var params = _ref31.params;
+              var body = _ref31.body;
+              var state = seq(t('function'), node.isGenerator ? t('*') : empty(), name ? name : empty(), paren(params), brace(body));
+              state.startsWithFunctionOrClass = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceFormalParameters',
+            value: function reduceFormalParameters(node, _ref32) {
+              var items = _ref32.items;
+              var rest = _ref32.rest;
+              return commaSep(items.concat(rest == null ? [] : [seq(t('...'), rest)]));
+            }
+          },
+          {
+            key: 'reduceArrowExpression',
+            value: function reduceArrowExpression(node, _ref33) {
+              var params = _ref33.params;
+              var body = _ref33.body;
+              if (node.params.rest != null || node.params.items.length !== 1 || node.params.items[0].type !== 'BindingIdentifier') {
+                params = paren(params);
+              }
+              if (node.body.type === 'FunctionBody') {
+                body = brace(body);
+              } else if (body.startsWithCurly) {
+                body = paren(body);
+              }
+              return seq(params, t('=>'), p(node.body, _coderep.Precedence.Assignment, body));
+            }
+          },
+          {
+            key: 'reduceGetter',
+            value: function reduceGetter(node, _ref34) {
+              var name = _ref34.name;
+              var body = _ref34.body;
+              return seq(t('get'), name, paren(empty()), brace(body));
+            }
+          },
+          {
+            key: 'reduceIdentifierExpression',
+            value: function reduceIdentifierExpression(node) {
+              var a = t(node.name);
+              if (node.name === 'let') {
+                a.startsWithLet = true;
+              }
+              return a;
+            }
+          },
+          {
+            key: 'reduceIfStatement',
+            value: function reduceIfStatement(node, _ref35) {
+              var test = _ref35.test;
+              var consequent = _ref35.consequent;
+              var alternate = _ref35.alternate;
+              if (alternate && consequent.endsWithMissingElse) {
+                consequent = brace(consequent);
+              }
+              return (0, _objectAssign2.default)(seq(t('if'), paren(test), consequent, alternate ? seq(t('else'), alternate) : empty()), { endsWithMissingElse: alternate ? alternate.endsWithMissingElse : true });
+            }
+          },
+          {
+            key: 'reduceImport',
+            value: function reduceImport(node, _ref36) {
+              var defaultBinding = _ref36.defaultBinding;
+              var namedImports = _ref36.namedImports;
+              var bindings = [];
+              if (defaultBinding != null) {
+                bindings.push(defaultBinding);
+              }
+              if (namedImports.length > 0) {
+                bindings.push(brace(commaSep(namedImports)));
+              }
+              if (bindings.length === 0) {
+                return seq(t('import'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+              }
+              return seq(t('import'), commaSep(bindings), t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+            }
+          },
+          {
+            key: 'reduceImportNamespace',
+            value: function reduceImportNamespace(node, _ref37) {
+              var defaultBinding = _ref37.defaultBinding;
+              var namespaceBinding = _ref37.namespaceBinding;
+              return seq(t('import'), defaultBinding == null ? empty() : seq(defaultBinding, t(',')), t('*'), t('as'), namespaceBinding, t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+            }
+          },
+          {
+            key: 'reduceImportSpecifier',
+            value: function reduceImportSpecifier(node, _ref38) {
+              var binding = _ref38.binding;
+              if (node.name == null)
+                return binding;
+              return seq(t(node.name), t('as'), binding);
+            }
+          },
+          {
+            key: 'reduceExportAllFrom',
+            value: function reduceExportAllFrom(node) {
+              return seq(t('export'), t('*'), t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp());
+            }
+          },
+          {
+            key: 'reduceExportFrom',
+            value: function reduceExportFrom(node, _ref39) {
+              var namedExports = _ref39.namedExports;
+              return seq(t('export'), brace(commaSep(namedExports)), node.moduleSpecifier == null ? empty() : seq(t('from'), t((0, _coderep.escapeStringLiteral)(node.moduleSpecifier)), semiOp()));
+            }
+          },
+          {
+            key: 'reduceExport',
+            value: function reduceExport(node, _ref40) {
+              var declaration = _ref40.declaration;
+              switch (node.declaration.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                declaration = seq(declaration, semiOp());
+              }
+              return seq(t('export'), declaration);
+            }
+          },
+          {
+            key: 'reduceExportDefault',
+            value: function reduceExportDefault(node, _ref41) {
+              var body = _ref41.body;
+              body = body.startsWithFunctionOrClass ? paren(body) : body;
+              switch (node.body.type) {
+              case 'FunctionDeclaration':
+              case 'ClassDeclaration':
+                break;
+              default:
+                body = seq(body, semiOp());
+              }
+              return seq(t('export default'), body);
+            }
+          },
+          {
+            key: 'reduceExportSpecifier',
+            value: function reduceExportSpecifier(node) {
+              if (node.name == null)
+                return t(node.exportedName);
+              return seq(t(node.name), t('as'), t(node.exportedName));
+            }
+          },
+          {
+            key: 'reduceLabeledStatement',
+            value: function reduceLabeledStatement(node, _ref42) {
+              var label = _ref42.label;
+              var body = _ref42.body;
+              return (0, _objectAssign2.default)(seq(t(label + ':'), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceLiteralBooleanExpression',
+            value: function reduceLiteralBooleanExpression(node) {
+              return t(node.value.toString());
+            }
+          },
+          {
+            key: 'reduceLiteralNullExpression',
+            value: function reduceLiteralNullExpression(node) {
+              return t('null');
+            }
+          },
+          {
+            key: 'reduceLiteralInfinityExpression',
+            value: function reduceLiteralInfinityExpression(node) {
+              return t('2e308');
+            }
+          },
+          {
+            key: 'reduceLiteralNumericExpression',
+            value: function reduceLiteralNumericExpression(node) {
+              return new _coderep.NumberCodeRep(node.value);
+            }
+          },
+          {
+            key: 'reduceLiteralRegExpExpression',
+            value: function reduceLiteralRegExpExpression(node) {
+              return t('/' + node.pattern + '/' + node.flags);
+            }
+          },
+          {
+            key: 'reduceLiteralStringExpression',
+            value: function reduceLiteralStringExpression(node) {
+              return t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceMethod',
+            value: function reduceMethod(node, _ref43) {
+              var name = _ref43.name;
+              var params = _ref43.params;
+              var body = _ref43.body;
+              return seq(node.isGenerator ? t('*') : empty(), name, paren(params), brace(body));
+            }
+          },
+          {
+            key: 'reduceModule',
+            value: function reduceModule(node, _ref44) {
+              var directives = _ref44.directives;
+              var items = _ref44.items;
+              if (items.length) {
+                items[0] = this.parenToAvoidBeingDirective(node.items[0], items[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(items)));
+            }
+          },
+          {
+            key: 'reduceNewExpression',
+            value: function reduceNewExpression(node, _ref45) {
+              var callee = _ref45.callee;
+              var args = _ref45.arguments;
+              var calleeRep = (0, _coderep.getPrecedence)(node.callee) == _coderep.Precedence.Call ? paren(callee) : p(node.callee, (0, _coderep.getPrecedence)(node), callee);
+              return seq(t('new'), calleeRep, args.length === 0 ? empty() : paren(commaSep(args)));
+            }
+          },
+          {
+            key: 'reduceNewTargetExpression',
+            value: function reduceNewTargetExpression() {
+              return t('new.target');
+            }
+          },
+          {
+            key: 'reduceObjectExpression',
+            value: function reduceObjectExpression(node, _ref46) {
+              var properties = _ref46.properties;
+              var state = brace(commaSep(properties));
+              state.startsWithCurly = true;
+              return state;
+            }
+          },
+          {
+            key: 'reduceUpdateExpression',
+            value: function reduceUpdateExpression(node, _ref47) {
+              var operand = _ref47.operand;
+              if (node.isPrefix) {
+                return this.reduceUnaryExpression.apply(this, arguments);
+              } else {
+                return (0, _objectAssign2.default)(seq(p(node.operand, _coderep.Precedence.New, operand), t(node.operator)), {
+                  startsWithCurly: operand.startsWithCurly,
+                  startsWithLetSquareBracket: operand.startsWithLetSquareBracket,
+                  startsWithFunctionOrClass: operand.startsWithFunctionOrClass
+                });
+              }
+            }
+          },
+          {
+            key: 'reduceUnaryExpression',
+            value: function reduceUnaryExpression(node, _ref48) {
+              var operand = _ref48.operand;
+              return seq(t(node.operator), p(node.operand, (0, _coderep.getPrecedence)(node), operand));
+            }
+          },
+          {
+            key: 'reduceReturnStatement',
+            value: function reduceReturnStatement(node, _ref49) {
+              var expression = _ref49.expression;
+              return seq(t('return'), expression || empty(), semiOp());
+            }
+          },
+          {
+            key: 'reduceScript',
+            value: function reduceScript(node, _ref50) {
+              var directives = _ref50.directives;
+              var statements = _ref50.statements;
+              if (statements.length) {
+                statements[0] = this.parenToAvoidBeingDirective(node.statements[0], statements[0]);
+              }
+              return seq.apply(undefined, _toConsumableArray(directives).concat(_toConsumableArray(statements)));
+            }
+          },
+          {
+            key: 'reduceSetter',
+            value: function reduceSetter(node, _ref51) {
+              var name = _ref51.name;
+              var param = _ref51.param;
+              var body = _ref51.body;
+              return seq(t('set'), name, paren(param), brace(body));
+            }
+          },
+          {
+            key: 'reduceShorthandProperty',
+            value: function reduceShorthandProperty(node) {
+              return t(node.name);
+            }
+          },
+          {
+            key: 'reduceStaticMemberExpression',
+            value: function reduceStaticMemberExpression(node, _ref52) {
+              var object = _ref52.object;
+              var property = _ref52.property;
+              var state = seq(p(node.object, (0, _coderep.getPrecedence)(node), object), t('.'), t(property));
+              state.startsWithLet = object.startsWithLet;
+              state.startsWithCurly = object.startsWithCurly;
+              state.startsWithLetSquareBracket = object.startsWithLetSquareBracket;
+              state.startsWithFunctionOrClass = object.startsWithFunctionOrClass;
+              return state;
+            }
+          },
+          {
+            key: 'reduceStaticPropertyName',
+            value: function reduceStaticPropertyName(node) {
+              var n;
+              if (_esutils.keyword.isIdentifierNameES6(node.value)) {
+                return t(node.value);
+              } else if (n = parseFloat(node.value), n === n) {
+                return new _coderep.NumberCodeRep(n);
+              }
+              return t((0, _coderep.escapeStringLiteral)(node.value));
+            }
+          },
+          {
+            key: 'reduceSuper',
+            value: function reduceSuper() {
+              return t('super');
+            }
+          },
+          {
+            key: 'reduceSwitchCase',
+            value: function reduceSwitchCase(node, _ref53) {
+              var test = _ref53.test;
+              var consequent = _ref53.consequent;
+              return seq(t('case'), test, t(':'), seq.apply(undefined, _toConsumableArray(consequent)));
+            }
+          },
+          {
+            key: 'reduceSwitchDefault',
+            value: function reduceSwitchDefault(node, _ref54) {
+              var consequent = _ref54.consequent;
+              return seq(t('default:'), seq.apply(undefined, _toConsumableArray(consequent)));
+            }
+          },
+          {
+            key: 'reduceSwitchStatement',
+            value: function reduceSwitchStatement(node, _ref55) {
+              var discriminant = _ref55.discriminant;
+              var cases = _ref55.cases;
+              return seq(t('switch'), paren(discriminant), brace(seq.apply(undefined, _toConsumableArray(cases))));
+            }
+          },
+          {
+            key: 'reduceSwitchStatementWithDefault',
+            value: function reduceSwitchStatementWithDefault(node, _ref56) {
+              var discriminant = _ref56.discriminant;
+              var preDefaultCases = _ref56.preDefaultCases;
+              var defaultCase = _ref56.defaultCase;
+              var postDefaultCases = _ref56.postDefaultCases;
+              return seq(t('switch'), paren(discriminant), brace(seq.apply(undefined, _toConsumableArray(preDefaultCases).concat([defaultCase], _toConsumableArray(postDefaultCases)))));
+            }
+          },
+          {
+            key: 'reduceTemplateExpression',
+            value: function reduceTemplateExpression(node, _ref57) {
+              var tag = _ref57.tag;
+              var elements = _ref57.elements;
+              var state = node.tag == null ? empty() : p(node.tag, (0, _coderep.getPrecedence)(node), tag);
+              var templateData = '';
+              state = seq(state, t('`'));
+              for (var i = 0, l = node.elements.length; i < l; ++i) {
+                if (node.elements[i].type === 'TemplateElement') {
+                  var d = '';
+                  if (i > 0)
+                    d += '}';
+                  d += node.elements[i].rawValue;
+                  if (i < l - 1)
+                    d += '${';
+                  state = seq(state, t(d));
+                } else {
+                  state = seq(state, elements[i]);
+                }
+              }
+              state = seq(state, t('`'));
+              if (node.tag != null) {
+                state.startsWithCurly = tag.startsWithCurly;
+                state.startsWithLetSquareBracket = tag.startsWithLetSquareBracket;
+                state.startsWithFunctionOrClass = tag.startsWithFunctionOrClass;
+              }
+              return state;
+            }
+          },
+          {
+            key: 'reduceTemplateElement',
+            value: function reduceTemplateElement(node) {
+              return t(node.rawValue);
+            }
+          },
+          {
+            key: 'reduceThisExpression',
+            value: function reduceThisExpression(node) {
+              return t('this');
+            }
+          },
+          {
+            key: 'reduceThrowStatement',
+            value: function reduceThrowStatement(node, _ref58) {
+              var expression = _ref58.expression;
+              return seq(t('throw'), expression, semiOp());
+            }
+          },
+          {
+            key: 'reduceTryCatchStatement',
+            value: function reduceTryCatchStatement(node, _ref59) {
+              var body = _ref59.body;
+              var catchClause = _ref59.catchClause;
+              return seq(t('try'), body, catchClause);
+            }
+          },
+          {
+            key: 'reduceTryFinallyStatement',
+            value: function reduceTryFinallyStatement(node, _ref60) {
+              var body = _ref60.body;
+              var catchClause = _ref60.catchClause;
+              var finalizer = _ref60.finalizer;
+              return seq(t('try'), body, catchClause || empty(), t('finally'), finalizer);
+            }
+          },
+          {
+            key: 'reduceYieldExpression',
+            value: function reduceYieldExpression(node, _ref61) {
+              var expression = _ref61.expression;
+              if (node.expression == null)
+                return t('yield');
+              return seq(t('yield'), p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceYieldGeneratorExpression',
+            value: function reduceYieldGeneratorExpression(node, _ref62) {
+              var expression = _ref62.expression;
+              return seq(t('yield'), t('*'), p(node.expression, (0, _coderep.getPrecedence)(node), expression));
+            }
+          },
+          {
+            key: 'reduceDirective',
+            value: function reduceDirective(node) {
+              var delim = /^(?:[^"\\]|\\.)*$/.test(node.rawValue) ? '"' : "'";
+              return seq(t(delim + node.rawValue + delim), semiOp());
+            }
+          },
+          {
+            key: 'reduceVariableDeclaration',
+            value: function reduceVariableDeclaration(node, _ref63) {
+              var declarators = _ref63.declarators;
+              return seq(t(node.kind), commaSep(declarators));
+            }
+          },
+          {
+            key: 'reduceVariableDeclarationStatement',
+            value: function reduceVariableDeclarationStatement(node, _ref64) {
+              var declaration = _ref64.declaration;
+              return seq(declaration, semiOp());
+            }
+          },
+          {
+            key: 'reduceVariableDeclarator',
+            value: function reduceVariableDeclarator(node, _ref65) {
+              var binding = _ref65.binding;
+              var init = _ref65.init;
+              var containsIn = init && init.containsIn && !init.containsGroup;
+              if (init) {
+                if (init.containsGroup) {
+                  init = paren(init);
+                } else {
+                  init = markContainsIn(init);
+                }
+              }
+              return (0, _objectAssign2.default)(init == null ? binding : seq(binding, t('='), init), { containsIn: containsIn });
+            }
+          },
+          {
+            key: 'reduceWhileStatement',
+            value: function reduceWhileStatement(node, _ref66) {
+              var test = _ref66.test;
+              var body = _ref66.body;
+              return (0, _objectAssign2.default)(seq(t('while'), paren(test), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          },
+          {
+            key: 'reduceWithStatement',
+            value: function reduceWithStatement(node, _ref67) {
+              var object = _ref67.object;
+              var body = _ref67.body;
+              return (0, _objectAssign2.default)(seq(t('with'), paren(object), body), { endsWithMissingElse: body.endsWithMissingElse });
+            }
+          }
+        ]);
+        return MinimalCodeGen;
+      }();
+    exports.default = MinimalCodeGen;
   });
   global.codegen = require('/dist/index.js');
 }.call(this, this));
