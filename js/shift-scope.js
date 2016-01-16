@@ -5383,6 +5383,7 @@
               case _scope.ScopeType.CATCH:
               case _scope.ScopeType.WITH:
               case _scope.ScopeType.FUNCTION_NAME:
+              case _scope.ScopeType.CLASS_NAME:
               case _scope.ScopeType.PARAMETER_EXPRESSION:
                 merge(declarations, this.blockScopedDeclarations);
                 merge(declarations, this.functionDeclarations);
