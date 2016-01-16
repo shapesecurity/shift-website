@@ -144,23 +144,47 @@ function mouseOutHandler(e) {
 output.addEventListener("mouseover", mouseOverHandler);
 output.addEventListener("mouseout", mouseOutHandler);
 
+function escapeHTML(string) {
+  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function WebGen() {
   var webGen = new codegen.FormattedCodeGen;
 
+  webGen.reduceDirective = function(node, obj) {
+    node.rawValue = escapeHTML(node.rawValue);
+    return codegen.FormattedCodeGen.prototype.reduceDirective.call(this, node, obj);
+  }
+  webGen.reduceImport = function(node, obj) {
+    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
+    return codegen.FormattedCodeGen.prototype.reduceImport.call(this, node, obj);
+  }
+  webGen.reduceImportNamespace = function(node, obj) {
+    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
+    return codegen.FormattedCodeGen.prototype.reduceImportNamespace.call(this, node, obj);
+  }
+  webGen.reduceExportAllFrom = function(node, obj) {
+    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
+    return codegen.FormattedCodeGen.prototype.reduceExportAllFrom.call(this, node, obj);
+  }
+  webGen.reduceExportFrom = function(node, obj) {
+    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
+    return codegen.FormattedCodeGen.prototype.reduceExportFrom.call(this, node, obj);
+  }
   webGen.reduceLiteralRegExpExpression = function(node) {
     var rep = codegen.FormattedCodeGen.prototype.reduceLiteralRegExpExpression.call(this, node);
-    rep.token = rep.token.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    rep.token = escapeHTML(rep.token);
     return rep;
   }
   webGen.reduceLiteralStringExpression = function(node) {
     var rep = codegen.FormattedCodeGen.prototype.reduceLiteralStringExpression.call(this, node);
-    rep.token = rep.token.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    rep.token = escapeHTML(rep.token);
     return rep;
   };
   webGen.reduceTemplateExpression = function(node, obj) {
     for (var i = 0; i < node.elements.length; ++i) {
       if (node.elements[i].type === "TemplateElement") {
-        node.elements[i].rawValue = node.elements[i].rawValue.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        node.elements[i].rawValue = escapeHTML(node.elements[i].rawValue);
       }
     }
     return codegen.FormattedCodeGen.prototype.reduceTemplateExpression.call(this, node, obj);
