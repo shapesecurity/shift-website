@@ -34,7 +34,7 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor =  ace.edit(document.querySelector("#demo1 .editor"))
+var editor = ace.edit(document.querySelector("#demo1 .editor"))
 
 var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
