@@ -78,7 +78,7 @@
   color: white;
   font-weight: bold;
   padding: 0.5em;
-  white-space: pre;
+  white-space: pre-wrap;
   font-family: monospace;
 }
 .output-container.error .error-message {
