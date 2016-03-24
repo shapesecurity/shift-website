@@ -147,8 +147,11 @@ function mouseOutHandler(e) {
 output.addEventListener("mouseover", mouseOverHandler);
 output.addEventListener("mouseout", mouseOutHandler);
 
-function escapeHTML(string) {
-  return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function escapeHTML(maybeString) {
+  if (maybeString == null) {
+    return maybeString;
+  }
+  return maybeString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function WebGen() {
