@@ -195,6 +195,16 @@ function WebGen() {
     }
     return codegen.FormattedCodeGen.prototype.reduceTemplateExpression.call(this, node, obj);
   };
+  webGen.reduceAssignmentTargetIdentifier = function(binding) {
+    var rep = codegen.FormattedCodeGen.prototype.reduceAssignmentTargetIdentifier.call(this, binding);
+    var ind = identifiers.indexOf(binding);
+    if (ind === -1) {
+      ind = identifiers.length;
+      identifiers.push(binding);
+    }
+    rep.token = "<span class=\"code-binding\" data-identifier=\"" + ind + "\">" + rep.token + "</span>";
+    return rep;
+  };
   webGen.reduceBindingIdentifier = function(binding) {
     var rep = codegen.FormattedCodeGen.prototype.reduceBindingIdentifier.call(this, binding);
     var ind = identifiers.indexOf(binding);

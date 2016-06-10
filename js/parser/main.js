@@ -86,7 +86,7 @@ function onChange() {
   var code = editor.getValue();
   var parseFn = radio.checked ? parser.parseScript : parser.parseModule;
   try {
-    var ast = parseFn(code, { loc: false, earlyErrors : true });
+    var ast = parseFn(code, { earlyErrors : true });
   } catch (ex) {
     displayError(ex);
     return;
