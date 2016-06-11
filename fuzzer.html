@@ -12,6 +12,49 @@
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="css/ribbon.css" rel="stylesheet">
     <link href="css/css.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
+
+    <!-- highlight.js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/magula.min.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- ui-treeview web component -->
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html"/>
+    <link rel="import" href="bower_components/ui-treeview/ui-treeview.html"/>
+    <link href="css/ui-treeview.css" rel="stylesheet">
+
+    <!-- ace editor -->
+    <script src="bower_components/ace-builds/src-min/ace.js"></script>
+    <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
+    <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
+
+    <script src="js/shift-fuzzer.js"></script>
+    <script src="js/shift-codegen.js"></script>
+    <script src="js/shift-parser.js"></script>
+    <script src="js/shift-validator.js"></script>
+
+    <style>
+      #demo1 {
+        resize: vertical;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+      }
+      #demo1 .editor {
+        width: 100%;
+      }
+      #generate-button {
+      }
+      .status {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
   </head>
 
   <body>
@@ -37,9 +80,42 @@
 
         <hr />
 
-        <p class="text-center">
-        <img src="http://mediaserver.pulse2.com/wp-content/uploads/2012/12/Under_construction.jpg" alt="Under Construction" />
-        </p>
+        <section id="demo">
+          <h3>Demo</h3>
+
+          <p>
+            This demo generates and <a href="codegen.html">renders</a> a random, valid Shift format AST.
+          </p>
+
+          <p id="generate-button" class="text-center">
+            <button class="btn btn-primary btn-lg go-button" type="button" id="generate-btn">Generate!</button>
+          </p>
+
+          <p class="text-center">
+            <span class="status">&#10003; Doesn't parse - open an issue!</span>
+          </p>
+          <div class="demo" id="demo1">
+          <div class="editor" spellcheck="false"></div>
+            <script src="js/fuzzer/main.js"></script>
+          </div>
+        </section>
+
+        <section id="installation">
+          <h3>Installation</h3>
+
+          <pre><code class="nohighlight">npm install shift-parser</code></pre>
+        </section>
+
+        <section id="usage">
+          <h3>Usage</h3>
+
+          <pre><code class="javascript">import parse from "shift-parser";
+let ast = parse("/* ECMAScript program text */");</code></pre>
+
+        <pre><code class="javascript">import {parseScript, parseModule} from "shift-parser";
+let scriptAST = parseScript("/* ECMAScript Script text */");
+let moduleAST = parseModule("/* ECMAScript Module text */");</code></pre>
+        </section>
 
       </div>
 
@@ -48,8 +124,8 @@
       <div class="footer">
         <p>&copy; 2016 Shape Security, Inc.</p>
       </div>
-    </div>
 
+    </div>
 
   </body>
 </html>
