@@ -82,8 +82,10 @@ session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
 
-if (/^\?code=/.test(location.search)) {
-  session.setValue(decodeURIComponent(location.search.slice(6)));
+var params = {};
+location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){ params[param] = decodeURIComponent(value); });
+if ({}.hasOwnProperty.call(params, 'code')) {
+  session.setValue(decodeURIComponent(params.code));
 }
 
 

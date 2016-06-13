@@ -82,6 +82,14 @@ session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
 
+var params = {};
+location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){ params[param] = decodeURIComponent(value); });
+if ({}.hasOwnProperty.call(params, 'type') && (params.type === 'Module' || params.type === 'Script') && {}.hasOwnProperty.call(params, 'code')) {
+  (params.type === 'Script' ? radio : radio2).checked = true;
+  session.setValue(params.code);
+}
+
+
 function onChange() {
   var code = editor.getValue();
   var parseFn = radio.checked ? parser.parseScript : parser.parseModule;
