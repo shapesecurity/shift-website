@@ -39,20 +39,28 @@
 
     <style>
       #demo1 {
-        resize: vertical;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
         position: relative;
       }
       #demo1 .editor {
         width: 100%;
       }
-      #generate-button {
+      #demo1 .actions a {
+        text-decoration: none;
+        color: inherit;
       }
-      .status {
-        margin-left: auto;
-        margin-right: auto;
+      #demo1 .actions {
+        position: absolute;
+        z-index: 5;
+        top: 0;
+        right: 0;
+        padding: 1em;
+      }
+      #demo1 .actions .generate-button {
+        margin: 0 0.5em;
+      }
+      #demo1 .actions .send-to-parser {
+        font-weight: bold;
+        font-size: 14pt;
       }
     </style>
   </head>
@@ -87,17 +95,15 @@
             This demo generates and <a href="codegen.html">renders</a> a random, valid Shift format AST.
           </p>
 
-          <p id="generate-button" class="text-center">
-            <button class="btn btn-primary btn-lg go-button" type="button" id="generate-btn">Generate!</button>
-          </p>
-
-          <p class="text-center">
-            <span class="status">&#10003; Doesn't parse - open an issue!</span>
-          </p>
           <div class="demo" id="demo1">
-          <div class="editor" spellcheck="false"></div>
-            <script src="js/fuzzer/main.js"></script>
+            <p class="actions">
+              <button class="btn btn-lg send-to-parser" type="button" title="Want to learn more about this program? Send it to the parser demo."></button>
+              <button class="btn btn-primary btn-lg generate-button" type="button" id="generate-btn">Generate!</button>
+            </p>
+
+            <div class="editor" spellcheck="false"></div>
           </div>
+          <script src="js/fuzzer/main.js"></script>
         </section>
 
         <section id="installation">
