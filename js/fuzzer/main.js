@@ -17,8 +17,7 @@ session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
 
 
-var generateButton = document.querySelector("#demo1 .actions .generate-button"),
-  sendToParserButton = document.querySelector("#demo1 .actions .send-to-parser"),
+var sendToParserButton = document.querySelector("#demo1 .actions .send-to-parser"),
   playButton = document.querySelector("#demo1 .actions .play-button"),
   pauseButton = document.querySelector("#demo1 .actions .pause-button"),
   reportButton = document.querySelector("#demo1 .actions .report-button");
@@ -35,7 +34,6 @@ function setStatus(passed, type, code) {
   } else {
     session.setMode("ace/mode/text");
     sendToParserButton.style.display = "none";
-    generateButton.style.display = "none";
     playButton.style.display = "none";
     pauseButton.style.display = "none";
     reportButton.style.display = "initial";
@@ -69,11 +67,9 @@ function generate() {
   }
 }
 
-generateButton.addEventListener("click", generate);
 playButton.addEventListener("click", function() {
   interval = setInterval(generate, 600);
   playButton.style.display = "none";
-  generateButton.style.display = "none";
   sendToParserButton.style.display = "none";
   pauseButton.style.display = "initial";
   pauseButton.focus();
@@ -82,7 +78,6 @@ playButton.addEventListener("click", function() {
 pauseButton.addEventListener("click", function() {
   clearInterval(interval);
   pauseButton.style.display = "none";
-  generateButton.style.display = "initial";
   sendToParserButton.style.display = "initial";
   playButton.style.display = "initial";
   playButton.focus();
