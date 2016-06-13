@@ -57,7 +57,7 @@ function generate() {
   do {
     tree = fuzzer.fuzzProgram();
     code = codegen.default(tree, new codegen.FormattedCodeGen);
-  } while (knownErrors(tree) || code.trim().length === 0);
+  } while (knownErrors(tree) || code.trim().length < 150);
   session.setValue(codegen.default(tree, new codegen.FormattedCodeGen));
   try {
     parser[tree.type === "Script" ? "parseScript" : "parseModule"](code);
