@@ -53,10 +53,16 @@
         z-index: 5;
         top: 0;
         right: 0;
-        padding: 1em;
+        padding: 1em 1.5em;
       }
-      #demo1 .actions .generate-button {
-        margin: 0 0.5em;
+      #demo1 .actions .pause-button, #demo1 .actions .report-button {
+        display: none;
+      }
+      #demo1 .actions button {
+        line-height: 22px;
+      }
+      #demo1 .actions img {
+        height: 16px;
       }
       #demo1 .actions .send-to-parser {
         font-weight: bold;
@@ -106,17 +112,27 @@
 
           <p>
             This demo uses the fuzzer to generate a random Shift AST and
-            renders it using the Shift Code Generator. Press the "Generate!"
-            button in the upper right corner of the demo to generate another
-            program. If the fuzzer finds a program that cannot be parsed, you
-            will be prompted to open an issue on GitHub because at least one of
-            the fuzzer, the code generator, or the parser will have a bug.
+            renders it using the Shift Code Generator. Press the green button
+            in the upper right corner of the demo to begin cycling through
+            random programs. If the fuzzer finds a program that cannot be
+            parsed, you will be prompted to open an issue on GitHub because at
+            least one of the fuzzer, the code generator, or the parser will
+            have a bug.
           </p>
 
           <div class="demo" id="demo1">
             <p class="actions">
-              <button class="btn btn-lg send-to-parser" type="button" title="Want to learn more about this program? Send it to the parser demo."></button>
-              <button class="btn btn-primary btn-lg generate-button" type="button" id="generate-btn">Generate!</button>
+              <button class="btn btn-lg send-to-parser" type="button" title="Want to learn more about this program? Send it to the parser demo.">?</button>
+              <button class="btn btn-success btn-lg play-button" type="button" title="Begin cycling through random programs.">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQxNS4zNDYgNDE1LjM0NiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDE1LjM0NiA0MTUuMzQ2OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTQxLjcxMiw0MTUuMzQ2Yy0xMS43NjMsMC0yMS4zLTkuNTM3LTIxLjMtMjEuM1YyMS4yOTlDMjAuNDEyLDkuNTM2LDI5Ljk0OSwwLDQxLjcxMiwwbDM0Ni4xMjIsMTkxLjY5NyAgICBjMCwwLDE1Ljk3NSwxNS45NzUsMCwzMS45NTFDMzcxLjg1OSwyMzkuNjIyLDQxLjcxMiw0MTUuMzQ2LDQxLjcxMiw0MTUuMzQ2eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+              </button>
+              <button class="btn btn-warning btn-lg pause-button" type="button" title="Stop cycling through random programs.">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUzNS41NzggNTM1LjU3OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTM1LjU3OCA1MzUuNTc4OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yMzEuNiw1MTYuMjc4YzAsMTAuNjU4LTguNjQxLDE5LjMtMTkuMywxOS4zSDEwNi4xNWMtMTAuNjU5LDAtMTkuMy04LjY0MS0xOS4zLTE5LjNWMTkuMyAgICAgYzAtMTAuNjU5LDguNjQxLTE5LjMsMTkuMy0xOS4zaDEwNi4xNWMxMC42NTksMCwxOS4zLDguNjQxLDE5LjMsMTkuM1Y1MTYuMjc4eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCQk8cGF0aCBkPSJNNDQ4LjcyOCw1MTYuMjc4YzAsMTAuNjU4LTguNjQxLDE5LjMtMTkuMywxOS4zaC0xMDYuMTVjLTEwLjY1OSwwLTE5LjMtOC42NDEtMTkuMy0xOS4zVjE5LjMgICAgIGMwLTEwLjY1OSw4LjY0MS0xOS4zLDE5LjMtMTkuM2gxMDYuMTVjMTAuNjU5LDAsMTkuMyw4LjY0MSwxOS4zLDE5LjNWNTE2LjI3OHoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8L2c+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" />
+              </button>
+              <button class="btn btn-primary btn-lg generate-button" type="button" title="Generate another random program.">
+                <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4Ny45MTMgNDg3LjkxMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDg3LjkxMyA0ODcuOTEzOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yMi45ODcsNDY4LjE4N0MxMC4yOTEsNDY4LjE4NywwLDQ1Ny44OTYsMCw0NDUuMjAyVjQyLjk0OWMwLTEyLjY5NSwxMC4yOTEtMjIuOTg4LDIyLjk4Ny0yMi45ODhsMzczLjUxOSwyMDYuODc1ICAgICBjMCwwLDE3LjIzOSwxNy4yMzgsMCwzNC40NzdDMzc5LjI2OCwyNzguNTUyLDIyLjk4Nyw0NjguMTg3LDIyLjk4Nyw0NjguMTg3eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCQk8cGF0aCBkPSJNNDExLjA5LDQ0LjY0YzAtMTMuNzYsMTEuMTU1LTI0LjkxNSwyNC45MTUtMjQuOTE1aDI2Ljk5M2MxMy43NiwwLDI0LjkxNSwxMS4xNTUsMjQuOTE1LDI0LjkxNXYzOTguNjMzICAgICBjMCwxMy43Ni0xMS4xNTUsMjQuOTE1LTI0LjkxNSwyNC45MTVoLTI2Ljk5M2MtMTMuNzYsMC0yNC45MTUtMTEuMTU1LTI0LjkxNS0yNC45MTVWNDQuNjR6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPC9nPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+              </button>
+              <button class="btn btn-danger btn-lg report-button" type="button">You've found a bug! Open an issue.</button>
             </p>
 
             <div class="editor" spellcheck="false"></div>
@@ -135,23 +151,23 @@
 
           <pre><code class="javascript">import fuzzProgram, {FuzzerState, fuzzFunctionDeclaration} from "shift-fuzzer";
 import render from "shift-codegen";
- 
-// generate random program 
+
+// generate random program
 let randomProgramAst = fuzzProgram();
 let randomProgram = render(randomProgramAst);
 console.log(randomProgram);
- 
-// generate random FunctionDeclaration 
+
+// generate random FunctionDeclaration
 let randomFunctionAst = fuzzFunctionDeclaration(new FuzzerState({maxDepth: 7}));
 let randomFunction = render(randomFunctionAst);
 console.log(randomFunction);
- 
-// generate random program from a seed 
+
+// generate random program from a seed
 const RNG_SEED = 0xBADBE1BE1;
 let prng =
   (function(state){
     return function nextDouble() {
-      // implementation left as an exercise for the reader 
+      // implementation left as an exercise for the reader
     };
   }(RNG_SEED));
 let seededRandomProgramAst = fuzzProgram(new FuzzerState({rng: prng, maxDepth: 7}));

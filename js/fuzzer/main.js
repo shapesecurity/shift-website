@@ -18,35 +18,39 @@ session.setUseWrapMode(false);
 
 
 var generateButton = document.querySelector("#demo1 .actions .generate-button"),
-  sendToParserButton = document.querySelector("#demo1 .actions .send-to-parser");
+  sendToParserButton = document.querySelector("#demo1 .actions .send-to-parser"),
+  playButton = document.querySelector("#demo1 .actions .play-button"),
+  pauseButton = document.querySelector("#demo1 .actions .pause-button"),
+  reportButton = document.querySelector("#demo1 .actions .report-button");
 
-sendToParserButton.addEventListener("click", function(){ sendToParserButton.children[0].click(); });
+var interval = null;
+
+var parserLink = null;
+sendToParserButton.addEventListener("click", function(){ location.href = parserLink; });
 
 function setStatus(passed, type, code) {
-  var link = document.createElement('a');
+  var link;
   if (passed) {
-    link.innerHTML = '?';
-    link.href = 'parser.html?type=' + type + '&code=' + encodeURIComponent(code);
-    sendToParserButton.innerHTML = '';
-    sendToParserButton.appendChild(link);
+    parserLink = "parser.html?type=" + type + "&code=" + encodeURIComponent(code);
   } else {
     session.setMode("ace/mode/text");
-    sendToParserButton.style.display = 'none';
-    link.innerHTML = 'You\'ve found a bug! Open an issue.';
-    link.href = 'https://github.com/shapesecurity/shift-fuzzer-js/issues/new?title=' + encodeURIComponent('I found a bug using the demo!') + '&body=' + encodeURIComponent('Here\'s the code:\n\n```js\n' + code.trim() + '\n```');
-    generateButton.innerHTML = '';
-    generateButton.appendChild(link);
-    generateButton.removeEventListener("click", generate);
-    generateButton.addEventListener("click", function(){ link.click(); });
-    generateButton.classList.remove('btn-primary');
-    generateButton.classList.add('btn-danger');
+    sendToParserButton.style.display = "none";
+    generateButton.style.display = "none";
+    playButton.style.display = "none";
+    pauseButton.style.display = "none";
+    reportButton.style.display = "initial";
+    if (interval != null) clearInterval(interval);
+    reportButton.addEventListener("click", function(){
+      location.href = "https://github.com/shapesecurity/shift-fuzzer-js/issues/new?title=" + encodeURIComponent("I found a bug using the demo!") + "&body=" + encodeURIComponent("Here's the code:\n\n```js\n" + code.trim() + "\n```");
+    });
+    reportButton.focus();
   }
 }
 
 function knownErrors(tree) {
   var errList = validator.Validator.validate(tree);
   return errList.length > 0 && errList.every(function (e) {
-    return e.description && e.description.match('is not declared') || e.message && e.message.match(/Duplicate (binding|export)|is not declared/); // pending https://github.com/shapesecurity/shift-fuzzer-js/issues/2
+    return e.description && e.description.match("is not declared") || e.message && e.message.match(/Duplicate (binding|export)|is not declared/); // pending https://github.com/shapesecurity/shift-fuzzer-js/issues/2
   });
 }
 
@@ -58,7 +62,7 @@ function generate() {
   } while (knownErrors(tree) || code.trim().length === 0);
   session.setValue(codegen.default(tree, new codegen.FormattedCodeGen));
   try {
-    parser[tree.type === 'Script' ? 'parseScript' : 'parseModule'](code);
+    parser[tree.type === "Script" ? "parseScript" : "parseModule"](code);
     setStatus(true, tree.type, code);
   } catch(e) {
     setStatus(false, tree.type, code);
@@ -66,5 +70,22 @@ function generate() {
 }
 
 generateButton.addEventListener("click", generate);
+playButton.addEventListener("click", function() {
+  interval = setInterval(generate, 600);
+  playButton.style.display = "none";
+  generateButton.style.display = "none";
+  sendToParserButton.style.display = "none";
+  pauseButton.style.display = "initial";
+  pauseButton.focus();
+  generate();
+});
+pauseButton.addEventListener("click", function() {
+  clearInterval(interval);
+  pauseButton.style.display = "none";
+  generateButton.style.display = "initial";
+  sendToParserButton.style.display = "initial";
+  playButton.style.display = "initial";
+  playButton.focus();
+});
 
 generate();
