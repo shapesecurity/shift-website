@@ -27,22 +27,29 @@ var interval = null;
 var parserLink = null;
 sendToParserButton.addEventListener("click", function(){ location.href = parserLink; });
 
-function setStatus(passed, type, code) {
-  var link;
-  if (passed) {
-    parserLink = "parser.html?type=" + type + "&code=" + encodeURIComponent(code);
-  } else {
-    session.setMode("ace/mode/text");
-    sendToParserButton.style.display = "none";
-    playButton.style.display = "none";
-    pauseButton.style.display = "none";
-    reportButton.style.display = "initial";
-    if (interval != null) clearInterval(interval);
-    reportButton.addEventListener("click", function(){
-      location.href = "https://github.com/shapesecurity/shift-fuzzer-js/issues/new?title=" + encodeURIComponent("I found a bug using the demo!") + "&body=" + encodeURIComponent("Here's the code:\n\n```js\n" + code.trim() + "\n```");
-    });
-    reportButton.focus();
-  }
+function success(tree, code) {
+  parserLink = "parser.html?type=" + tree.type + "&code=" + encodeURIComponent(code);
+}
+
+function failure(tree, code, error) {
+  session.setMode("ace/mode/text");
+  sendToParserButton.style.display = "none";
+  playButton.style.display = "none";
+  pauseButton.style.display = "none";
+  reportButton.style.display = "initial";
+  if (interval != null) clearInterval(interval);
+  reportButton.addEventListener("click", function(){
+    location.href =
+      "https://github.com/shapesecurity/shift-fuzzer-js/issues/new?title=" +
+      encodeURIComponent("I found a bug using the demo!") +
+      "&body=" +
+      encodeURIComponent(
+        "> " + error.message + "\n\n" +
+        "Here's the " + tree.type.toLowerCase() + ":\n\n" +
+        "```js\n" + code.trim() + "\n```"
+      );
+  });
+  reportButton.focus();
 }
 
 function knownErrors(tree) {
@@ -61,9 +68,9 @@ function generate() {
   session.setValue(codegen.default(tree, new codegen.FormattedCodeGen));
   try {
     parser[tree.type === "Script" ? "parseScript" : "parseModule"](code);
-    setStatus(true, tree.type, code);
+    success(tree, code);
   } catch(e) {
-    setStatus(false, tree.type, code);
+    failure(tree, code, e);
   }
 }
 
