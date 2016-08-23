@@ -49,8 +49,9 @@ function displayError(exception) {
   console.dir(exception);
   if (exception.line) {
     editor.getSession().setAnnotations([{
-      row: exception.line - 1,
-      column: exception.column,
+      // check for both properties since Error object line/column cannot be redefined in Safari
+      row: (exception.parseErrorLine || exception.line) - 1,
+      column: exception.parseErrorColumn || exception.column,
       text: exception.description,
       type: "error" // also warning and information
     }]);
