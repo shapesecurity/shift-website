@@ -4,9 +4,16 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "bower": "^1.4.1"
+    "commonjs-everywhere": "0.9.7",
+    "shift-codegen": "5.0.3",
+    "shift-fuzzer": "1.0.1",
+    "shift-parser": "5.0.5",
+    "shift-reducer": "4.0.0",
+    "shift-scope": "3.0.0",
+    "shift-validator": "3.0.0"
   },
   "scripts": {
+    "build": "bash ./update.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
