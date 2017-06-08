@@ -85,6 +85,9 @@ session.setUseWrapMode(false);
 var params = {};
 location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){ params[param] = decodeURIComponent(value); });
 if ({}.hasOwnProperty.call(params, 'code')) {
+  if ({}.hasOwnProperty.call(params, 'type') && (params.type === 'Module' || params.type === 'Script')) {
+    (params.type === 'Script' ? radio : radio2).checked = true;
+  }
   session.setValue(decodeURIComponent(params.code));
 }
 
