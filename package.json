@@ -5,9 +5,9 @@
   "dependencies": {},
   "devDependencies": {
     "commonjs-everywhere": "0.9.7",
-    "shift-codegen": "5.0.3",
-    "shift-fuzzer": "1.0.1",
-    "shift-parser": "5.0.5",
+    "shift-codegen": "5.0.4",
+    "shift-fuzzer": "1.0.2",
+    "shift-parser": "5.0.7",
     "shift-reducer": "4.0.0",
     "shift-scope": "3.0.0",
     "shift-validator": "3.0.0"
