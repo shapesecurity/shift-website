@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // fn from http://underscorejs.org/docs/underscore.html
 // https://github.com/jashkenas/underscore/blob/master/LICENSE
@@ -34,14 +34,14 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = ace.edit(document.querySelector("#demo1 .editor"));
+var editor = ace.edit(document.querySelector('#demo1 .editor'));
 
-var error = document.querySelector("#demo1 .error-message");
-var output = document.querySelector("#demo1 .output");
-var outputContainer = document.querySelector("#demo1 .output-container");
+var error = document.querySelector('#demo1 .error-message');
+var output = document.querySelector('#demo1 .output');
+var outputContainer = document.querySelector('#demo1 .output-container');
 
-var radio = document.querySelector("#script-radio");
-var radio2 = document.querySelector("#module-radio");
+var radio = document.querySelector('#script-radio');
+var radio2 = document.querySelector('#module-radio');
 
 function displayError(exception) {
   unhighlight();
@@ -52,14 +52,14 @@ function displayError(exception) {
       row: exception.line - 1,
       column: exception.column,
       text: exception.message,
-      type: "error" // also warning and information
+      type: 'error' // also warning and information
     }]);
   }
-  outputContainer.classList.add("error");
+  outputContainer.classList.add('error');
 }
 
 function hideError() {
-  outputContainer.classList.remove("error");
+  outputContainer.classList.remove('error');
   editor.getSession().clearAnnotations();
 }
 
@@ -71,13 +71,13 @@ function render(program) {
 var session = editor.getSession();
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
-editor.setOption("fontFamily", "Source Code Pro");
-editor.setOption("fontSize", "10pt");
+editor.setOption('fontFamily', 'Source Code Pro');
+editor.setOption('fontSize', '10pt');
 editor.setShowPrintMargin(false);
-editor.setTheme("ace/theme/textmate");
+editor.setTheme('ace/theme/textmate');
 editor.setWrapBehavioursEnabled(false);
-session.setMode("ace/mode/javascript");
-session.setOption("useWorker", false);
+session.setMode('ace/mode/javascript');
+session.setOption('useWorker', false);
 session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
@@ -156,8 +156,8 @@ function mouseOverHandler(e) {
 function mouseOutHandler(e) {
   unhighlight();
 }
-output.addEventListener("mouseover", mouseOverHandler);
-output.addEventListener("mouseout", mouseOutHandler);
+output.addEventListener('mouseover', mouseOverHandler);
+output.addEventListener('mouseout', mouseOutHandler);
 
 function escapeHTML(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
