@@ -4,12 +4,12 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "commonjs-everywhere": "0.9.7",
+    "browserify": "14.4.0",
     "shift-codegen": "5.0.4",
     "shift-fuzzer": "1.0.2",
-    "shift-parser": "5.0.7",
-    "shift-reducer": "4.0.0",
-    "shift-scope": "3.0.0",
+    "shift-parser": "5.2.0",
+    "shift-reducer": "4.0.1",
+    "shift-scope": "3.1.0",
     "shift-validator": "3.0.0"
   },
   "scripts": {

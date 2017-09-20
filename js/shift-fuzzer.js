@@ -1,1 +1,3312 @@
-(function(b){function a(b,d){if({}.hasOwnProperty.call(a.cache,b))return a.cache[b];var e=a.resolve(b);if(!e)throw new Error('Failed to resolve module '+b);var c={id:b,require:a,filename:b,exports:{},loaded:!1,parent:d,children:[]};d&&d.children.push(c);var f=b.slice(0,b.lastIndexOf('/')+1);return a.cache[b]=c.exports,e.call(c.exports,c,c.exports,f,b),c.loaded=!0,a.cache[b]=c.exports}a.modules={},a.cache={},a.resolve=function(b){return{}.hasOwnProperty.call(a.modules,b)?a.modules[b]:void 0},a.define=function(b,c){a.modules[b]=c},a.define('/node_modules/shift-fuzzer/dist/index.js',function(C,b,bm,bl){'use strict';function aA(a){return a&&a.__esModule?a:{default:a}}function bk(a){if(a&&a.__esModule)return a;else{var b={};if(a!=null)for(var c in a)Object.prototype.hasOwnProperty.call(a,c)&&(b[c]=a[c]);return b.default=a,b}}function l(a){if(Array.isArray(a)){for(var b=0,c=Array(a.length);b<a.length;b++)c[b]=a[b];return c}else return Array.from(a)}function al(a){return String.fromCharCode(97+a.rng.nextInt(25))}Object.defineProperty(b,'__esModule',{value:!0}),b.fuzzStatement=b.fuzzExpression=undefined,b.default=b.fuzzProgram=b.fuzzYieldGeneratorExpression=b.fuzzYieldExpression=b.fuzzWithStatement=b.fuzzWhileStatement=b.fuzzVariableDeclarator=b.fuzzVariableDeclarationStatement=b.fuzzVariableDeclaration=b.fuzzUpdateExpression=b.fuzzUnaryExpression=b.fuzzTryFinallyStatement=b.fuzzTryCatchStatement=b.fuzzThrowStatement=b.fuzzThisExpression=b.fuzzTemplateExpression=b.fuzzTemplateElement=b.fuzzSwitchStatementWithDefault=b.fuzzSwitchStatement=b.fuzzSwitchDefault=b.fuzzSwitchCase=b.fuzzSuper=b.fuzzStaticPropertyName=b.fuzzStaticMemberExpression=b.fuzzStaticMemberAssignmentTarget=b.fuzzSpreadElement=b.fuzzShorthandProperty=b.fuzzSetter=b.fuzzScript=b.fuzzReturnStatement=b.fuzzObjectExpression=b.fuzzObjectBinding=b.fuzzObjectAssignmentTarget=b.fuzzNewTargetExpression=b.fuzzNewExpression=b.fuzzModule=b.fuzzMethod=b.fuzzLiteralStringExpression=b.fuzzLiteralRegExpExpression=b.fuzzLiteralNumericExpression=b.fuzzLiteralNullExpression=b.fuzzLiteralInfinityExpression=b.fuzzLiteralBooleanExpression=b.fuzzLabeledStatement=b.fuzzImportSpecifier=b.fuzzImportNamespace=b.fuzzImport=b.fuzzIfStatement=b.fuzzIdentifierExpression=b.fuzzGetter=b.fuzzFunctionExpression=b.fuzzFunctionDeclaration=b.fuzzFunctionBody=b.fuzzFormalParameters=b.fuzzForStatement=b.fuzzForOfStatement=b.fuzzForInStatement=b.fuzzExpressionStatement=b.fuzzExportLocals=b.fuzzExportLocalSpecifier=b.fuzzExportFromSpecifier=b.fuzzExportFrom=b.fuzzExportDefault=b.fuzzExportAllFrom=b.fuzzExport=b.fuzzEmptyStatement=b.fuzzDoWhileStatement=b.fuzzDirective=b.fuzzDebuggerStatement=b.fuzzDataProperty=b.fuzzContinueStatement=b.fuzzConditionalExpression=b.fuzzComputedPropertyName=b.fuzzComputedMemberExpression=b.fuzzComputedMemberAssignmentTarget=b.fuzzCompoundAssignmentExpression=b.fuzzClassExpression=b.fuzzClassElement=b.fuzzClassDeclaration=b.fuzzCatchClause=b.fuzzCallExpression=b.fuzzBreakStatement=b.fuzzBlockStatement=b.fuzzBlock=b.fuzzBindingWithDefault=b.fuzzBindingPropertyProperty=b.fuzzBindingPropertyIdentifier=b.fuzzBindingIdentifier=b.fuzzBinaryExpression=b.fuzzAssignmentTargetWithDefault=b.fuzzAssignmentTargetPropertyProperty=b.fuzzAssignmentTargetPropertyIdentifier=b.fuzzAssignmentTargetIdentifier=b.fuzzAssignmentExpression=b.fuzzArrowExpression=b.fuzzArrayExpression=b.fuzzArrayBinding=b.fuzzArrayAssignmentTarget=b.fuzzIdentifier=b.FuzzerState=undefined;var ap=a('/node_modules/shift-ast/checked.js',C),d=bk(ap),aE=a('/node_modules/shift-fuzzer/dist/fuzzer-state.js',C),f=aA(aE),c=a('/node_modules/shift-fuzzer/dist/combinators.js',C),b2=a('/node_modules/shift-fuzzer/dist/regexp.js',C),b3=aA(b2);b.FuzzerState=f.default;var v=['break','case','catch','class','const','continue','debugger','default','delete','do','else','export','extends','finally','for','function','if','import','in','instanceof','new','return','super','switch','this','throw','try','typeof','var','void','while','with','null','true','false','enum'],u=['implements','package','protected','interface','private','public','static'],au=v.concat(u).concat(['let','yield','await','eval','arguments','constructor','prototype']),ax=al,ay=15,ab=function a(b){return al(b)+(0,c.manyN)(ay)(ax)(b).join('')},B=function a(d,e){var b=[],c=[].concat(v);return d.strict?c.push.apply(c,u.concat(['let','yield'])):(b.push.apply(b,u),(d.declKind==='let'||d.declKind==='const'?c:b).push('let'),(d.allowYieldIdentifier?b:c).push('yield')),(d.strict&&e?c:b).push('eval','arguments'),(d.allowAwaitIdenifier?b:c).push('await'),M(d,b,c)},aI=function a(c){var b=['eval','arguments'],d=[].concat(v,l(c.labels));return c.strict?d.push.apply(d,u.concat(['let','yield'])):(b.push.apply(b,u.concat(['let'])),(c.allowYieldIdentifier?b:d).push('yield')),(c.allowAwaitIdenifier?b:d).push('await'),c.labels.forEach(function(c){var a=b.indexOf(c);a!==-1&&b.splice(a,1)}),M(c,b,d)},M=b.fuzzIdentifier=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,d=arguments.length>1&&arguments[1]!==undefined?arguments[1]:[],g=arguments.length>2&&arguments[2]!==undefined?arguments[2]:v;if(d.length>0&&b.rng.nextBoolean())return c.oneOf.apply(undefined,l(d))(b);while(!0){var e=ab(b);if(g.indexOf(e)<0)return e}},q=(0,c.choose)(ab,c.oneOf.apply(undefined,l(au))),bj=c.oneOf.apply(undefined,l('0123456789abcdefABCDEF')),k=function a(b){return b.rng.nextString()},ad=function a(d,b){var c=void 0;do c=b,b=b.replace(/((^|[^\\])(\\\\)*\\)(8|9|u|x|$)/g,'$1\\$4'),d.strict&&(b=b.replace(/((^|[^\\])(\\\\)*\\)0([0-7])/g,'$1\\0$4'),b=b.replace(/((^|[^\\])(\\\\)*\\)([1-7])/g,'$1\\$4'));while(b!==c);return b},b5=b.fuzzArrayAssignmentTarget=function a(b){return(0,c.ap)(d.ArrayAssignmentTarget,{elements:(0,c.many)((0,c.opt)((0,c.choose)($,m))),rest:(0,c.opt)(m)},b)},ah=b.fuzzArrayBinding=function a(b){return(0,c.ap)(d.ArrayBinding,{elements:(0,c.many)((0,c.opt)((0,c.choose)(y,i))),rest:(0,c.opt)(i)},b)},ai=b.fuzzArrayExpression=function a(b){return(0,c.ap)(d.ArrayExpression,{elements:(0,c.many)((0,c.opt)((0,c.choose)(e,D)))},b)},aj=b.fuzzArrowExpression=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,m=b.rng.nextBoolean(),h=void 0,i=void 0;if(!m){var k=j(b),n=k.directives,l=k.hasStrictDirective;b=b.enterFunction({isArrow:!0,hasStrictDirective:l}),h=t(b,{hasStrictDirective:l}),i=new d.FunctionBody({directives:n,statements:(0,c.many)(g)(b.goDeeper())})}else b=b.enterFunction({isArrow:!0}),h=t(b),i=e(b);return new d.ArrowExpression({params:h,body:i})},ak=b.fuzzAssignmentExpression=function a(b){return(0,c.ap)(d.AssignmentExpression,{binding:m,expression:e},b)},x=b.fuzzAssignmentTargetIdentifier=function a(b){return(0,c.ap)(d.AssignmentTargetIdentifier,{name:function a(b){return B(b,!0)}},b)},am=b.fuzzAssignmentTargetPropertyIdentifier=function a(b){return(0,c.ap)(d.AssignmentTargetPropertyIdentifier,{binding:x,init:(0,c.opt)(e)},b)},ao=b.fuzzAssignmentTargetPropertyProperty=function a(b){return(0,c.ap)(d.AssignmentTargetPropertyProperty,{name:(0,c.choose)(p,o),binding:(0,c.choose)($,m)},b)},$=b.fuzzAssignmentTargetWithDefault=function a(b){return(0,c.ap)(d.AssignmentTargetWithDefault,{binding:m,init:e},b)},aq=b.fuzzBinaryExpression=function a(b){return(0,c.ap)(d.BinaryExpression,{left:e,operator:(0,c.oneOf)('==','!=','===','!==','<','<=','>','>=','in','instanceof','<<','>>','>>>','+','-','*','/','%','**',',','||','&&','|','^','&'),right:e},b)},h=b.fuzzBindingIdentifier=function a(b){return(0,c.ap)(d.BindingIdentifier,{name:function a(b){return B(b,!0)}},b)},av=b.fuzzBindingPropertyIdentifier=function a(b){return(0,c.ap)(d.BindingPropertyIdentifier,{binding:h,init:(0,c.opt)(e)},b)},aw=b.fuzzBindingPropertyProperty=function a(b){return(0,c.ap)(d.BindingPropertyProperty,{name:(0,c.choose)(p,o),binding:(0,c.choose)(y,i)},b)},y=b.fuzzBindingWithDefault=function a(b){return(0,c.ap)(d.BindingWithDefault,{binding:i,init:e},b)},r=b.fuzzBlock=function a(b){return(0,c.ap)(d.Block,{statements:(0,c.many)(g)},b)},az=b.fuzzBlockStatement=function a(b){return(0,c.ap)(d.BlockStatement,{block:r},b)},J=b.fuzzBreakStatement=function a(b){return(0,c.ap)(d.BreakStatement,{label:function a(b){return b.labels.length>0&&(!(b.inLoop||b.inSwitch)||b.rng.nextBoolean())?c.oneOf.apply(undefined,l(b.labels))(b):null}},b)},aB=b.fuzzCallExpression=function a(b){return(0,c.ap)(d.CallExpression,{callee:be,'arguments':(0,c.many)((0,c.choose)(e,D))},b)},a5=b.fuzzCatchClause=function a(b){return(0,c.ap)(d.CatchClause,{binding:i,body:r},b)},H=b.fuzzClassDeclaration=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper(),b.inLoop=b.inSwitch=!1,b.strict=!0;var i=h(b),g=(0,c.opt)(e)(b),j=ac(b,{allowConstructor:g!==null});return new d.ClassDeclaration({name:i,'super':g,elements:j})},aK=b.fuzzClassElement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,g=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},h=g.allowConstructor,j=h===undefined?!0:h,i=g.constructorMayContainSuperCall,k=i===undefined?!1:i;b=b.goDeeper();var e=b.rng.nextBoolean(),l=(0,c.choose)(function(a){return L(a,{isStatic:e,inClass:!0})},function(a){return V(a,{isStatic:e,inClass:!0,allowConstructor:j,constructorMayContainSuperCall:k})},function(a){return Y(a,{isStatic:e,inClass:!0})})(b);return new d.ClassElement({isStatic:e,method:l})},aM=b.fuzzClassExpression=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper(),b.inLoop=b.inSwitch=!1,b.strict=!0;var i=(0,c.opt)(h)(b),g=(0,c.opt)(e)(b),j=ac(b,{allowConstructor:g!==null});return new d.ClassExpression({name:i,'super':g,elements:j})},aN=b.fuzzCompoundAssignmentExpression=function a(b){return(0,c.ap)(d.CompoundAssignmentExpression,{binding:(0,c.choose)(x,(0,c.choose)(F,E)),operator:(0,c.oneOf)('+=','-=','*=','/=','%=','**=','<<=','>>=','>>>=','|=','^=','&='),expression:e},b)},F=b.fuzzComputedMemberAssignmentTarget=function a(b){return(0,c.ap)(d.ComputedMemberAssignmentTarget,{object:w,expression:e},b)},aQ=b.fuzzComputedMemberExpression=function a(b){return(0,c.ap)(d.ComputedMemberExpression,{object:w,expression:e},b)},p=b.fuzzComputedPropertyName=function a(b){return(0,c.ap)(d.ComputedPropertyName,{expression:e},b)},aV=b.fuzzConditionalExpression=function a(b){return(0,c.ap)(d.ConditionalExpression,{test:e,consequent:e,alternate:e},b)},O=b.fuzzContinueStatement=function a(b){return(0,c.ap)(d.ContinueStatement,{label:function a(b){return b.loopLabels.length>0&&b.rng.nextBoolean()?c.oneOf.apply(undefined,l(b.loopLabels))(b):null}},b)},b1=b.fuzzDataProperty=function a(b){return(0,c.ap)(d.DataProperty,{name:(0,c.choose)(p,o),expression:e},b)},P=b.fuzzDebuggerStatement=function a(b){return(0,c.ap)(d.DebuggerStatement,{},b)},Z=b.fuzzDirective=function a(){var c=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,l=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},e=l.allowUseStrict,g=e===undefined?!0:e,b=g&&c.rng.nextBoolean()?'use strict':k(c);if(b.match('"')&&b.match("'")){var h=c.rng.nextBoolean()?'"':"'",m=h==='"'?/((^|[^\\])(\\\\)*)"/g:/((^|[^\\])(\\\\)*)'/g,i=void 0;do i=b,b=b.replace(m,'$1\\'+h);while(b!==i)}var j=void 0;do j=b,b=b.replace(/((^|[^\\])(\\\\)*)([\r\n])/g,'$1\\$4');while(b!==j);return b=ad(c,b),!g&&b==='use strict'&&(b=''),new d.Directive({rawValue:b})},b4=b.fuzzDoWhileStatement=function a(b){return(0,c.ap)(d.DoWhileStatement,{body:function a(b){return g(b.enterLoop(),{allowProperDeclarations:!1,allowFunctionDeclarations:!1})},test:e},b)},_=b.fuzzEmptyStatement=function a(b){return(0,c.ap)(d.EmptyStatement,{},b)},b6=b.fuzzExport=function a(b){return(0,c.ap)(d.Export,{declaration:(0,c.choose)(H,n,s)},b)},bb=b.fuzzExportAllFrom=function a(b){return(0,c.ap)(d.ExportAllFrom,{moduleSpecifier:k},b)},bd=b.fuzzExportDefault=function a(b){return(0,c.ap)(d.ExportDefault,{body:(0,c.choose)(H,e,n)},b)},bf=b.fuzzExportFrom=function a(b){return(0,c.ap)(d.ExportFrom,{namedExports:(0,c.many)(bg),moduleSpecifier:k},b)},bg=b.fuzzExportFromSpecifier=function a(b){return(0,c.ap)(d.ExportFromSpecifier,{name:q,exportedName:(0,c.opt)(q)},b)},bh=b.fuzzExportLocalSpecifier=function a(b){return(0,c.ap)(d.ExportLocalSpecifier,{name:A,exportedName:(0,c.opt)(q)},b)},af=b.fuzzExportLocals=function a(b){return(0,c.ap)(d.ExportLocals,{namedExports:(0,c.many)(bh)},b)},ag=b.fuzzExpressionStatement=function a(b){return(0,c.ap)(d.ExpressionStatement,{expression:e},b)},ae=b.fuzzForInStatement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper();var c=b.rng.nextBoolean()?s(b,{inForInOfHead:!0}):m(b),h=e(b),i=g(b.enterLoop(),{allowProperDeclarations:!1,allowFunctionDeclarations:!1});return new d.ForInStatement({left:c,right:h,body:i})},a1=b.fuzzForOfStatement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper();var c=b.rng.nextBoolean()?s(b,{inForInOfHead:!0}):m(b),h=e(b),i=g(b.enterLoop(),{allowProperDeclarations:!1,allowFunctionDeclarations:!1});return new d.ForOfStatement({left:c,right:h,body:i})},a4=b.fuzzForStatement=function a(b){return(0,c.ap)(d.ForStatement,{init:(0,c.opt)((0,c.choose)(e,s)),test:(0,c.opt)(e),update:(0,c.opt)(e),body:function a(b){return g(b.enterLoop(),{allowProperDeclarations:!1,allowFunctionDeclarations:!1})}},b)},t=b.fuzzFormalParameters=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,g=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},e=g.hasStrictDirective,j=e===undefined?!1:e;if(j)return new d.FormalParameters({items:(0,c.many)(h)(b),rest:null});b=b.goDeeper().disableYieldExpr();var k=(0,c.many)((0,c.choose)(y,i))(b),l=(0,c.opt)(i)(b);return new d.FormalParameters({items:k,rest:l})},bi=b.fuzzFunctionBody=function a(b){return(0,c.ap)(d.FunctionBody,{directives:(0,c.many)(Z),statements:(0,c.many)(g)},b)},n=b.fuzzFunctionDeclaration=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,o=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},e=o.allowProperDeclarations,n=e===undefined?!0:e,i=j(b),r=i.directives,k=i.hasStrictDirective,l=n&&b.rng.nextBoolean(),p=h(b);b=b.enterFunction({isGenerator:l,hasStrictDirective:k});var q=t(b,{hasStrictDirective:k}),m=new d.FunctionBody({directives:r,statements:(0,c.many)(g)(b.goDeeper())});return new d.FunctionDeclaration({isGenerator:l,name:p,params:q,body:m})},an=b.fuzzFunctionExpression=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.clone();var i=j(b),l=i.directives,k=i.hasStrictDirective,e=b.rng.nextBoolean();e&&(b.allowYieldIdentifier=!1);var m=b.rng.nextBoolean()?h(b):null;b=b.enterFunction({isGenerator:e,hasStrictDirective:k});var n=t(b,{hasStrictDirective:k}),o=new d.FunctionBody({directives:l,statements:(0,c.many)(g)(b.goDeeper())});return new d.FunctionExpression({isGenerator:e,name:m,params:n,body:o})},L=b.fuzzGetter=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,e=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},h=e.isStatic,l=h===undefined?!1:h,i=e.inClass,s=i===undefined?!1:i,k=j(b),n=k.directives,q=k.hasStrictDirective,r=b.rng.nextBoolean?p(b):o(b,{allowConstructor:!s,allowPrototype:!l});b=b.enterFunction({isMethod:!0,hasStrictDirective:q}),b.allowSuperCall=!1,b.allowSuperProp=!0;var m=new d.FunctionBody({directives:n,statements:(0,c.many)(g)(b.goDeeper())});return new d.Getter({name:r,body:m})},A=b.fuzzIdentifierExpression=function a(b){return(0,c.ap)(d.IdentifierExpression,{name:function a(b){return B(b,!1)}},b)},N=b.fuzzIfStatement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper();var h=e(b),c=!b.allowMissingElse||b.rng.nextBoolean()?g(b,{allowProperDeclarations:!1,allowFunctionDeclarations:!b.strict,allowLabeledFunctionDeclarations:!1}):null;c&&(b.allowMissingElse=!1);var i=g(b,{allowProperDeclarations:!1,allowFunctionDeclarations:!b.strict,allowLabeledFunctionDeclarations:!1});return new d.IfStatement({test:h,consequent:i,alternate:c})},ar=b.fuzzImport=function a(b){return(0,c.ap)(d.Import,{defaultBinding:(0,c.opt)(h),namedImports:(0,c.many)(at),moduleSpecifier:k},b)},as=b.fuzzImportNamespace=function a(b){return(0,c.ap)(d.ImportNamespace,{defaultBinding:(0,c.opt)(h),namespaceBinding:h,moduleSpecifier:k},b)},at=b.fuzzImportSpecifier=function a(b){return(0,c.ap)(d.ImportSpecifier,{name:(0,c.opt)(q),binding:h},b)},z=b.fuzzLabeledStatement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,j=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},i=j.allowFunctionDeclarations,k=i===undefined?b.strict:i;b=b.goDeeper();var e=aI(b),h=void 0;return b.labels=b.labels.concat([e]),b.rng.nextBoolean()?(b.loopLabels=b.loopLabels.concat([e]),h=c.choose.apply(undefined,aa)(b)):h=g(b,{allowLoops:!1,allowProperDeclarations:!1,allowFunctionDeclarations:k}),new d.LabeledStatement({label:e,body:h})},K=b.fuzzLiteralBooleanExpression=function a(b){return(0,c.ap)(d.LiteralBooleanExpression,{value:function a(b){return b.rng.nextBoolean()}},b)},Q=b.fuzzLiteralInfinityExpression=function a(b){return(0,c.ap)(d.LiteralInfinityExpression,{},b)},R=b.fuzzLiteralNullExpression=function a(b){return(0,c.ap)(d.LiteralNullExpression,{},b)},S=b.fuzzLiteralNumericExpression=function a(b){return(0,c.ap)(d.LiteralNumericExpression,{value:(0,c.choose)(function(a){return a.rng.nextInt(1e4)},function(a){return a.rng.nextInt(Math.pow(2,53))},function(a){return a.rng.nextDouble()*Math.pow(10,a.rng.nextInt(309))},function(a){return parseFloat((''+a.rng.nextDouble()*1e4).slice(0,7))},function(a){return parseFloat((''+a.rng.nextDouble()).slice(0,4))},function(a){return 0})},b)},T=b.fuzzLiteralRegExpExpression=function a(b){return(0,c.ap)(d.LiteralRegExpExpression,{pattern:b3.default,global:function a(b){return b.rng.nextBoolean()},ignoreCase:function a(b){return b.rng.nextBoolean()},multiLine:function a(b){return b.rng.nextBoolean()},sticky:function a(b){return b.rng.nextBoolean()},unicode:function a(b){return b.rng.nextBoolean()}},b)},U=b.fuzzLiteralStringExpression=function a(b){return(0,c.ap)(d.LiteralStringExpression,{value:k},b)},V=b.fuzzMethod=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,e=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},r=e.isStatic,i=r===undefined?!1:r,k=e.inClass,l=k===undefined?!1:k,m=e.allowConstructor,x=m===undefined?!0:m,q=e.constructorMayContainSuperCall,w=q===undefined?!1:q;b=b.goDeeper();var s=j(b),v=s.directives,u=s.hasStrictDirective,h=l&&x&&!i&&b.rng.nextBoolean(),n=!h&&b.rng.nextBoolean(),y=h?new d.StaticPropertyName({value:'constructor'}):(0,c.choose)(p,function(a){return o(a,{allowConstructor:!l,allowPrototype:!i})})(b);b=b.enterFunction({isMethod:!0,isGenerator:n,hasStrictDirective:u}),b.allowSuperCall=h&&w,b.allowSuperProp=!0;var z=t(b,{hasStrictDirective:u}),A=new d.FunctionBody({directives:v,statements:(0,c.many)(g)(b.goDeeper())});return new d.Method({isGenerator:n,name:y,params:z,body:A})},aC=b.fuzzModule=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;return b=b.clone(),b.strict=!0,b.allowAwaitIdenifier=!1,(0,c.ap)(d.Module,{directives:function a(b){return j(b).directives},items:(0,c.many)((0,c.choose)((0,c.choose)(b6,bb,bd,bf,af),(0,c.choose)(ar,as),g))},b)},aD=b.fuzzNewExpression=function a(b){return(0,c.ap)(d.NewExpression,{callee:e,'arguments':(0,c.many)((0,c.choose)(e,D))},b)},W=b.fuzzNewTargetExpression=function a(b){return(0,c.ap)(d.NewTargetExpression,{},b)},aF=b.fuzzObjectAssignmentTarget=function a(b){return(0,c.ap)(d.ObjectAssignmentTarget,{properties:(0,c.many)((0,c.choose)(am,ao))},b)},aG=b.fuzzObjectBinding=function a(b){return(0,c.ap)(d.ObjectBinding,{properties:(0,c.many)((0,c.choose)(av,aw))},b)},aH=b.fuzzObjectExpression=function a(b){return(0,c.ap)(d.ObjectExpression,{properties:(0,c.many)((0,c.choose)((0,c.choose)(b1,(0,c.choose)(L,V,Y)),aL))},b)},X=b.fuzzReturnStatement=function a(b){return(0,c.ap)(d.ReturnStatement,{expression:(0,c.opt)(e)},b)},aJ=b.fuzzScript=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper();var e=j(b),h=e.directives,i=e.hasStrictDirective;return b.strict=i,new d.Script({directives:h,statements:(0,c.many)(g)(b)})},Y=b.fuzzSetter=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,e=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},k=e.isStatic,s=k===undefined?!1:k,l=e.inClass,v=l===undefined?!1:l,m=j(b),r=m.directives,n=m.hasStrictDirective,t=b.rng.nextBoolean?p(b):o(b,{allowConstructor:!v,allowPrototype:!s});b=b.enterFunction({isMethod:!0,hasStrictDirective:n}),b.allowSuperCall=!1,b.allowSuperProp=!0;var u=n?h(b):(0,c.choose)(y,i)(b),q=new d.FunctionBody({directives:r,statements:(0,c.many)(g)(b.goDeeper())});return new d.Setter({name:t,param:u,body:q})},aL=b.fuzzShorthandProperty=function a(b){return(0,c.ap)(d.ShorthandProperty,{name:A},b)},D=b.fuzzSpreadElement=function a(b){return(0,c.ap)(d.SpreadElement,{expression:e},b)},E=b.fuzzStaticMemberAssignmentTarget=function a(b){return(0,c.ap)(d.StaticMemberAssignmentTarget,{object:w,property:q},b)},aO=b.fuzzStaticMemberExpression=function a(b){return(0,c.ap)(d.StaticMemberExpression,{object:w,property:q},b)},o=b.fuzzStaticPropertyName=function a(){var h=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,c=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},e=c.allowConstructor,i=e===undefined?!0:e,g=c.allowPrototype,j=g===undefined?!0:g,b=void 0;do b=k(h);while(!i&&b==='constructor'||!j&&b==='prototype');return new d.StaticPropertyName({value:b})},a0=b.fuzzSuper=function a(b){return(0,c.ap)(d.Super,{},b)},G=b.fuzzSwitchCase=function a(b){return(0,c.ap)(d.SwitchCase,{test:e,consequent:(0,c.many)(g)},b)},aS=b.fuzzSwitchDefault=function a(b){return(0,c.ap)(d.SwitchDefault,{consequent:(0,c.many)(g)},b)},aT=b.fuzzSwitchStatement=function a(b){return(0,c.ap)(d.SwitchStatement,{discriminant:e,cases:(0,c.many)(G)},b.enterSwitch())},aU=b.fuzzSwitchStatementWithDefault=function a(b){return(0,c.ap)(d.SwitchStatementWithDefault,{discriminant:e,preDefaultCases:(0,c.many)(G),defaultCase:aS,postDefaultCases:(0,c.many)(G)},b.enterSwitch())},a2=b.fuzzTemplateElement=function a(){var c=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,b=ad(c,k(c)),e=void 0;do e=b,b=b.replace(/((^|[^\\])(\\\\)*)(`|\${)/g,'$1\\$4'),b=b.replace(/((^|[^\\])(\\\\)*\\)(0(?=[0-7])|[1-7])/g,'$1\\$4');while(b!==e);return new d.TemplateElement({rawValue:b})},aW=b.fuzzTemplateExpression=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper();var j=(0,c.opt)(e)(b),h=(0,c.many)(e)(b),i=[a2(b)];for(var g=0;g<h.length;++g)i.push(h[g],a2(b));return new d.TemplateExpression({tag:j,elements:i})},a3=b.fuzzThisExpression=function a(b){return(0,c.ap)(d.ThisExpression,{},b)},aY=b.fuzzThrowStatement=function a(b){return(0,c.ap)(d.ThrowStatement,{expression:e},b)},aZ=b.fuzzTryCatchStatement=function a(b){return(0,c.ap)(d.TryCatchStatement,{body:r,catchClause:a5},b)},a_=b.fuzzTryFinallyStatement=function a(b){return(0,c.ap)(d.TryFinallyStatement,{body:r,catchClause:(0,c.opt)(a5),finalizer:r},b)},a$=b.fuzzUnaryExpression=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default;b=b.goDeeper();var g=(0,c.oneOf)('+','-','!','~','typeof','void','delete')(b),h=e(b,{allowIdentifierExpression:g!=='delete'||!b.strict});return new d.UnaryExpression({operator:g,operand:h})},b0=b.fuzzUpdateExpression=function a(b){return(0,c.ap)(d.UpdateExpression,{isPrefix:function a(b){return b.rng.nextBoolean()},operator:(0,c.oneOf)('++','--'),operand:(0,c.choose)(x,(0,c.choose)(F,E))},b)},s=b.fuzzVariableDeclaration=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,g=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},h=g.allowProperDeclarations,l=h===undefined?!0:h,i=g.inForInOfHead,j=i===undefined?!1:i;b=b.goDeeper();var k=l?(0,c.oneOf)('var','let','const')(b):'var';b.declKind=k;var e=void 0;return j?e=[a6(b,{inForInOfHead:j})]:e=(0,c.many1)(a6)(b),new d.VariableDeclaration({kind:k,declarators:e})},I=b.fuzzVariableDeclarationStatement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,e=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},c=e.allowProperDeclarations,g=c===undefined?!0:c;b=b.goDeeper();var h=s(b,{allowProperDeclarations:g});return new d.VariableDeclarationStatement({declaration:h})},a6=b.fuzzVariableDeclarator=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,j=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},h=j.inForInOfHead,k=h===undefined?!1:h;b=b.goDeeper();var g=i(b),c=void 0;return k?c=null:b.declKind==='const'||g.type==='ArrayBinding'||g.type==='ObjectBinding'?c=e(b):c=b.rng.nextBoolean()?e(b):null,new d.VariableDeclarator({binding:g,init:c})},a7=b.fuzzWhileStatement=function a(b){return(0,c.ap)(d.WhileStatement,{test:e,body:function a(b){return g(b.enterLoop(),{allowProperDeclarations:!1,allowFunctionDeclarations:!1})}},b)},a8=b.fuzzWithStatement=function a(b){return(0,c.ap)(d.WithStatement,{object:e,body:function a(b){return g(b,{allowProperDeclarations:!1,allowFunctionDeclarations:!1})}},b)},a9=b.fuzzYieldExpression=function a(b){return(0,c.ap)(d.YieldExpression,{expression:(0,c.opt)(e)},b)},b7=b.fuzzYieldGeneratorExpression=function a(b){return(0,c.ap)(d.YieldGeneratorExpression,{expression:e},b)},b8=[ai,aj,ak,aq,aB,aM,aN,aV,an,K,Q,R,S,T,U,aD,aH,aW,a3,a$,b0,aQ,aO],b9=[a9,b7],ba=[az,P,_,ag,N,z,aT,aU,aY,aZ,a_,I],aa=[b4,ae,a1,a4,a7],bc=[z,a4,ae,a1,N,a7,a8],w=function a(b){return b.allowSuperProp?(0,c.choose)(e,a0)(b):e(b)},be=function a(b){return b.allowSuperCall?(0,c.choose)(e,a0)(b):e(b)},ac=function a(e,h){var f=h.allowConstructor,d=[];if(e.tooDeep())return d;var g=e.rng.nextInt(c.MANY_BOUND+1);while(g-->0){var b=aK(e,{allowConstructor:f,constructorMayContainSuperCall:!0});!b.isStatic&&b.method.type==='Method'&&b.method.name.type==='StaticPropertyName'&&b.method.name.value==='constructor'&&(f=!1),d.push(b)}return d},j=function a(b){b=b.clone();var e=b.rng.nextBoolean();e&&(b.strict=!0);var f=(0,c.many)(function(a){return Z(a,{allowUseStrict:e})})(b);return e&&!f.some(function(a){return a.rawValue==='use strict'})&&f.push(new d.Directive({rawValue:'use strict'})),{directives:f,hasStrictDirective:e}},m=function a(b){return b.tooDeep()||b.rng.nextBoolean()?x(b):(0,c.choose)((0,c.choose)(b5,aF),(0,c.choose)(F,E))(b)},i=function a(b){return b.tooDeep()||b.rng.nextBoolean()?h(b):(b.rng.nextBoolean()?ah:aG)(b)},aX=b.fuzzProgram=(0,c.choose)(aC,aJ);b.default=aX;var e=b.fuzzExpression=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,h=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},e=h.allowIdentifierExpression,g=e===undefined?!0:e;if(b.tooDeep())return aR(b,{allowIdentifierExpression:g});var d=b8;return b.allowYieldExpr&&(d=d.concat(b9)),b.allowNewTarget&&(d=d.concat([W])),g&&(d=d.concat([A])),b=b.clone(),b.declKind=null,c.choose.apply(undefined,l(d))(b)},aR=function a(d,f){var e=f.allowIdentifierExpression,b=[K,Q,R,S,T,U,a3];return e&&b.push(A),d.allowNewTarget&&b.push(W),d.allowYieldExpr&&b.push(a9),c.choose.apply(undefined,b)(d)},g=b.fuzzStatement=function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new f.default,g=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{},o=g.allowLoops,p=o===undefined?!0:o,i=g.allowProperDeclarations,h=i===undefined?!0:i,j=g.allowFunctionDeclarations,k=j===undefined?!0:j,m=g.allowLabeledFunctionDeclarations,q=m===undefined?!b.strict&&k:m;if(b.tooDeep())return aP(b);var d=[].concat(ba);p&&d.push.apply(d,aa),b.allowReturn&&d.push(X),b.inLoop?d.push(J,O):b.allowBreak()&&d.push(J),h?d.push(H,n):k&&d.push(n),b.strict||d.push(a8);var e=c.oneOf.apply(undefined,l(d))(b);return bc.indexOf(e)===-1&&(b=b.enableMissingElse()),e===I?I(b,{allowProperDeclarations:h}):e===n?n(b,{allowProperDeclarations:h}):e===z?z(b,{allowFunctionDeclarations:q}):e(b)},aP=function a(d){var b=[P,_];return d.allowBreak()&&b.push(J),d.inLoop&&b.push(O),d.allowReturn&&b.push(X),c.choose.apply(undefined,b)(d)}}),a.define('/node_modules/shift-fuzzer/dist/regexp.js',function(r,u,y,z){'use strict';function x(a){return a&&a.__esModule?a:{default:a}}function w(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function v(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{rng:new l.default(Math.random)},a=i(new n({rng:b.rng}));return a===''?'(?:)':a}Object.defineProperty(u,'__esModule',{value:!0});var p=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}();u.default=v;var o=a('/node_modules/shift-fuzzer/dist/random.js',r),l=x(o),b=a('/node_modules/shift-fuzzer/dist/combinators.js',r),n=function(){function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{},c=b.maxDepth,e=c===undefined?5:c,d=b.rng,f=d===undefined?new l.default(Math.random):d;w(this,a),this.maxDepth=e,this.depth=0,this.rng=f}return p(a,[{key:'tooDeep',value:function a(){return this.depth>=this.maxDepth}},{key:'clone',value:function b(){var c=new a({maxDepth:this.maxDepth,rng:this.rng});return c.depth=this.depth,c}},{key:'goDeeper',value:function a(){var b=this.clone();return++b.depth,b}}]),a}(),h=function a(b){if(b[0]==='\\')switch(b[1]){case'u':case'x':return parseInt(b.slice(2),16);case'0':case'1':case'2':case'3':case'4':case'5':case'6':case'7':return parseInt(b.slice(1),8);case'b':return 8;case't':return 9;case'n':return 10;case'v':return 11;case'f':return 12;case'r':return 13;case'c':throw new Error('control sequences not supported');default:return b.charCodeAt(1)}else return b.charCodeAt(0)},k=function a(b){return String.fromCharCode(32+b.rng.nextInt(94))},c=(0,b.oneOf)('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','A','B','C','D','E','F'),q=function a(c){return c.tooDeep()?'':(c=c.goDeeper(),(0,b.many)((0,b.choose)(g,e,m,j))(c).join('|'))},g=function a(c){return c.tooDeep()?'()':(c=c.goDeeper(),'('+(0,b.oneOf)('?:','?!','?=','')(c)+i(c)+')')},m=function a(c){return c.tooDeep()?'':(c=c.goDeeper(),''+(0,b.choose)(g,e,f)(c)+(0,b.oneOf)('?','+','*','*?','+?')(c))},j=function a(c){return(0,b.many)((0,b.choose)(f,s))(c).join('')},s=(0,b.oneOf)('^','$','\\b','\\B'),f=(0,b.choose)(function(b){var a=void 0;do a=k(b);while(['[','(',')','{','?','*','+','|','\\','$','^','/'].indexOf(a)!==-1);return a},function(a){return'\\u'+c(a)+c(a)+c(a)+c(a)},function(a){return'\\x'+c(a)+c(a)},function(b){var a=void 0;do a=k(b);while(['u','x','b','B','c','1','2','3','4','5','6','7','8','9'].indexOf(a)!==-1);return'\\'+a}),e=function a(c){if(c.tooDeep())return'[]';c=c.goDeeper();var e=(0,b.many)((0,b.choose)(d,t))(c).join('');return e=e.replace(/((^|[^\\])(\\\\)*)\\$/g,'$1\\a'),'['+(0,b.oneOf)('^','-','')(c)+e+(0,b.oneOf)('-','')(c)+']'},d=function a(d){var c=void 0;do c=(0,b.choose)(f,(0,b.oneOf)('[','(',')','{','?','*','+','|','$'))(d);while(c==='-'||c===']');return c},t=function a(f){var b=d(f),c=d(f);if(h(c)<h(b)){var e=[c,b];b=e[0],c=e[1]}return b+'-'+c},i=function a(c){return c.tooDeep()?'':(c=c.goDeeper(),(0,b.choose)(q,g,e,m,j)(c))}}),a.define('/node_modules/shift-fuzzer/dist/combinators.js',function(k,b,r,q){'use strict';function j(a){return a&&a.__esModule?a:{default:a}}function g(a){return function(b){return d(function(){return[]},function(){var d=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new c.default,f=d.rng.nextInt(a+1),e=[];while(f-->0)e.push(b(d));return e})}}function p(a){return function(){var d=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new c.default,b=e(a)(d);return b.length===0&&b.push(a(d)),b}}function h(a,b){return function(){var d=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new c.default;return(d.rng.nextBoolean()?a:b)(d)}}function o(){for(var d=arguments.length,a=Array(d),b=0;b<d;b++)a[b]=arguments[b];switch(a.length){case 0:throw new Error('choose must be given at least one fuzzer');case 1:return a[0];case 2:return h(a[0],a[1]);default:return function(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new c.default;return a[b.rng.nextInt(a.length)](b)}}}function l(){for(var c=arguments.length,b=Array(c),a=0;a<c;a++)b[a]=arguments[a];return function(a){return b[a.rng.nextInt(b.length)]}}function m(a){return d(function(){return null},function(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new c.default;return b.rng.nextBoolean()?null:a(b)})}function n(g,b){var e=arguments.length>2&&arguments[2]!==undefined?arguments[2]:new c.default,f=e.goDeeper(),d=Object.create(null);for(var a in b){if(!b.hasOwnProperty(a))continue;d[a]=b[a](f)}return new g(d)}function d(a,b){return function(){var d=arguments.length>0&&arguments[0]!==undefined?arguments[0]:new c.default;return d.tooDeep()?a(d):b(d)}}Object.defineProperty(b,'__esModule',{value:!0}),b.many=b.MANY_BOUND=undefined,b.manyN=g,b.many1=p,b.either=h,b.choose=o,b.oneOf=l,b.opt=m,b.ap=n,b.guardDepth=d;var i=a('/node_modules/shift-fuzzer/dist/fuzzer-state.js',k),c=j(i),f=b.MANY_BOUND=5,e=b.many=g(f)}),a.define('/node_modules/shift-fuzzer/dist/fuzzer-state.js',function(g,c,k,j){'use strict';function i(a){return a&&a.__esModule?a:{default:a}}function h(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(c,'__esModule',{value:!0});var f=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a('/node_modules/shift-fuzzer/dist/random.js',g),d=i(e),b=function(){function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{},c=b.maxDepth,f=c===undefined?7:c,e=b.rng,g=e===undefined?Math.random:e;h(this,a),this.maxDepth=f,this.rng=new d.default(g),this.depth=0,this.allowAwaitIdentifier=!0,this.inLoop=!1,this.inSwitch=!1,this.strict=!1,this.allowReturn=!1,this.allowNewTarget=!1,this.allowSuperCall=!1,this.allowSuperProp=!1,this.allowMissingElse=!0,this.declKind=null,this.allowYieldIdentifier=!0,this.allowYieldExpr=!1,this.labels=[],this.loopLabels=[]}return f(a,[{key:'clone',value:function b(){var c=Object.create(a.prototype);return c.maxDepth=this.maxDepth,c.rng=this.rng,c.depth=this.depth,c.allowAwaitIdentifier=this.allowAwaitIdentifier,c.inLoop=this.inLoop,c.inSwitch=this.inSwitch,c.strict=this.strict,c.allowReturn=this.allowReturn,c.allowNewTarget=this.allowNewTarget,c.allowSuperCall=this.allowSuperCall,c.allowSuperProp=this.allowSuperProp,c.allowMissingElse=this.allowMissingElse,c.declKind=this.declKind,c.allowYieldIdentifier=this.allowYieldIdentifier,c.allowYieldExpr=this.allowYieldExpr,c.labels=this.labels,c.loopLabels=this.loopLabels,c}},{key:'goDeeper',value:function a(){var b=this.clone();return++b.depth,b}},{key:'tooDeep',value:function a(){return this.depth>=this.maxDepth}},{key:'allowBreak',value:function a(){return this.inLoop||this.inSwitch||this.labels.length!==0}},{key:'enableMissingElse',value:function a(){var b=this.clone();return b.allowMissingElse=!0,b}},{key:'disableMissingElse',value:function a(){var b=this.clone();return b.allowMissingElse=!1,b}},{key:'disableYieldExpr',value:function a(){var b=this.clone();return b.allowYieldExpr=!1,b}},{key:'enterFunction',value:function a(){var c=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{},d=c.isGenerator,i=d===undefined?!1:d,e=c.isArrow,k=e===undefined?!1:e,f=c.isMethod,h=f===undefined?!1:f,g=c.hasStrictDirective,j=g===undefined?!1:g,b=this.clone();if(b.declKind!==null)throw'declKind';return b.inLoop=!1,b.inSwitch=!1,j&&(b.strict=!0),b.allowReturn=!0,k?b.allowYieldExpr=!1:(b.allowNewTarget=!0,i?(b.allowYieldIdentifier=!1,b.allowYieldExpr=!0):(b.allowYieldIdentifier=!0,b.allowYieldExpr=!1),h||(b.allowSuperCall=!1,b.allowSuperProp=!1)),b.allowMissingElse=!0,b.labels=[],b.loopLabels=[],b}},{key:'enterLoop',value:function a(){var b=this.clone();return b.inLoop=!0,b}},{key:'enterSwitch',value:function a(){var b=this.clone();return b.inSwitch=!0,b}}]),a}();c.default=b}),a.define('/node_modules/shift-fuzzer/dist/random.js',function(f,a,g,h){'use strict';function e(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(a,'__esModule',{value:!0});var b=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),c=5,d=function(){function a(b){e(this,a),this.rng=b}return b(a,[{key:'nextBoolean',value:function a(){var b=arguments.length>0&&arguments[0]!==undefined?arguments[0]:.5;return this.rng()<b}},{key:'nextInt',value:function a(b){return Math.floor(this.rng()*b)}},{key:'nextDouble',value:function a(){return this.rng()}},{key:'nextString',value:function a(){var d=this.nextInt(c+1),b='';while(d-->0)b+=String.fromCharCode(this.nextInt(255));return b}}]),a}();a.default=d}),a.define('/node_modules/shift-ast/checked.js',function(b,c,d,e){b.exports=a('/node_modules/shift-ast/dist/checked.js',b)}),a.define('/node_modules/shift-ast/dist/checked.js',function(aM,b,aO,aN){'use strict';function c(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function d(a){return a===undefined||a.type!=='ArrayExpression'&&a.type!=='ArrowExpression'&&a.type!=='AssignmentExpression'&&a.type!=='BinaryExpression'&&a.type!=='CallExpression'&&a.type!=='ClassExpression'&&a.type!=='CompoundAssignmentExpression'&&a.type!=='ConditionalExpression'&&a.type!=='FunctionExpression'&&a.type!=='IdentifierExpression'&&a.type!=='LiteralBooleanExpression'&&a.type!=='LiteralInfinityExpression'&&a.type!=='LiteralNullExpression'&&a.type!=='LiteralNumericExpression'&&a.type!=='LiteralRegExpExpression'&&a.type!=='LiteralStringExpression'&&a.type!=='ComputedMemberExpression'&&a.type!=='StaticMemberExpression'&&a.type!=='NewExpression'&&a.type!=='NewTargetExpression'&&a.type!=='ObjectExpression'&&a.type!=='TemplateExpression'&&a.type!=='ThisExpression'&&a.type!=='UnaryExpression'&&a.type!=='UpdateExpression'&&a.type!=='YieldExpression'&&a.type!=='YieldGeneratorExpression'}function e(a){return a===undefined||a.type!=='BlockStatement'&&a.type!=='BreakStatement'&&a.type!=='ClassDeclaration'&&a.type!=='ContinueStatement'&&a.type!=='DebuggerStatement'&&a.type!=='EmptyStatement'&&a.type!=='ExpressionStatement'&&a.type!=='FunctionDeclaration'&&a.type!=='IfStatement'&&a.type!=='DoWhileStatement'&&a.type!=='ForInStatement'&&a.type!=='ForOfStatement'&&a.type!=='ForStatement'&&a.type!=='WhileStatement'&&a.type!=='LabeledStatement'&&a.type!=='ReturnStatement'&&a.type!=='SwitchStatement'&&a.type!=='SwitchStatementWithDefault'&&a.type!=='ThrowStatement'&&a.type!=='TryCatchStatement'&&a.type!=='TryFinallyStatement'&&a.type!=='VariableDeclarationStatement'&&a.type!=='WithStatement'}function a(b){return(b===void 0?!0:f(b)!=='object')?b===void 0?'undefined':f(b):Array.isArray(b)?'['+b.map(a).join(', ')+']':b===null?null:b.type?b.type:JSON.stringify(b)}Object.defineProperty(b,'__esModule',{value:!0});var f=typeof Symbol==='function'&&typeof Symbol.iterator==='symbol'?function(a){return typeof a}:function(a){return a&&typeof Symbol==='function'&&a.constructor===Symbol?'symbol':typeof a},k=b.ArrayAssignmentTarget=function b(f){var e=f.elements,d=f.rest;if(c(this,b),e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a!==null&&a.type!=='AssignmentTargetWithDefault'&&a.type!=='ArrayAssignmentTarget'&&a.type!=='ObjectAssignmentTarget'&&a.type!=='AssignmentTargetIdentifier'&&a.type!=='ComputedMemberAssignmentTarget'&&a.type!=='StaticMemberAssignmentTarget'}))throw new TypeError('Field "elements" of ArrayAssignmentTarget constructor is of incorrect type (expected [null or one of {AssignmentTargetWithDefault, ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}], got '+a(e)+')');if(d===undefined||d!==null&&d.type!=='ArrayAssignmentTarget'&&d.type!=='ObjectAssignmentTarget'&&d.type!=='AssignmentTargetIdentifier'&&d.type!=='ComputedMemberAssignmentTarget'&&d.type!=='StaticMemberAssignmentTarget')throw new TypeError('Field "rest" of ArrayAssignmentTarget constructor is of incorrect type (expected null or one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got '+a(d)+')');this.type='ArrayAssignmentTarget',this.elements=e,this.rest=d},l=b.ArrayBinding=function b(f){var e=f.elements,d=f.rest;if(c(this,b),e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a!==null&&a.type!=='BindingWithDefault'&&a.type!=='BindingIdentifier'&&a.type!=='ArrayBinding'&&a.type!=='ObjectBinding'}))throw new TypeError('Field "elements" of ArrayBinding constructor is of incorrect type (expected [null or one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}], got '+a(e)+')');if(d===undefined||d!==null&&d.type!=='BindingIdentifier'&&d.type!=='ArrayBinding'&&d.type!=='ObjectBinding')throw new TypeError('Field "rest" of ArrayBinding constructor is of incorrect type (expected null or one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(d)+')');this.type='ArrayBinding',this.elements=e,this.rest=d},m=b.ArrayExpression=function b(f){var e=f.elements;if(c(this,b),e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a!==null&&d(a)&&a.type!=='SpreadElement'}))throw new TypeError('Field "elements" of ArrayExpression constructor is of incorrect type (expected [null or one of {Expression, SpreadElement}], got '+a(e)+')');this.type='ArrayExpression',this.elements=e},n=b.ArrowExpression=function b(g){var f=g.params,e=g.body;if(c(this,b),f===undefined||f.type!=='FormalParameters')throw new TypeError('Field "params" of ArrowExpression constructor is of incorrect type (expected FormalParameters, got '+a(f)+')');if(e===undefined||d(e)&&e.type!=='FunctionBody')throw new TypeError('Field "body" of ArrowExpression constructor is of incorrect type (expected one of {Expression, FunctionBody}, got '+a(e)+')');this.type='ArrowExpression',this.params=f,this.body=e},o=b.AssignmentExpression=function b(g){var e=g.binding,f=g.expression;if(c(this,b),e===undefined||e.type!=='ArrayAssignmentTarget'&&e.type!=='ObjectAssignmentTarget'&&e.type!=='AssignmentTargetIdentifier'&&e.type!=='ComputedMemberAssignmentTarget'&&e.type!=='StaticMemberAssignmentTarget')throw new TypeError('Field "binding" of AssignmentExpression constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got '+a(e)+')');if(d(f))throw new TypeError('Field "expression" of AssignmentExpression constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='AssignmentExpression',this.binding=e,this.expression=f},p=b.AssignmentTargetIdentifier=function b(e){var d=e.name;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "name" of AssignmentTargetIdentifier constructor is of incorrect type (expected string, got '+a(d)+')');this.type='AssignmentTargetIdentifier',this.name=d},q=b.AssignmentTargetPropertyIdentifier=function b(g){var f=g.binding,e=g.init;if(c(this,b),f===undefined||f.type!=='AssignmentTargetIdentifier')throw new TypeError('Field "binding" of AssignmentTargetPropertyIdentifier constructor is of incorrect type (expected AssignmentTargetIdentifier, got '+a(f)+')');if(e===undefined||e!==null&&d(e))throw new TypeError('Field "init" of AssignmentTargetPropertyIdentifier constructor is of incorrect type (expected null or Expression, got '+a(e)+')');this.type='AssignmentTargetPropertyIdentifier',this.binding=f,this.init=e},r=b.AssignmentTargetPropertyProperty=function b(f){var e=f.name,d=f.binding;if(c(this,b),e===undefined||e.type!=='ComputedPropertyName'&&e.type!=='StaticPropertyName')throw new TypeError('Field "name" of AssignmentTargetPropertyProperty constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got '+a(e)+')');if(d===undefined||d.type!=='AssignmentTargetWithDefault'&&d.type!=='ArrayAssignmentTarget'&&d.type!=='ObjectAssignmentTarget'&&d.type!=='AssignmentTargetIdentifier'&&d.type!=='ComputedMemberAssignmentTarget'&&d.type!=='StaticMemberAssignmentTarget')throw new TypeError('Field "binding" of AssignmentTargetPropertyProperty constructor is of incorrect type (expected one of {AssignmentTargetWithDefault, ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got '+a(d)+')');this.type='AssignmentTargetPropertyProperty',this.name=e,this.binding=d},s=b.AssignmentTargetWithDefault=function b(g){var e=g.binding,f=g.init;if(c(this,b),e===undefined||e.type!=='ArrayAssignmentTarget'&&e.type!=='ObjectAssignmentTarget'&&e.type!=='AssignmentTargetIdentifier'&&e.type!=='ComputedMemberAssignmentTarget'&&e.type!=='StaticMemberAssignmentTarget')throw new TypeError('Field "binding" of AssignmentTargetWithDefault constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got '+a(e)+')');if(d(f))throw new TypeError('Field "init" of AssignmentTargetWithDefault constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='AssignmentTargetWithDefault',this.binding=e,this.init=f},t=b.BinaryExpression=function b(h){var f=h.left,e=h.operator,g=h.right;if(c(this,b),d(f))throw new TypeError('Field "left" of BinaryExpression constructor is of incorrect type (expected Expression, got '+a(f)+')');if(e===undefined||['==','!=','===','!==','<','<=','>','>=','in','instanceof','<<','>>','>>>','+','-','*','/','%','**',',','||','&&','|','^','&'].indexOf(e)===-1)throw new TypeError('Field "operator" of BinaryExpression constructor is of incorrect type (expected one of {"==", "!=", "===", "!==", "<", "<=", ">", ">=", "in", "instanceof", "<<", ">>", ">>>", "+", "-", "*", "/", "%", "**", ",", "||", "&&", "|", "^", "&"}, got '+a(e)+')');if(d(g))throw new TypeError('Field "right" of BinaryExpression constructor is of incorrect type (expected Expression, got '+a(g)+')');this.type='BinaryExpression',this.left=f,this.operator=e,this.right=g},u=b.BindingIdentifier=function b(e){var d=e.name;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "name" of BindingIdentifier constructor is of incorrect type (expected string, got '+a(d)+')');this.type='BindingIdentifier',this.name=d},v=b.BindingPropertyIdentifier=function b(g){var f=g.binding,e=g.init;if(c(this,b),f===undefined||f.type!=='BindingIdentifier')throw new TypeError('Field "binding" of BindingPropertyIdentifier constructor is of incorrect type (expected BindingIdentifier, got '+a(f)+')');if(e===undefined||e!==null&&d(e))throw new TypeError('Field "init" of BindingPropertyIdentifier constructor is of incorrect type (expected null or Expression, got '+a(e)+')');this.type='BindingPropertyIdentifier',this.binding=f,this.init=e},w=b.BindingPropertyProperty=function b(f){var e=f.name,d=f.binding;if(c(this,b),e===undefined||e.type!=='ComputedPropertyName'&&e.type!=='StaticPropertyName')throw new TypeError('Field "name" of BindingPropertyProperty constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got '+a(e)+')');if(d===undefined||d.type!=='BindingWithDefault'&&d.type!=='BindingIdentifier'&&d.type!=='ArrayBinding'&&d.type!=='ObjectBinding')throw new TypeError('Field "binding" of BindingPropertyProperty constructor is of incorrect type (expected one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(d)+')');this.type='BindingPropertyProperty',this.name=e,this.binding=d},x=b.BindingWithDefault=function b(g){var e=g.binding,f=g.init;if(c(this,b),e===undefined||e.type!=='BindingIdentifier'&&e.type!=='ArrayBinding'&&e.type!=='ObjectBinding')throw new TypeError('Field "binding" of BindingWithDefault constructor is of incorrect type (expected one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(e)+')');if(d(f))throw new TypeError('Field "init" of BindingWithDefault constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='BindingWithDefault',this.binding=e,this.init=f},y=b.Block=function b(f){var d=f.statements;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return e(a)}))throw new TypeError('Field "statements" of Block constructor is of incorrect type (expected [Statement], got '+a(d)+')');this.type='Block',this.statements=d},z=b.BlockStatement=function b(e){var d=e.block;if(c(this,b),d===undefined||d.type!=='Block')throw new TypeError('Field "block" of BlockStatement constructor is of incorrect type (expected Block, got '+a(d)+')');this.type='BlockStatement',this.block=d},A=b.BreakStatement=function b(e){var d=e.label;if(c(this,b),d===undefined||d!==null&&typeof d!=='string')throw new TypeError('Field "label" of BreakStatement constructor is of incorrect type (expected null or string, got '+a(d)+')');this.type='BreakStatement',this.label=d},B=b.CallExpression=function b(g){var e=g.callee,f=g.arguments;if(c(this,b),e===undefined||d(e)&&e.type!=='Super')throw new TypeError('Field "callee" of CallExpression constructor is of incorrect type (expected one of {Expression, Super}, got '+a(e)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return a===undefined||d(a)&&a.type!=='SpreadElement'}))throw new TypeError('Field "arguments" of CallExpression constructor is of incorrect type (expected [one of {Expression, SpreadElement}], got '+a(f)+')');this.type='CallExpression',this.callee=e,this.arguments=f},C=b.CatchClause=function b(f){var d=f.binding,e=f.body;if(c(this,b),d===undefined||d.type!=='BindingIdentifier'&&d.type!=='ArrayBinding'&&d.type!=='ObjectBinding')throw new TypeError('Field "binding" of CatchClause constructor is of incorrect type (expected one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(d)+')');if(e===undefined||e.type!=='Block')throw new TypeError('Field "body" of CatchClause constructor is of incorrect type (expected Block, got '+a(e)+')');this.type='CatchClause',this.binding=d,this.body=e},D=b.ClassDeclaration=function b(h){var g=h.name,e=h.super,f=h.elements;if(c(this,b),g===undefined||g.type!=='BindingIdentifier')throw new TypeError('Field "name" of ClassDeclaration constructor is of incorrect type (expected BindingIdentifier, got '+a(g)+')');if(e===undefined||e!==null&&d(e))throw new TypeError('Field "super" of ClassDeclaration constructor is of incorrect type (expected null or Expression, got '+a(e)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return a===undefined||a.type!=='ClassElement'}))throw new TypeError('Field "elements" of ClassDeclaration constructor is of incorrect type (expected [ClassElement], got '+a(f)+')');this.type='ClassDeclaration',this.name=g,this.super=e,this.elements=f},E=b.ClassElement=function b(f){var e=f.isStatic,d=f.method;if(c(this,b),e===undefined||typeof e!=='boolean')throw new TypeError('Field "isStatic" of ClassElement constructor is of incorrect type (expected boolean, got '+a(e)+')');if(d===undefined||d.type!=='Getter'&&d.type!=='Method'&&d.type!=='Setter')throw new TypeError('Field "method" of ClassElement constructor is of incorrect type (expected one of {Getter, Method, Setter}, got '+a(d)+')');this.type='ClassElement',this.isStatic=e,this.method=d},F=b.ClassExpression=function b(h){var e=h.name,f=h.super,g=h.elements;if(c(this,b),e===undefined||e!==null&&e.type!=='BindingIdentifier')throw new TypeError('Field "name" of ClassExpression constructor is of incorrect type (expected null or BindingIdentifier, got '+a(e)+')');if(f===undefined||f!==null&&d(f))throw new TypeError('Field "super" of ClassExpression constructor is of incorrect type (expected null or Expression, got '+a(f)+')');if(g===undefined||!Array.isArray(g)||g.some(function(a){return a===undefined||a.type!=='ClassElement'}))throw new TypeError('Field "elements" of ClassExpression constructor is of incorrect type (expected [ClassElement], got '+a(g)+')');this.type='ClassExpression',this.name=e,this.super=f,this.elements=g},G=b.CompoundAssignmentExpression=function b(h){var e=h.binding,f=h.operator,g=h.expression;if(c(this,b),e===undefined||e.type!=='AssignmentTargetIdentifier'&&e.type!=='ComputedMemberAssignmentTarget'&&e.type!=='StaticMemberAssignmentTarget')throw new TypeError('Field "binding" of CompoundAssignmentExpression constructor is of incorrect type (expected one of {AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got '+a(e)+')');if(f===undefined||['+=','-=','*=','/=','%=','**=','<<=','>>=','>>>=','|=','^=','&='].indexOf(f)===-1)throw new TypeError('Field "operator" of CompoundAssignmentExpression constructor is of incorrect type (expected one of {"+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "|=", "^=", "&="}, got '+a(f)+')');if(d(g))throw new TypeError('Field "expression" of CompoundAssignmentExpression constructor is of incorrect type (expected Expression, got '+a(g)+')');this.type='CompoundAssignmentExpression',this.binding=e,this.operator=f,this.expression=g},H=b.ComputedMemberAssignmentTarget=function b(g){var e=g.object,f=g.expression;if(c(this,b),e===undefined||d(e)&&e.type!=='Super')throw new TypeError('Field "object" of ComputedMemberAssignmentTarget constructor is of incorrect type (expected one of {Expression, Super}, got '+a(e)+')');if(d(f))throw new TypeError('Field "expression" of ComputedMemberAssignmentTarget constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='ComputedMemberAssignmentTarget',this.object=e,this.expression=f},I=b.ComputedMemberExpression=function b(g){var e=g.object,f=g.expression;if(c(this,b),e===undefined||d(e)&&e.type!=='Super')throw new TypeError('Field "object" of ComputedMemberExpression constructor is of incorrect type (expected one of {Expression, Super}, got '+a(e)+')');if(d(f))throw new TypeError('Field "expression" of ComputedMemberExpression constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='ComputedMemberExpression',this.object=e,this.expression=f},J=b.ComputedPropertyName=function b(f){var e=f.expression;if(c(this,b),d(e))throw new TypeError('Field "expression" of ComputedPropertyName constructor is of incorrect type (expected Expression, got '+a(e)+')');this.type='ComputedPropertyName',this.expression=e},K=b.ConditionalExpression=function b(h){var e=h.test,f=h.consequent,g=h.alternate;if(c(this,b),d(e))throw new TypeError('Field "test" of ConditionalExpression constructor is of incorrect type (expected Expression, got '+a(e)+')');if(d(f))throw new TypeError('Field "consequent" of ConditionalExpression constructor is of incorrect type (expected Expression, got '+a(f)+')');if(d(g))throw new TypeError('Field "alternate" of ConditionalExpression constructor is of incorrect type (expected Expression, got '+a(g)+')');this.type='ConditionalExpression',this.test=e,this.consequent=f,this.alternate=g},L=b.ContinueStatement=function b(e){var d=e.label;if(c(this,b),d===undefined||d!==null&&typeof d!=='string')throw new TypeError('Field "label" of ContinueStatement constructor is of incorrect type (expected null or string, got '+a(d)+')');this.type='ContinueStatement',this.label=d},M=b.DataProperty=function b(g){var e=g.name,f=g.expression;if(c(this,b),e===undefined||e.type!=='ComputedPropertyName'&&e.type!=='StaticPropertyName')throw new TypeError('Field "name" of DataProperty constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got '+a(e)+')');if(d(f))throw new TypeError('Field "expression" of DataProperty constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='DataProperty',this.name=e,this.expression=f},N=b.DebuggerStatement=function a(){c(this,a),this.type='DebuggerStatement'},O=b.Directive=function b(e){var d=e.rawValue;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "rawValue" of Directive constructor is of incorrect type (expected string, got '+a(d)+')');this.type='Directive',this.rawValue=d},P=b.DoWhileStatement=function b(h){var f=h.body,g=h.test;if(c(this,b),e(f))throw new TypeError('Field "body" of DoWhileStatement constructor is of incorrect type (expected Statement, got '+a(f)+')');if(d(g))throw new TypeError('Field "test" of DoWhileStatement constructor is of incorrect type (expected Expression, got '+a(g)+')');this.type='DoWhileStatement',this.body=f,this.test=g},Q=b.EmptyStatement=function a(){c(this,a),this.type='EmptyStatement'},R=b.Export=function b(e){var d=e.declaration;if(c(this,b),d===undefined||d.type!=='ClassDeclaration'&&d.type!=='FunctionDeclaration'&&d.type!=='VariableDeclaration')throw new TypeError('Field "declaration" of Export constructor is of incorrect type (expected one of {ClassDeclaration, FunctionDeclaration, VariableDeclaration}, got '+a(d)+')');this.type='Export',this.declaration=d},S=b.ExportAllFrom=function b(e){var d=e.moduleSpecifier;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "moduleSpecifier" of ExportAllFrom constructor is of incorrect type (expected string, got '+a(d)+')');this.type='ExportAllFrom',this.moduleSpecifier=d},T=b.ExportDefault=function b(f){var e=f.body;if(c(this,b),e===undefined||e.type!=='ClassDeclaration'&&d(e)&&e.type!=='FunctionDeclaration')throw new TypeError('Field "body" of ExportDefault constructor is of incorrect type (expected one of {ClassDeclaration, Expression, FunctionDeclaration}, got '+a(e)+')');this.type='ExportDefault',this.body=e},U=b.ExportFrom=function b(f){var d=f.namedExports,e=f.moduleSpecifier;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='ExportFromSpecifier'}))throw new TypeError('Field "namedExports" of ExportFrom constructor is of incorrect type (expected [ExportFromSpecifier], got '+a(d)+')');if(e===undefined||typeof e!=='string')throw new TypeError('Field "moduleSpecifier" of ExportFrom constructor is of incorrect type (expected string, got '+a(e)+')');this.type='ExportFrom',this.namedExports=d,this.moduleSpecifier=e},V=b.ExportFromSpecifier=function b(f){var e=f.name,d=f.exportedName;if(c(this,b),e===undefined||typeof e!=='string')throw new TypeError('Field "name" of ExportFromSpecifier constructor is of incorrect type (expected string, got '+a(e)+')');if(d===undefined||d!==null&&typeof d!=='string')throw new TypeError('Field "exportedName" of ExportFromSpecifier constructor is of incorrect type (expected null or string, got '+a(d)+')');this.type='ExportFromSpecifier',this.name=e,this.exportedName=d},W=b.ExportLocalSpecifier=function b(f){var e=f.name,d=f.exportedName;if(c(this,b),e===undefined||e.type!=='IdentifierExpression')throw new TypeError('Field "name" of ExportLocalSpecifier constructor is of incorrect type (expected IdentifierExpression, got '+a(e)+')');if(d===undefined||d!==null&&typeof d!=='string')throw new TypeError('Field "exportedName" of ExportLocalSpecifier constructor is of incorrect type (expected null or string, got '+a(d)+')');this.type='ExportLocalSpecifier',this.name=e,this.exportedName=d},X=b.ExportLocals=function b(e){var d=e.namedExports;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='ExportLocalSpecifier'}))throw new TypeError('Field "namedExports" of ExportLocals constructor is of incorrect type (expected [ExportLocalSpecifier], got '+a(d)+')');this.type='ExportLocals',this.namedExports=d},Y=b.ExpressionStatement=function b(f){var e=f.expression;if(c(this,b),d(e))throw new TypeError('Field "expression" of ExpressionStatement constructor is of incorrect type (expected Expression, got '+a(e)+')');this.type='ExpressionStatement',this.expression=e},Z=b.ForInStatement=function b(i){var f=i.left,g=i.right,h=i.body;if(c(this,b),f===undefined||f.type!=='ArrayAssignmentTarget'&&f.type!=='ObjectAssignmentTarget'&&f.type!=='AssignmentTargetIdentifier'&&f.type!=='ComputedMemberAssignmentTarget'&&f.type!=='StaticMemberAssignmentTarget'&&f.type!=='VariableDeclaration')throw new TypeError('Field "left" of ForInStatement constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget, VariableDeclaration}, got '+a(f)+')');if(d(g))throw new TypeError('Field "right" of ForInStatement constructor is of incorrect type (expected Expression, got '+a(g)+')');if(e(h))throw new TypeError('Field "body" of ForInStatement constructor is of incorrect type (expected Statement, got '+a(h)+')');this.type='ForInStatement',this.left=f,this.right=g,this.body=h},_=b.ForOfStatement=function b(i){var f=i.left,g=i.right,h=i.body;if(c(this,b),f===undefined||f.type!=='ArrayAssignmentTarget'&&f.type!=='ObjectAssignmentTarget'&&f.type!=='AssignmentTargetIdentifier'&&f.type!=='ComputedMemberAssignmentTarget'&&f.type!=='StaticMemberAssignmentTarget'&&f.type!=='VariableDeclaration')throw new TypeError('Field "left" of ForOfStatement constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget, VariableDeclaration}, got '+a(f)+')');if(d(g))throw new TypeError('Field "right" of ForOfStatement constructor is of incorrect type (expected Expression, got '+a(g)+')');if(e(h))throw new TypeError('Field "body" of ForOfStatement constructor is of incorrect type (expected Statement, got '+a(h)+')');this.type='ForOfStatement',this.left=f,this.right=g,this.body=h},g=b.ForStatement=function b(i){var f=i.init,g=i.test,h=i.update,j=i.body;if(c(this,b),f===undefined||f!==null&&d(f)&&f.type!=='VariableDeclaration')throw new TypeError('Field "init" of ForStatement constructor is of incorrect type (expected null or one of {Expression, VariableDeclaration}, got '+a(f)+')');if(g===undefined||g!==null&&d(g))throw new TypeError('Field "test" of ForStatement constructor is of incorrect type (expected null or Expression, got '+a(g)+')');if(h===undefined||h!==null&&d(h))throw new TypeError('Field "update" of ForStatement constructor is of incorrect type (expected null or Expression, got '+a(h)+')');if(e(j))throw new TypeError('Field "body" of ForStatement constructor is of incorrect type (expected Statement, got '+a(j)+')');this.type='ForStatement',this.init=f,this.test=g,this.update=h,this.body=j},a0=b.FormalParameters=function b(f){var e=f.items,d=f.rest;if(c(this,b),e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a.type!=='BindingWithDefault'&&a.type!=='BindingIdentifier'&&a.type!=='ArrayBinding'&&a.type!=='ObjectBinding'}))throw new TypeError('Field "items" of FormalParameters constructor is of incorrect type (expected [one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}], got '+a(e)+')');if(d===undefined||d!==null&&d.type!=='BindingIdentifier'&&d.type!=='ArrayBinding'&&d.type!=='ObjectBinding')throw new TypeError('Field "rest" of FormalParameters constructor is of incorrect type (expected null or one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(d)+')');this.type='FormalParameters',this.items=e,this.rest=d},a1=b.FunctionBody=function b(g){var d=g.directives,f=g.statements;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='Directive'}))throw new TypeError('Field "directives" of FunctionBody constructor is of incorrect type (expected [Directive], got '+a(d)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return e(a)}))throw new TypeError('Field "statements" of FunctionBody constructor is of incorrect type (expected [Statement], got '+a(f)+')');this.type='FunctionBody',this.directives=d,this.statements=f},a2=b.FunctionDeclaration=function b(h){var d=h.isGenerator,e=h.name,f=h.params,g=h.body;if(c(this,b),d===undefined||typeof d!=='boolean')throw new TypeError('Field "isGenerator" of FunctionDeclaration constructor is of incorrect type (expected boolean, got '+a(d)+')');if(e===undefined||e.type!=='BindingIdentifier')throw new TypeError('Field "name" of FunctionDeclaration constructor is of incorrect type (expected BindingIdentifier, got '+a(e)+')');if(f===undefined||f.type!=='FormalParameters')throw new TypeError('Field "params" of FunctionDeclaration constructor is of incorrect type (expected FormalParameters, got '+a(f)+')');if(g===undefined||g.type!=='FunctionBody')throw new TypeError('Field "body" of FunctionDeclaration constructor is of incorrect type (expected FunctionBody, got '+a(g)+')');this.type='FunctionDeclaration',this.isGenerator=d,this.name=e,this.params=f,this.body=g},a3=b.FunctionExpression=function b(h){var e=h.isGenerator,d=h.name,f=h.params,g=h.body;if(c(this,b),e===undefined||typeof e!=='boolean')throw new TypeError('Field "isGenerator" of FunctionExpression constructor is of incorrect type (expected boolean, got '+a(e)+')');if(d===undefined||d!==null&&d.type!=='BindingIdentifier')throw new TypeError('Field "name" of FunctionExpression constructor is of incorrect type (expected null or BindingIdentifier, got '+a(d)+')');if(f===undefined||f.type!=='FormalParameters')throw new TypeError('Field "params" of FunctionExpression constructor is of incorrect type (expected FormalParameters, got '+a(f)+')');if(g===undefined||g.type!=='FunctionBody')throw new TypeError('Field "body" of FunctionExpression constructor is of incorrect type (expected FunctionBody, got '+a(g)+')');this.type='FunctionExpression',this.isGenerator=e,this.name=d,this.params=f,this.body=g},a4=b.Getter=function b(f){var d=f.name,e=f.body;if(c(this,b),d===undefined||d.type!=='ComputedPropertyName'&&d.type!=='StaticPropertyName')throw new TypeError('Field "name" of Getter constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got '+a(d)+')');if(e===undefined||e.type!=='FunctionBody')throw new TypeError('Field "body" of Getter constructor is of incorrect type (expected FunctionBody, got '+a(e)+')');this.type='Getter',this.name=d,this.body=e},a5=b.IdentifierExpression=function b(e){var d=e.name;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "name" of IdentifierExpression constructor is of incorrect type (expected string, got '+a(d)+')');this.type='IdentifierExpression',this.name=d},a6=b.IfStatement=function b(i){var g=i.test,h=i.consequent,f=i.alternate;if(c(this,b),d(g))throw new TypeError('Field "test" of IfStatement constructor is of incorrect type (expected Expression, got '+a(g)+')');if(e(h))throw new TypeError('Field "consequent" of IfStatement constructor is of incorrect type (expected Statement, got '+a(h)+')');if(f===undefined||f!==null&&e(f))throw new TypeError('Field "alternate" of IfStatement constructor is of incorrect type (expected null or Statement, got '+a(f)+')');this.type='IfStatement',this.test=g,this.consequent=h,this.alternate=f},a7=b.Import=function b(g){var d=g.defaultBinding,e=g.namedImports,f=g.moduleSpecifier;if(c(this,b),d===undefined||d!==null&&d.type!=='BindingIdentifier')throw new TypeError('Field "defaultBinding" of Import constructor is of incorrect type (expected null or BindingIdentifier, got '+a(d)+')');if(e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a.type!=='ImportSpecifier'}))throw new TypeError('Field "namedImports" of Import constructor is of incorrect type (expected [ImportSpecifier], got '+a(e)+')');if(f===undefined||typeof f!=='string')throw new TypeError('Field "moduleSpecifier" of Import constructor is of incorrect type (expected string, got '+a(f)+')');this.type='Import',this.defaultBinding=d,this.namedImports=e,this.moduleSpecifier=f},a8=b.ImportNamespace=function b(g){var d=g.defaultBinding,e=g.namespaceBinding,f=g.moduleSpecifier;if(c(this,b),d===undefined||d!==null&&d.type!=='BindingIdentifier')throw new TypeError('Field "defaultBinding" of ImportNamespace constructor is of incorrect type (expected null or BindingIdentifier, got '+a(d)+')');if(e===undefined||e.type!=='BindingIdentifier')throw new TypeError('Field "namespaceBinding" of ImportNamespace constructor is of incorrect type (expected BindingIdentifier, got '+a(e)+')');if(f===undefined||typeof f!=='string')throw new TypeError('Field "moduleSpecifier" of ImportNamespace constructor is of incorrect type (expected string, got '+a(f)+')');this.type='ImportNamespace',this.defaultBinding=d,this.namespaceBinding=e,this.moduleSpecifier=f},a9=b.ImportSpecifier=function b(f){var d=f.name,e=f.binding;if(c(this,b),d===undefined||d!==null&&typeof d!=='string')throw new TypeError('Field "name" of ImportSpecifier constructor is of incorrect type (expected null or string, got '+a(d)+')');if(e===undefined||e.type!=='BindingIdentifier')throw new TypeError('Field "binding" of ImportSpecifier constructor is of incorrect type (expected BindingIdentifier, got '+a(e)+')');this.type='ImportSpecifier',this.name=d,this.binding=e},aa=b.LabeledStatement=function b(g){var d=g.label,f=g.body;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "label" of LabeledStatement constructor is of incorrect type (expected string, got '+a(d)+')');if(e(f))throw new TypeError('Field "body" of LabeledStatement constructor is of incorrect type (expected Statement, got '+a(f)+')');this.type='LabeledStatement',this.label=d,this.body=f},ab=b.LiteralBooleanExpression=function b(e){var d=e.value;if(c(this,b),d===undefined||typeof d!=='boolean')throw new TypeError('Field "value" of LiteralBooleanExpression constructor is of incorrect type (expected boolean, got '+a(d)+')');this.type='LiteralBooleanExpression',this.value=d},ac=b.LiteralInfinityExpression=function a(){c(this,a),this.type='LiteralInfinityExpression'},ad=b.LiteralNullExpression=function a(){c(this,a),this.type='LiteralNullExpression'},ae=b.LiteralNumericExpression=function b(e){var d=e.value;if(c(this,b),d===undefined||typeof d!=='number')throw new TypeError('Field "value" of LiteralNumericExpression constructor is of incorrect type (expected number, got '+a(d)+')');this.type='LiteralNumericExpression',this.value=d},af=b.LiteralRegExpExpression=function b(d){var e=d.pattern,f=d.global,g=d.ignoreCase,h=d.multiLine,i=d.sticky,j=d.unicode;if(c(this,b),e===undefined||typeof e!=='string')throw new TypeError('Field "pattern" of LiteralRegExpExpression constructor is of incorrect type (expected string, got '+a(e)+')');if(f===undefined||typeof f!=='boolean')throw new TypeError('Field "global" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got '+a(f)+')');if(g===undefined||typeof g!=='boolean')throw new TypeError('Field "ignoreCase" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got '+a(g)+')');if(h===undefined||typeof h!=='boolean')throw new TypeError('Field "multiLine" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got '+a(h)+')');if(i===undefined||typeof i!=='boolean')throw new TypeError('Field "sticky" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got '+a(i)+')');if(j===undefined||typeof j!=='boolean')throw new TypeError('Field "unicode" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got '+a(j)+')');this.type='LiteralRegExpExpression',this.pattern=e,this.global=f,this.ignoreCase=g,this.multiLine=h,this.sticky=i,this.unicode=j},ag=b.LiteralStringExpression=function b(e){var d=e.value;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "value" of LiteralStringExpression constructor is of incorrect type (expected string, got '+a(d)+')');this.type='LiteralStringExpression',this.value=d},ah=b.Method=function b(h){var e=h.isGenerator,d=h.name,f=h.params,g=h.body;if(c(this,b),e===undefined||typeof e!=='boolean')throw new TypeError('Field "isGenerator" of Method constructor is of incorrect type (expected boolean, got '+a(e)+')');if(d===undefined||d.type!=='ComputedPropertyName'&&d.type!=='StaticPropertyName')throw new TypeError('Field "name" of Method constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got '+a(d)+')');if(f===undefined||f.type!=='FormalParameters')throw new TypeError('Field "params" of Method constructor is of incorrect type (expected FormalParameters, got '+a(f)+')');if(g===undefined||g.type!=='FunctionBody')throw new TypeError('Field "body" of Method constructor is of incorrect type (expected FunctionBody, got '+a(g)+')');this.type='Method',this.isGenerator=e,this.name=d,this.params=f,this.body=g},ai=b.Module=function b(g){var d=g.directives,f=g.items;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='Directive'}))throw new TypeError('Field "directives" of Module constructor is of incorrect type (expected [Directive], got '+a(d)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return a===undefined||a.type!=='Export'&&a.type!=='ExportAllFrom'&&a.type!=='ExportDefault'&&a.type!=='ExportFrom'&&a.type!=='ExportLocals'&&a.type!=='Import'&&a.type!=='ImportNamespace'&&e(a)}))throw new TypeError('Field "items" of Module constructor is of incorrect type (expected [one of {Export, ExportAllFrom, ExportDefault, ExportFrom, ExportLocals, Import, ImportNamespace, Statement}], got '+a(f)+')');this.type='Module',this.directives=d,this.items=f},aj=b.NewExpression=function b(g){var f=g.callee,e=g.arguments;if(c(this,b),d(f))throw new TypeError('Field "callee" of NewExpression constructor is of incorrect type (expected Expression, got '+a(f)+')');if(e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||d(a)&&a.type!=='SpreadElement'}))throw new TypeError('Field "arguments" of NewExpression constructor is of incorrect type (expected [one of {Expression, SpreadElement}], got '+a(e)+')');this.type='NewExpression',this.callee=f,this.arguments=e},ak=b.NewTargetExpression=function a(){c(this,a),this.type='NewTargetExpression'},al=b.ObjectAssignmentTarget=function b(e){var d=e.properties;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='AssignmentTargetPropertyIdentifier'&&a.type!=='AssignmentTargetPropertyProperty'}))throw new TypeError('Field "properties" of ObjectAssignmentTarget constructor is of incorrect type (expected [one of {AssignmentTargetPropertyIdentifier, AssignmentTargetPropertyProperty}], got '+a(d)+')');this.type='ObjectAssignmentTarget',this.properties=d},am=b.ObjectBinding=function b(e){var d=e.properties;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='BindingPropertyIdentifier'&&a.type!=='BindingPropertyProperty'}))throw new TypeError('Field "properties" of ObjectBinding constructor is of incorrect type (expected [one of {BindingPropertyIdentifier, BindingPropertyProperty}], got '+a(d)+')');this.type='ObjectBinding',this.properties=d},an=b.ObjectExpression=function b(e){var d=e.properties;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='DataProperty'&&a.type!=='Getter'&&a.type!=='Method'&&a.type!=='Setter'&&a.type!=='ShorthandProperty'}))throw new TypeError('Field "properties" of ObjectExpression constructor is of incorrect type (expected [one of {DataProperty, Getter, Method, Setter, ShorthandProperty}], got '+a(d)+')');this.type='ObjectExpression',this.properties=d},ao=b.ReturnStatement=function b(f){var e=f.expression;if(c(this,b),e===undefined||e!==null&&d(e))throw new TypeError('Field "expression" of ReturnStatement constructor is of incorrect type (expected null or Expression, got '+a(e)+')');this.type='ReturnStatement',this.expression=e},ap=b.Script=function b(g){var d=g.directives,f=g.statements;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='Directive'}))throw new TypeError('Field "directives" of Script constructor is of incorrect type (expected [Directive], got '+a(d)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return e(a)}))throw new TypeError('Field "statements" of Script constructor is of incorrect type (expected [Statement], got '+a(f)+')');this.type='Script',this.directives=d,this.statements=f},aq=b.Setter=function b(g){var e=g.name,d=g.param,f=g.body;if(c(this,b),e===undefined||e.type!=='ComputedPropertyName'&&e.type!=='StaticPropertyName')throw new TypeError('Field "name" of Setter constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got '+a(e)+')');if(d===undefined||d.type!=='BindingWithDefault'&&d.type!=='BindingIdentifier'&&d.type!=='ArrayBinding'&&d.type!=='ObjectBinding')throw new TypeError('Field "param" of Setter constructor is of incorrect type (expected one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(d)+')');if(f===undefined||f.type!=='FunctionBody')throw new TypeError('Field "body" of Setter constructor is of incorrect type (expected FunctionBody, got '+a(f)+')');this.type='Setter',this.name=e,this.param=d,this.body=f},ar=b.ShorthandProperty=function b(e){var d=e.name;if(c(this,b),d===undefined||d.type!=='IdentifierExpression')throw new TypeError('Field "name" of ShorthandProperty constructor is of incorrect type (expected IdentifierExpression, got '+a(d)+')');this.type='ShorthandProperty',this.name=d},as=b.SpreadElement=function b(f){var e=f.expression;if(c(this,b),d(e))throw new TypeError('Field "expression" of SpreadElement constructor is of incorrect type (expected Expression, got '+a(e)+')');this.type='SpreadElement',this.expression=e},at=b.StaticMemberAssignmentTarget=function b(g){var e=g.object,f=g.property;if(c(this,b),e===undefined||d(e)&&e.type!=='Super')throw new TypeError('Field "object" of StaticMemberAssignmentTarget constructor is of incorrect type (expected one of {Expression, Super}, got '+a(e)+')');if(f===undefined||typeof f!=='string')throw new TypeError('Field "property" of StaticMemberAssignmentTarget constructor is of incorrect type (expected string, got '+a(f)+')');this.type='StaticMemberAssignmentTarget',this.object=e,this.property=f},au=b.StaticMemberExpression=function b(g){var e=g.object,f=g.property;if(c(this,b),e===undefined||d(e)&&e.type!=='Super')throw new TypeError('Field "object" of StaticMemberExpression constructor is of incorrect type (expected one of {Expression, Super}, got '+a(e)+')');if(f===undefined||typeof f!=='string')throw new TypeError('Field "property" of StaticMemberExpression constructor is of incorrect type (expected string, got '+a(f)+')');this.type='StaticMemberExpression',this.object=e,this.property=f},av=b.StaticPropertyName=function b(e){var d=e.value;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "value" of StaticPropertyName constructor is of incorrect type (expected string, got '+a(d)+')');this.type='StaticPropertyName',this.value=d},aw=b.Super=function a(){c(this,a),this.type='Super'},ax=b.SwitchCase=function b(h){var g=h.test,f=h.consequent;if(c(this,b),d(g))throw new TypeError('Field "test" of SwitchCase constructor is of incorrect type (expected Expression, got '+a(g)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return e(a)}))throw new TypeError('Field "consequent" of SwitchCase constructor is of incorrect type (expected [Statement], got '+a(f)+')');this.type='SwitchCase',this.test=g,this.consequent=f},ay=b.SwitchDefault=function b(f){var d=f.consequent;if(c(this,b),d===undefined||!Array.isArray(d)||d.some(function(a){return e(a)}))throw new TypeError('Field "consequent" of SwitchDefault constructor is of incorrect type (expected [Statement], got '+a(d)+')');this.type='SwitchDefault',this.consequent=d},az=b.SwitchStatement=function b(g){var f=g.discriminant,e=g.cases;if(c(this,b),d(f))throw new TypeError('Field "discriminant" of SwitchStatement constructor is of incorrect type (expected Expression, got '+a(f)+')');if(e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a.type!=='SwitchCase'}))throw new TypeError('Field "cases" of SwitchStatement constructor is of incorrect type (expected [SwitchCase], got '+a(e)+')');this.type='SwitchStatement',this.discriminant=f,this.cases=e},aA=b.SwitchStatementWithDefault=function b(h){var i=h.discriminant,e=h.preDefaultCases,g=h.defaultCase,f=h.postDefaultCases;if(c(this,b),d(i))throw new TypeError('Field "discriminant" of SwitchStatementWithDefault constructor is of incorrect type (expected Expression, got '+a(i)+')');if(e===undefined||!Array.isArray(e)||e.some(function(a){return a===undefined||a.type!=='SwitchCase'}))throw new TypeError('Field "preDefaultCases" of SwitchStatementWithDefault constructor is of incorrect type (expected [SwitchCase], got '+a(e)+')');if(g===undefined||g.type!=='SwitchDefault')throw new TypeError('Field "defaultCase" of SwitchStatementWithDefault constructor is of incorrect type (expected SwitchDefault, got '+a(g)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return a===undefined||a.type!=='SwitchCase'}))throw new TypeError('Field "postDefaultCases" of SwitchStatementWithDefault constructor is of incorrect type (expected [SwitchCase], got '+a(f)+')');this.type='SwitchStatementWithDefault',this.discriminant=i,this.preDefaultCases=e,this.defaultCase=g,this.postDefaultCases=f},aB=b.TemplateElement=function b(e){var d=e.rawValue;if(c(this,b),d===undefined||typeof d!=='string')throw new TypeError('Field "rawValue" of TemplateElement constructor is of incorrect type (expected string, got '+a(d)+')');this.type='TemplateElement',this.rawValue=d},aC=b.TemplateExpression=function b(g){var e=g.tag,f=g.elements;if(c(this,b),e===undefined||e!==null&&d(e))throw new TypeError('Field "tag" of TemplateExpression constructor is of incorrect type (expected null or Expression, got '+a(e)+')');if(f===undefined||!Array.isArray(f)||f.some(function(a){return a===undefined||d(a)&&a.type!=='TemplateElement'}))throw new TypeError('Field "elements" of TemplateExpression constructor is of incorrect type (expected [one of {Expression, TemplateElement}], got '+a(f)+')');this.type='TemplateExpression',this.tag=e,this.elements=f},aD=b.ThisExpression=function a(){c(this,a),this.type='ThisExpression'},aE=b.ThrowStatement=function b(f){var e=f.expression;if(c(this,b),d(e))throw new TypeError('Field "expression" of ThrowStatement constructor is of incorrect type (expected Expression, got '+a(e)+')');this.type='ThrowStatement',this.expression=e},aF=b.TryCatchStatement=function b(f){var d=f.body,e=f.catchClause;if(c(this,b),d===undefined||d.type!=='Block')throw new TypeError('Field "body" of TryCatchStatement constructor is of incorrect type (expected Block, got '+a(d)+')');if(e===undefined||e.type!=='CatchClause')throw new TypeError('Field "catchClause" of TryCatchStatement constructor is of incorrect type (expected CatchClause, got '+a(e)+')');this.type='TryCatchStatement',this.body=d,this.catchClause=e},aG=b.TryFinallyStatement=function b(g){var e=g.body,d=g.catchClause,f=g.finalizer;if(c(this,b),e===undefined||e.type!=='Block')throw new TypeError('Field "body" of TryFinallyStatement constructor is of incorrect type (expected Block, got '+a(e)+')');if(d===undefined||d!==null&&d.type!=='CatchClause')throw new TypeError('Field "catchClause" of TryFinallyStatement constructor is of incorrect type (expected null or CatchClause, got '+a(d)+')');if(f===undefined||f.type!=='Block')throw new TypeError('Field "finalizer" of TryFinallyStatement constructor is of incorrect type (expected Block, got '+a(f)+')');this.type='TryFinallyStatement',this.body=e,this.catchClause=d,this.finalizer=f},aH=b.UnaryExpression=function b(g){var e=g.operator,f=g.operand;if(c(this,b),e===undefined||['+','-','!','~','typeof','void','delete'].indexOf(e)===-1)throw new TypeError('Field "operator" of UnaryExpression constructor is of incorrect type (expected one of {"+", "-", "!", "~", "typeof", "void", "delete"}, got '+a(e)+')');if(d(f))throw new TypeError('Field "operand" of UnaryExpression constructor is of incorrect type (expected Expression, got '+a(f)+')');this.type='UnaryExpression',this.operator=e,this.operand=f},aI=b.UpdateExpression=function b(g){var e=g.isPrefix,f=g.operator,d=g.operand;if(c(this,b),e===undefined||typeof e!=='boolean')throw new TypeError('Field "isPrefix" of UpdateExpression constructor is of incorrect type (expected boolean, got '+a(e)+')');if(f===undefined||['++','--'].indexOf(f)===-1)throw new TypeError('Field "operator" of UpdateExpression constructor is of incorrect type (expected one of {"++", "--"}, got '+a(f)+')');if(d===undefined||d.type!=='AssignmentTargetIdentifier'&&d.type!=='ComputedMemberAssignmentTarget'&&d.type!=='StaticMemberAssignmentTarget')throw new TypeError('Field "operand" of UpdateExpression constructor is of incorrect type (expected one of {AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got '+a(d)+')');this.type='UpdateExpression',this.isPrefix=e,this.operator=f,this.operand=d},aJ=b.VariableDeclaration=function b(f){var e=f.kind,d=f.declarators;if(c(this,b),e===undefined||['var','let','const'].indexOf(e)===-1)throw new TypeError('Field "kind" of VariableDeclaration constructor is of incorrect type (expected one of {"var", "let", "const"}, got '+a(e)+')');if(d===undefined||!Array.isArray(d)||d.some(function(a){return a===undefined||a.type!=='VariableDeclarator'}))throw new TypeError('Field "declarators" of VariableDeclaration constructor is of incorrect type (expected [VariableDeclarator], got '+a(d)+')');this.type='VariableDeclaration',this.kind=e,this.declarators=d},aK=b.VariableDeclarationStatement=function b(e){var d=e.declaration;if(c(this,b),d===undefined||d.type!=='VariableDeclaration')throw new TypeError('Field "declaration" of VariableDeclarationStatement constructor is of incorrect type (expected VariableDeclaration, got '+a(d)+')');this.type='VariableDeclarationStatement',this.declaration=d},aL=b.VariableDeclarator=function b(g){var e=g.binding,f=g.init;if(c(this,b),e===undefined||e.type!=='BindingIdentifier'&&e.type!=='ArrayBinding'&&e.type!=='ObjectBinding')throw new TypeError('Field "binding" of VariableDeclarator constructor is of incorrect type (expected one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got '+a(e)+')');if(f===undefined||f!==null&&d(f))throw new TypeError('Field "init" of VariableDeclarator constructor is of incorrect type (expected null or Expression, got '+a(f)+')');this.type='VariableDeclarator',this.binding=e,this.init=f},$=b.WhileStatement=function b(h){var f=h.test,g=h.body;if(c(this,b),d(f))throw new TypeError('Field "test" of WhileStatement constructor is of incorrect type (expected Expression, got '+a(f)+')');if(e(g))throw new TypeError('Field "body" of WhileStatement constructor is of incorrect type (expected Statement, got '+a(g)+')');this.type='WhileStatement',this.test=f,this.body=g},h=b.WithStatement=function b(h){var f=h.object,g=h.body;if(c(this,b),d(f))throw new TypeError('Field "object" of WithStatement constructor is of incorrect type (expected Expression, got '+a(f)+')');if(e(g))throw new TypeError('Field "body" of WithStatement constructor is of incorrect type (expected Statement, got '+a(g)+')');this.type='WithStatement',this.object=f,this.body=g},j=b.YieldExpression=function b(f){var e=f.expression;if(c(this,b),e===undefined||e!==null&&d(e))throw new TypeError('Field "expression" of YieldExpression constructor is of incorrect type (expected null or Expression, got '+a(e)+')');this.type='YieldExpression',this.expression=e},i=b.YieldGeneratorExpression=function b(f){var e=f.expression;if(c(this,b),d(e))throw new TypeError('Field "expression" of YieldGeneratorExpression constructor is of incorrect type (expected Expression, got '+a(e)+')');this.type='YieldGeneratorExpression',this.expression=e}}),b.fuzzer=a('/node_modules/shift-fuzzer/dist/index.js')}.call(this,this))
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.fuzzer = require("shift-fuzzer");
+
+},{"shift-fuzzer":6}],2:[function(require,module,exports){
+/**
+ * Copyright 2016 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+module.exports = require('./dist/checked');
+
+},{"./dist/checked":3}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Generated by src/generate-checked.js.
+
+/**
+ * Copyright 2016 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+function isNotExpression(node) {
+  return node === undefined || node.type !== 'ArrayExpression' && node.type !== 'ArrowExpression' && node.type !== 'AssignmentExpression' && node.type !== 'BinaryExpression' && node.type !== 'CallExpression' && node.type !== 'ClassExpression' && node.type !== 'CompoundAssignmentExpression' && node.type !== 'ConditionalExpression' && node.type !== 'FunctionExpression' && node.type !== 'IdentifierExpression' && node.type !== 'LiteralBooleanExpression' && node.type !== 'LiteralInfinityExpression' && node.type !== 'LiteralNullExpression' && node.type !== 'LiteralNumericExpression' && node.type !== 'LiteralRegExpExpression' && node.type !== 'LiteralStringExpression' && node.type !== 'ComputedMemberExpression' && node.type !== 'StaticMemberExpression' && node.type !== 'NewExpression' && node.type !== 'NewTargetExpression' && node.type !== 'ObjectExpression' && node.type !== 'TemplateExpression' && node.type !== 'ThisExpression' && node.type !== 'UnaryExpression' && node.type !== 'UpdateExpression' && node.type !== 'YieldExpression' && node.type !== 'YieldGeneratorExpression';
+}
+
+function isNotStatement(node) {
+  return node === undefined || node.type !== 'BlockStatement' && node.type !== 'BreakStatement' && node.type !== 'ClassDeclaration' && node.type !== 'ContinueStatement' && node.type !== 'DebuggerStatement' && node.type !== 'EmptyStatement' && node.type !== 'ExpressionStatement' && node.type !== 'FunctionDeclaration' && node.type !== 'IfStatement' && node.type !== 'DoWhileStatement' && node.type !== 'ForInStatement' && node.type !== 'ForOfStatement' && node.type !== 'ForStatement' && node.type !== 'WhileStatement' && node.type !== 'LabeledStatement' && node.type !== 'ReturnStatement' && node.type !== 'SwitchStatement' && node.type !== 'SwitchStatementWithDefault' && node.type !== 'ThrowStatement' && node.type !== 'TryCatchStatement' && node.type !== 'TryFinallyStatement' && node.type !== 'VariableDeclarationStatement' && node.type !== 'WithStatement';
+}
+
+function printActualType(arg) {
+  if ((typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) !== 'object') {
+    return typeof arg === 'undefined' ? 'undefined' : _typeof(arg);
+  }
+  if (Array.isArray(arg)) {
+    return '[' + arg.map(printActualType).join(', ') + ']';
+  }
+  if (arg === null) {
+    return null;
+  }
+  if (!arg.type) {
+    return JSON.stringify(arg);
+  }
+  return arg.type;
+}
+
+var ArrayAssignmentTarget = exports.ArrayAssignmentTarget = function ArrayAssignmentTarget(_ref) {
+  var elements = _ref.elements;
+  var rest = _ref.rest;
+
+  _classCallCheck(this, ArrayAssignmentTarget);
+
+  if (elements === undefined || !Array.isArray(elements) || elements.some(function (f) {
+    return f === undefined || f !== null && f.type !== 'AssignmentTargetWithDefault' && f.type !== 'ArrayAssignmentTarget' && f.type !== 'ObjectAssignmentTarget' && f.type !== 'AssignmentTargetIdentifier' && f.type !== 'ComputedMemberAssignmentTarget' && f.type !== 'StaticMemberAssignmentTarget';
+  })) {
+    throw new TypeError('Field "elements" of ArrayAssignmentTarget constructor is of incorrect type (expected [null or one of {AssignmentTargetWithDefault, ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}], got ' + printActualType(elements) + ')');
+  }
+  if (rest === undefined || rest !== null && rest.type !== 'ArrayAssignmentTarget' && rest.type !== 'ObjectAssignmentTarget' && rest.type !== 'AssignmentTargetIdentifier' && rest.type !== 'ComputedMemberAssignmentTarget' && rest.type !== 'StaticMemberAssignmentTarget') {
+    throw new TypeError('Field "rest" of ArrayAssignmentTarget constructor is of incorrect type (expected null or one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got ' + printActualType(rest) + ')');
+  }
+  this.type = 'ArrayAssignmentTarget';
+  this.elements = elements;
+  this.rest = rest;
+};
+
+var ArrayBinding = exports.ArrayBinding = function ArrayBinding(_ref2) {
+  var elements = _ref2.elements;
+  var rest = _ref2.rest;
+
+  _classCallCheck(this, ArrayBinding);
+
+  if (elements === undefined || !Array.isArray(elements) || elements.some(function (f) {
+    return f === undefined || f !== null && f.type !== 'BindingWithDefault' && f.type !== 'BindingIdentifier' && f.type !== 'ArrayBinding' && f.type !== 'ObjectBinding';
+  })) {
+    throw new TypeError('Field "elements" of ArrayBinding constructor is of incorrect type (expected [null or one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}], got ' + printActualType(elements) + ')');
+  }
+  if (rest === undefined || rest !== null && rest.type !== 'BindingIdentifier' && rest.type !== 'ArrayBinding' && rest.type !== 'ObjectBinding') {
+    throw new TypeError('Field "rest" of ArrayBinding constructor is of incorrect type (expected null or one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(rest) + ')');
+  }
+  this.type = 'ArrayBinding';
+  this.elements = elements;
+  this.rest = rest;
+};
+
+var ArrayExpression = exports.ArrayExpression = function ArrayExpression(_ref3) {
+  var elements = _ref3.elements;
+
+  _classCallCheck(this, ArrayExpression);
+
+  if (elements === undefined || !Array.isArray(elements) || elements.some(function (f) {
+    return f === undefined || f !== null && isNotExpression(f) && f.type !== 'SpreadElement';
+  })) {
+    throw new TypeError('Field "elements" of ArrayExpression constructor is of incorrect type (expected [null or one of {Expression, SpreadElement}], got ' + printActualType(elements) + ')');
+  }
+  this.type = 'ArrayExpression';
+  this.elements = elements;
+};
+
+var ArrowExpression = exports.ArrowExpression = function ArrowExpression(_ref4) {
+  var params = _ref4.params;
+  var body = _ref4.body;
+
+  _classCallCheck(this, ArrowExpression);
+
+  if (params === undefined || params.type !== 'FormalParameters') {
+    throw new TypeError('Field "params" of ArrowExpression constructor is of incorrect type (expected FormalParameters, got ' + printActualType(params) + ')');
+  }
+  if (body === undefined || isNotExpression(body) && body.type !== 'FunctionBody') {
+    throw new TypeError('Field "body" of ArrowExpression constructor is of incorrect type (expected one of {Expression, FunctionBody}, got ' + printActualType(body) + ')');
+  }
+  this.type = 'ArrowExpression';
+  this.params = params;
+  this.body = body;
+};
+
+var AssignmentExpression = exports.AssignmentExpression = function AssignmentExpression(_ref5) {
+  var binding = _ref5.binding;
+  var expression = _ref5.expression;
+
+  _classCallCheck(this, AssignmentExpression);
+
+  if (binding === undefined || binding.type !== 'ArrayAssignmentTarget' && binding.type !== 'ObjectAssignmentTarget' && binding.type !== 'AssignmentTargetIdentifier' && binding.type !== 'ComputedMemberAssignmentTarget' && binding.type !== 'StaticMemberAssignmentTarget') {
+    throw new TypeError('Field "binding" of AssignmentExpression constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got ' + printActualType(binding) + ')');
+  }
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of AssignmentExpression constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'AssignmentExpression';
+  this.binding = binding;
+  this.expression = expression;
+};
+
+var AssignmentTargetIdentifier = exports.AssignmentTargetIdentifier = function AssignmentTargetIdentifier(_ref6) {
+  var name = _ref6.name;
+
+  _classCallCheck(this, AssignmentTargetIdentifier);
+
+  if (name === undefined || typeof name !== 'string') {
+    throw new TypeError('Field "name" of AssignmentTargetIdentifier constructor is of incorrect type (expected string, got ' + printActualType(name) + ')');
+  }
+  this.type = 'AssignmentTargetIdentifier';
+  this.name = name;
+};
+
+var AssignmentTargetPropertyIdentifier = exports.AssignmentTargetPropertyIdentifier = function AssignmentTargetPropertyIdentifier(_ref7) {
+  var binding = _ref7.binding;
+  var init = _ref7.init;
+
+  _classCallCheck(this, AssignmentTargetPropertyIdentifier);
+
+  if (binding === undefined || binding.type !== 'AssignmentTargetIdentifier') {
+    throw new TypeError('Field "binding" of AssignmentTargetPropertyIdentifier constructor is of incorrect type (expected AssignmentTargetIdentifier, got ' + printActualType(binding) + ')');
+  }
+  if (init === undefined || init !== null && isNotExpression(init)) {
+    throw new TypeError('Field "init" of AssignmentTargetPropertyIdentifier constructor is of incorrect type (expected null or Expression, got ' + printActualType(init) + ')');
+  }
+  this.type = 'AssignmentTargetPropertyIdentifier';
+  this.binding = binding;
+  this.init = init;
+};
+
+var AssignmentTargetPropertyProperty = exports.AssignmentTargetPropertyProperty = function AssignmentTargetPropertyProperty(_ref8) {
+  var name = _ref8.name;
+  var binding = _ref8.binding;
+
+  _classCallCheck(this, AssignmentTargetPropertyProperty);
+
+  if (name === undefined || name.type !== 'ComputedPropertyName' && name.type !== 'StaticPropertyName') {
+    throw new TypeError('Field "name" of AssignmentTargetPropertyProperty constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got ' + printActualType(name) + ')');
+  }
+  if (binding === undefined || binding.type !== 'AssignmentTargetWithDefault' && binding.type !== 'ArrayAssignmentTarget' && binding.type !== 'ObjectAssignmentTarget' && binding.type !== 'AssignmentTargetIdentifier' && binding.type !== 'ComputedMemberAssignmentTarget' && binding.type !== 'StaticMemberAssignmentTarget') {
+    throw new TypeError('Field "binding" of AssignmentTargetPropertyProperty constructor is of incorrect type (expected one of {AssignmentTargetWithDefault, ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got ' + printActualType(binding) + ')');
+  }
+  this.type = 'AssignmentTargetPropertyProperty';
+  this.name = name;
+  this.binding = binding;
+};
+
+var AssignmentTargetWithDefault = exports.AssignmentTargetWithDefault = function AssignmentTargetWithDefault(_ref9) {
+  var binding = _ref9.binding;
+  var init = _ref9.init;
+
+  _classCallCheck(this, AssignmentTargetWithDefault);
+
+  if (binding === undefined || binding.type !== 'ArrayAssignmentTarget' && binding.type !== 'ObjectAssignmentTarget' && binding.type !== 'AssignmentTargetIdentifier' && binding.type !== 'ComputedMemberAssignmentTarget' && binding.type !== 'StaticMemberAssignmentTarget') {
+    throw new TypeError('Field "binding" of AssignmentTargetWithDefault constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got ' + printActualType(binding) + ')');
+  }
+  if (isNotExpression(init)) {
+    throw new TypeError('Field "init" of AssignmentTargetWithDefault constructor is of incorrect type (expected Expression, got ' + printActualType(init) + ')');
+  }
+  this.type = 'AssignmentTargetWithDefault';
+  this.binding = binding;
+  this.init = init;
+};
+
+var BinaryExpression = exports.BinaryExpression = function BinaryExpression(_ref10) {
+  var left = _ref10.left;
+  var operator = _ref10.operator;
+  var right = _ref10.right;
+
+  _classCallCheck(this, BinaryExpression);
+
+  if (isNotExpression(left)) {
+    throw new TypeError('Field "left" of BinaryExpression constructor is of incorrect type (expected Expression, got ' + printActualType(left) + ')');
+  }
+  if (operator === undefined || ["==", "!=", "===", "!==", "<", "<=", ">", ">=", "in", "instanceof", "<<", ">>", ">>>", "+", "-", "*", "/", "%", "**", ",", "||", "&&", "|", "^", "&"].indexOf(operator) === -1) {
+    throw new TypeError('Field "operator" of BinaryExpression constructor is of incorrect type (expected one of {"==", "!=", "===", "!==", "<", "<=", ">", ">=", "in", "instanceof", "<<", ">>", ">>>", "+", "-", "*", "/", "%", "**", ",", "||", "&&", "|", "^", "&"}, got ' + printActualType(operator) + ')');
+  }
+  if (isNotExpression(right)) {
+    throw new TypeError('Field "right" of BinaryExpression constructor is of incorrect type (expected Expression, got ' + printActualType(right) + ')');
+  }
+  this.type = 'BinaryExpression';
+  this.left = left;
+  this.operator = operator;
+  this.right = right;
+};
+
+var BindingIdentifier = exports.BindingIdentifier = function BindingIdentifier(_ref11) {
+  var name = _ref11.name;
+
+  _classCallCheck(this, BindingIdentifier);
+
+  if (name === undefined || typeof name !== 'string') {
+    throw new TypeError('Field "name" of BindingIdentifier constructor is of incorrect type (expected string, got ' + printActualType(name) + ')');
+  }
+  this.type = 'BindingIdentifier';
+  this.name = name;
+};
+
+var BindingPropertyIdentifier = exports.BindingPropertyIdentifier = function BindingPropertyIdentifier(_ref12) {
+  var binding = _ref12.binding;
+  var init = _ref12.init;
+
+  _classCallCheck(this, BindingPropertyIdentifier);
+
+  if (binding === undefined || binding.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "binding" of BindingPropertyIdentifier constructor is of incorrect type (expected BindingIdentifier, got ' + printActualType(binding) + ')');
+  }
+  if (init === undefined || init !== null && isNotExpression(init)) {
+    throw new TypeError('Field "init" of BindingPropertyIdentifier constructor is of incorrect type (expected null or Expression, got ' + printActualType(init) + ')');
+  }
+  this.type = 'BindingPropertyIdentifier';
+  this.binding = binding;
+  this.init = init;
+};
+
+var BindingPropertyProperty = exports.BindingPropertyProperty = function BindingPropertyProperty(_ref13) {
+  var name = _ref13.name;
+  var binding = _ref13.binding;
+
+  _classCallCheck(this, BindingPropertyProperty);
+
+  if (name === undefined || name.type !== 'ComputedPropertyName' && name.type !== 'StaticPropertyName') {
+    throw new TypeError('Field "name" of BindingPropertyProperty constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got ' + printActualType(name) + ')');
+  }
+  if (binding === undefined || binding.type !== 'BindingWithDefault' && binding.type !== 'BindingIdentifier' && binding.type !== 'ArrayBinding' && binding.type !== 'ObjectBinding') {
+    throw new TypeError('Field "binding" of BindingPropertyProperty constructor is of incorrect type (expected one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(binding) + ')');
+  }
+  this.type = 'BindingPropertyProperty';
+  this.name = name;
+  this.binding = binding;
+};
+
+var BindingWithDefault = exports.BindingWithDefault = function BindingWithDefault(_ref14) {
+  var binding = _ref14.binding;
+  var init = _ref14.init;
+
+  _classCallCheck(this, BindingWithDefault);
+
+  if (binding === undefined || binding.type !== 'BindingIdentifier' && binding.type !== 'ArrayBinding' && binding.type !== 'ObjectBinding') {
+    throw new TypeError('Field "binding" of BindingWithDefault constructor is of incorrect type (expected one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(binding) + ')');
+  }
+  if (isNotExpression(init)) {
+    throw new TypeError('Field "init" of BindingWithDefault constructor is of incorrect type (expected Expression, got ' + printActualType(init) + ')');
+  }
+  this.type = 'BindingWithDefault';
+  this.binding = binding;
+  this.init = init;
+};
+
+var Block = exports.Block = function Block(_ref15) {
+  var statements = _ref15.statements;
+
+  _classCallCheck(this, Block);
+
+  if (statements === undefined || !Array.isArray(statements) || statements.some(function (f) {
+    return isNotStatement(f);
+  })) {
+    throw new TypeError('Field "statements" of Block constructor is of incorrect type (expected [Statement], got ' + printActualType(statements) + ')');
+  }
+  this.type = 'Block';
+  this.statements = statements;
+};
+
+var BlockStatement = exports.BlockStatement = function BlockStatement(_ref16) {
+  var block = _ref16.block;
+
+  _classCallCheck(this, BlockStatement);
+
+  if (block === undefined || block.type !== 'Block') {
+    throw new TypeError('Field "block" of BlockStatement constructor is of incorrect type (expected Block, got ' + printActualType(block) + ')');
+  }
+  this.type = 'BlockStatement';
+  this.block = block;
+};
+
+var BreakStatement = exports.BreakStatement = function BreakStatement(_ref17) {
+  var label = _ref17.label;
+
+  _classCallCheck(this, BreakStatement);
+
+  if (label === undefined || label !== null && typeof label !== 'string') {
+    throw new TypeError('Field "label" of BreakStatement constructor is of incorrect type (expected null or string, got ' + printActualType(label) + ')');
+  }
+  this.type = 'BreakStatement';
+  this.label = label;
+};
+
+var CallExpression = exports.CallExpression = function CallExpression(_ref18) {
+  var callee = _ref18.callee;
+  var _arguments = _ref18.arguments;
+
+  _classCallCheck(this, CallExpression);
+
+  if (callee === undefined || isNotExpression(callee) && callee.type !== 'Super') {
+    throw new TypeError('Field "callee" of CallExpression constructor is of incorrect type (expected one of {Expression, Super}, got ' + printActualType(callee) + ')');
+  }
+  if (_arguments === undefined || !Array.isArray(_arguments) || _arguments.some(function (f) {
+    return f === undefined || isNotExpression(f) && f.type !== 'SpreadElement';
+  })) {
+    throw new TypeError('Field "arguments" of CallExpression constructor is of incorrect type (expected [one of {Expression, SpreadElement}], got ' + printActualType(_arguments) + ')');
+  }
+  this.type = 'CallExpression';
+  this.callee = callee;
+  this.arguments = _arguments;
+};
+
+var CatchClause = exports.CatchClause = function CatchClause(_ref19) {
+  var binding = _ref19.binding;
+  var body = _ref19.body;
+
+  _classCallCheck(this, CatchClause);
+
+  if (binding === undefined || binding.type !== 'BindingIdentifier' && binding.type !== 'ArrayBinding' && binding.type !== 'ObjectBinding') {
+    throw new TypeError('Field "binding" of CatchClause constructor is of incorrect type (expected one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(binding) + ')');
+  }
+  if (body === undefined || body.type !== 'Block') {
+    throw new TypeError('Field "body" of CatchClause constructor is of incorrect type (expected Block, got ' + printActualType(body) + ')');
+  }
+  this.type = 'CatchClause';
+  this.binding = binding;
+  this.body = body;
+};
+
+var ClassDeclaration = exports.ClassDeclaration = function ClassDeclaration(_ref20) {
+  var name = _ref20.name;
+  var _super = _ref20.super;
+  var elements = _ref20.elements;
+
+  _classCallCheck(this, ClassDeclaration);
+
+  if (name === undefined || name.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "name" of ClassDeclaration constructor is of incorrect type (expected BindingIdentifier, got ' + printActualType(name) + ')');
+  }
+  if (_super === undefined || _super !== null && isNotExpression(_super)) {
+    throw new TypeError('Field "super" of ClassDeclaration constructor is of incorrect type (expected null or Expression, got ' + printActualType(_super) + ')');
+  }
+  if (elements === undefined || !Array.isArray(elements) || elements.some(function (f) {
+    return f === undefined || f.type !== 'ClassElement';
+  })) {
+    throw new TypeError('Field "elements" of ClassDeclaration constructor is of incorrect type (expected [ClassElement], got ' + printActualType(elements) + ')');
+  }
+  this.type = 'ClassDeclaration';
+  this.name = name;
+  this.super = _super;
+  this.elements = elements;
+};
+
+var ClassElement = exports.ClassElement = function ClassElement(_ref21) {
+  var isStatic = _ref21.isStatic;
+  var method = _ref21.method;
+
+  _classCallCheck(this, ClassElement);
+
+  if (isStatic === undefined || typeof isStatic !== 'boolean') {
+    throw new TypeError('Field "isStatic" of ClassElement constructor is of incorrect type (expected boolean, got ' + printActualType(isStatic) + ')');
+  }
+  if (method === undefined || method.type !== 'Getter' && method.type !== 'Method' && method.type !== 'Setter') {
+    throw new TypeError('Field "method" of ClassElement constructor is of incorrect type (expected one of {Getter, Method, Setter}, got ' + printActualType(method) + ')');
+  }
+  this.type = 'ClassElement';
+  this.isStatic = isStatic;
+  this.method = method;
+};
+
+var ClassExpression = exports.ClassExpression = function ClassExpression(_ref22) {
+  var name = _ref22.name;
+  var _super = _ref22.super;
+  var elements = _ref22.elements;
+
+  _classCallCheck(this, ClassExpression);
+
+  if (name === undefined || name !== null && name.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "name" of ClassExpression constructor is of incorrect type (expected null or BindingIdentifier, got ' + printActualType(name) + ')');
+  }
+  if (_super === undefined || _super !== null && isNotExpression(_super)) {
+    throw new TypeError('Field "super" of ClassExpression constructor is of incorrect type (expected null or Expression, got ' + printActualType(_super) + ')');
+  }
+  if (elements === undefined || !Array.isArray(elements) || elements.some(function (f) {
+    return f === undefined || f.type !== 'ClassElement';
+  })) {
+    throw new TypeError('Field "elements" of ClassExpression constructor is of incorrect type (expected [ClassElement], got ' + printActualType(elements) + ')');
+  }
+  this.type = 'ClassExpression';
+  this.name = name;
+  this.super = _super;
+  this.elements = elements;
+};
+
+var CompoundAssignmentExpression = exports.CompoundAssignmentExpression = function CompoundAssignmentExpression(_ref23) {
+  var binding = _ref23.binding;
+  var operator = _ref23.operator;
+  var expression = _ref23.expression;
+
+  _classCallCheck(this, CompoundAssignmentExpression);
+
+  if (binding === undefined || binding.type !== 'AssignmentTargetIdentifier' && binding.type !== 'ComputedMemberAssignmentTarget' && binding.type !== 'StaticMemberAssignmentTarget') {
+    throw new TypeError('Field "binding" of CompoundAssignmentExpression constructor is of incorrect type (expected one of {AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got ' + printActualType(binding) + ')');
+  }
+  if (operator === undefined || ["+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "|=", "^=", "&="].indexOf(operator) === -1) {
+    throw new TypeError('Field "operator" of CompoundAssignmentExpression constructor is of incorrect type (expected one of {"+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "|=", "^=", "&="}, got ' + printActualType(operator) + ')');
+  }
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of CompoundAssignmentExpression constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'CompoundAssignmentExpression';
+  this.binding = binding;
+  this.operator = operator;
+  this.expression = expression;
+};
+
+var ComputedMemberAssignmentTarget = exports.ComputedMemberAssignmentTarget = function ComputedMemberAssignmentTarget(_ref24) {
+  var object = _ref24.object;
+  var expression = _ref24.expression;
+
+  _classCallCheck(this, ComputedMemberAssignmentTarget);
+
+  if (object === undefined || isNotExpression(object) && object.type !== 'Super') {
+    throw new TypeError('Field "object" of ComputedMemberAssignmentTarget constructor is of incorrect type (expected one of {Expression, Super}, got ' + printActualType(object) + ')');
+  }
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of ComputedMemberAssignmentTarget constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'ComputedMemberAssignmentTarget';
+  this.object = object;
+  this.expression = expression;
+};
+
+var ComputedMemberExpression = exports.ComputedMemberExpression = function ComputedMemberExpression(_ref25) {
+  var object = _ref25.object;
+  var expression = _ref25.expression;
+
+  _classCallCheck(this, ComputedMemberExpression);
+
+  if (object === undefined || isNotExpression(object) && object.type !== 'Super') {
+    throw new TypeError('Field "object" of ComputedMemberExpression constructor is of incorrect type (expected one of {Expression, Super}, got ' + printActualType(object) + ')');
+  }
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of ComputedMemberExpression constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'ComputedMemberExpression';
+  this.object = object;
+  this.expression = expression;
+};
+
+var ComputedPropertyName = exports.ComputedPropertyName = function ComputedPropertyName(_ref26) {
+  var expression = _ref26.expression;
+
+  _classCallCheck(this, ComputedPropertyName);
+
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of ComputedPropertyName constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'ComputedPropertyName';
+  this.expression = expression;
+};
+
+var ConditionalExpression = exports.ConditionalExpression = function ConditionalExpression(_ref27) {
+  var test = _ref27.test;
+  var consequent = _ref27.consequent;
+  var alternate = _ref27.alternate;
+
+  _classCallCheck(this, ConditionalExpression);
+
+  if (isNotExpression(test)) {
+    throw new TypeError('Field "test" of ConditionalExpression constructor is of incorrect type (expected Expression, got ' + printActualType(test) + ')');
+  }
+  if (isNotExpression(consequent)) {
+    throw new TypeError('Field "consequent" of ConditionalExpression constructor is of incorrect type (expected Expression, got ' + printActualType(consequent) + ')');
+  }
+  if (isNotExpression(alternate)) {
+    throw new TypeError('Field "alternate" of ConditionalExpression constructor is of incorrect type (expected Expression, got ' + printActualType(alternate) + ')');
+  }
+  this.type = 'ConditionalExpression';
+  this.test = test;
+  this.consequent = consequent;
+  this.alternate = alternate;
+};
+
+var ContinueStatement = exports.ContinueStatement = function ContinueStatement(_ref28) {
+  var label = _ref28.label;
+
+  _classCallCheck(this, ContinueStatement);
+
+  if (label === undefined || label !== null && typeof label !== 'string') {
+    throw new TypeError('Field "label" of ContinueStatement constructor is of incorrect type (expected null or string, got ' + printActualType(label) + ')');
+  }
+  this.type = 'ContinueStatement';
+  this.label = label;
+};
+
+var DataProperty = exports.DataProperty = function DataProperty(_ref29) {
+  var name = _ref29.name;
+  var expression = _ref29.expression;
+
+  _classCallCheck(this, DataProperty);
+
+  if (name === undefined || name.type !== 'ComputedPropertyName' && name.type !== 'StaticPropertyName') {
+    throw new TypeError('Field "name" of DataProperty constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got ' + printActualType(name) + ')');
+  }
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of DataProperty constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'DataProperty';
+  this.name = name;
+  this.expression = expression;
+};
+
+var DebuggerStatement = exports.DebuggerStatement = function DebuggerStatement() {
+  _classCallCheck(this, DebuggerStatement);
+
+  this.type = 'DebuggerStatement';
+};
+
+var Directive = exports.Directive = function Directive(_ref30) {
+  var rawValue = _ref30.rawValue;
+
+  _classCallCheck(this, Directive);
+
+  if (rawValue === undefined || typeof rawValue !== 'string') {
+    throw new TypeError('Field "rawValue" of Directive constructor is of incorrect type (expected string, got ' + printActualType(rawValue) + ')');
+  }
+  this.type = 'Directive';
+  this.rawValue = rawValue;
+};
+
+var DoWhileStatement = exports.DoWhileStatement = function DoWhileStatement(_ref31) {
+  var body = _ref31.body;
+  var test = _ref31.test;
+
+  _classCallCheck(this, DoWhileStatement);
+
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of DoWhileStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  if (isNotExpression(test)) {
+    throw new TypeError('Field "test" of DoWhileStatement constructor is of incorrect type (expected Expression, got ' + printActualType(test) + ')');
+  }
+  this.type = 'DoWhileStatement';
+  this.body = body;
+  this.test = test;
+};
+
+var EmptyStatement = exports.EmptyStatement = function EmptyStatement() {
+  _classCallCheck(this, EmptyStatement);
+
+  this.type = 'EmptyStatement';
+};
+
+var Export = exports.Export = function Export(_ref32) {
+  var declaration = _ref32.declaration;
+
+  _classCallCheck(this, Export);
+
+  if (declaration === undefined || declaration.type !== 'ClassDeclaration' && declaration.type !== 'FunctionDeclaration' && declaration.type !== 'VariableDeclaration') {
+    throw new TypeError('Field "declaration" of Export constructor is of incorrect type (expected one of {ClassDeclaration, FunctionDeclaration, VariableDeclaration}, got ' + printActualType(declaration) + ')');
+  }
+  this.type = 'Export';
+  this.declaration = declaration;
+};
+
+var ExportAllFrom = exports.ExportAllFrom = function ExportAllFrom(_ref33) {
+  var moduleSpecifier = _ref33.moduleSpecifier;
+
+  _classCallCheck(this, ExportAllFrom);
+
+  if (moduleSpecifier === undefined || typeof moduleSpecifier !== 'string') {
+    throw new TypeError('Field "moduleSpecifier" of ExportAllFrom constructor is of incorrect type (expected string, got ' + printActualType(moduleSpecifier) + ')');
+  }
+  this.type = 'ExportAllFrom';
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ExportDefault = exports.ExportDefault = function ExportDefault(_ref34) {
+  var body = _ref34.body;
+
+  _classCallCheck(this, ExportDefault);
+
+  if (body === undefined || body.type !== 'ClassDeclaration' && isNotExpression(body) && body.type !== 'FunctionDeclaration') {
+    throw new TypeError('Field "body" of ExportDefault constructor is of incorrect type (expected one of {ClassDeclaration, Expression, FunctionDeclaration}, got ' + printActualType(body) + ')');
+  }
+  this.type = 'ExportDefault';
+  this.body = body;
+};
+
+var ExportFrom = exports.ExportFrom = function ExportFrom(_ref35) {
+  var namedExports = _ref35.namedExports;
+  var moduleSpecifier = _ref35.moduleSpecifier;
+
+  _classCallCheck(this, ExportFrom);
+
+  if (namedExports === undefined || !Array.isArray(namedExports) || namedExports.some(function (f) {
+    return f === undefined || f.type !== 'ExportFromSpecifier';
+  })) {
+    throw new TypeError('Field "namedExports" of ExportFrom constructor is of incorrect type (expected [ExportFromSpecifier], got ' + printActualType(namedExports) + ')');
+  }
+  if (moduleSpecifier === undefined || typeof moduleSpecifier !== 'string') {
+    throw new TypeError('Field "moduleSpecifier" of ExportFrom constructor is of incorrect type (expected string, got ' + printActualType(moduleSpecifier) + ')');
+  }
+  this.type = 'ExportFrom';
+  this.namedExports = namedExports;
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ExportFromSpecifier = exports.ExportFromSpecifier = function ExportFromSpecifier(_ref36) {
+  var name = _ref36.name;
+  var exportedName = _ref36.exportedName;
+
+  _classCallCheck(this, ExportFromSpecifier);
+
+  if (name === undefined || typeof name !== 'string') {
+    throw new TypeError('Field "name" of ExportFromSpecifier constructor is of incorrect type (expected string, got ' + printActualType(name) + ')');
+  }
+  if (exportedName === undefined || exportedName !== null && typeof exportedName !== 'string') {
+    throw new TypeError('Field "exportedName" of ExportFromSpecifier constructor is of incorrect type (expected null or string, got ' + printActualType(exportedName) + ')');
+  }
+  this.type = 'ExportFromSpecifier';
+  this.name = name;
+  this.exportedName = exportedName;
+};
+
+var ExportLocalSpecifier = exports.ExportLocalSpecifier = function ExportLocalSpecifier(_ref37) {
+  var name = _ref37.name;
+  var exportedName = _ref37.exportedName;
+
+  _classCallCheck(this, ExportLocalSpecifier);
+
+  if (name === undefined || name.type !== 'IdentifierExpression') {
+    throw new TypeError('Field "name" of ExportLocalSpecifier constructor is of incorrect type (expected IdentifierExpression, got ' + printActualType(name) + ')');
+  }
+  if (exportedName === undefined || exportedName !== null && typeof exportedName !== 'string') {
+    throw new TypeError('Field "exportedName" of ExportLocalSpecifier constructor is of incorrect type (expected null or string, got ' + printActualType(exportedName) + ')');
+  }
+  this.type = 'ExportLocalSpecifier';
+  this.name = name;
+  this.exportedName = exportedName;
+};
+
+var ExportLocals = exports.ExportLocals = function ExportLocals(_ref38) {
+  var namedExports = _ref38.namedExports;
+
+  _classCallCheck(this, ExportLocals);
+
+  if (namedExports === undefined || !Array.isArray(namedExports) || namedExports.some(function (f) {
+    return f === undefined || f.type !== 'ExportLocalSpecifier';
+  })) {
+    throw new TypeError('Field "namedExports" of ExportLocals constructor is of incorrect type (expected [ExportLocalSpecifier], got ' + printActualType(namedExports) + ')');
+  }
+  this.type = 'ExportLocals';
+  this.namedExports = namedExports;
+};
+
+var ExpressionStatement = exports.ExpressionStatement = function ExpressionStatement(_ref39) {
+  var expression = _ref39.expression;
+
+  _classCallCheck(this, ExpressionStatement);
+
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of ExpressionStatement constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'ExpressionStatement';
+  this.expression = expression;
+};
+
+var ForInStatement = exports.ForInStatement = function ForInStatement(_ref40) {
+  var left = _ref40.left;
+  var right = _ref40.right;
+  var body = _ref40.body;
+
+  _classCallCheck(this, ForInStatement);
+
+  if (left === undefined || left.type !== 'ArrayAssignmentTarget' && left.type !== 'ObjectAssignmentTarget' && left.type !== 'AssignmentTargetIdentifier' && left.type !== 'ComputedMemberAssignmentTarget' && left.type !== 'StaticMemberAssignmentTarget' && left.type !== 'VariableDeclaration') {
+    throw new TypeError('Field "left" of ForInStatement constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget, VariableDeclaration}, got ' + printActualType(left) + ')');
+  }
+  if (isNotExpression(right)) {
+    throw new TypeError('Field "right" of ForInStatement constructor is of incorrect type (expected Expression, got ' + printActualType(right) + ')');
+  }
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of ForInStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  this.type = 'ForInStatement';
+  this.left = left;
+  this.right = right;
+  this.body = body;
+};
+
+var ForOfStatement = exports.ForOfStatement = function ForOfStatement(_ref41) {
+  var left = _ref41.left;
+  var right = _ref41.right;
+  var body = _ref41.body;
+
+  _classCallCheck(this, ForOfStatement);
+
+  if (left === undefined || left.type !== 'ArrayAssignmentTarget' && left.type !== 'ObjectAssignmentTarget' && left.type !== 'AssignmentTargetIdentifier' && left.type !== 'ComputedMemberAssignmentTarget' && left.type !== 'StaticMemberAssignmentTarget' && left.type !== 'VariableDeclaration') {
+    throw new TypeError('Field "left" of ForOfStatement constructor is of incorrect type (expected one of {ArrayAssignmentTarget, ObjectAssignmentTarget, AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget, VariableDeclaration}, got ' + printActualType(left) + ')');
+  }
+  if (isNotExpression(right)) {
+    throw new TypeError('Field "right" of ForOfStatement constructor is of incorrect type (expected Expression, got ' + printActualType(right) + ')');
+  }
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of ForOfStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  this.type = 'ForOfStatement';
+  this.left = left;
+  this.right = right;
+  this.body = body;
+};
+
+var ForStatement = exports.ForStatement = function ForStatement(_ref42) {
+  var init = _ref42.init;
+  var test = _ref42.test;
+  var update = _ref42.update;
+  var body = _ref42.body;
+
+  _classCallCheck(this, ForStatement);
+
+  if (init === undefined || init !== null && isNotExpression(init) && init.type !== 'VariableDeclaration') {
+    throw new TypeError('Field "init" of ForStatement constructor is of incorrect type (expected null or one of {Expression, VariableDeclaration}, got ' + printActualType(init) + ')');
+  }
+  if (test === undefined || test !== null && isNotExpression(test)) {
+    throw new TypeError('Field "test" of ForStatement constructor is of incorrect type (expected null or Expression, got ' + printActualType(test) + ')');
+  }
+  if (update === undefined || update !== null && isNotExpression(update)) {
+    throw new TypeError('Field "update" of ForStatement constructor is of incorrect type (expected null or Expression, got ' + printActualType(update) + ')');
+  }
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of ForStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  this.type = 'ForStatement';
+  this.init = init;
+  this.test = test;
+  this.update = update;
+  this.body = body;
+};
+
+var FormalParameters = exports.FormalParameters = function FormalParameters(_ref43) {
+  var items = _ref43.items;
+  var rest = _ref43.rest;
+
+  _classCallCheck(this, FormalParameters);
+
+  if (items === undefined || !Array.isArray(items) || items.some(function (f) {
+    return f === undefined || f.type !== 'BindingWithDefault' && f.type !== 'BindingIdentifier' && f.type !== 'ArrayBinding' && f.type !== 'ObjectBinding';
+  })) {
+    throw new TypeError('Field "items" of FormalParameters constructor is of incorrect type (expected [one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}], got ' + printActualType(items) + ')');
+  }
+  if (rest === undefined || rest !== null && rest.type !== 'BindingIdentifier' && rest.type !== 'ArrayBinding' && rest.type !== 'ObjectBinding') {
+    throw new TypeError('Field "rest" of FormalParameters constructor is of incorrect type (expected null or one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(rest) + ')');
+  }
+  this.type = 'FormalParameters';
+  this.items = items;
+  this.rest = rest;
+};
+
+var FunctionBody = exports.FunctionBody = function FunctionBody(_ref44) {
+  var directives = _ref44.directives;
+  var statements = _ref44.statements;
+
+  _classCallCheck(this, FunctionBody);
+
+  if (directives === undefined || !Array.isArray(directives) || directives.some(function (f) {
+    return f === undefined || f.type !== 'Directive';
+  })) {
+    throw new TypeError('Field "directives" of FunctionBody constructor is of incorrect type (expected [Directive], got ' + printActualType(directives) + ')');
+  }
+  if (statements === undefined || !Array.isArray(statements) || statements.some(function (f) {
+    return isNotStatement(f);
+  })) {
+    throw new TypeError('Field "statements" of FunctionBody constructor is of incorrect type (expected [Statement], got ' + printActualType(statements) + ')');
+  }
+  this.type = 'FunctionBody';
+  this.directives = directives;
+  this.statements = statements;
+};
+
+var FunctionDeclaration = exports.FunctionDeclaration = function FunctionDeclaration(_ref45) {
+  var isGenerator = _ref45.isGenerator;
+  var name = _ref45.name;
+  var params = _ref45.params;
+  var body = _ref45.body;
+
+  _classCallCheck(this, FunctionDeclaration);
+
+  if (isGenerator === undefined || typeof isGenerator !== 'boolean') {
+    throw new TypeError('Field "isGenerator" of FunctionDeclaration constructor is of incorrect type (expected boolean, got ' + printActualType(isGenerator) + ')');
+  }
+  if (name === undefined || name.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "name" of FunctionDeclaration constructor is of incorrect type (expected BindingIdentifier, got ' + printActualType(name) + ')');
+  }
+  if (params === undefined || params.type !== 'FormalParameters') {
+    throw new TypeError('Field "params" of FunctionDeclaration constructor is of incorrect type (expected FormalParameters, got ' + printActualType(params) + ')');
+  }
+  if (body === undefined || body.type !== 'FunctionBody') {
+    throw new TypeError('Field "body" of FunctionDeclaration constructor is of incorrect type (expected FunctionBody, got ' + printActualType(body) + ')');
+  }
+  this.type = 'FunctionDeclaration';
+  this.isGenerator = isGenerator;
+  this.name = name;
+  this.params = params;
+  this.body = body;
+};
+
+var FunctionExpression = exports.FunctionExpression = function FunctionExpression(_ref46) {
+  var isGenerator = _ref46.isGenerator;
+  var name = _ref46.name;
+  var params = _ref46.params;
+  var body = _ref46.body;
+
+  _classCallCheck(this, FunctionExpression);
+
+  if (isGenerator === undefined || typeof isGenerator !== 'boolean') {
+    throw new TypeError('Field "isGenerator" of FunctionExpression constructor is of incorrect type (expected boolean, got ' + printActualType(isGenerator) + ')');
+  }
+  if (name === undefined || name !== null && name.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "name" of FunctionExpression constructor is of incorrect type (expected null or BindingIdentifier, got ' + printActualType(name) + ')');
+  }
+  if (params === undefined || params.type !== 'FormalParameters') {
+    throw new TypeError('Field "params" of FunctionExpression constructor is of incorrect type (expected FormalParameters, got ' + printActualType(params) + ')');
+  }
+  if (body === undefined || body.type !== 'FunctionBody') {
+    throw new TypeError('Field "body" of FunctionExpression constructor is of incorrect type (expected FunctionBody, got ' + printActualType(body) + ')');
+  }
+  this.type = 'FunctionExpression';
+  this.isGenerator = isGenerator;
+  this.name = name;
+  this.params = params;
+  this.body = body;
+};
+
+var Getter = exports.Getter = function Getter(_ref47) {
+  var name = _ref47.name;
+  var body = _ref47.body;
+
+  _classCallCheck(this, Getter);
+
+  if (name === undefined || name.type !== 'ComputedPropertyName' && name.type !== 'StaticPropertyName') {
+    throw new TypeError('Field "name" of Getter constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got ' + printActualType(name) + ')');
+  }
+  if (body === undefined || body.type !== 'FunctionBody') {
+    throw new TypeError('Field "body" of Getter constructor is of incorrect type (expected FunctionBody, got ' + printActualType(body) + ')');
+  }
+  this.type = 'Getter';
+  this.name = name;
+  this.body = body;
+};
+
+var IdentifierExpression = exports.IdentifierExpression = function IdentifierExpression(_ref48) {
+  var name = _ref48.name;
+
+  _classCallCheck(this, IdentifierExpression);
+
+  if (name === undefined || typeof name !== 'string') {
+    throw new TypeError('Field "name" of IdentifierExpression constructor is of incorrect type (expected string, got ' + printActualType(name) + ')');
+  }
+  this.type = 'IdentifierExpression';
+  this.name = name;
+};
+
+var IfStatement = exports.IfStatement = function IfStatement(_ref49) {
+  var test = _ref49.test;
+  var consequent = _ref49.consequent;
+  var alternate = _ref49.alternate;
+
+  _classCallCheck(this, IfStatement);
+
+  if (isNotExpression(test)) {
+    throw new TypeError('Field "test" of IfStatement constructor is of incorrect type (expected Expression, got ' + printActualType(test) + ')');
+  }
+  if (isNotStatement(consequent)) {
+    throw new TypeError('Field "consequent" of IfStatement constructor is of incorrect type (expected Statement, got ' + printActualType(consequent) + ')');
+  }
+  if (alternate === undefined || alternate !== null && isNotStatement(alternate)) {
+    throw new TypeError('Field "alternate" of IfStatement constructor is of incorrect type (expected null or Statement, got ' + printActualType(alternate) + ')');
+  }
+  this.type = 'IfStatement';
+  this.test = test;
+  this.consequent = consequent;
+  this.alternate = alternate;
+};
+
+var Import = exports.Import = function Import(_ref50) {
+  var defaultBinding = _ref50.defaultBinding;
+  var namedImports = _ref50.namedImports;
+  var moduleSpecifier = _ref50.moduleSpecifier;
+
+  _classCallCheck(this, Import);
+
+  if (defaultBinding === undefined || defaultBinding !== null && defaultBinding.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "defaultBinding" of Import constructor is of incorrect type (expected null or BindingIdentifier, got ' + printActualType(defaultBinding) + ')');
+  }
+  if (namedImports === undefined || !Array.isArray(namedImports) || namedImports.some(function (f) {
+    return f === undefined || f.type !== 'ImportSpecifier';
+  })) {
+    throw new TypeError('Field "namedImports" of Import constructor is of incorrect type (expected [ImportSpecifier], got ' + printActualType(namedImports) + ')');
+  }
+  if (moduleSpecifier === undefined || typeof moduleSpecifier !== 'string') {
+    throw new TypeError('Field "moduleSpecifier" of Import constructor is of incorrect type (expected string, got ' + printActualType(moduleSpecifier) + ')');
+  }
+  this.type = 'Import';
+  this.defaultBinding = defaultBinding;
+  this.namedImports = namedImports;
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ImportNamespace = exports.ImportNamespace = function ImportNamespace(_ref51) {
+  var defaultBinding = _ref51.defaultBinding;
+  var namespaceBinding = _ref51.namespaceBinding;
+  var moduleSpecifier = _ref51.moduleSpecifier;
+
+  _classCallCheck(this, ImportNamespace);
+
+  if (defaultBinding === undefined || defaultBinding !== null && defaultBinding.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "defaultBinding" of ImportNamespace constructor is of incorrect type (expected null or BindingIdentifier, got ' + printActualType(defaultBinding) + ')');
+  }
+  if (namespaceBinding === undefined || namespaceBinding.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "namespaceBinding" of ImportNamespace constructor is of incorrect type (expected BindingIdentifier, got ' + printActualType(namespaceBinding) + ')');
+  }
+  if (moduleSpecifier === undefined || typeof moduleSpecifier !== 'string') {
+    throw new TypeError('Field "moduleSpecifier" of ImportNamespace constructor is of incorrect type (expected string, got ' + printActualType(moduleSpecifier) + ')');
+  }
+  this.type = 'ImportNamespace';
+  this.defaultBinding = defaultBinding;
+  this.namespaceBinding = namespaceBinding;
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ImportSpecifier = exports.ImportSpecifier = function ImportSpecifier(_ref52) {
+  var name = _ref52.name;
+  var binding = _ref52.binding;
+
+  _classCallCheck(this, ImportSpecifier);
+
+  if (name === undefined || name !== null && typeof name !== 'string') {
+    throw new TypeError('Field "name" of ImportSpecifier constructor is of incorrect type (expected null or string, got ' + printActualType(name) + ')');
+  }
+  if (binding === undefined || binding.type !== 'BindingIdentifier') {
+    throw new TypeError('Field "binding" of ImportSpecifier constructor is of incorrect type (expected BindingIdentifier, got ' + printActualType(binding) + ')');
+  }
+  this.type = 'ImportSpecifier';
+  this.name = name;
+  this.binding = binding;
+};
+
+var LabeledStatement = exports.LabeledStatement = function LabeledStatement(_ref53) {
+  var label = _ref53.label;
+  var body = _ref53.body;
+
+  _classCallCheck(this, LabeledStatement);
+
+  if (label === undefined || typeof label !== 'string') {
+    throw new TypeError('Field "label" of LabeledStatement constructor is of incorrect type (expected string, got ' + printActualType(label) + ')');
+  }
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of LabeledStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  this.type = 'LabeledStatement';
+  this.label = label;
+  this.body = body;
+};
+
+var LiteralBooleanExpression = exports.LiteralBooleanExpression = function LiteralBooleanExpression(_ref54) {
+  var value = _ref54.value;
+
+  _classCallCheck(this, LiteralBooleanExpression);
+
+  if (value === undefined || typeof value !== 'boolean') {
+    throw new TypeError('Field "value" of LiteralBooleanExpression constructor is of incorrect type (expected boolean, got ' + printActualType(value) + ')');
+  }
+  this.type = 'LiteralBooleanExpression';
+  this.value = value;
+};
+
+var LiteralInfinityExpression = exports.LiteralInfinityExpression = function LiteralInfinityExpression() {
+  _classCallCheck(this, LiteralInfinityExpression);
+
+  this.type = 'LiteralInfinityExpression';
+};
+
+var LiteralNullExpression = exports.LiteralNullExpression = function LiteralNullExpression() {
+  _classCallCheck(this, LiteralNullExpression);
+
+  this.type = 'LiteralNullExpression';
+};
+
+var LiteralNumericExpression = exports.LiteralNumericExpression = function LiteralNumericExpression(_ref55) {
+  var value = _ref55.value;
+
+  _classCallCheck(this, LiteralNumericExpression);
+
+  if (value === undefined || typeof value !== 'number') {
+    throw new TypeError('Field "value" of LiteralNumericExpression constructor is of incorrect type (expected number, got ' + printActualType(value) + ')');
+  }
+  this.type = 'LiteralNumericExpression';
+  this.value = value;
+};
+
+var LiteralRegExpExpression = exports.LiteralRegExpExpression = function LiteralRegExpExpression(_ref56) {
+  var pattern = _ref56.pattern;
+  var global = _ref56.global;
+  var ignoreCase = _ref56.ignoreCase;
+  var multiLine = _ref56.multiLine;
+  var sticky = _ref56.sticky;
+  var unicode = _ref56.unicode;
+
+  _classCallCheck(this, LiteralRegExpExpression);
+
+  if (pattern === undefined || typeof pattern !== 'string') {
+    throw new TypeError('Field "pattern" of LiteralRegExpExpression constructor is of incorrect type (expected string, got ' + printActualType(pattern) + ')');
+  }
+  if (global === undefined || typeof global !== 'boolean') {
+    throw new TypeError('Field "global" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got ' + printActualType(global) + ')');
+  }
+  if (ignoreCase === undefined || typeof ignoreCase !== 'boolean') {
+    throw new TypeError('Field "ignoreCase" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got ' + printActualType(ignoreCase) + ')');
+  }
+  if (multiLine === undefined || typeof multiLine !== 'boolean') {
+    throw new TypeError('Field "multiLine" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got ' + printActualType(multiLine) + ')');
+  }
+  if (sticky === undefined || typeof sticky !== 'boolean') {
+    throw new TypeError('Field "sticky" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got ' + printActualType(sticky) + ')');
+  }
+  if (unicode === undefined || typeof unicode !== 'boolean') {
+    throw new TypeError('Field "unicode" of LiteralRegExpExpression constructor is of incorrect type (expected boolean, got ' + printActualType(unicode) + ')');
+  }
+  this.type = 'LiteralRegExpExpression';
+  this.pattern = pattern;
+  this.global = global;
+  this.ignoreCase = ignoreCase;
+  this.multiLine = multiLine;
+  this.sticky = sticky;
+  this.unicode = unicode;
+};
+
+var LiteralStringExpression = exports.LiteralStringExpression = function LiteralStringExpression(_ref57) {
+  var value = _ref57.value;
+
+  _classCallCheck(this, LiteralStringExpression);
+
+  if (value === undefined || typeof value !== 'string') {
+    throw new TypeError('Field "value" of LiteralStringExpression constructor is of incorrect type (expected string, got ' + printActualType(value) + ')');
+  }
+  this.type = 'LiteralStringExpression';
+  this.value = value;
+};
+
+var Method = exports.Method = function Method(_ref58) {
+  var isGenerator = _ref58.isGenerator;
+  var name = _ref58.name;
+  var params = _ref58.params;
+  var body = _ref58.body;
+
+  _classCallCheck(this, Method);
+
+  if (isGenerator === undefined || typeof isGenerator !== 'boolean') {
+    throw new TypeError('Field "isGenerator" of Method constructor is of incorrect type (expected boolean, got ' + printActualType(isGenerator) + ')');
+  }
+  if (name === undefined || name.type !== 'ComputedPropertyName' && name.type !== 'StaticPropertyName') {
+    throw new TypeError('Field "name" of Method constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got ' + printActualType(name) + ')');
+  }
+  if (params === undefined || params.type !== 'FormalParameters') {
+    throw new TypeError('Field "params" of Method constructor is of incorrect type (expected FormalParameters, got ' + printActualType(params) + ')');
+  }
+  if (body === undefined || body.type !== 'FunctionBody') {
+    throw new TypeError('Field "body" of Method constructor is of incorrect type (expected FunctionBody, got ' + printActualType(body) + ')');
+  }
+  this.type = 'Method';
+  this.isGenerator = isGenerator;
+  this.name = name;
+  this.params = params;
+  this.body = body;
+};
+
+var Module = exports.Module = function Module(_ref59) {
+  var directives = _ref59.directives;
+  var items = _ref59.items;
+
+  _classCallCheck(this, Module);
+
+  if (directives === undefined || !Array.isArray(directives) || directives.some(function (f) {
+    return f === undefined || f.type !== 'Directive';
+  })) {
+    throw new TypeError('Field "directives" of Module constructor is of incorrect type (expected [Directive], got ' + printActualType(directives) + ')');
+  }
+  if (items === undefined || !Array.isArray(items) || items.some(function (f) {
+    return f === undefined || f.type !== 'Export' && f.type !== 'ExportAllFrom' && f.type !== 'ExportDefault' && f.type !== 'ExportFrom' && f.type !== 'ExportLocals' && f.type !== 'Import' && f.type !== 'ImportNamespace' && isNotStatement(f);
+  })) {
+    throw new TypeError('Field "items" of Module constructor is of incorrect type (expected [one of {Export, ExportAllFrom, ExportDefault, ExportFrom, ExportLocals, Import, ImportNamespace, Statement}], got ' + printActualType(items) + ')');
+  }
+  this.type = 'Module';
+  this.directives = directives;
+  this.items = items;
+};
+
+var NewExpression = exports.NewExpression = function NewExpression(_ref60) {
+  var callee = _ref60.callee;
+  var _arguments = _ref60.arguments;
+
+  _classCallCheck(this, NewExpression);
+
+  if (isNotExpression(callee)) {
+    throw new TypeError('Field "callee" of NewExpression constructor is of incorrect type (expected Expression, got ' + printActualType(callee) + ')');
+  }
+  if (_arguments === undefined || !Array.isArray(_arguments) || _arguments.some(function (f) {
+    return f === undefined || isNotExpression(f) && f.type !== 'SpreadElement';
+  })) {
+    throw new TypeError('Field "arguments" of NewExpression constructor is of incorrect type (expected [one of {Expression, SpreadElement}], got ' + printActualType(_arguments) + ')');
+  }
+  this.type = 'NewExpression';
+  this.callee = callee;
+  this.arguments = _arguments;
+};
+
+var NewTargetExpression = exports.NewTargetExpression = function NewTargetExpression() {
+  _classCallCheck(this, NewTargetExpression);
+
+  this.type = 'NewTargetExpression';
+};
+
+var ObjectAssignmentTarget = exports.ObjectAssignmentTarget = function ObjectAssignmentTarget(_ref61) {
+  var properties = _ref61.properties;
+
+  _classCallCheck(this, ObjectAssignmentTarget);
+
+  if (properties === undefined || !Array.isArray(properties) || properties.some(function (f) {
+    return f === undefined || f.type !== 'AssignmentTargetPropertyIdentifier' && f.type !== 'AssignmentTargetPropertyProperty';
+  })) {
+    throw new TypeError('Field "properties" of ObjectAssignmentTarget constructor is of incorrect type (expected [one of {AssignmentTargetPropertyIdentifier, AssignmentTargetPropertyProperty}], got ' + printActualType(properties) + ')');
+  }
+  this.type = 'ObjectAssignmentTarget';
+  this.properties = properties;
+};
+
+var ObjectBinding = exports.ObjectBinding = function ObjectBinding(_ref62) {
+  var properties = _ref62.properties;
+
+  _classCallCheck(this, ObjectBinding);
+
+  if (properties === undefined || !Array.isArray(properties) || properties.some(function (f) {
+    return f === undefined || f.type !== 'BindingPropertyIdentifier' && f.type !== 'BindingPropertyProperty';
+  })) {
+    throw new TypeError('Field "properties" of ObjectBinding constructor is of incorrect type (expected [one of {BindingPropertyIdentifier, BindingPropertyProperty}], got ' + printActualType(properties) + ')');
+  }
+  this.type = 'ObjectBinding';
+  this.properties = properties;
+};
+
+var ObjectExpression = exports.ObjectExpression = function ObjectExpression(_ref63) {
+  var properties = _ref63.properties;
+
+  _classCallCheck(this, ObjectExpression);
+
+  if (properties === undefined || !Array.isArray(properties) || properties.some(function (f) {
+    return f === undefined || f.type !== 'DataProperty' && f.type !== 'Getter' && f.type !== 'Method' && f.type !== 'Setter' && f.type !== 'ShorthandProperty';
+  })) {
+    throw new TypeError('Field "properties" of ObjectExpression constructor is of incorrect type (expected [one of {DataProperty, Getter, Method, Setter, ShorthandProperty}], got ' + printActualType(properties) + ')');
+  }
+  this.type = 'ObjectExpression';
+  this.properties = properties;
+};
+
+var ReturnStatement = exports.ReturnStatement = function ReturnStatement(_ref64) {
+  var expression = _ref64.expression;
+
+  _classCallCheck(this, ReturnStatement);
+
+  if (expression === undefined || expression !== null && isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of ReturnStatement constructor is of incorrect type (expected null or Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'ReturnStatement';
+  this.expression = expression;
+};
+
+var Script = exports.Script = function Script(_ref65) {
+  var directives = _ref65.directives;
+  var statements = _ref65.statements;
+
+  _classCallCheck(this, Script);
+
+  if (directives === undefined || !Array.isArray(directives) || directives.some(function (f) {
+    return f === undefined || f.type !== 'Directive';
+  })) {
+    throw new TypeError('Field "directives" of Script constructor is of incorrect type (expected [Directive], got ' + printActualType(directives) + ')');
+  }
+  if (statements === undefined || !Array.isArray(statements) || statements.some(function (f) {
+    return isNotStatement(f);
+  })) {
+    throw new TypeError('Field "statements" of Script constructor is of incorrect type (expected [Statement], got ' + printActualType(statements) + ')');
+  }
+  this.type = 'Script';
+  this.directives = directives;
+  this.statements = statements;
+};
+
+var Setter = exports.Setter = function Setter(_ref66) {
+  var name = _ref66.name;
+  var param = _ref66.param;
+  var body = _ref66.body;
+
+  _classCallCheck(this, Setter);
+
+  if (name === undefined || name.type !== 'ComputedPropertyName' && name.type !== 'StaticPropertyName') {
+    throw new TypeError('Field "name" of Setter constructor is of incorrect type (expected one of {ComputedPropertyName, StaticPropertyName}, got ' + printActualType(name) + ')');
+  }
+  if (param === undefined || param.type !== 'BindingWithDefault' && param.type !== 'BindingIdentifier' && param.type !== 'ArrayBinding' && param.type !== 'ObjectBinding') {
+    throw new TypeError('Field "param" of Setter constructor is of incorrect type (expected one of {BindingWithDefault, BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(param) + ')');
+  }
+  if (body === undefined || body.type !== 'FunctionBody') {
+    throw new TypeError('Field "body" of Setter constructor is of incorrect type (expected FunctionBody, got ' + printActualType(body) + ')');
+  }
+  this.type = 'Setter';
+  this.name = name;
+  this.param = param;
+  this.body = body;
+};
+
+var ShorthandProperty = exports.ShorthandProperty = function ShorthandProperty(_ref67) {
+  var name = _ref67.name;
+
+  _classCallCheck(this, ShorthandProperty);
+
+  if (name === undefined || name.type !== 'IdentifierExpression') {
+    throw new TypeError('Field "name" of ShorthandProperty constructor is of incorrect type (expected IdentifierExpression, got ' + printActualType(name) + ')');
+  }
+  this.type = 'ShorthandProperty';
+  this.name = name;
+};
+
+var SpreadElement = exports.SpreadElement = function SpreadElement(_ref68) {
+  var expression = _ref68.expression;
+
+  _classCallCheck(this, SpreadElement);
+
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of SpreadElement constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'SpreadElement';
+  this.expression = expression;
+};
+
+var StaticMemberAssignmentTarget = exports.StaticMemberAssignmentTarget = function StaticMemberAssignmentTarget(_ref69) {
+  var object = _ref69.object;
+  var property = _ref69.property;
+
+  _classCallCheck(this, StaticMemberAssignmentTarget);
+
+  if (object === undefined || isNotExpression(object) && object.type !== 'Super') {
+    throw new TypeError('Field "object" of StaticMemberAssignmentTarget constructor is of incorrect type (expected one of {Expression, Super}, got ' + printActualType(object) + ')');
+  }
+  if (property === undefined || typeof property !== 'string') {
+    throw new TypeError('Field "property" of StaticMemberAssignmentTarget constructor is of incorrect type (expected string, got ' + printActualType(property) + ')');
+  }
+  this.type = 'StaticMemberAssignmentTarget';
+  this.object = object;
+  this.property = property;
+};
+
+var StaticMemberExpression = exports.StaticMemberExpression = function StaticMemberExpression(_ref70) {
+  var object = _ref70.object;
+  var property = _ref70.property;
+
+  _classCallCheck(this, StaticMemberExpression);
+
+  if (object === undefined || isNotExpression(object) && object.type !== 'Super') {
+    throw new TypeError('Field "object" of StaticMemberExpression constructor is of incorrect type (expected one of {Expression, Super}, got ' + printActualType(object) + ')');
+  }
+  if (property === undefined || typeof property !== 'string') {
+    throw new TypeError('Field "property" of StaticMemberExpression constructor is of incorrect type (expected string, got ' + printActualType(property) + ')');
+  }
+  this.type = 'StaticMemberExpression';
+  this.object = object;
+  this.property = property;
+};
+
+var StaticPropertyName = exports.StaticPropertyName = function StaticPropertyName(_ref71) {
+  var value = _ref71.value;
+
+  _classCallCheck(this, StaticPropertyName);
+
+  if (value === undefined || typeof value !== 'string') {
+    throw new TypeError('Field "value" of StaticPropertyName constructor is of incorrect type (expected string, got ' + printActualType(value) + ')');
+  }
+  this.type = 'StaticPropertyName';
+  this.value = value;
+};
+
+var Super = exports.Super = function Super() {
+  _classCallCheck(this, Super);
+
+  this.type = 'Super';
+};
+
+var SwitchCase = exports.SwitchCase = function SwitchCase(_ref72) {
+  var test = _ref72.test;
+  var consequent = _ref72.consequent;
+
+  _classCallCheck(this, SwitchCase);
+
+  if (isNotExpression(test)) {
+    throw new TypeError('Field "test" of SwitchCase constructor is of incorrect type (expected Expression, got ' + printActualType(test) + ')');
+  }
+  if (consequent === undefined || !Array.isArray(consequent) || consequent.some(function (f) {
+    return isNotStatement(f);
+  })) {
+    throw new TypeError('Field "consequent" of SwitchCase constructor is of incorrect type (expected [Statement], got ' + printActualType(consequent) + ')');
+  }
+  this.type = 'SwitchCase';
+  this.test = test;
+  this.consequent = consequent;
+};
+
+var SwitchDefault = exports.SwitchDefault = function SwitchDefault(_ref73) {
+  var consequent = _ref73.consequent;
+
+  _classCallCheck(this, SwitchDefault);
+
+  if (consequent === undefined || !Array.isArray(consequent) || consequent.some(function (f) {
+    return isNotStatement(f);
+  })) {
+    throw new TypeError('Field "consequent" of SwitchDefault constructor is of incorrect type (expected [Statement], got ' + printActualType(consequent) + ')');
+  }
+  this.type = 'SwitchDefault';
+  this.consequent = consequent;
+};
+
+var SwitchStatement = exports.SwitchStatement = function SwitchStatement(_ref74) {
+  var discriminant = _ref74.discriminant;
+  var cases = _ref74.cases;
+
+  _classCallCheck(this, SwitchStatement);
+
+  if (isNotExpression(discriminant)) {
+    throw new TypeError('Field "discriminant" of SwitchStatement constructor is of incorrect type (expected Expression, got ' + printActualType(discriminant) + ')');
+  }
+  if (cases === undefined || !Array.isArray(cases) || cases.some(function (f) {
+    return f === undefined || f.type !== 'SwitchCase';
+  })) {
+    throw new TypeError('Field "cases" of SwitchStatement constructor is of incorrect type (expected [SwitchCase], got ' + printActualType(cases) + ')');
+  }
+  this.type = 'SwitchStatement';
+  this.discriminant = discriminant;
+  this.cases = cases;
+};
+
+var SwitchStatementWithDefault = exports.SwitchStatementWithDefault = function SwitchStatementWithDefault(_ref75) {
+  var discriminant = _ref75.discriminant;
+  var preDefaultCases = _ref75.preDefaultCases;
+  var defaultCase = _ref75.defaultCase;
+  var postDefaultCases = _ref75.postDefaultCases;
+
+  _classCallCheck(this, SwitchStatementWithDefault);
+
+  if (isNotExpression(discriminant)) {
+    throw new TypeError('Field "discriminant" of SwitchStatementWithDefault constructor is of incorrect type (expected Expression, got ' + printActualType(discriminant) + ')');
+  }
+  if (preDefaultCases === undefined || !Array.isArray(preDefaultCases) || preDefaultCases.some(function (f) {
+    return f === undefined || f.type !== 'SwitchCase';
+  })) {
+    throw new TypeError('Field "preDefaultCases" of SwitchStatementWithDefault constructor is of incorrect type (expected [SwitchCase], got ' + printActualType(preDefaultCases) + ')');
+  }
+  if (defaultCase === undefined || defaultCase.type !== 'SwitchDefault') {
+    throw new TypeError('Field "defaultCase" of SwitchStatementWithDefault constructor is of incorrect type (expected SwitchDefault, got ' + printActualType(defaultCase) + ')');
+  }
+  if (postDefaultCases === undefined || !Array.isArray(postDefaultCases) || postDefaultCases.some(function (f) {
+    return f === undefined || f.type !== 'SwitchCase';
+  })) {
+    throw new TypeError('Field "postDefaultCases" of SwitchStatementWithDefault constructor is of incorrect type (expected [SwitchCase], got ' + printActualType(postDefaultCases) + ')');
+  }
+  this.type = 'SwitchStatementWithDefault';
+  this.discriminant = discriminant;
+  this.preDefaultCases = preDefaultCases;
+  this.defaultCase = defaultCase;
+  this.postDefaultCases = postDefaultCases;
+};
+
+var TemplateElement = exports.TemplateElement = function TemplateElement(_ref76) {
+  var rawValue = _ref76.rawValue;
+
+  _classCallCheck(this, TemplateElement);
+
+  if (rawValue === undefined || typeof rawValue !== 'string') {
+    throw new TypeError('Field "rawValue" of TemplateElement constructor is of incorrect type (expected string, got ' + printActualType(rawValue) + ')');
+  }
+  this.type = 'TemplateElement';
+  this.rawValue = rawValue;
+};
+
+var TemplateExpression = exports.TemplateExpression = function TemplateExpression(_ref77) {
+  var tag = _ref77.tag;
+  var elements = _ref77.elements;
+
+  _classCallCheck(this, TemplateExpression);
+
+  if (tag === undefined || tag !== null && isNotExpression(tag)) {
+    throw new TypeError('Field "tag" of TemplateExpression constructor is of incorrect type (expected null or Expression, got ' + printActualType(tag) + ')');
+  }
+  if (elements === undefined || !Array.isArray(elements) || elements.some(function (f) {
+    return f === undefined || isNotExpression(f) && f.type !== 'TemplateElement';
+  })) {
+    throw new TypeError('Field "elements" of TemplateExpression constructor is of incorrect type (expected [one of {Expression, TemplateElement}], got ' + printActualType(elements) + ')');
+  }
+  this.type = 'TemplateExpression';
+  this.tag = tag;
+  this.elements = elements;
+};
+
+var ThisExpression = exports.ThisExpression = function ThisExpression() {
+  _classCallCheck(this, ThisExpression);
+
+  this.type = 'ThisExpression';
+};
+
+var ThrowStatement = exports.ThrowStatement = function ThrowStatement(_ref78) {
+  var expression = _ref78.expression;
+
+  _classCallCheck(this, ThrowStatement);
+
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of ThrowStatement constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'ThrowStatement';
+  this.expression = expression;
+};
+
+var TryCatchStatement = exports.TryCatchStatement = function TryCatchStatement(_ref79) {
+  var body = _ref79.body;
+  var catchClause = _ref79.catchClause;
+
+  _classCallCheck(this, TryCatchStatement);
+
+  if (body === undefined || body.type !== 'Block') {
+    throw new TypeError('Field "body" of TryCatchStatement constructor is of incorrect type (expected Block, got ' + printActualType(body) + ')');
+  }
+  if (catchClause === undefined || catchClause.type !== 'CatchClause') {
+    throw new TypeError('Field "catchClause" of TryCatchStatement constructor is of incorrect type (expected CatchClause, got ' + printActualType(catchClause) + ')');
+  }
+  this.type = 'TryCatchStatement';
+  this.body = body;
+  this.catchClause = catchClause;
+};
+
+var TryFinallyStatement = exports.TryFinallyStatement = function TryFinallyStatement(_ref80) {
+  var body = _ref80.body;
+  var catchClause = _ref80.catchClause;
+  var finalizer = _ref80.finalizer;
+
+  _classCallCheck(this, TryFinallyStatement);
+
+  if (body === undefined || body.type !== 'Block') {
+    throw new TypeError('Field "body" of TryFinallyStatement constructor is of incorrect type (expected Block, got ' + printActualType(body) + ')');
+  }
+  if (catchClause === undefined || catchClause !== null && catchClause.type !== 'CatchClause') {
+    throw new TypeError('Field "catchClause" of TryFinallyStatement constructor is of incorrect type (expected null or CatchClause, got ' + printActualType(catchClause) + ')');
+  }
+  if (finalizer === undefined || finalizer.type !== 'Block') {
+    throw new TypeError('Field "finalizer" of TryFinallyStatement constructor is of incorrect type (expected Block, got ' + printActualType(finalizer) + ')');
+  }
+  this.type = 'TryFinallyStatement';
+  this.body = body;
+  this.catchClause = catchClause;
+  this.finalizer = finalizer;
+};
+
+var UnaryExpression = exports.UnaryExpression = function UnaryExpression(_ref81) {
+  var operator = _ref81.operator;
+  var operand = _ref81.operand;
+
+  _classCallCheck(this, UnaryExpression);
+
+  if (operator === undefined || ["+", "-", "!", "~", "typeof", "void", "delete"].indexOf(operator) === -1) {
+    throw new TypeError('Field "operator" of UnaryExpression constructor is of incorrect type (expected one of {"+", "-", "!", "~", "typeof", "void", "delete"}, got ' + printActualType(operator) + ')');
+  }
+  if (isNotExpression(operand)) {
+    throw new TypeError('Field "operand" of UnaryExpression constructor is of incorrect type (expected Expression, got ' + printActualType(operand) + ')');
+  }
+  this.type = 'UnaryExpression';
+  this.operator = operator;
+  this.operand = operand;
+};
+
+var UpdateExpression = exports.UpdateExpression = function UpdateExpression(_ref82) {
+  var isPrefix = _ref82.isPrefix;
+  var operator = _ref82.operator;
+  var operand = _ref82.operand;
+
+  _classCallCheck(this, UpdateExpression);
+
+  if (isPrefix === undefined || typeof isPrefix !== 'boolean') {
+    throw new TypeError('Field "isPrefix" of UpdateExpression constructor is of incorrect type (expected boolean, got ' + printActualType(isPrefix) + ')');
+  }
+  if (operator === undefined || ["++", "--"].indexOf(operator) === -1) {
+    throw new TypeError('Field "operator" of UpdateExpression constructor is of incorrect type (expected one of {"++", "--"}, got ' + printActualType(operator) + ')');
+  }
+  if (operand === undefined || operand.type !== 'AssignmentTargetIdentifier' && operand.type !== 'ComputedMemberAssignmentTarget' && operand.type !== 'StaticMemberAssignmentTarget') {
+    throw new TypeError('Field "operand" of UpdateExpression constructor is of incorrect type (expected one of {AssignmentTargetIdentifier, ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget}, got ' + printActualType(operand) + ')');
+  }
+  this.type = 'UpdateExpression';
+  this.isPrefix = isPrefix;
+  this.operator = operator;
+  this.operand = operand;
+};
+
+var VariableDeclaration = exports.VariableDeclaration = function VariableDeclaration(_ref83) {
+  var kind = _ref83.kind;
+  var declarators = _ref83.declarators;
+
+  _classCallCheck(this, VariableDeclaration);
+
+  if (kind === undefined || ["var", "let", "const"].indexOf(kind) === -1) {
+    throw new TypeError('Field "kind" of VariableDeclaration constructor is of incorrect type (expected one of {"var", "let", "const"}, got ' + printActualType(kind) + ')');
+  }
+  if (declarators === undefined || !Array.isArray(declarators) || declarators.some(function (f) {
+    return f === undefined || f.type !== 'VariableDeclarator';
+  })) {
+    throw new TypeError('Field "declarators" of VariableDeclaration constructor is of incorrect type (expected [VariableDeclarator], got ' + printActualType(declarators) + ')');
+  }
+  this.type = 'VariableDeclaration';
+  this.kind = kind;
+  this.declarators = declarators;
+};
+
+var VariableDeclarationStatement = exports.VariableDeclarationStatement = function VariableDeclarationStatement(_ref84) {
+  var declaration = _ref84.declaration;
+
+  _classCallCheck(this, VariableDeclarationStatement);
+
+  if (declaration === undefined || declaration.type !== 'VariableDeclaration') {
+    throw new TypeError('Field "declaration" of VariableDeclarationStatement constructor is of incorrect type (expected VariableDeclaration, got ' + printActualType(declaration) + ')');
+  }
+  this.type = 'VariableDeclarationStatement';
+  this.declaration = declaration;
+};
+
+var VariableDeclarator = exports.VariableDeclarator = function VariableDeclarator(_ref85) {
+  var binding = _ref85.binding;
+  var init = _ref85.init;
+
+  _classCallCheck(this, VariableDeclarator);
+
+  if (binding === undefined || binding.type !== 'BindingIdentifier' && binding.type !== 'ArrayBinding' && binding.type !== 'ObjectBinding') {
+    throw new TypeError('Field "binding" of VariableDeclarator constructor is of incorrect type (expected one of {BindingIdentifier, ArrayBinding, ObjectBinding}, got ' + printActualType(binding) + ')');
+  }
+  if (init === undefined || init !== null && isNotExpression(init)) {
+    throw new TypeError('Field "init" of VariableDeclarator constructor is of incorrect type (expected null or Expression, got ' + printActualType(init) + ')');
+  }
+  this.type = 'VariableDeclarator';
+  this.binding = binding;
+  this.init = init;
+};
+
+var WhileStatement = exports.WhileStatement = function WhileStatement(_ref86) {
+  var test = _ref86.test;
+  var body = _ref86.body;
+
+  _classCallCheck(this, WhileStatement);
+
+  if (isNotExpression(test)) {
+    throw new TypeError('Field "test" of WhileStatement constructor is of incorrect type (expected Expression, got ' + printActualType(test) + ')');
+  }
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of WhileStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  this.type = 'WhileStatement';
+  this.test = test;
+  this.body = body;
+};
+
+var WithStatement = exports.WithStatement = function WithStatement(_ref87) {
+  var object = _ref87.object;
+  var body = _ref87.body;
+
+  _classCallCheck(this, WithStatement);
+
+  if (isNotExpression(object)) {
+    throw new TypeError('Field "object" of WithStatement constructor is of incorrect type (expected Expression, got ' + printActualType(object) + ')');
+  }
+  if (isNotStatement(body)) {
+    throw new TypeError('Field "body" of WithStatement constructor is of incorrect type (expected Statement, got ' + printActualType(body) + ')');
+  }
+  this.type = 'WithStatement';
+  this.object = object;
+  this.body = body;
+};
+
+var YieldExpression = exports.YieldExpression = function YieldExpression(_ref88) {
+  var expression = _ref88.expression;
+
+  _classCallCheck(this, YieldExpression);
+
+  if (expression === undefined || expression !== null && isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of YieldExpression constructor is of incorrect type (expected null or Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'YieldExpression';
+  this.expression = expression;
+};
+
+var YieldGeneratorExpression = exports.YieldGeneratorExpression = function YieldGeneratorExpression(_ref89) {
+  var expression = _ref89.expression;
+
+  _classCallCheck(this, YieldGeneratorExpression);
+
+  if (isNotExpression(expression)) {
+    throw new TypeError('Field "expression" of YieldGeneratorExpression constructor is of incorrect type (expected Expression, got ' + printActualType(expression) + ')');
+  }
+  this.type = 'YieldGeneratorExpression';
+  this.expression = expression;
+};
+},{}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.many = exports.MANY_BOUND = undefined;
+exports.manyN = manyN;
+exports.many1 = many1;
+exports.either = either;
+exports.choose = choose;
+exports.oneOf = oneOf;
+exports.opt = opt;
+exports.ap = ap;
+exports.guardDepth = guardDepth;
+
+var _fuzzerState = require("./fuzzer-state");
+
+var _fuzzerState2 = _interopRequireDefault(_fuzzerState);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MANY_BOUND = exports.MANY_BOUND = 5; /**
+                                          * Copyright 2014 Shape Security, Inc.
+                                          *
+                                          * Licensed under the Apache License, Version 2.0 (the "License");
+                                          * you may not use this file except in compliance with the License.
+                                          * You may obtain a copy of the License at
+                                          *
+                                          *     http://www.apache.org/licenses/LICENSE-2.0
+                                          *
+                                          * Unless required by applicable law or agreed to in writing, software
+                                          * distributed under the License is distributed on an "AS IS" BASIS,
+                                          * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                          * See the License for the specific language governing permissions and
+                                          * limitations under the License.
+                                          */
+
+function manyN(bound) {
+  return function (fuzzer) {
+    return guardDepth(function () {
+      return [];
+    }, function () {
+      var fuzzerState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+      var count = fuzzerState.rng.nextInt(bound + 1);
+      var result = [];
+      while (count-- > 0) {
+        result.push(fuzzer(fuzzerState));
+      }return result;
+    });
+  };
+}
+
+var many = exports.many = manyN(MANY_BOUND);
+
+function many1(fuzzer) {
+  return function () {
+    var fuzzerState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+    var result = many(fuzzer)(fuzzerState);
+    if (result.length === 0) result.push(fuzzer(fuzzerState));
+    return result;
+  };
+}
+
+function either(fuzzerA, fuzzerB) {
+  return function () {
+    var fuzzerState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+    return (fuzzerState.rng.nextBoolean() ? fuzzerA : fuzzerB)(fuzzerState);
+  };
+}
+
+function choose() {
+  for (var _len = arguments.length, fuzzers = Array(_len), _key = 0; _key < _len; _key++) {
+    fuzzers[_key] = arguments[_key];
+  }
+
+  switch (fuzzers.length) {
+    case 0:
+      throw new Error("choose must be given at least one fuzzer");
+    case 1:
+      return fuzzers[0];
+    case 2:
+      return either(fuzzers[0], fuzzers[1]);
+    default:
+      return function () {
+        var fuzzerState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+        return fuzzers[fuzzerState.rng.nextInt(fuzzers.length)](fuzzerState);
+      };
+  }
+}
+
+function oneOf() {
+  for (var _len2 = arguments.length, values = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    values[_key2] = arguments[_key2];
+  }
+
+  return function (fuzzerState) {
+    return values[fuzzerState.rng.nextInt(values.length)];
+  };
+}
+
+function opt(fuzzer) {
+  return guardDepth(function () {
+    return null;
+  }, function () {
+    var fuzzerState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+    return fuzzerState.rng.nextBoolean() ? null : fuzzer(fuzzerState);
+  });
+}
+
+function ap(ctor, propFuzzers) {
+  var fuzzerState = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : new _fuzzerState2.default();
+
+  var f = fuzzerState.goDeeper();
+  var props = Object.create(null);
+  for (var prop in propFuzzers) {
+    if (!propFuzzers.hasOwnProperty(prop)) continue;
+    props[prop] = propFuzzers[prop](f);
+  }
+  return new ctor(props);
+}
+
+function guardDepth(fuzzerA, fuzzerB) {
+  return function () {
+    var fuzzerState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+    return fuzzerState.tooDeep() ? fuzzerA(fuzzerState) : fuzzerB(fuzzerState);
+  };
+}
+},{"./fuzzer-state":5}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright 2014 Shape Security, Inc.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Licensed under the Apache License, Version 2.0 (the "License");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * you may not use this file except in compliance with the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * You may obtain a copy of the License at
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *     http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * See the License for the specific language governing permissions and
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * limitations under the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _random = require("./random");
+
+var _random2 = _interopRequireDefault(_random);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var FuzzerState = function () {
+  function FuzzerState() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$maxDepth = _ref.maxDepth,
+        maxDepth = _ref$maxDepth === undefined ? 7 : _ref$maxDepth,
+        _ref$rng = _ref.rng,
+        rng = _ref$rng === undefined ? Math.random : _ref$rng;
+
+    _classCallCheck(this, FuzzerState);
+
+    this.maxDepth = maxDepth;
+    this.rng = new _random2.default(rng);
+
+    this.depth = 0;
+    this.allowAwaitIdentifier = true; // false iff we fuzzing a module
+    this.inLoop = false; // allows continue and unlabelled break
+    this.inSwitch = false; // allows unlabelled break // todo consider collapsing into one allowBreak, one allowContinue
+    this.strict = false;
+    this.allowReturn = false;
+    this.allowNewTarget = false;
+    this.allowSuperCall = false; // todo generate constructor methods more often
+    this.allowSuperProp = false; // implied by allowSuperCall
+    this.allowMissingElse = true;
+    this.declKind = null; // const requires initializer; const and let prohibit bindings named let.
+    this.allowYieldIdentifier = true;
+    this.allowYieldExpr = false; // mutually exclusive with the above, but both can be false, e.g. in formal parameters of or within a generator
+
+    this.labels = []; // would use a set, but we need immutibility.
+    this.loopLabels = []; // is a subset of labels
+  }
+
+  _createClass(FuzzerState, [{
+    key: "clone",
+    value: function clone() {
+      var st = Object.create(FuzzerState.prototype);
+      st.maxDepth = this.maxDepth;
+      st.rng = this.rng;
+      st.depth = this.depth;
+      st.allowAwaitIdentifier = this.allowAwaitIdentifier;
+      st.inLoop = this.inLoop;
+      st.inSwitch = this.inSwitch;
+      st.strict = this.strict;
+      st.allowReturn = this.allowReturn;
+      st.allowNewTarget = this.allowNewTarget;
+      st.allowSuperCall = this.allowSuperCall;
+      st.allowSuperProp = this.allowSuperProp;
+      st.allowMissingElse = this.allowMissingElse;
+      st.declKind = this.declKind;
+      st.allowYieldIdentifier = this.allowYieldIdentifier;
+      st.allowYieldExpr = this.allowYieldExpr;
+      st.labels = this.labels;
+      st.loopLabels = this.loopLabels;
+      return st;
+    }
+  }, {
+    key: "goDeeper",
+    value: function goDeeper() {
+      var st = this.clone();
+      ++st.depth;
+      return st;
+    }
+  }, {
+    key: "tooDeep",
+    value: function tooDeep() {
+      return this.depth >= this.maxDepth;
+    }
+  }, {
+    key: "allowBreak",
+    value: function allowBreak() {
+      return this.inLoop || this.inSwitch || this.labels.length !== 0;
+    }
+  }, {
+    key: "enableMissingElse",
+    value: function enableMissingElse() {
+      var st = this.clone();
+      st.allowMissingElse = true;
+      return st;
+    }
+  }, {
+    key: "disableMissingElse",
+    value: function disableMissingElse() {
+      var st = this.clone();
+      st.allowMissingElse = false;
+      return st;
+    }
+  }, {
+    key: "disableYieldExpr",
+    value: function disableYieldExpr() {
+      var st = this.clone();
+      st.allowYieldExpr = false;
+      return st;
+    }
+  }, {
+    key: "enterFunction",
+    value: function enterFunction() {
+      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref2$isGenerator = _ref2.isGenerator,
+          isGenerator = _ref2$isGenerator === undefined ? false : _ref2$isGenerator,
+          _ref2$isArrow = _ref2.isArrow,
+          isArrow = _ref2$isArrow === undefined ? false : _ref2$isArrow,
+          _ref2$isMethod = _ref2.isMethod,
+          isMethod = _ref2$isMethod === undefined ? false : _ref2$isMethod,
+          _ref2$hasStrictDirect = _ref2.hasStrictDirective,
+          hasStrictDirective = _ref2$hasStrictDirect === undefined ? false : _ref2$hasStrictDirect;
+
+      var st = this.clone();
+      if (st.declKind !== null) throw 'declKind'; // todo remove this
+
+      st.inLoop = false;
+      st.inSwitch = false;
+      if (hasStrictDirective) {
+        st.strict = true;
+      }
+      st.allowReturn = true;
+      if (isArrow) {
+        st.allowYieldExpr = false;
+      } else {
+        st.allowNewTarget = true;
+        if (isGenerator) {
+          st.allowYieldIdentifier = false;
+          st.allowYieldExpr = true;
+        } else {
+          st.allowYieldIdentifier = true;
+          st.allowYieldExpr = false;
+        }
+        if (!isMethod) {
+          st.allowSuperCall = false;
+          st.allowSuperProp = false;
+        }
+      }
+      st.allowMissingElse = true;
+
+      st.labels = [];
+      st.loopLabels = [];
+
+      return st;
+    }
+  }, {
+    key: "enterLoop",
+    value: function enterLoop() {
+      var st = this.clone();
+      st.inLoop = true;
+      return st;
+    }
+  }, {
+    key: "enterSwitch",
+    value: function enterSwitch() {
+      var st = this.clone();
+      st.inSwitch = true;
+      return st;
+    }
+  }]);
+
+  return FuzzerState;
+}();
+
+exports.default = FuzzerState;
+},{"./random":7}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fuzzStatement = exports.fuzzExpression = undefined;
+exports.default = exports.fuzzProgram = exports.fuzzYieldGeneratorExpression = exports.fuzzYieldExpression = exports.fuzzWithStatement = exports.fuzzWhileStatement = exports.fuzzVariableDeclarator = exports.fuzzVariableDeclarationStatement = exports.fuzzVariableDeclaration = exports.fuzzUpdateExpression = exports.fuzzUnaryExpression = exports.fuzzTryFinallyStatement = exports.fuzzTryCatchStatement = exports.fuzzThrowStatement = exports.fuzzThisExpression = exports.fuzzTemplateExpression = exports.fuzzTemplateElement = exports.fuzzSwitchStatementWithDefault = exports.fuzzSwitchStatement = exports.fuzzSwitchDefault = exports.fuzzSwitchCase = exports.fuzzSuper = exports.fuzzStaticPropertyName = exports.fuzzStaticMemberExpression = exports.fuzzStaticMemberAssignmentTarget = exports.fuzzSpreadElement = exports.fuzzShorthandProperty = exports.fuzzSetter = exports.fuzzScript = exports.fuzzReturnStatement = exports.fuzzObjectExpression = exports.fuzzObjectBinding = exports.fuzzObjectAssignmentTarget = exports.fuzzNewTargetExpression = exports.fuzzNewExpression = exports.fuzzModule = exports.fuzzMethod = exports.fuzzLiteralStringExpression = exports.fuzzLiteralRegExpExpression = exports.fuzzLiteralNumericExpression = exports.fuzzLiteralNullExpression = exports.fuzzLiteralInfinityExpression = exports.fuzzLiteralBooleanExpression = exports.fuzzLabeledStatement = exports.fuzzImportSpecifier = exports.fuzzImportNamespace = exports.fuzzImport = exports.fuzzIfStatement = exports.fuzzIdentifierExpression = exports.fuzzGetter = exports.fuzzFunctionExpression = exports.fuzzFunctionDeclaration = exports.fuzzFunctionBody = exports.fuzzFormalParameters = exports.fuzzForStatement = exports.fuzzForOfStatement = exports.fuzzForInStatement = exports.fuzzExpressionStatement = exports.fuzzExportLocals = exports.fuzzExportLocalSpecifier = exports.fuzzExportFromSpecifier = exports.fuzzExportFrom = exports.fuzzExportDefault = exports.fuzzExportAllFrom = exports.fuzzExport = exports.fuzzEmptyStatement = exports.fuzzDoWhileStatement = exports.fuzzDirective = exports.fuzzDebuggerStatement = exports.fuzzDataProperty = exports.fuzzContinueStatement = exports.fuzzConditionalExpression = exports.fuzzComputedPropertyName = exports.fuzzComputedMemberExpression = exports.fuzzComputedMemberAssignmentTarget = exports.fuzzCompoundAssignmentExpression = exports.fuzzClassExpression = exports.fuzzClassElement = exports.fuzzClassDeclaration = exports.fuzzCatchClause = exports.fuzzCallExpression = exports.fuzzBreakStatement = exports.fuzzBlockStatement = exports.fuzzBlock = exports.fuzzBindingWithDefault = exports.fuzzBindingPropertyProperty = exports.fuzzBindingPropertyIdentifier = exports.fuzzBindingIdentifier = exports.fuzzBinaryExpression = exports.fuzzAssignmentTargetWithDefault = exports.fuzzAssignmentTargetPropertyProperty = exports.fuzzAssignmentTargetPropertyIdentifier = exports.fuzzAssignmentTargetIdentifier = exports.fuzzAssignmentExpression = exports.fuzzArrowExpression = exports.fuzzArrayExpression = exports.fuzzArrayBinding = exports.fuzzArrayAssignmentTarget = exports.fuzzIdentifier = exports.FuzzerState = undefined;
+
+var _checked = require("shift-ast/checked");
+
+var Shift = _interopRequireWildcard(_checked);
+
+var _fuzzerState = require("./fuzzer-state");
+
+var _fuzzerState2 = _interopRequireDefault(_fuzzerState);
+
+var _combinators = require("./combinators");
+
+var _regexp = require("./regexp");
+
+var _regexp2 = _interopRequireDefault(_regexp);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
+                                                                                                                                                                                                     * Copyright 2016 Shape Security, Inc.
+                                                                                                                                                                                                     *
+                                                                                                                                                                                                     * Licensed under the Apache License, Version 2.0 (the "License");
+                                                                                                                                                                                                     * you may not use this file except in compliance with the License.
+                                                                                                                                                                                                     * You may obtain a copy of the License at
+                                                                                                                                                                                                     *
+                                                                                                                                                                                                     *     http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                                     *
+                                                                                                                                                                                                     * Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                                     * distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                                     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                                     * See the License for the specific language governing permissions and
+                                                                                                                                                                                                     * limitations under the License.
+                                                                                                                                                                                                     */
+
+exports.FuzzerState = _fuzzerState2.default;
+
+
+var RESERVED = [// todo import this
+// keywords
+'break', 'case', 'catch', 'class', 'const', 'continue', 'debugger', 'default', 'delete', 'do', 'else', 'export', 'extends', 'finally', 'for', 'function', 'if', 'import', 'in', 'instanceof', 'new', 'return', 'super', 'switch', 'this', 'throw', 'try', 'typeof', 'var', 'void', 'while', 'with',
+// null, booleans
+'null', 'true', 'false',
+// future reserved word
+'enum'];
+
+var STRICT_FORBIDDEN = ['implements', 'package', 'protected', 'interface', 'private', 'public', 'static'];
+
+var ALL_KNOWN_WORDS = RESERVED.concat(STRICT_FORBIDDEN).concat(['let', 'yield', 'await', 'eval', 'arguments', 'constructor', 'prototype']);
+
+// special cases: 'let', 'yield', 'await', 'eval', 'arguments'
+
+
+function identifierStart(fuzzerState) {
+  // todo. see also https://gist.github.com/mathiasbynens/6334847#file-javascript-identifier-regex-js-L65-L105
+  return String.fromCharCode(97 + fuzzerState.rng.nextInt(25));
+}
+
+var identifierPart = identifierStart; // todo
+var MAX_IDENT_LENGTH = 15;
+
+var genIdentifierString = function genIdentifierString(f) {
+  return identifierStart(f) + (0, _combinators.manyN)(MAX_IDENT_LENGTH)(identifierPart)(f).join("");
+};
+
+var fuzzVariableName = function fuzzVariableName(f, isBinding) {
+  var interestingNames = [];
+  var forbiddenNames = [].concat(RESERVED);
+  if (f.strict) {
+    forbiddenNames.push.apply(forbiddenNames, STRICT_FORBIDDEN.concat(['let', 'yield']));
+  } else {
+    interestingNames.push.apply(interestingNames, STRICT_FORBIDDEN);
+    (f.declKind === 'let' || f.declKind === 'const' ? forbiddenNames : interestingNames).push('let');
+    (!f.allowYieldIdentifier ? forbiddenNames : interestingNames).push('yield');
+  }
+  (f.strict && isBinding ? forbiddenNames : interestingNames).push('eval', 'arguments');
+  (!f.allowAwaitIdenifier ? forbiddenNames : interestingNames).push('await'); // this has the odd effect that strict-mode scripts have lots of variables named await.
+
+  return fuzzIdentifier(f, interestingNames, forbiddenNames);
+};
+
+var fuzzLabel = function fuzzLabel(f) {
+  // todo consider collapsing into fuzzVariableName(f, false);
+  var interestingNames = ['eval', 'arguments'];
+  var forbiddenNames = [].concat(RESERVED, _toConsumableArray(f.labels));
+  if (f.strict) {
+    forbiddenNames.push.apply(forbiddenNames, STRICT_FORBIDDEN.concat(['let', 'yield']));
+  } else {
+    interestingNames.push.apply(interestingNames, STRICT_FORBIDDEN.concat(['let']));
+    (!f.allowYieldIdentifier ? forbiddenNames : interestingNames).push('yield');
+  }
+  (!f.allowAwaitIdenifier ? forbiddenNames : interestingNames).push('await');
+
+  f.labels.forEach(function (l) {
+    var ind = interestingNames.indexOf(l);
+    if (ind !== -1) {
+      interestingNames.splice(ind, 1);
+    }
+  });
+
+  return fuzzIdentifier(f, interestingNames, forbiddenNames);
+};
+
+var fuzzIdentifier = exports.fuzzIdentifier = function fuzzIdentifier() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+  var interestingNames = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var forbiddenNames = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : RESERVED;
+
+  if (interestingNames.length > 0 && f.rng.nextBoolean()) {
+    return _combinators.oneOf.apply(undefined, _toConsumableArray(interestingNames))(f);
+  }
+
+  while (true) {
+    var possibleIdentifier = genIdentifierString(f);
+    if (forbiddenNames.indexOf(possibleIdentifier) < 0) return possibleIdentifier;
+  }
+};
+
+var fuzzIdentifierName = (0, _combinators.choose)(genIdentifierString, _combinators.oneOf.apply(undefined, _toConsumableArray(ALL_KNOWN_WORDS)));
+
+var fuzzHexDigit = _combinators.oneOf.apply(undefined, _toConsumableArray('0123456789abcdefABCDEF'));
+
+var fuzzString = function fuzzString(f) {
+  return f.rng.nextString();
+};
+
+var toRawValue = function toRawValue(f, str) {
+  // handle illegal escape sequences: 8, 9, trailing backslash, u, x, octals (in strict mode)
+  var orig = void 0;
+  do {
+    orig = str;
+    str = str.replace(/((^|[^\\])(\\\\)*\\)(8|9|u|x|$)/g, "$1\\$4");
+    // str = str.replace(/((^|[^\\])(\\\\)*\\)u/g, `$1u${f.rng.nextBoolean() ?
+    //   `${fuzzHexDigit(f)}${fuzzHexDigit(f)}${fuzzHexDigit(f)}${fuzzHexDigit(f)}` :
+    //   `{${fuzzHexDigit(f)}${manyN(4)(fuzzHexDigit)(f).join('')}}`
+    // }`);
+    // str = str.replace(/((^|[^\\])(\\\\)*\\)x/g, `$1x${fuzzHexDigit(f)}${fuzzHexDigit(f)}`); // todo consider inserting escape sequences like \u{XXXXX} etc into strings. This technique works, but not in combination with our hack for dealing with the \u\u case.
+    if (f.strict) {
+      str = str.replace(/((^|[^\\])(\\\\)*\\)0([0-7])/g, "$1\\0$4");
+      str = str.replace(/((^|[^\\])(\\\\)*\\)([1-7])/g, "$1\\$4");
+    }
+  } while (str !== orig); // loop is to handle e.g. \8\8, because javascript lacks lookbehind and faking it is painful.
+  return str;
+};
+
+var fuzzArrayAssignmentTarget = exports.fuzzArrayAssignmentTarget = function fuzzArrayAssignmentTarget(f) {
+  return (0, _combinators.ap)(Shift.ArrayAssignmentTarget, { "elements": (0, _combinators.many)((0, _combinators.opt)((0, _combinators.choose)(fuzzAssignmentTargetWithDefault, fuzzAssignmentTarget))), "rest": (0, _combinators.opt)(fuzzAssignmentTarget) }, f);
+};
+
+var fuzzArrayBinding = exports.fuzzArrayBinding = function fuzzArrayBinding(f) {
+  return (0, _combinators.ap)(Shift.ArrayBinding, { "elements": (0, _combinators.many)((0, _combinators.opt)((0, _combinators.choose)(fuzzBindingWithDefault, fuzzBinding))), "rest": (0, _combinators.opt)(fuzzBinding) }, f);
+};
+
+var fuzzArrayExpression = exports.fuzzArrayExpression = function fuzzArrayExpression(f) {
+  return (0, _combinators.ap)(Shift.ArrayExpression, { "elements": (0, _combinators.many)((0, _combinators.opt)((0, _combinators.choose)(fuzzExpression, fuzzSpreadElement))) }, f);
+};
+
+var fuzzArrowExpression = exports.fuzzArrowExpression = function fuzzArrowExpression() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var isConsise = f.rng.nextBoolean();
+  var params = void 0,
+      body = void 0;
+  if (!isConsise) {
+    var _fuzzDirectives = fuzzDirectives(f),
+        directives = _fuzzDirectives.directives,
+        hasStrictDirective = _fuzzDirectives.hasStrictDirective;
+
+    f = f.enterFunction({ isArrow: true, hasStrictDirective: hasStrictDirective });
+    params = fuzzFormalParameters(f, { hasStrictDirective: hasStrictDirective });
+    body = new Shift.FunctionBody({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f.goDeeper()) });
+  } else {
+    f = f.enterFunction({ isArrow: true });
+    params = fuzzFormalParameters(f);
+    body = fuzzExpression(f);
+  }
+  return new Shift.ArrowExpression({ params: params, body: body });
+};
+
+var fuzzAssignmentExpression = exports.fuzzAssignmentExpression = function fuzzAssignmentExpression(f) {
+  return (0, _combinators.ap)(Shift.AssignmentExpression, { "binding": fuzzAssignmentTarget, "expression": fuzzExpression }, f);
+};
+
+var fuzzAssignmentTargetIdentifier = exports.fuzzAssignmentTargetIdentifier = function fuzzAssignmentTargetIdentifier(f) {
+  return (0, _combinators.ap)(Shift.AssignmentTargetIdentifier, { "name": function name(f) {
+      return fuzzVariableName(f, true);
+    } }, f);
+};
+
+var fuzzAssignmentTargetPropertyIdentifier = exports.fuzzAssignmentTargetPropertyIdentifier = function fuzzAssignmentTargetPropertyIdentifier(f) {
+  return (0, _combinators.ap)(Shift.AssignmentTargetPropertyIdentifier, { "binding": fuzzAssignmentTargetIdentifier, "init": (0, _combinators.opt)(fuzzExpression) }, f);
+};
+
+var fuzzAssignmentTargetPropertyProperty = exports.fuzzAssignmentTargetPropertyProperty = function fuzzAssignmentTargetPropertyProperty(f) {
+  return (0, _combinators.ap)(Shift.AssignmentTargetPropertyProperty, { "name": (0, _combinators.choose)(fuzzComputedPropertyName, fuzzStaticPropertyName), "binding": (0, _combinators.choose)(fuzzAssignmentTargetWithDefault, fuzzAssignmentTarget) }, f);
+};
+
+var fuzzAssignmentTargetWithDefault = exports.fuzzAssignmentTargetWithDefault = function fuzzAssignmentTargetWithDefault(f) {
+  return (0, _combinators.ap)(Shift.AssignmentTargetWithDefault, { "binding": fuzzAssignmentTarget, "init": fuzzExpression }, f);
+};
+
+var fuzzBinaryExpression = exports.fuzzBinaryExpression = function fuzzBinaryExpression(f) {
+  return (0, _combinators.ap)(Shift.BinaryExpression, { "left": fuzzExpression, "operator": (0, _combinators.oneOf)("==", "!=", "===", "!==", "<", "<=", ">", ">=", "in", "instanceof", "<<", ">>", ">>>", "+", "-", "*", "/", "%", "**", ",", "||", "&&", "|", "^", "&"), "right": fuzzExpression }, f);
+};
+
+var fuzzBindingIdentifier = exports.fuzzBindingIdentifier = function fuzzBindingIdentifier(f) {
+  return (0, _combinators.ap)(Shift.BindingIdentifier, { "name": function name(f) {
+      return fuzzVariableName(f, true);
+    } }, f);
+};
+
+var fuzzBindingPropertyIdentifier = exports.fuzzBindingPropertyIdentifier = function fuzzBindingPropertyIdentifier(f) {
+  return (0, _combinators.ap)(Shift.BindingPropertyIdentifier, { "binding": fuzzBindingIdentifier, "init": (0, _combinators.opt)(fuzzExpression) }, f);
+};
+
+var fuzzBindingPropertyProperty = exports.fuzzBindingPropertyProperty = function fuzzBindingPropertyProperty(f) {
+  return (0, _combinators.ap)(Shift.BindingPropertyProperty, { "name": (0, _combinators.choose)(fuzzComputedPropertyName, fuzzStaticPropertyName), "binding": (0, _combinators.choose)(fuzzBindingWithDefault, fuzzBinding) }, f);
+};
+
+var fuzzBindingWithDefault = exports.fuzzBindingWithDefault = function fuzzBindingWithDefault(f) {
+  return (0, _combinators.ap)(Shift.BindingWithDefault, { "binding": fuzzBinding, "init": fuzzExpression }, f);
+};
+
+var fuzzBlock = exports.fuzzBlock = function fuzzBlock(f) {
+  return (0, _combinators.ap)(Shift.Block, { "statements": (0, _combinators.many)(fuzzStatement) }, f);
+};
+
+var fuzzBlockStatement = exports.fuzzBlockStatement = function fuzzBlockStatement(f) {
+  return (0, _combinators.ap)(Shift.BlockStatement, { "block": fuzzBlock }, f);
+};
+
+var fuzzBreakStatement = exports.fuzzBreakStatement = function fuzzBreakStatement(f) {
+  return (0, _combinators.ap)(Shift.BreakStatement, { "label": function label(f) {
+      return f.labels.length > 0 && (!(f.inLoop || f.inSwitch) || f.rng.nextBoolean()) ? _combinators.oneOf.apply(undefined, _toConsumableArray(f.labels))(f) : null;
+    } }, f);
+};
+
+var fuzzCallExpression = exports.fuzzCallExpression = function fuzzCallExpression(f) {
+  return (0, _combinators.ap)(Shift.CallExpression, { "callee": fuzzExpressionSuperCall, "arguments": (0, _combinators.many)((0, _combinators.choose)(fuzzExpression, fuzzSpreadElement)) }, f);
+};
+
+var fuzzCatchClause = exports.fuzzCatchClause = function fuzzCatchClause(f) {
+  return (0, _combinators.ap)(Shift.CatchClause, { "binding": fuzzBinding, "body": fuzzBlock }, f);
+};
+
+var fuzzClassDeclaration = exports.fuzzClassDeclaration = function fuzzClassDeclaration() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  f.inLoop = f.inSwitch = false;
+  f.strict = true;
+  var name = fuzzBindingIdentifier(f);
+  var _super = (0, _combinators.opt)(fuzzExpression)(f);
+  var elements = fuzzClassElements(f, { allowConstructor: _super !== null });
+  return new Shift.ClassDeclaration({ name: name, "super": _super, elements: elements });
+};
+
+var fuzzClassElement = exports.fuzzClassElement = function fuzzClassElement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref$allowConstructor = _ref.allowConstructor,
+      allowConstructor = _ref$allowConstructor === undefined ? true : _ref$allowConstructor,
+      _ref$constructorMayCo = _ref.constructorMayContainSuperCall,
+      constructorMayContainSuperCall = _ref$constructorMayCo === undefined ? false : _ref$constructorMayCo;
+
+  f = f.goDeeper();
+  var isStatic = f.rng.nextBoolean();
+  var method = (0, _combinators.choose)(function (f) {
+    return fuzzGetter(f, { isStatic: isStatic, inClass: true });
+  }, function (f) {
+    return fuzzMethod(f, { isStatic: isStatic, inClass: true, allowConstructor: allowConstructor, constructorMayContainSuperCall: constructorMayContainSuperCall });
+  }, function (f) {
+    return fuzzSetter(f, { isStatic: isStatic, inClass: true });
+  })(f);
+  return new Shift.ClassElement({ isStatic: isStatic, method: method });
+};
+
+var fuzzClassExpression = exports.fuzzClassExpression = function fuzzClassExpression() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  f.inLoop = f.inSwitch = false;
+  f.strict = true;
+  var name = (0, _combinators.opt)(fuzzBindingIdentifier)(f);
+  var _super = (0, _combinators.opt)(fuzzExpression)(f);
+  var elements = fuzzClassElements(f, { allowConstructor: _super !== null });
+  return new Shift.ClassExpression({ name: name, "super": _super, elements: elements });
+};
+
+var fuzzCompoundAssignmentExpression = exports.fuzzCompoundAssignmentExpression = function fuzzCompoundAssignmentExpression(f) {
+  return (0, _combinators.ap)(Shift.CompoundAssignmentExpression, { "binding": (0, _combinators.choose)(fuzzAssignmentTargetIdentifier, (0, _combinators.choose)(fuzzComputedMemberAssignmentTarget, fuzzStaticMemberAssignmentTarget)), "operator": (0, _combinators.oneOf)("+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "|=", "^=", "&="), "expression": fuzzExpression }, f);
+};
+
+var fuzzComputedMemberAssignmentTarget = exports.fuzzComputedMemberAssignmentTarget = function fuzzComputedMemberAssignmentTarget(f) {
+  return (0, _combinators.ap)(Shift.ComputedMemberAssignmentTarget, { "object": fuzzExpressionSuperProp, "expression": fuzzExpression }, f);
+};
+
+var fuzzComputedMemberExpression = exports.fuzzComputedMemberExpression = function fuzzComputedMemberExpression(f) {
+  return (0, _combinators.ap)(Shift.ComputedMemberExpression, { "object": fuzzExpressionSuperProp, "expression": fuzzExpression }, f);
+};
+
+var fuzzComputedPropertyName = exports.fuzzComputedPropertyName = function fuzzComputedPropertyName(f) {
+  return (0, _combinators.ap)(Shift.ComputedPropertyName, { "expression": fuzzExpression }, f);
+};
+
+var fuzzConditionalExpression = exports.fuzzConditionalExpression = function fuzzConditionalExpression(f) {
+  return (0, _combinators.ap)(Shift.ConditionalExpression, { "test": fuzzExpression, "consequent": fuzzExpression, "alternate": fuzzExpression }, f);
+};
+
+var fuzzContinueStatement = exports.fuzzContinueStatement = function fuzzContinueStatement(f) {
+  return (0, _combinators.ap)(Shift.ContinueStatement, { "label": function label(f) {
+      return f.loopLabels.length > 0 && f.rng.nextBoolean() ? _combinators.oneOf.apply(undefined, _toConsumableArray(f.loopLabels))(f) : null;
+    } }, f);
+};
+
+var fuzzDataProperty = exports.fuzzDataProperty = function fuzzDataProperty(f) {
+  return (0, _combinators.ap)(Shift.DataProperty, { "name": (0, _combinators.choose)(fuzzComputedPropertyName, fuzzStaticPropertyName), "expression": fuzzExpression }, f);
+};
+
+var fuzzDebuggerStatement = exports.fuzzDebuggerStatement = function fuzzDebuggerStatement(f) {
+  return (0, _combinators.ap)(Shift.DebuggerStatement, {}, f);
+};
+
+var fuzzDirective = exports.fuzzDirective = function fuzzDirective() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref2$allowUseStrict = _ref2.allowUseStrict,
+      allowUseStrict = _ref2$allowUseStrict === undefined ? true : _ref2$allowUseStrict;
+
+  var rawValue = allowUseStrict && f.rng.nextBoolean() ? 'use strict' : fuzzString(f);
+  if (rawValue.match('"') && rawValue.match("'")) {
+    var toReplace = f.rng.nextBoolean() ? '"' : "'";
+    var regex = toReplace === '"' ? /((^|[^\\])(\\\\)*)"/g : /((^|[^\\])(\\\\)*)'/g; // Trust me, this was easier than generating them on the fly
+    var _orig = void 0;
+    do {
+      _orig = rawValue;
+      rawValue = rawValue.replace(regex, "$1\\" + toReplace);
+    } while (rawValue !== _orig); // to handle e.g. '\"\"
+  }
+  var orig = void 0;
+  do {
+    orig = rawValue;
+    rawValue = rawValue.replace(/((^|[^\\])(\\\\)*)([\r\n])/g, "$1\\$4");
+  } while (rawValue !== orig); // to handle e.g. \n\n
+  rawValue = toRawValue(f, rawValue);
+  if (!allowUseStrict && rawValue === 'use strict') {
+    // This will almost never happen, but we should deal with it anyway.
+    rawValue = '';
+  }
+  return new Shift.Directive({ rawValue: rawValue });
+};
+
+var fuzzDoWhileStatement = exports.fuzzDoWhileStatement = function fuzzDoWhileStatement(f) {
+  return (0, _combinators.ap)(Shift.DoWhileStatement, { "body": function body(f) {
+      return fuzzStatement(f.enterLoop(), { allowProperDeclarations: false, allowFunctionDeclarations: false });
+    }, "test": fuzzExpression }, f);
+};
+
+var fuzzEmptyStatement = exports.fuzzEmptyStatement = function fuzzEmptyStatement(f) {
+  return (0, _combinators.ap)(Shift.EmptyStatement, {}, f);
+};
+
+var fuzzExport = exports.fuzzExport = function fuzzExport(f) {
+  return (0, _combinators.ap)(Shift.Export, { "declaration": (0, _combinators.choose)(fuzzClassDeclaration, fuzzFunctionDeclaration, fuzzVariableDeclaration) }, f);
+};
+
+var fuzzExportAllFrom = exports.fuzzExportAllFrom = function fuzzExportAllFrom(f) {
+  return (0, _combinators.ap)(Shift.ExportAllFrom, { "moduleSpecifier": fuzzString }, f);
+};
+
+var fuzzExportDefault = exports.fuzzExportDefault = function fuzzExportDefault(f) {
+  return (0, _combinators.ap)(Shift.ExportDefault, { "body": (0, _combinators.choose)(fuzzClassDeclaration, fuzzExpression, fuzzFunctionDeclaration) }, f);
+};
+
+var fuzzExportFrom = exports.fuzzExportFrom = function fuzzExportFrom(f) {
+  return (0, _combinators.ap)(Shift.ExportFrom, { "namedExports": (0, _combinators.many)(fuzzExportFromSpecifier), "moduleSpecifier": fuzzString }, f);
+};
+
+var fuzzExportFromSpecifier = exports.fuzzExportFromSpecifier = function fuzzExportFromSpecifier(f) {
+  return (0, _combinators.ap)(Shift.ExportFromSpecifier, { "name": fuzzIdentifierName, "exportedName": (0, _combinators.opt)(fuzzIdentifierName) }, f);
+};
+
+var fuzzExportLocalSpecifier = exports.fuzzExportLocalSpecifier = function fuzzExportLocalSpecifier(f) {
+  return (0, _combinators.ap)(Shift.ExportLocalSpecifier, { "name": fuzzIdentifierExpression, "exportedName": (0, _combinators.opt)(fuzzIdentifierName) }, f);
+};
+
+var fuzzExportLocals = exports.fuzzExportLocals = function fuzzExportLocals(f) {
+  return (0, _combinators.ap)(Shift.ExportLocals, { "namedExports": (0, _combinators.many)(fuzzExportLocalSpecifier) }, f);
+};
+
+var fuzzExpressionStatement = exports.fuzzExpressionStatement = function fuzzExpressionStatement(f) {
+  return (0, _combinators.ap)(Shift.ExpressionStatement, { "expression": fuzzExpression }, f);
+};
+
+var fuzzForInStatement = exports.fuzzForInStatement = function fuzzForInStatement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  var left = f.rng.nextBoolean() ? fuzzVariableDeclaration(f, { inForInOfHead: true }) : fuzzAssignmentTarget(f);
+  var right = fuzzExpression(f);
+  var body = fuzzStatement(f.enterLoop(), { allowProperDeclarations: false, allowFunctionDeclarations: false });
+  return new Shift.ForInStatement({ left: left, right: right, body: body });
+};
+
+var fuzzForOfStatement = exports.fuzzForOfStatement = function fuzzForOfStatement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  var left = f.rng.nextBoolean() ? fuzzVariableDeclaration(f, { inForInOfHead: true }) : fuzzAssignmentTarget(f);
+  var right = fuzzExpression(f);
+  var body = fuzzStatement(f.enterLoop(), { allowProperDeclarations: false, allowFunctionDeclarations: false });
+  return new Shift.ForOfStatement({ left: left, right: right, body: body });
+};
+
+var fuzzForStatement = exports.fuzzForStatement = function fuzzForStatement(f) {
+  return (0, _combinators.ap)(Shift.ForStatement, { "init": (0, _combinators.opt)((0, _combinators.choose)(fuzzExpression, fuzzVariableDeclaration)), "test": (0, _combinators.opt)(fuzzExpression), "update": (0, _combinators.opt)(fuzzExpression), "body": function body(f) {
+      return fuzzStatement(f.enterLoop(), { allowProperDeclarations: false, allowFunctionDeclarations: false });
+    } }, f);
+};
+
+var fuzzFormalParameters = exports.fuzzFormalParameters = function fuzzFormalParameters() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref3$hasStrictDirect = _ref3.hasStrictDirective,
+      hasStrictDirective = _ref3$hasStrictDirect === undefined ? false : _ref3$hasStrictDirect;
+
+  if (hasStrictDirective) {
+    return new Shift.FormalParameters({ items: (0, _combinators.many)(fuzzBindingIdentifier)(f), rest: null }); // note that f.strict should be set by the callee in this case
+  }
+  f = f.goDeeper().disableYieldExpr();
+  var items = (0, _combinators.many)((0, _combinators.choose)(fuzzBindingWithDefault, fuzzBinding))(f);
+  var rest = (0, _combinators.opt)(fuzzBinding)(f);
+  return new Shift.FormalParameters({ items: items, rest: rest });
+};
+
+var fuzzFunctionBody = exports.fuzzFunctionBody = function fuzzFunctionBody(f) {
+  return (0, _combinators.ap)(Shift.FunctionBody, { "directives": (0, _combinators.many)(fuzzDirective), "statements": (0, _combinators.many)(fuzzStatement) }, f);
+};
+
+var fuzzFunctionDeclaration = exports.fuzzFunctionDeclaration = function fuzzFunctionDeclaration() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref4 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref4$allowProperDecl = _ref4.allowProperDeclarations,
+      allowProperDeclarations = _ref4$allowProperDecl === undefined ? true : _ref4$allowProperDecl;
+
+  var _fuzzDirectives2 = fuzzDirectives(f),
+      directives = _fuzzDirectives2.directives,
+      hasStrictDirective = _fuzzDirectives2.hasStrictDirective;
+
+  var isGenerator = allowProperDeclarations && f.rng.nextBoolean();
+  var name = fuzzBindingIdentifier(f);
+  f = f.enterFunction({ isGenerator: isGenerator, hasStrictDirective: hasStrictDirective });
+  var params = fuzzFormalParameters(f, { hasStrictDirective: hasStrictDirective });
+  var body = new Shift.FunctionBody({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f.goDeeper()) });
+  return new Shift.FunctionDeclaration({ isGenerator: isGenerator, name: name, params: params, body: body });
+};
+
+var fuzzFunctionExpression = exports.fuzzFunctionExpression = function fuzzFunctionExpression() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.clone();
+
+  var _fuzzDirectives3 = fuzzDirectives(f),
+      directives = _fuzzDirectives3.directives,
+      hasStrictDirective = _fuzzDirectives3.hasStrictDirective;
+
+  var isGenerator = f.rng.nextBoolean();
+  if (isGenerator) {
+    f.allowYieldIdentifier = false;
+  }
+  var name = f.rng.nextBoolean() ? fuzzBindingIdentifier(f) : null;
+  f = f.enterFunction({ isGenerator: isGenerator, hasStrictDirective: hasStrictDirective });
+  var params = fuzzFormalParameters(f, { hasStrictDirective: hasStrictDirective });
+  var body = new Shift.FunctionBody({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f.goDeeper()) });
+  return new Shift.FunctionExpression({ isGenerator: isGenerator, name: name, params: params, body: body });
+};
+
+var fuzzGetter = exports.fuzzGetter = function fuzzGetter() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref5$isStatic = _ref5.isStatic,
+      isStatic = _ref5$isStatic === undefined ? false : _ref5$isStatic,
+      _ref5$inClass = _ref5.inClass,
+      inClass = _ref5$inClass === undefined ? false : _ref5$inClass;
+
+  var _fuzzDirectives4 = fuzzDirectives(f),
+      directives = _fuzzDirectives4.directives,
+      hasStrictDirective = _fuzzDirectives4.hasStrictDirective;
+
+  var name = f.rng.nextBoolean ? fuzzComputedPropertyName(f) : fuzzStaticPropertyName(f, { allowConstructor: !inClass, allowPrototype: !isStatic });
+  f = f.enterFunction({ isMethod: true, hasStrictDirective: hasStrictDirective });
+  f.allowSuperCall = false;
+  f.allowSuperProp = true;
+  var body = new Shift.FunctionBody({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f.goDeeper()) });
+  return new Shift.Getter({ name: name, body: body });
+};
+
+var fuzzIdentifierExpression = exports.fuzzIdentifierExpression = function fuzzIdentifierExpression(f) {
+  return (0, _combinators.ap)(Shift.IdentifierExpression, { "name": function name(f) {
+      return fuzzVariableName(f, false);
+    } }, f);
+};
+
+var fuzzIfStatement = exports.fuzzIfStatement = function fuzzIfStatement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  var test = fuzzExpression(f);
+  var alternate = !f.allowMissingElse || f.rng.nextBoolean() ? fuzzStatement(f, { allowProperDeclarations: false, allowFunctionDeclarations: !f.strict, allowLabeledFunctionDeclarations: false }) : null;
+  if (alternate) {
+    f.allowMissingElse = false;
+  }
+  var consequent = fuzzStatement(f, { allowProperDeclarations: false, allowFunctionDeclarations: !f.strict, allowLabeledFunctionDeclarations: false });
+  return new Shift.IfStatement({ test: test, consequent: consequent, alternate: alternate });
+};
+
+var fuzzImport = exports.fuzzImport = function fuzzImport(f) {
+  return (0, _combinators.ap)(Shift.Import, { "defaultBinding": (0, _combinators.opt)(fuzzBindingIdentifier), "namedImports": (0, _combinators.many)(fuzzImportSpecifier), "moduleSpecifier": fuzzString }, f);
+};
+
+var fuzzImportNamespace = exports.fuzzImportNamespace = function fuzzImportNamespace(f) {
+  return (0, _combinators.ap)(Shift.ImportNamespace, { "defaultBinding": (0, _combinators.opt)(fuzzBindingIdentifier), "namespaceBinding": fuzzBindingIdentifier, "moduleSpecifier": fuzzString }, f);
+};
+
+var fuzzImportSpecifier = exports.fuzzImportSpecifier = function fuzzImportSpecifier(f) {
+  return (0, _combinators.ap)(Shift.ImportSpecifier, { "name": (0, _combinators.opt)(fuzzIdentifierName), "binding": fuzzBindingIdentifier }, f);
+};
+
+var fuzzLabeledStatement = exports.fuzzLabeledStatement = function fuzzLabeledStatement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref6 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref6$allowFunctionDe = _ref6.allowFunctionDeclarations,
+      allowFunctionDeclarations = _ref6$allowFunctionDe === undefined ? f.strict : _ref6$allowFunctionDe;
+
+  f = f.goDeeper();
+  var label = fuzzLabel(f);
+  var body = void 0;
+  f.labels = f.labels.concat([label]);
+  if (f.rng.nextBoolean()) {
+    f.loopLabels = f.loopLabels.concat([label]);
+    body = _combinators.choose.apply(undefined, loopFuzzers)(f);
+  } else {
+    body = fuzzStatement(f, { allowLoops: false, allowProperDeclarations: false, allowFunctionDeclarations: allowFunctionDeclarations });
+  }
+  return new Shift.LabeledStatement({ label: label, body: body });
+};
+
+var fuzzLiteralBooleanExpression = exports.fuzzLiteralBooleanExpression = function fuzzLiteralBooleanExpression(f) {
+  return (0, _combinators.ap)(Shift.LiteralBooleanExpression, { "value": function value(f) {
+      return f.rng.nextBoolean();
+    } }, f);
+};
+
+var fuzzLiteralInfinityExpression = exports.fuzzLiteralInfinityExpression = function fuzzLiteralInfinityExpression(f) {
+  return (0, _combinators.ap)(Shift.LiteralInfinityExpression, {}, f);
+};
+
+var fuzzLiteralNullExpression = exports.fuzzLiteralNullExpression = function fuzzLiteralNullExpression(f) {
+  return (0, _combinators.ap)(Shift.LiteralNullExpression, {}, f);
+};
+
+var fuzzLiteralNumericExpression = exports.fuzzLiteralNumericExpression = function fuzzLiteralNumericExpression(f) {
+  return (0, _combinators.ap)(Shift.LiteralNumericExpression, { "value": (0, _combinators.choose)(function (f) {
+      return f.rng.nextInt(1e4);
+    }, function (f) {
+      return f.rng.nextInt(Math.pow(2, 53));
+    }, function (f) {
+      return f.rng.nextDouble() * Math.pow(10, f.rng.nextInt(309));
+    }, function (f) {
+      return parseFloat(("" + f.rng.nextDouble() * 1e4).slice(0, 7));
+    }, function (f) {
+      return parseFloat(("" + f.rng.nextDouble()).slice(0, 4));
+    }, function (f) {
+      return 0;
+    }) }, f);
+};
+
+var fuzzLiteralRegExpExpression = exports.fuzzLiteralRegExpExpression = function fuzzLiteralRegExpExpression(f) {
+  return (0, _combinators.ap)(Shift.LiteralRegExpExpression, { "pattern": _regexp2.default, "global": function global(f) {
+      return f.rng.nextBoolean();
+    }, "ignoreCase": function ignoreCase(f) {
+      return f.rng.nextBoolean();
+    }, "multiLine": function multiLine(f) {
+      return f.rng.nextBoolean();
+    }, "sticky": function sticky(f) {
+      return f.rng.nextBoolean();
+    }, "unicode": function unicode(f) {
+      return f.rng.nextBoolean();
+    } }, f);
+};
+
+var fuzzLiteralStringExpression = exports.fuzzLiteralStringExpression = function fuzzLiteralStringExpression(f) {
+  return (0, _combinators.ap)(Shift.LiteralStringExpression, { "value": fuzzString }, f);
+};
+
+var fuzzMethod = exports.fuzzMethod = function fuzzMethod() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref7 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref7$isStatic = _ref7.isStatic,
+      isStatic = _ref7$isStatic === undefined ? false : _ref7$isStatic,
+      _ref7$inClass = _ref7.inClass,
+      inClass = _ref7$inClass === undefined ? false : _ref7$inClass,
+      _ref7$allowConstructo = _ref7.allowConstructor,
+      allowConstructor = _ref7$allowConstructo === undefined ? true : _ref7$allowConstructo,
+      _ref7$constructorMayC = _ref7.constructorMayContainSuperCall,
+      constructorMayContainSuperCall = _ref7$constructorMayC === undefined ? false : _ref7$constructorMayC;
+
+  // isStatic implies inClass
+  f = f.goDeeper();
+
+  var _fuzzDirectives5 = fuzzDirectives(f),
+      directives = _fuzzDirectives5.directives,
+      hasStrictDirective = _fuzzDirectives5.hasStrictDirective;
+
+  var isConstructor = inClass && allowConstructor && !isStatic && f.rng.nextBoolean();
+  var isGenerator = !isConstructor && f.rng.nextBoolean();
+  var name = isConstructor ? new Shift.StaticPropertyName({ value: "constructor" }) : (0, _combinators.choose)(fuzzComputedPropertyName, function (f) {
+    return fuzzStaticPropertyName(f, { allowConstructor: !inClass, allowPrototype: !isStatic });
+  })(f);
+  f = f.enterFunction({ isMethod: true, isGenerator: isGenerator, hasStrictDirective: hasStrictDirective });
+  f.allowSuperCall = isConstructor && constructorMayContainSuperCall;
+  f.allowSuperProp = true;
+  var params = fuzzFormalParameters(f, { hasStrictDirective: hasStrictDirective });
+  var body = new Shift.FunctionBody({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f.goDeeper()) });
+  return new Shift.Method({ isGenerator: isGenerator, name: name, params: params, body: body });
+};
+
+var fuzzModule = exports.fuzzModule = function fuzzModule() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.clone();
+  f.strict = true;
+  f.allowAwaitIdenifier = false;
+
+  return (0, _combinators.ap)(Shift.Module, { "directives": function directives(f) {
+      return fuzzDirectives(f).directives;
+    }, "items": (0, _combinators.many)((0, _combinators.choose)((0, _combinators.choose)(fuzzExport, fuzzExportAllFrom, fuzzExportDefault, fuzzExportFrom, fuzzExportLocals), (0, _combinators.choose)(fuzzImport, fuzzImportNamespace), fuzzStatement)) }, f);
+};
+
+var fuzzNewExpression = exports.fuzzNewExpression = function fuzzNewExpression(f) {
+  return (0, _combinators.ap)(Shift.NewExpression, { "callee": fuzzExpression, "arguments": (0, _combinators.many)((0, _combinators.choose)(fuzzExpression, fuzzSpreadElement)) }, f);
+};
+
+var fuzzNewTargetExpression = exports.fuzzNewTargetExpression = function fuzzNewTargetExpression(f) {
+  return (0, _combinators.ap)(Shift.NewTargetExpression, {}, f);
+};
+
+var fuzzObjectAssignmentTarget = exports.fuzzObjectAssignmentTarget = function fuzzObjectAssignmentTarget(f) {
+  return (0, _combinators.ap)(Shift.ObjectAssignmentTarget, { "properties": (0, _combinators.many)((0, _combinators.choose)(fuzzAssignmentTargetPropertyIdentifier, fuzzAssignmentTargetPropertyProperty)) }, f);
+};
+
+var fuzzObjectBinding = exports.fuzzObjectBinding = function fuzzObjectBinding(f) {
+  return (0, _combinators.ap)(Shift.ObjectBinding, { "properties": (0, _combinators.many)((0, _combinators.choose)(fuzzBindingPropertyIdentifier, fuzzBindingPropertyProperty)) }, f);
+};
+
+var fuzzObjectExpression = exports.fuzzObjectExpression = function fuzzObjectExpression(f) {
+  return (0, _combinators.ap)(Shift.ObjectExpression, { "properties": (0, _combinators.many)((0, _combinators.choose)((0, _combinators.choose)(fuzzDataProperty, (0, _combinators.choose)(fuzzGetter, fuzzMethod, fuzzSetter)), fuzzShorthandProperty)) }, f);
+};
+
+var fuzzReturnStatement = exports.fuzzReturnStatement = function fuzzReturnStatement(f) {
+  return (0, _combinators.ap)(Shift.ReturnStatement, { "expression": (0, _combinators.opt)(fuzzExpression) }, f);
+};
+
+var fuzzScript = exports.fuzzScript = function fuzzScript() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+
+  var _fuzzDirectives6 = fuzzDirectives(f),
+      directives = _fuzzDirectives6.directives,
+      hasStrictDirective = _fuzzDirectives6.hasStrictDirective;
+
+  f.strict = hasStrictDirective;
+  return new Shift.Script({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f) });
+};
+
+var fuzzSetter = exports.fuzzSetter = function fuzzSetter() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref8 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref8$isStatic = _ref8.isStatic,
+      isStatic = _ref8$isStatic === undefined ? false : _ref8$isStatic,
+      _ref8$inClass = _ref8.inClass,
+      inClass = _ref8$inClass === undefined ? false : _ref8$inClass;
+
+  var _fuzzDirectives7 = fuzzDirectives(f),
+      directives = _fuzzDirectives7.directives,
+      hasStrictDirective = _fuzzDirectives7.hasStrictDirective;
+
+  var name = f.rng.nextBoolean ? fuzzComputedPropertyName(f) : fuzzStaticPropertyName(f, { allowConstructor: !inClass, allowPrototype: !isStatic });
+  f = f.enterFunction({ isMethod: true, hasStrictDirective: hasStrictDirective });
+  f.allowSuperCall = false;
+  f.allowSuperProp = true;
+  var param = hasStrictDirective ? fuzzBindingIdentifier(f) : (0, _combinators.choose)(fuzzBindingWithDefault, fuzzBinding)(f);
+  var body = new Shift.FunctionBody({ directives: directives, statements: (0, _combinators.many)(fuzzStatement)(f.goDeeper()) });
+  return new Shift.Setter({ name: name, param: param, body: body });
+};
+
+var fuzzShorthandProperty = exports.fuzzShorthandProperty = function fuzzShorthandProperty(f) {
+  return (0, _combinators.ap)(Shift.ShorthandProperty, { "name": fuzzIdentifierExpression }, f);
+};
+
+var fuzzSpreadElement = exports.fuzzSpreadElement = function fuzzSpreadElement(f) {
+  return (0, _combinators.ap)(Shift.SpreadElement, { "expression": fuzzExpression }, f);
+};
+
+var fuzzStaticMemberAssignmentTarget = exports.fuzzStaticMemberAssignmentTarget = function fuzzStaticMemberAssignmentTarget(f) {
+  return (0, _combinators.ap)(Shift.StaticMemberAssignmentTarget, { "object": fuzzExpressionSuperProp, "property": fuzzIdentifierName }, f);
+};
+
+var fuzzStaticMemberExpression = exports.fuzzStaticMemberExpression = function fuzzStaticMemberExpression(f) {
+  return (0, _combinators.ap)(Shift.StaticMemberExpression, { "object": fuzzExpressionSuperProp, "property": fuzzIdentifierName }, f);
+};
+
+var fuzzStaticPropertyName = exports.fuzzStaticPropertyName = function fuzzStaticPropertyName() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref9 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref9$allowConstructo = _ref9.allowConstructor,
+      allowConstructor = _ref9$allowConstructo === undefined ? true : _ref9$allowConstructo,
+      _ref9$allowPrototype = _ref9.allowPrototype,
+      allowPrototype = _ref9$allowPrototype === undefined ? true : _ref9$allowPrototype;
+
+  // todo avoid duplicate __proto__ simple properties
+  var value = void 0;
+  do {
+    value = fuzzString(f);
+  } while (!allowConstructor && value === 'constructor' || !allowPrototype && value === 'prototype');
+  return new Shift.StaticPropertyName({ value: value });
+};
+
+var fuzzSuper = exports.fuzzSuper = function fuzzSuper(f) {
+  return (0, _combinators.ap)(Shift.Super, {}, f);
+};
+
+var fuzzSwitchCase = exports.fuzzSwitchCase = function fuzzSwitchCase(f) {
+  return (0, _combinators.ap)(Shift.SwitchCase, { "test": fuzzExpression, "consequent": (0, _combinators.many)(fuzzStatement) }, f);
+};
+
+var fuzzSwitchDefault = exports.fuzzSwitchDefault = function fuzzSwitchDefault(f) {
+  return (0, _combinators.ap)(Shift.SwitchDefault, { "consequent": (0, _combinators.many)(fuzzStatement) }, f);
+};
+
+var fuzzSwitchStatement = exports.fuzzSwitchStatement = function fuzzSwitchStatement(f) {
+  return (0, _combinators.ap)(Shift.SwitchStatement, { "discriminant": fuzzExpression, "cases": (0, _combinators.many)(fuzzSwitchCase) }, f.enterSwitch());
+};
+
+var fuzzSwitchStatementWithDefault = exports.fuzzSwitchStatementWithDefault = function fuzzSwitchStatementWithDefault(f) {
+  return (0, _combinators.ap)(Shift.SwitchStatementWithDefault, { "discriminant": fuzzExpression, "preDefaultCases": (0, _combinators.many)(fuzzSwitchCase), "defaultCase": fuzzSwitchDefault, "postDefaultCases": (0, _combinators.many)(fuzzSwitchCase) }, f.enterSwitch());
+};
+
+var fuzzTemplateElement = exports.fuzzTemplateElement = function fuzzTemplateElement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var rawValue = toRawValue(f, fuzzString(f));
+  var orig = void 0;
+  do {
+    orig = rawValue;
+    rawValue = rawValue.replace(/((^|[^\\])(\\\\)*)(`|\${)/g, '$1\\$4');
+    rawValue = rawValue.replace(/((^|[^\\])(\\\\)*\\)(0(?=[0-7])|[1-7])/g, '$1\\$4');
+  } while (rawValue !== orig);
+  return new Shift.TemplateElement({ rawValue: rawValue });
+};
+
+var fuzzTemplateExpression = exports.fuzzTemplateExpression = function fuzzTemplateExpression() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  var tag = (0, _combinators.opt)(fuzzExpression)(f);
+
+  var exprs = (0, _combinators.many)(fuzzExpression)(f);
+  var elements = [fuzzTemplateElement(f)];
+  for (var i = 0; i < exprs.length; ++i) {
+    elements.push(exprs[i], fuzzTemplateElement(f));
+  }
+  return new Shift.TemplateExpression({ tag: tag, elements: elements });
+};
+
+var fuzzThisExpression = exports.fuzzThisExpression = function fuzzThisExpression(f) {
+  return (0, _combinators.ap)(Shift.ThisExpression, {}, f);
+};
+
+var fuzzThrowStatement = exports.fuzzThrowStatement = function fuzzThrowStatement(f) {
+  return (0, _combinators.ap)(Shift.ThrowStatement, { "expression": fuzzExpression }, f);
+};
+
+var fuzzTryCatchStatement = exports.fuzzTryCatchStatement = function fuzzTryCatchStatement(f) {
+  return (0, _combinators.ap)(Shift.TryCatchStatement, { "body": fuzzBlock, "catchClause": fuzzCatchClause }, f);
+};
+
+var fuzzTryFinallyStatement = exports.fuzzTryFinallyStatement = function fuzzTryFinallyStatement(f) {
+  return (0, _combinators.ap)(Shift.TryFinallyStatement, { "body": fuzzBlock, "catchClause": (0, _combinators.opt)(fuzzCatchClause), "finalizer": fuzzBlock }, f);
+};
+
+var fuzzUnaryExpression = exports.fuzzUnaryExpression = function fuzzUnaryExpression() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  f = f.goDeeper();
+  var operator = (0, _combinators.oneOf)("+", "-", "!", "~", "typeof", "void", "delete")(f);
+  var operand = fuzzExpression(f, { allowIdentifierExpression: operator !== "delete" || !f.strict });
+  return new Shift.UnaryExpression({ operator: operator, operand: operand });
+};
+
+var fuzzUpdateExpression = exports.fuzzUpdateExpression = function fuzzUpdateExpression(f) {
+  return (0, _combinators.ap)(Shift.UpdateExpression, { "isPrefix": function isPrefix(f) {
+      return f.rng.nextBoolean();
+    }, "operator": (0, _combinators.oneOf)("++", "--"), "operand": (0, _combinators.choose)(fuzzAssignmentTargetIdentifier, (0, _combinators.choose)(fuzzComputedMemberAssignmentTarget, fuzzStaticMemberAssignmentTarget)) }, f);
+};
+
+var fuzzVariableDeclaration = exports.fuzzVariableDeclaration = function fuzzVariableDeclaration() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref10 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref10$allowProperDec = _ref10.allowProperDeclarations,
+      allowProperDeclarations = _ref10$allowProperDec === undefined ? true : _ref10$allowProperDec,
+      _ref10$inForInOfHead = _ref10.inForInOfHead,
+      inForInOfHead = _ref10$inForInOfHead === undefined ? false : _ref10$inForInOfHead;
+
+  f = f.goDeeper();
+  var kind = allowProperDeclarations ? (0, _combinators.oneOf)("var", "let", "const")(f) : "var";
+  f.declKind = kind;
+  var declarators = void 0;
+  if (inForInOfHead) {
+    declarators = [fuzzVariableDeclarator(f, { inForInOfHead: inForInOfHead })];
+  } else {
+    declarators = (0, _combinators.many1)(fuzzVariableDeclarator)(f);
+  }
+  return new Shift.VariableDeclaration({ kind: kind, declarators: declarators });
+};
+
+var fuzzVariableDeclarationStatement = exports.fuzzVariableDeclarationStatement = function fuzzVariableDeclarationStatement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref11 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref11$allowProperDec = _ref11.allowProperDeclarations,
+      allowProperDeclarations = _ref11$allowProperDec === undefined ? true : _ref11$allowProperDec;
+
+  f = f.goDeeper();
+  var declaration = fuzzVariableDeclaration(f, { allowProperDeclarations: allowProperDeclarations });
+  return new Shift.VariableDeclarationStatement({ declaration: declaration });
+};
+
+var fuzzVariableDeclarator = exports.fuzzVariableDeclarator = function fuzzVariableDeclarator() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref12 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref12$inForInOfHead = _ref12.inForInOfHead,
+      inForInOfHead = _ref12$inForInOfHead === undefined ? false : _ref12$inForInOfHead;
+
+  f = f.goDeeper();
+  var binding = fuzzBinding(f);
+  var init = void 0;
+  if (inForInOfHead) {
+    init = null;
+  } else if (f.declKind === 'const' || binding.type === 'ArrayBinding' || binding.type === 'ObjectBinding') {
+    init = fuzzExpression(f);
+  } else {
+    init = f.rng.nextBoolean() ? fuzzExpression(f) : null;
+  }
+  return new Shift.VariableDeclarator({ binding: binding, init: init });
+};
+
+var fuzzWhileStatement = exports.fuzzWhileStatement = function fuzzWhileStatement(f) {
+  return (0, _combinators.ap)(Shift.WhileStatement, { "test": fuzzExpression, "body": function body(f) {
+      return fuzzStatement(f.enterLoop(), { allowProperDeclarations: false, allowFunctionDeclarations: false });
+    } }, f);
+};
+
+var fuzzWithStatement = exports.fuzzWithStatement = function fuzzWithStatement(f) {
+  return (0, _combinators.ap)(Shift.WithStatement, { "object": fuzzExpression, "body": function body(f) {
+      return fuzzStatement(f, { allowProperDeclarations: false, allowFunctionDeclarations: false });
+    } }, f);
+};
+
+var fuzzYieldExpression = exports.fuzzYieldExpression = function fuzzYieldExpression(f) {
+  return (0, _combinators.ap)(Shift.YieldExpression, { "expression": (0, _combinators.opt)(fuzzExpression) }, f);
+};
+
+var fuzzYieldGeneratorExpression = exports.fuzzYieldGeneratorExpression = function fuzzYieldGeneratorExpression(f) {
+  return (0, _combinators.ap)(Shift.YieldGeneratorExpression, { "expression": fuzzExpression }, f);
+};
+
+var simpleExprFuzzers = [fuzzArrayExpression, fuzzArrowExpression, fuzzAssignmentExpression, fuzzBinaryExpression, fuzzCallExpression, fuzzClassExpression, fuzzCompoundAssignmentExpression, fuzzConditionalExpression, fuzzFunctionExpression, fuzzLiteralBooleanExpression, fuzzLiteralInfinityExpression, fuzzLiteralNullExpression, fuzzLiteralNumericExpression, fuzzLiteralRegExpExpression, fuzzLiteralStringExpression, fuzzNewExpression, fuzzObjectExpression, fuzzTemplateExpression, fuzzThisExpression, fuzzUnaryExpression, fuzzUpdateExpression, fuzzComputedMemberExpression, fuzzStaticMemberExpression];
+
+var yieldExprFuzzers = [fuzzYieldExpression, fuzzYieldGeneratorExpression];
+
+var simpleStmtFuzzers = [fuzzBlockStatement, fuzzDebuggerStatement, fuzzEmptyStatement, fuzzExpressionStatement, fuzzIfStatement, fuzzLabeledStatement, fuzzSwitchStatement, fuzzSwitchStatementWithDefault, fuzzThrowStatement, fuzzTryCatchStatement, fuzzTryFinallyStatement, fuzzVariableDeclarationStatement];
+
+var loopFuzzers = [fuzzDoWhileStatement, fuzzForInStatement, fuzzForOfStatement, fuzzForStatement, fuzzWhileStatement];
+
+var fuzzersPassingAllowMissingElse = [fuzzLabeledStatement, fuzzForStatement, fuzzForInStatement, fuzzForOfStatement, fuzzIfStatement, fuzzWhileStatement, fuzzWithStatement];
+
+var fuzzExpressionSuperProp = function fuzzExpressionSuperProp(f) {
+  return f.allowSuperProp ? (0, _combinators.choose)(fuzzExpression, fuzzSuper)(f) : fuzzExpression(f);
+};
+
+var fuzzExpressionSuperCall = function fuzzExpressionSuperCall(f) {
+  return f.allowSuperCall ? (0, _combinators.choose)(fuzzExpression, fuzzSuper)(f) : fuzzExpression(f);
+};
+
+var fuzzClassElements = function fuzzClassElements(f, _ref13) {
+  var allowConstructor = _ref13.allowConstructor;
+
+  var elements = [];
+  if (f.tooDeep()) {
+    return elements;
+  }
+  var count = f.rng.nextInt(_combinators.MANY_BOUND + 1);
+  while (count-- > 0) {
+    var element = fuzzClassElement(f, { allowConstructor: allowConstructor, constructorMayContainSuperCall: true });
+    if (!element.isStatic && element.method.type === 'Method' && element.method.name.type === 'StaticPropertyName' && element.method.name.value === 'constructor') {
+      allowConstructor = false;
+    }
+    elements.push(element);
+  }
+  return elements;
+};
+
+var fuzzDirectives = function fuzzDirectives(f) {
+  f = f.clone();
+  var hasStrictDirective = f.rng.nextBoolean();
+  if (hasStrictDirective) {
+    f.strict = true;
+  }
+
+  var directives = (0, _combinators.many)(function (f) {
+    return fuzzDirective(f, { allowUseStrict: hasStrictDirective });
+  })(f);
+  if (hasStrictDirective && !directives.some(function (d) {
+    return d.rawValue === 'use strict';
+  })) {
+    directives.push(new Shift.Directive({ rawValue: 'use strict' }));
+  }
+  return { directives: directives, hasStrictDirective: hasStrictDirective };
+};
+
+var fuzzAssignmentTarget = function fuzzAssignmentTarget(f) {
+  if (f.tooDeep() || f.rng.nextBoolean()) {
+    return fuzzAssignmentTargetIdentifier(f);
+  }
+  return (0, _combinators.choose)((0, _combinators.choose)(fuzzArrayAssignmentTarget, fuzzObjectAssignmentTarget), (0, _combinators.choose)(fuzzComputedMemberAssignmentTarget, fuzzStaticMemberAssignmentTarget))(f);
+};
+
+var fuzzBinding = function fuzzBinding(f) {
+  if (f.tooDeep() || f.rng.nextBoolean()) {
+    return fuzzBindingIdentifier(f);
+  }
+  return (f.rng.nextBoolean() ? fuzzArrayBinding : fuzzObjectBinding)(f);
+};
+
+var fuzzProgram = exports.fuzzProgram = (0, _combinators.choose)(fuzzModule, fuzzScript);
+
+exports.default = fuzzProgram;
+var fuzzExpression = exports.fuzzExpression = function fuzzExpression() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref14 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref14$allowIdentifie = _ref14.allowIdentifierExpression,
+      allowIdentifierExpression = _ref14$allowIdentifie === undefined ? true : _ref14$allowIdentifie;
+
+  if (f.tooDeep()) {
+    return fuzzLeafExpression(f, { allowIdentifierExpression: allowIdentifierExpression });
+  }
+  var fuzzers = simpleExprFuzzers;
+  if (f.allowYieldExpr) {
+    fuzzers = fuzzers.concat(yieldExprFuzzers);
+  }
+  if (f.allowNewTarget) {
+    fuzzers = fuzzers.concat([fuzzNewTargetExpression]);
+  }
+  if (allowIdentifierExpression) {
+    fuzzers = fuzzers.concat([fuzzIdentifierExpression]);
+  }
+  f = f.clone();
+  f.declKind = null;
+
+  return _combinators.choose.apply(undefined, _toConsumableArray(fuzzers))(f);
+};
+
+var fuzzLeafExpression = function fuzzLeafExpression(f, _ref15) {
+  var allowIdentifierExpression = _ref15.allowIdentifierExpression;
+
+  var fuzzers = [fuzzLiteralBooleanExpression, fuzzLiteralInfinityExpression, fuzzLiteralNullExpression, fuzzLiteralNumericExpression, fuzzLiteralRegExpExpression, fuzzLiteralStringExpression, fuzzThisExpression];
+  if (allowIdentifierExpression) fuzzers.push(fuzzIdentifierExpression);
+  if (f.allowNewTarget) fuzzers.push(fuzzNewTargetExpression);
+  if (f.allowYieldExpr) fuzzers.push(fuzzYieldExpression);
+  return _combinators.choose.apply(undefined, fuzzers)(f);
+};
+
+var fuzzStatement = exports.fuzzStatement = function fuzzStatement() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _fuzzerState2.default();
+
+  var _ref16 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref16$allowLoops = _ref16.allowLoops,
+      allowLoops = _ref16$allowLoops === undefined ? true : _ref16$allowLoops,
+      _ref16$allowProperDec = _ref16.allowProperDeclarations,
+      allowProperDeclarations = _ref16$allowProperDec === undefined ? true : _ref16$allowProperDec,
+      _ref16$allowFunctionD = _ref16.allowFunctionDeclarations,
+      allowFunctionDeclarations = _ref16$allowFunctionD === undefined ? true : _ref16$allowFunctionD,
+      _ref16$allowLabeledFu = _ref16.allowLabeledFunctionDeclarations,
+      allowLabeledFunctionDeclarations = _ref16$allowLabeledFu === undefined ? !f.strict && allowFunctionDeclarations : _ref16$allowLabeledFu;
+
+  if (f.tooDeep()) {
+    return fuzzLeafStatement(f);
+  }
+
+  var fuzzers = [].concat(simpleStmtFuzzers);
+  if (allowLoops) {
+    fuzzers.push.apply(fuzzers, loopFuzzers);
+  }
+
+  if (f.allowReturn) {
+    fuzzers.push(fuzzReturnStatement);
+  }
+  if (f.inLoop) {
+    fuzzers.push(fuzzBreakStatement, fuzzContinueStatement);
+  } else if (f.allowBreak()) {
+    fuzzers.push(fuzzBreakStatement);
+  }
+  if (allowProperDeclarations) {
+    fuzzers.push(fuzzClassDeclaration, fuzzFunctionDeclaration);
+  } else if (allowFunctionDeclarations) {
+    fuzzers.push(fuzzFunctionDeclaration);
+  }
+
+  if (!f.strict) {
+    fuzzers.push(fuzzWithStatement);
+  }
+
+  var fuzzer = _combinators.oneOf.apply(undefined, _toConsumableArray(fuzzers))(f);
+
+  if (fuzzersPassingAllowMissingElse.indexOf(fuzzer) === -1) {
+    f = f.enableMissingElse();
+  }
+
+  if (fuzzer === fuzzVariableDeclarationStatement) {
+    return fuzzVariableDeclarationStatement(f, { allowProperDeclarations: allowProperDeclarations });
+  }
+
+  if (fuzzer === fuzzFunctionDeclaration) {
+    return fuzzFunctionDeclaration(f, { allowProperDeclarations: allowProperDeclarations });
+  }
+
+  if (fuzzer === fuzzLabeledStatement) {
+    return fuzzLabeledStatement(f, { allowFunctionDeclarations: allowLabeledFunctionDeclarations });
+  }
+
+  return fuzzer(f);
+};
+
+var fuzzLeafStatement = function fuzzLeafStatement(f) {
+  var fuzzers = [fuzzDebuggerStatement, fuzzEmptyStatement];
+  if (f.allowBreak()) fuzzers.push(fuzzBreakStatement);
+  if (f.inLoop) fuzzers.push(fuzzContinueStatement);
+  if (f.allowReturn) fuzzers.push(fuzzReturnStatement);
+  return _combinators.choose.apply(undefined, fuzzers)(f);
+};
+},{"./combinators":4,"./fuzzer-state":5,"./regexp":8,"shift-ast/checked":2}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Copyright 2014 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var MAX_STRING_LENGTH = 5;
+
+var Random = function () {
+  function Random(rng) {
+    _classCallCheck(this, Random);
+
+    this.rng = rng;
+  }
+
+  _createClass(Random, [{
+    key: "nextBoolean",
+    value: function nextBoolean() {
+      var p = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.5;
+
+      return this.rng() < p;
+    }
+  }, {
+    key: "nextInt",
+    value: function nextInt(bound) {
+      return Math.floor(this.rng() * bound);
+    }
+  }, {
+    key: "nextDouble",
+    value: function nextDouble() {
+      return this.rng();
+    }
+  }, {
+    key: "nextString",
+    value: function nextString() {
+      var count = this.nextInt(MAX_STRING_LENGTH + 1);
+      var result = "";
+      while (count-- > 0) {
+        result += String.fromCharCode(this.nextInt(0xFF));
+      } // TODO: 0x100000000
+      return result;
+    }
+  }]);
+
+  return Random;
+}();
+
+exports.default = Random;
+},{}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.default = fuzzRegExpPattern;
+
+var _random = require("./random");
+
+var _random2 = _interopRequireDefault(_random);
+
+var _combinators = require("./combinators");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// todo generate: /\cM/ (matches control-M in a string).
+
+var RegExpState = function () {
+  function RegExpState() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$maxDepth = _ref.maxDepth,
+        maxDepth = _ref$maxDepth === undefined ? 5 : _ref$maxDepth,
+        _ref$rng = _ref.rng,
+        rng = _ref$rng === undefined ? new _random2.default(Math.random) : _ref$rng;
+
+    _classCallCheck(this, RegExpState);
+
+    this.maxDepth = maxDepth;
+    this.depth = 0;
+    this.rng = rng;
+  }
+
+  _createClass(RegExpState, [{
+    key: "tooDeep",
+    value: function tooDeep() {
+      return this.depth >= this.maxDepth;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      var st = new RegExpState({ maxDepth: this.maxDepth, rng: this.rng });
+      st.depth = this.depth;
+      return st;
+    }
+  }, {
+    key: "goDeeper",
+    value: function goDeeper() {
+      var st = this.clone();
+      ++st.depth;
+      return st;
+    }
+  }]);
+
+  return RegExpState;
+}();
+
+var charVal = function charVal(c) {
+  if (c[0] === '\\') {
+    switch (c[1]) {
+      case 'u':
+      case 'x':
+        return parseInt(c.slice(2), 16);
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+        return parseInt(c.slice(1), 8);
+      case 'b':
+        return 8;
+      case 't':
+        return 9;
+      case 'n':
+        return 10;
+      case 'v':
+        return 11;
+      case 'f':
+        return 12;
+      case 'r':
+        return 13;
+      case 'c':
+        throw new Error('control sequences not supported');
+      default:
+        return c.charCodeAt(1);
+    }
+  } else {
+    return c.charCodeAt(0);
+  }
+};
+
+var fuzzPrintableAscii = function fuzzPrintableAscii(f) {
+  return String.fromCharCode(32 + f.rng.nextInt(94));
+};
+
+var fuzzHex = (0, _combinators.oneOf)('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F');
+
+var fuzzAlternation = function fuzzAlternation(f) {
+  if (f.tooDeep()) return '';
+  f = f.goDeeper();
+  return (0, _combinators.many)((0, _combinators.choose)(fuzzGrouping, fuzzCharacterClass, fuzzRepetition, fuzzSequence))(f).join('|');
+};
+
+var fuzzGrouping = function fuzzGrouping(f) {
+  if (f.tooDeep()) return '()';
+  f = f.goDeeper();
+  return "(" + (0, _combinators.oneOf)('?:', '?!', '?=', '')(f) + fuzzRegExpSource(f) + ")";
+};
+
+var fuzzRepetition = function fuzzRepetition(f) {
+  if (f.tooDeep()) return '';
+  f = f.goDeeper();
+  return "" + (0, _combinators.choose)(fuzzGrouping, fuzzCharacterClass, fuzzCharacter)(f) + (0, _combinators.oneOf)('?', '+', '*', '*?', '+?')(f);
+};
+
+var fuzzSequence = function fuzzSequence(f) {
+  return (0, _combinators.many)((0, _combinators.choose)(fuzzCharacter, fuzzBoundary))(f).join('');
+};
+
+var fuzzBoundary = (0, _combinators.oneOf)('^', '$', '\\b', '\\B');
+
+var fuzzCharacter = (0, _combinators.choose)(function (f) {
+  var c = void 0;
+  do {
+    c = fuzzPrintableAscii(f);
+  } while (['[', '(', ')', '{', '?', '*', '+', '|', '\\', '$', '^', '/'].indexOf(c) !== -1);
+  return c;
+}, function (f) {
+  return "\\u" + fuzzHex(f) + fuzzHex(f) + fuzzHex(f) + fuzzHex(f);
+}, function (f) {
+  return "\\x" + fuzzHex(f) + fuzzHex(f);
+}, function (f) {
+  var c = void 0;
+  do {
+    c = fuzzPrintableAscii(f);
+  } while (['u', 'x', 'b', 'B', 'c', '1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(c) !== -1);
+  return "\\" + c;
+});
+
+var fuzzCharacterClass = function fuzzCharacterClass(f) {
+  if (f.tooDeep()) return '[]';
+  f = f.goDeeper();
+  var source = (0, _combinators.many)((0, _combinators.choose)(fuzzCharacterClassCharacter, fuzzCharacterClassRange))(f).join('');
+  source = source.replace(/((^|[^\\])(\\\\)*)\\$/g, '$1\\a'); // character class cannot end in an odd number of backslashes
+  return "[" + (0, _combinators.oneOf)('^', '-', '')(f) + source + (0, _combinators.oneOf)('-', '')(f) + "]";
+};
+
+var fuzzCharacterClassCharacter = function fuzzCharacterClassCharacter(f) {
+  var ch = void 0;
+  do {
+    ch = (0, _combinators.choose)(fuzzCharacter, (0, _combinators.oneOf)('[', '(', ')', '{', '?', '*', '+', '|', '$'))(f);
+  } while (ch === '-' || ch === ']');
+  return ch;
+};
+
+var fuzzCharacterClassRange = function fuzzCharacterClassRange(f) {
+  var a = fuzzCharacterClassCharacter(f);
+  var b = fuzzCharacterClassCharacter(f);
+  if (charVal(b) < charVal(a)) {
+    ;
+    var _ref2 = [b, a];
+    a = _ref2[0];
+    b = _ref2[1];
+  }return a + "-" + b;
+};
+
+var fuzzRegExpSource = function fuzzRegExpSource(f) {
+  if (f.tooDeep()) return '';
+  f = f.goDeeper();
+  return (0, _combinators.choose)(fuzzAlternation, fuzzGrouping, fuzzCharacterClass, fuzzRepetition, fuzzSequence)(f);
+};
+
+function fuzzRegExpPattern() {
+  var f = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { rng: new _random2.default(Math.random) };
+
+  var rv = fuzzRegExpSource(new RegExpState({ rng: f.rng }));
+  if (rv === '') return '(?:)';
+  return rv;
+}
+},{"./combinators":4,"./random":7}]},{},[1]);

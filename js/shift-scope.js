@@ -1,1 +1,5871 @@
-(function(b){function a(b,d){if({}.hasOwnProperty.call(a.cache,b))return a.cache[b];var e=a.resolve(b);if(!e)throw new Error('Failed to resolve module '+b);var c={id:b,require:a,filename:b,exports:{},loaded:!1,parent:d,children:[]};d&&d.children.push(c);var f=b.slice(0,b.lastIndexOf('/')+1);return a.cache[b]=c.exports,e.call(c.exports,c,c.exports,f,b),c.loaded=!0,a.cache[b]=c.exports}a.modules={},a.cache={},a.resolve=function(b){return{}.hasOwnProperty.call(a.modules,b)?a.modules[b]:void 0},a.define=function(b,c){a.modules[b]=c},a.define('/node_modules/shift-scope/dist/index.js',function(c,b,n,m){'use strict';function g(a){return a&&a.__esModule?a:{default:a}}function l(a){return i.default.analyze(a)}Object.defineProperty(b,'__esModule',{value:!0}),b.serialize=b.Accessibility=b.DeclarationType=b.ScopeType=b.ScopeLookup=undefined;var d=a('/node_modules/shift-scope/dist/scope-lookup.js',c);Object.defineProperty(b,'ScopeLookup',{enumerable:!0,get:function a(){return g(d).default}});var j=a('/node_modules/shift-scope/dist/scope.js',c);Object.defineProperty(b,'ScopeType',{enumerable:!0,get:function a(){return j.ScopeType}});var k=a('/node_modules/shift-scope/dist/declaration.js',c);Object.defineProperty(b,'DeclarationType',{enumerable:!0,get:function a(){return k.DeclarationType}});var h=a('/node_modules/shift-scope/dist/reference.js',c);Object.defineProperty(b,'Accessibility',{enumerable:!0,get:function a(){return h.Accessibility}});var f=a('/node_modules/shift-scope/dist/scope-serializer.js',c);Object.defineProperty(b,'serialize',{enumerable:!0,get:function a(){return f.serialize}}),b.default=l;var e=a('/node_modules/shift-scope/dist/scope-analyzer.js',c),i=g(e);typeof Map==='undefined'&&a('/node_modules/es6-map/implement.js',c),typeof Symbol==='undefined'&&a('/node_modules/shift-scope/node_modules/es6-symbol/implement.js',c)}),a.define('/node_modules/shift-scope/node_modules/es6-symbol/implement.js',function(b,c,d,e){'use strict';a('/node_modules/shift-scope/node_modules/es6-symbol/is-implemented.js',b)()||Object.defineProperty(a('/node_modules/es5-ext/global.js',b),'Symbol',{value:a('/node_modules/shift-scope/node_modules/es6-symbol/polyfill.js',b),configurable:!0,enumerable:!1,writable:!0})}),a.define('/node_modules/shift-scope/node_modules/es6-symbol/polyfill.js',function(j,o,n,m){'use strict';var c=a('/node_modules/shift-scope/node_modules/d/index.js',j),g=a('/node_modules/shift-scope/node_modules/es6-symbol/validate-symbol.js',j),i=Object.create,h=Object.defineProperties,d=Object.defineProperty,l=Object.prototype,b,f,e=i(null),k=function(a){return a=i(null),function(b){var e=0,f;while(a[b+(e||'')])++e;return b+=e||'',a[b]=!0,f='@@'+b,d(l,f,c.gs(null,function(a){d(this,f,c(a))})),f}}();f=function a(b){if(this instanceof f)throw new TypeError('TypeError: Symbol is not a constructor');return a(b)},j.exports=b=function a(b){var d;if(this instanceof a)throw new TypeError('TypeError: Symbol is not a constructor');return d=i(f.prototype),b=b===undefined?'':String(b),h(d,{__description__:c('',b),__name__:c('',k(b))})},h(b,{for:c(function(a){return e[a]?e[a]:e[a]=b(String(a))}),keyFor:c(function(b){var a;g(b);for(a in e)if(e[a]===b)return a}),hasInstance:c('',b('hasInstance')),isConcatSpreadable:c('',b('isConcatSpreadable')),iterator:c('',b('iterator')),match:c('',b('match')),replace:c('',b('replace')),search:c('',b('search')),species:c('',b('species')),split:c('',b('split')),toPrimitive:c('',b('toPrimitive')),toStringTag:c('',b('toStringTag')),unscopables:c('',b('unscopables'))}),h(f.prototype,{constructor:c(b),toString:c('',function(){return this.__name__})}),h(b.prototype,{toString:c(function(){return'Symbol ('+g(this).__description__+')'}),valueOf:c(function(){return g(this)})}),d(b.prototype,b.toPrimitive,c('',function(){return g(this)})),d(b.prototype,b.toStringTag,c('c','Symbol')),d(f.prototype,b.toPrimitive,c('c',b.prototype[b.toPrimitive])),d(f.prototype,b.toStringTag,c('c',b.prototype[b.toStringTag]))}),a.define('/node_modules/shift-scope/node_modules/es6-symbol/validate-symbol.js',function(b,d,e,f){'use strict';var c=a('/node_modules/shift-scope/node_modules/es6-symbol/is-symbol.js',b);b.exports=function(a){if(!c(a))throw new TypeError(a+' is not a symbol');return a}}),a.define('/node_modules/shift-scope/node_modules/es6-symbol/is-symbol.js',function(a,b,c,d){'use strict';a.exports=function(a){return a&&(typeof a==='symbol'||a['@@toStringTag']==='Symbol')||!1}}),a.define('/node_modules/shift-scope/node_modules/d/index.js',function(c,h,i,j){'use strict';var d=a('/node_modules/es5-ext/object/assign/index.js',c),e=a('/node_modules/es5-ext/object/normalize-options.js',c),f=a('/node_modules/es5-ext/object/is-callable.js',c),b=a('/node_modules/es5-ext/string/#/contains/index.js',c),g;g=c.exports=function(a,f){var g,h,i,c,j;return arguments.length<2||typeof a!=='string'?(c=f,f=a,a=null):c=arguments[2],a==null?(g=i=!0,h=!1):(g=b.call(a,'c'),h=b.call(a,'e'),i=b.call(a,'w')),j={value:f,configurable:g,enumerable:h,writable:i},c?d(e(c),j):j},g.gs=function(g,c,a){var i,j,h,k;return typeof g!=='string'?(h=a,a=c,c=g,g=null):h=arguments[3],c==null?c=undefined:f(c)?a==null?a=undefined:f(a)||(h=a,a=undefined):(h=c,c=a=undefined),g==null?(i=!0,j=!1):(i=b.call(g,'c'),j=b.call(g,'e')),k={get:c,set:a,configurable:i,enumerable:j},h?d(e(h),k):k}}),a.define('/node_modules/es5-ext/string/#/contains/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/string/#/contains/is-implemented.js',b)()?String.prototype.contains:a('/node_modules/es5-ext/string/#/contains/shim.js',b)}),a.define('/node_modules/es5-ext/string/#/contains/shim.js',function(b,c,d,e){'use strict';var a=String.prototype.indexOf;b.exports=function(b){return a.call(this,b,arguments[1])>-1}}),a.define('/node_modules/es5-ext/string/#/contains/is-implemented.js',function(b,c,d,e){'use strict';var a='razdwatrzy';b.exports=function(){return typeof a.contains!=='function'?!1:a.contains('dwa')===!0&&a.contains('foo')===!1}}),a.define('/node_modules/es5-ext/object/is-callable.js',function(a,b,c,d){'use strict';a.exports=function(a){return typeof a==='function'}}),a.define('/node_modules/es5-ext/object/normalize-options.js',function(d,e,f,g){'use strict';var a=Array.prototype.forEach,b=Object.create,c=function(b,c){var a;for(a in b)c[a]=b[a]};d.exports=function(e){var d=b(null);return a.call(arguments,function(a){if(a==null)return;c(Object(a),d)}),d}}),a.define('/node_modules/es5-ext/object/assign/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/object/assign/is-implemented.js',b)()?Object.assign:a('/node_modules/es5-ext/object/assign/shim.js',b)}),a.define('/node_modules/es5-ext/object/assign/shim.js',function(b,f,g,h){'use strict';var c=a('/node_modules/es5-ext/object/keys/index.js',b),d=a('/node_modules/es5-ext/object/valid-value.js',b),e=Math.max;b.exports=function(a,g){var b,f,h=e(arguments.length,2),i;for(a=Object(d(a)),i=function(c){try{a[c]=g[c]}catch(a){b||(b=a)}},f=1;f<h;++f)g=arguments[f],c(g).forEach(i);if(b!==undefined)throw b;return a}}),a.define('/node_modules/es5-ext/object/valid-value.js',function(a,b,c,d){'use strict';a.exports=function(a){if(a==null)throw new TypeError('Cannot use null or undefined');return a}}),a.define('/node_modules/es5-ext/object/keys/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/object/keys/is-implemented.js',b)()?Object.keys:a('/node_modules/es5-ext/object/keys/shim.js',b)}),a.define('/node_modules/es5-ext/object/keys/shim.js',function(b,c,d,e){'use strict';var a=Object.keys;b.exports=function(b){return a(b==null?b:Object(b))}}),a.define('/node_modules/es5-ext/object/keys/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){try{return Object.keys('primitive'),!0}catch(a){return!1}}}),a.define('/node_modules/es5-ext/object/assign/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){var b=Object.assign,a;return typeof b!=='function'?!1:(a={foo:'raz'},b(a,{bar:'dwa'},{trzy:'trzy'}),a.foo+a.bar+a.trzy==='razdwatrzy')}}),a.define('/node_modules/es5-ext/global.js',function(a,b,c,d){'use strict';a.exports=new Function('return this')()}),a.define('/node_modules/shift-scope/node_modules/es6-symbol/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){var a;if(typeof Symbol!=='function')return!1;a=Symbol('test symbol');try{String(a)}catch(a){return!1}return typeof Symbol.iterator==='symbol'?!0:typeof Symbol.isConcatSpreadable!=='object'?!1:typeof Symbol.iterator!=='object'?!1:typeof Symbol.toPrimitive!=='object'?!1:typeof Symbol.toStringTag!=='object'?!1:typeof Symbol.unscopables!=='object'?!1:!0}}),a.define('/node_modules/es6-map/implement.js',function(b,c,d,e){'use strict';a('/node_modules/es6-map/is-implemented.js',b)()||Object.defineProperty(a('/node_modules/es5-ext/global.js',b),'Map',{value:a('/node_modules/es6-map/polyfill.js',b),configurable:!0,enumerable:!1,writable:!0})}),a.define('/node_modules/es6-map/polyfill.js',function(c,u,s,t){'use strict';var i=a('/node_modules/es5-ext/array/#/clear.js',c),e=a('/node_modules/es5-ext/array/#/e-index-of.js',c),f=a('/node_modules/es5-ext/object/set-prototype-of/index.js',c),n=a('/node_modules/es5-ext/object/valid-callable.js',c),o=a('/node_modules/es5-ext/object/valid-value.js',c),b=a('/node_modules/d/index.js',c),q=a('/node_modules/event-emitter/index.js',c),h=a('/node_modules/es6-symbol/index.js',c),r=a('/node_modules/es6-iterator/valid-iterable.js',c),m=a('/node_modules/es6-iterator/for-of.js',c),g=a('/node_modules/es6-map/lib/iterator.js',c),j=a('/node_modules/es6-map/is-native-implemented.js',c),p=Function.prototype.call,k=Object.defineProperties,l=Object.getPrototypeOf,d;c.exports=d=function(){var c=arguments[0],g,h,a;if(!(this instanceof d))throw new TypeError("Constructor requires 'new'");return j&&f&&Map!==d?a=f(new Map,l(this)):a=this,c!=null&&r(c),k(a,{__mapKeysData__:b('c',g=[]),__mapValuesData__:b('c',h=[])}),c?(m(c,function(a){var b=o(a)[0];if(a=a[1],e.call(g,b)!==-1)return;g.push(b),h.push(a)},a),a):a},j&&(f&&f(d,Map),d.prototype=Object.create(Map.prototype,{constructor:b(d)})),q(k(d.prototype,{clear:b(function(){if(!this.__mapKeysData__.length)return;i.call(this.__mapKeysData__),i.call(this.__mapValuesData__),this.emit('_clear')}),delete:b(function(b){var a=e.call(this.__mapKeysData__,b);return a===-1?!1:(this.__mapKeysData__.splice(a,1),this.__mapValuesData__.splice(a,1),this.emit('_delete',a,b),!0)}),entries:b(function(){return new g(this,'key+value')}),forEach:b(function(c){var d=arguments[1],b,a;n(c),b=this.entries(),a=b._next();while(a!==undefined)p.call(c,d,this.__mapValuesData__[a],this.__mapKeysData__[a],this),a=b._next()}),get:b(function(b){var a=e.call(this.__mapKeysData__,b);return a===-1?void 0:this.__mapValuesData__[a]}),has:b(function(a){return e.call(this.__mapKeysData__,a)!==-1}),keys:b(function(){return new g(this,'key')}),set:b(function(b,d){var a=e.call(this.__mapKeysData__,b),c;return a===-1&&(a=this.__mapKeysData__.push(b)-1,c=!0),this.__mapValuesData__[a]=d,c&&this.emit('_add',a,b),this}),size:b.gs(function(){return this.__mapKeysData__.length}),values:b(function(){return new g(this,'value')}),toString:b(function(){return'[object Map]'})})),Object.defineProperty(d.prototype,h.iterator,b(function(){return this.entries()})),Object.defineProperty(d.prototype,h.toStringTag,b('c','Map'))}),a.define('/node_modules/es6-map/is-native-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){return typeof Map==='undefined'?!1:Object.prototype.toString.call(new Map)==='[object Map]'}()}),a.define('/node_modules/es6-map/lib/iterator.js',function(d,m,l,k){'use strict';var f=a('/node_modules/es5-ext/object/set-prototype-of/index.js',d),b=a('/node_modules/d/index.js',d),e=a('/node_modules/es6-iterator/index.js',d),g=a('/node_modules/es6-symbol/index.js',d).toStringTag,h=a('/node_modules/es6-map/lib/iterator-kinds.js',d),i=Object.defineProperties,j=e.prototype._unBind,c;c=d.exports=function(d,a){if(!(this instanceof c))return new c(d,a);e.call(this,d.__mapKeysData__,d),a&&h[a]||(a='key+value'),i(this,{__kind__:b('',a),__values__:b('w',d.__mapValuesData__)})},f&&f(c,e),c.prototype=Object.create(e.prototype,{constructor:b(c),_resolve:b(function(a){return this.__kind__==='value'?this.__values__[a]:this.__kind__==='key'?this.__list__[a]:[this.__list__[a],this.__values__[a]]}),_unBind:b(function(){this.__values__=null,j.call(this)}),toString:b(function(){return'[object Map Iterator]'})}),Object.defineProperty(c.prototype,g,b('c','Map Iterator'))}),a.define('/node_modules/es6-map/lib/iterator-kinds.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/object/primitive-set.js',b)('key','value','key+value')}),a.define('/node_modules/es5-ext/object/primitive-set.js',function(c,d,e,f){'use strict';var a=Array.prototype.forEach,b=Object.create;c.exports=function(d){var c=b(null);return a.call(arguments,function(a){c[a]=!0}),c}}),a.define('/node_modules/es6-symbol/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es6-symbol/is-implemented.js',b)()?Symbol:a('/node_modules/es6-symbol/polyfill.js',b)}),a.define('/node_modules/es6-symbol/polyfill.js',function(k,q,p,o){'use strict';var c=a('/node_modules/d/index.js',k),i=a('/node_modules/es6-symbol/validate-symbol.js',k),j=Object.create,h=Object.defineProperties,e=Object.defineProperty,l=Object.prototype,d,b,g,f=j(null),m;if(typeof Symbol==='function'){d=Symbol;try{String(d()),m=!0}catch(a){}}var n=function(a){return a=j(null),function(b){var d=0,f,g;while(a[b+(d||'')])++d;return b+=d||'',a[b]=!0,f='@@'+b,e(l,f,c.gs(null,function(a){if(g)return;g=!0,e(this,f,c(a)),g=!1})),f}}();g=function a(c){if(this instanceof g)throw new TypeError('Symbol is not a constructor');return b(c)},k.exports=b=function a(b){var e;if(this instanceof a)throw new TypeError('Symbol is not a constructor');return m?d(b):(e=j(g.prototype),b=b===undefined?'':String(b),h(e,{__description__:c('',b),__name__:c('',n(b))}))},h(b,{for:c(function(a){return f[a]?f[a]:f[a]=b(String(a))}),keyFor:c(function(b){var a;i(b);for(a in f)if(f[a]===b)return a}),hasInstance:c('',d&&d.hasInstance||b('hasInstance')),isConcatSpreadable:c('',d&&d.isConcatSpreadable||b('isConcatSpreadable')),iterator:c('',d&&d.iterator||b('iterator')),match:c('',d&&d.match||b('match')),replace:c('',d&&d.replace||b('replace')),search:c('',d&&d.search||b('search')),species:c('',d&&d.species||b('species')),split:c('',d&&d.split||b('split')),toPrimitive:c('',d&&d.toPrimitive||b('toPrimitive')),toStringTag:c('',d&&d.toStringTag||b('toStringTag')),unscopables:c('',d&&d.unscopables||b('unscopables'))}),h(g.prototype,{constructor:c(b),toString:c('',function(){return this.__name__})}),h(b.prototype,{toString:c(function(){return'Symbol ('+i(this).__description__+')'}),valueOf:c(function(){return i(this)})}),e(b.prototype,b.toPrimitive,c('',function(){var a=i(this);return typeof a==='symbol'?a:a.toString()})),e(b.prototype,b.toStringTag,c('c','Symbol')),e(g.prototype,b.toStringTag,c('c',b.prototype[b.toStringTag])),e(g.prototype,b.toPrimitive,c('c',b.prototype[b.toPrimitive]))}),a.define('/node_modules/es6-symbol/validate-symbol.js',function(b,d,e,f){'use strict';var c=a('/node_modules/es6-symbol/is-symbol.js',b);b.exports=function(a){if(!c(a))throw new TypeError(a+' is not a symbol');return a}}),a.define('/node_modules/es6-symbol/is-symbol.js',function(a,b,c,d){'use strict';a.exports=function(a){return a?typeof a==='symbol'?!0:a.constructor?a.constructor.name!=='Symbol'?!1:a[a.constructor.toStringTag]==='Symbol':!1:!1}}),a.define('/node_modules/d/index.js',function(c,h,i,j){'use strict';var d=a('/node_modules/es5-ext/object/assign/index.js',c),e=a('/node_modules/es5-ext/object/normalize-options.js',c),f=a('/node_modules/es5-ext/object/is-callable.js',c),b=a('/node_modules/es5-ext/string/#/contains/index.js',c),g;g=c.exports=function(a,f){var g,h,i,c,j;return arguments.length<2||typeof a!=='string'?(c=f,f=a,a=null):c=arguments[2],a==null?(g=i=!0,h=!1):(g=b.call(a,'c'),h=b.call(a,'e'),i=b.call(a,'w')),j={value:f,configurable:g,enumerable:h,writable:i},c?d(e(c),j):j},g.gs=function(g,c,a){var i,j,h,k;return typeof g!=='string'?(h=a,a=c,c=g,g=null):h=arguments[3],c==null?c=undefined:f(c)?a==null?a=undefined:f(a)||(h=a,a=undefined):(h=c,c=a=undefined),g==null?(i=!0,j=!1):(i=b.call(g,'c'),j=b.call(g,'e')),k={get:c,set:a,configurable:i,enumerable:j},h?d(e(h),k):k}}),a.define('/node_modules/es6-symbol/is-implemented.js',function(b,c,d,e){'use strict';var a={object:!0,symbol:!0};b.exports=function(){var b;if(typeof Symbol!=='function')return!1;b=Symbol('test symbol');try{String(b)}catch(a){return!1}return a[typeof Symbol.iterator]?a[typeof Symbol.toPrimitive]?a[typeof Symbol.toStringTag]?!0:!1:!1:!1}}),a.define('/node_modules/es6-iterator/index.js',function(c,o,n,m){'use strict';var k=a('/node_modules/es5-ext/array/#/clear.js',c),h=a('/node_modules/es5-ext/object/assign/index.js',c),i=a('/node_modules/es5-ext/object/valid-callable.js',c),j=a('/node_modules/es5-ext/object/valid-value.js',c),b=a('/node_modules/d/index.js',c),l=a('/node_modules/d/auto-bind.js',c),g=a('/node_modules/es6-symbol/index.js',c),e=Object.defineProperty,f=Object.defineProperties,d;c.exports=d=function(c,a){if(!(this instanceof d))return new d(c,a);if(f(this,{__list__:b('w',j(c)),__context__:b('w',a),__nextIndex__:b('w',0)}),!a)return;i(a.on),a.on('_add',this._onAdd),a.on('_delete',this._onDelete),a.on('_clear',this._onClear)},f(d.prototype,h({constructor:b(d),_next:b(function(){var a;if(!this.__list__)return;if(this.__redo__&&(a=this.__redo__.shift(),a!==undefined))return a;if(this.__nextIndex__<this.__list__.length)return this.__nextIndex__++;this._unBind()}),next:b(function(){return this._createResult(this._next())}),_createResult:b(function(a){return a===undefined?{done:!0,value:undefined}:{done:!1,value:this._resolve(a)}}),_resolve:b(function(a){return this.__list__[a]}),_unBind:b(function(){if(this.__list__=null,delete this.__redo__,!this.__context__)return;this.__context__.off('_add',this._onAdd),this.__context__.off('_delete',this._onDelete),this.__context__.off('_clear',this._onClear),this.__context__=null}),toString:b(function(){return'[object Iterator]'})},l({_onAdd:b(function(a){if(a>=this.__nextIndex__)return;if(++this.__nextIndex__,!this.__redo__){e(this,'__redo__',b('c',[a]));return}this.__redo__.forEach(function(b,c){b>=a&&(this.__redo__[c]=++b)},this),this.__redo__.push(a)}),_onDelete:b(function(a){var b;if(a>=this.__nextIndex__)return;if(--this.__nextIndex__,!this.__redo__)return;b=this.__redo__.indexOf(a),b!==-1&&this.__redo__.splice(b,1),this.__redo__.forEach(function(b,c){b>a&&(this.__redo__[c]=--b)},this)}),_onClear:b(function(){this.__redo__&&k.call(this.__redo__),this.__nextIndex__=0})}))),e(d.prototype,g.iterator,b(function(){return this})),e(d.prototype,g.toStringTag,b('','Iterator'))}),a.define('/node_modules/d/auto-bind.js',function(b,o,n,m){'use strict';var g=a('/node_modules/es5-ext/object/copy.js',b),h=a('/node_modules/es5-ext/object/normalize-options.js',b),c=a('/node_modules/es5-ext/object/valid-callable.js',b),j=a('/node_modules/es5-ext/object/map.js',b),k=a('/node_modules/es5-ext/object/valid-callable.js',b),l=a('/node_modules/es5-ext/object/valid-value.js',b),f=Function.prototype.bind,e=Object.defineProperty,d=Object.prototype.hasOwnProperty,i;i=function(c,a,h){var i=l(a)&&k(a.value),b;return b=g(a),delete b.writable,delete b.value,b.get=function(){return!h.overwriteDefinition&&d.call(this,c)?i:(a.value=f.call(i,h.resolveContext?h.resolveContext(this):this),e(this,c,a),this[c])},b},b.exports=function(b){var a=h(arguments[1]);return a.resolveContext!=null&&c(a.resolveContext),j(b,function(b,c){return i(c,b,a)})}}),a.define('/node_modules/es5-ext/object/valid-callable.js',function(a,b,c,d){'use strict';a.exports=function(a){if(typeof a!=='function')throw new TypeError(a+' is not a function');return a}}),a.define('/node_modules/es5-ext/object/map.js',function(b,f,g,h){'use strict';var c=a('/node_modules/es5-ext/object/valid-callable.js',b),d=a('/node_modules/es5-ext/object/for-each.js',b),e=Function.prototype.call;b.exports=function(g,b){var a={},f=arguments[2];return c(b),d(g,function(d,c,g,h){a[c]=e.call(b,f,d,c,g,h)}),a}}),a.define('/node_modules/es5-ext/object/for-each.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/object/_iterate.js',b)('forEach')}),a.define('/node_modules/es5-ext/object/_iterate.js',function(c,k,j,i){'use strict';var d=a('/node_modules/es5-ext/object/valid-callable.js',c),h=a('/node_modules/es5-ext/object/valid-value.js',c),f=Function.prototype.bind,b=Function.prototype.call,g=Object.keys,e=Object.prototype.propertyIsEnumerable;c.exports=function(a,c){return function(i,l){var j,m=arguments[2],k=arguments[3];return i=Object(h(i)),d(l),j=g(i),k&&j.sort(typeof k==='function'?f.call(k,i):undefined),typeof a!=='function'&&(a=j[a]),b.call(a,j,function(a,d){return e.call(i,a)?b.call(l,m,i[a],a,i,d):c})}}}),a.define('/node_modules/es5-ext/object/copy.js',function(b,f,g,h){'use strict';var c=a('/node_modules/es5-ext/array/from/index.js',b),d=a('/node_modules/es5-ext/object/assign/index.js',b),e=a('/node_modules/es5-ext/object/valid-value.js',b);b.exports=function(a){var g=Object(e(a)),b=arguments[1],h=Object(arguments[2]);if(g!==a&&!b)return g;var f={};return b?c(b,function(b){(h.ensure||b in a)&&(f[b]=a[b])}):d(f,a),f}}),a.define('/node_modules/es5-ext/array/from/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/array/from/is-implemented.js',b)()?Array.from:a('/node_modules/es5-ext/array/from/shim.js',b)}),a.define('/node_modules/es5-ext/array/from/shim.js',function(c,p,o,n){'use strict';var k=a('/node_modules/es6-symbol/index.js',c).iterator,h=a('/node_modules/es5-ext/function/is-arguments.js',c),i=a('/node_modules/es5-ext/function/is-function.js',c),j=a('/node_modules/es5-ext/number/to-pos-integer.js',c),g=a('/node_modules/es5-ext/object/valid-callable.js',c),l=a('/node_modules/es5-ext/object/valid-value.js',c),m=a('/node_modules/es5-ext/string/is-string.js',c),f=Array.isArray,e=Function.prototype.call,b={configurable:!0,enumerable:!0,writable:!0,value:null},d=Object.defineProperty;c.exports=function(c){var r=arguments[1],u=arguments[2],q,a,s,n,p,v,w,t,x,o;if(c=Object(l(c)),r!=null&&g(r),!this||this===Array||!i(this)){if(!r){if(h(c))return p=c.length,p!==1?Array.apply(null,c):(n=new Array(1),n[0]=c[0],n);if(f(c)){for(n=new Array(p=c.length),a=0;a<p;++a)n[a]=c[a];return n}}n=[]}else q=this;if(!f(c))if((x=c[k])!==undefined){w=g(x).call(c),q&&(n=new q),t=w.next(),a=0;while(!t.done)o=r?e.call(r,u,t.value,a):t.value,q?(b.value=o,d(n,a,b)):n[a]=o,t=w.next(),++a;p=a}else if(m(c)){for(p=c.length,q&&(n=new q),a=0,s=0;a<p;++a)o=c[a],a+1<p&&(v=o.charCodeAt(0),v>=55296&&v<=56319&&(o+=c[++a])),o=r?e.call(r,u,o,s):o,q?(b.value=o,d(n,s,b)):n[s]=o,++s;p=s}if(p===undefined)for(p=j(c.length),q&&(n=new q(p)),a=0;a<p;++a)o=r?e.call(r,u,c[a],a):c[a],q?(b.value=o,d(n,a,b)):n[a]=o;return q&&(b.value=null,n.length=p),n}}),a.define('/node_modules/es5-ext/string/is-string.js',function(c,d,e,f){'use strict';var a=Object.prototype.toString,b=a.call('');c.exports=function(c){return typeof c==='string'||c&&typeof c==='object'&&(c instanceof String||a.call(c)===b)||!1}}),a.define('/node_modules/es5-ext/number/to-pos-integer.js',function(b,e,f,g){'use strict';var c=a('/node_modules/es5-ext/number/to-integer.js',b),d=Math.max;b.exports=function(a){return d(0,c(a))}}),a.define('/node_modules/es5-ext/number/to-integer.js',function(b,f,g,h){'use strict';var c=a('/node_modules/es5-ext/math/sign/index.js',b),d=Math.abs,e=Math.floor;b.exports=function(a){return isNaN(a)?0:(a=Number(a),a===0||!isFinite(a)?a:c(a)*e(d(a)))}}),a.define('/node_modules/es5-ext/math/sign/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/math/sign/is-implemented.js',b)()?Math.sign:a('/node_modules/es5-ext/math/sign/shim.js',b)}),a.define('/node_modules/es5-ext/math/sign/shim.js',function(a,b,c,d){'use strict';a.exports=function(a){return a=Number(a),isNaN(a)||a===0?a:a>0?1:-1}}),a.define('/node_modules/es5-ext/math/sign/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){var a=Math.sign;return typeof a!=='function'?!1:a(10)===1&&a(-20)===-1}}),a.define('/node_modules/es5-ext/function/is-function.js',function(c,e,f,g){'use strict';var b=Object.prototype.toString,d=b.call(a('/node_modules/es5-ext/function/noop.js',c));c.exports=function(a){return typeof a==='function'&&b.call(a)===d}}),a.define('/node_modules/es5-ext/function/noop.js',function(a,b,c,d){'use strict';a.exports=function(){}}),a.define('/node_modules/es5-ext/function/is-arguments.js',function(c,d,e,f){'use strict';var a=Object.prototype.toString,b=a.call(function(){return arguments}());c.exports=function(c){return a.call(c)===b}}),a.define('/node_modules/es5-ext/array/from/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){var b=Array.from,c,a;return typeof b!=='function'?!1:(c=['raz','dwa'],a=b(c),Boolean(a&&a!==c&&a[1]==='dwa'))}}),a.define('/node_modules/es5-ext/array/#/clear.js',function(b,d,e,f){'use strict';var c=a('/node_modules/es5-ext/object/valid-value.js',b);b.exports=function(){return c(this).length=0,this}}),a.define('/node_modules/es5-ext/object/set-prototype-of/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es5-ext/object/set-prototype-of/is-implemented.js',b)()?Object.setPrototypeOf:a('/node_modules/es5-ext/object/set-prototype-of/shim.js',b)}),a.define('/node_modules/es5-ext/object/set-prototype-of/shim.js',function(c,k,j,i){'use strict';var g=a('/node_modules/es5-ext/object/is-object.js',c),h=a('/node_modules/es5-ext/object/valid-value.js',c),f=Object.prototype.isPrototypeOf,e=Object.defineProperty,d={configurable:!0,enumerable:!1,writable:!0,value:undefined},b;b=function(a,b){if(h(a),b===null||g(b))return a;throw new TypeError('Prototype must be null or an object')},c.exports=function(a,c,g){return a?(a.level===2?a.set?(g=a.set,c=function(a,c){return g.call(b(a,c),c),a}):c=function(a,c){return b(a,c).__proto__=c,a}:c=function a(c,g){var h;return b(c,g),h=f.call(a.nullPolyfill,c),h&&delete a.nullPolyfill.__proto__,g===null&&(g=a.nullPolyfill),c.__proto__=g,h&&e(a.nullPolyfill,'__proto__',d),c},Object.defineProperty(c,'level',{configurable:!1,enumerable:!1,writable:!1,value:a.level})):null}(function(a,b,c,d){if(a=Object.create(null),b={},d=Object.getOwnPropertyDescriptor(Object.prototype,'__proto__'),d){try{c=d.set,c.call(a,b)}catch(a){}if(Object.getPrototypeOf(a)===b)return{set:c,level:2}}return a.__proto__=b,Object.getPrototypeOf(a)===b?{level:2}:(a={},a.__proto__=b,Object.getPrototypeOf(a)===b?{level:1}:!1)}()),a('/node_modules/es5-ext/object/create.js',c)}),a.define('/node_modules/es5-ext/object/create.js',function(d,e,f,g){'use strict';var b=Object.create,c;a('/node_modules/es5-ext/object/set-prototype-of/is-implemented.js',d)()||(c=a('/node_modules/es5-ext/object/set-prototype-of/shim.js',d)),d.exports=function(a,d,e){return c?c.level!==1?b:(a={},d={},e={configurable:!1,enumerable:!1,writable:!0,value:undefined},Object.getOwnPropertyNames(Object.prototype).forEach(function(a){if(a==='__proto__'){d[a]={configurable:!0,enumerable:!1,writable:!0,value:undefined};return}d[a]=e}),Object.defineProperties(a,d),Object.defineProperty(c,'nullPolyfill',{configurable:!1,enumerable:!1,writable:!1,value:a}),function(c,d){return b(c===null?a:c,d)}):b}()}),a.define('/node_modules/es5-ext/object/set-prototype-of/is-implemented.js',function(d,e,f,g){'use strict';var b=Object.create,c=Object.getPrototypeOf,a={};d.exports=function(){var d=Object.setPrototypeOf,e=arguments[0]||b;return typeof d!=='function'?!1:c(d(e(null),a))===a}}),a.define('/node_modules/es5-ext/object/is-object.js',function(b,c,d,e){'use strict';var a={'function':!0,object:!0};b.exports=function(b){return b!=null&&a[typeof b]||!1}}),a.define('/node_modules/es6-iterator/for-of.js',function(b,l,k,j){'use strict';var g=a('/node_modules/es5-ext/function/is-arguments.js',b),d=a('/node_modules/es5-ext/object/valid-callable.js',b),i=a('/node_modules/es5-ext/string/is-string.js',b),f=a('/node_modules/es6-iterator/get.js',b),e=Array.isArray,c=Function.prototype.call,h=Array.prototype.some;b.exports=function(a,k){var l,m=arguments[2],n,j,o,b,q,p,r;if(e(a)||g(a)?l='array':i(a)?l='string':a=f(a),d(k),j=function(){o=!0},l==='array'){h.call(a,function(a){return c.call(k,m,a,j),o?!0:void 0});return}if(l==='string'){for(q=a.length,b=0;b<q;++b)if(p=a[b],b+1<q&&(r=p.charCodeAt(0),r>=55296&&r<=56319&&(p+=a[++b])),c.call(k,m,p,j),o)break;return}n=a.next();while(!n.done){if(c.call(k,m,n.value,j),o)return;n=a.next()}}}),a.define('/node_modules/es6-iterator/get.js',function(b,k,j,i){'use strict';var f=a('/node_modules/es5-ext/function/is-arguments.js',b),h=a('/node_modules/es5-ext/string/is-string.js',b),d=a('/node_modules/es6-iterator/array.js',b),e=a('/node_modules/es6-iterator/string.js',b),g=a('/node_modules/es6-iterator/valid-iterable.js',b),c=a('/node_modules/es6-symbol/index.js',b).iterator;b.exports=function(a){return typeof g(a)[c]==='function'?a[c]():f(a)?new d(a):h(a)?new e(a):new d(a)}}),a.define('/node_modules/es6-iterator/valid-iterable.js',function(b,d,e,f){'use strict';var c=a('/node_modules/es6-iterator/is-iterable.js',b);b.exports=function(a){if(!c(a))throw new TypeError(a+' is not iterable');return a}}),a.define('/node_modules/es6-iterator/is-iterable.js',function(b,g,h,i){'use strict';var c=a('/node_modules/es5-ext/function/is-arguments.js',b),d=a('/node_modules/es5-ext/string/is-string.js',b),e=a('/node_modules/es6-symbol/index.js',b).iterator,f=Array.isArray;b.exports=function(a){return a==null?!1:f(a)?!0:d(a)?!0:c(a)?!0:typeof a[e]==='function'}}),a.define('/node_modules/es6-iterator/string.js',function(d,h,i,j){'use strict';var f=a('/node_modules/es5-ext/object/set-prototype-of/index.js',d),b=a('/node_modules/d/index.js',d),e=a('/node_modules/es6-iterator/index.js',d),g=Object.defineProperty,c;c=d.exports=function(a){if(!(this instanceof c))return new c(a);a=String(a),e.call(this,a),g(this,'__length__',b('',a.length))},f&&f(c,e),c.prototype=Object.create(e.prototype,{constructor:b(c),_next:b(function(){if(!this.__list__)return;if(this.__nextIndex__<this.__length__)return this.__nextIndex__++;this._unBind()}),_resolve:b(function(c){var a=this.__list__[c],b;return this.__nextIndex__===this.__length__?a:(b=a.charCodeAt(0),b>=55296&&b<=56319?a+this.__list__[this.__nextIndex__++]:a)}),toString:b(function(){return'[object String Iterator]'})})}),a.define('/node_modules/es6-iterator/array.js',function(d,k,j,i){'use strict';var g=a('/node_modules/es5-ext/object/set-prototype-of/index.js',d),f=a('/node_modules/es5-ext/string/#/contains/index.js',d),c=a('/node_modules/d/index.js',d),e=a('/node_modules/es6-iterator/index.js',d),h=Object.defineProperty,b;b=d.exports=function(d,a){if(!(this instanceof b))return new b(d,a);e.call(this,d),a?f.call(a,'key+value')?a='key+value':f.call(a,'key')?a='key':a='value':a='value',h(this,'__kind__',c('',a))},g&&g(b,e),b.prototype=Object.create(e.prototype,{constructor:c(b),_resolve:c(function(a){return this.__kind__==='value'?this.__list__[a]:this.__kind__==='key+value'?[a,this.__list__[a]]:a}),toString:c(function(){return'[object Array Iterator]'})})}),a.define('/node_modules/event-emitter/index.js',function(j,s,u,t){'use strict';var b=a('/node_modules/d/index.js',j),c=a('/node_modules/es5-ext/object/valid-callable.js',j),d=Function.prototype.apply,e=Function.prototype.call,l=Object.create,p=Object.defineProperty,o=Object.defineProperties,f=Object.prototype.hasOwnProperty,g={configurable:!0,enumerable:!1,writable:!0},h,n,i,k,r,m,q;h=function(b,d){var a;return c(d),f.call(this,'__ee__')?a=this.__ee__:(a=g.value=l(null),p(this,'__ee__',g),g.value=null),a[b]?typeof a[b]==='object'?a[b].push(d):a[b]=[a[b],d]:a[b]=d,this},n=function(e,a){var b,f;return c(a),f=this,h.call(this,e,b=function(){i.call(f,e,b),d.call(a,this,arguments)}),b.__eeOnceListener__=a,this},i=function(g,b){var d,a,h,e;if(c(b),!f.call(this,'__ee__'))return this;if(d=this.__ee__,!d[g])return this;if(a=d[g],typeof a==='object')for(e=0;h=a[e];++e)(h===b||h.__eeOnceListener__===b)&&(a.length===2?d[g]=a[e?0:1]:a.splice(e,1));else(a===b||a.__eeOnceListener__===b)&&delete d[g];return this},k=function(i){var a,c,h,b,g;if(!f.call(this,'__ee__'))return;if(b=this.__ee__[i],!b)return;if(typeof b==='object'){for(c=arguments.length,g=new Array(c-1),a=1;a<c;++a)g[a-1]=arguments[a];for(b=b.slice(),a=0;h=b[a];++a)d.call(h,this,g)}else switch(arguments.length){case 1:e.call(b,this);break;case 2:e.call(b,this,arguments[1]);break;case 3:e.call(b,this,arguments[1],arguments[2]);break;default:c=arguments.length;g=new Array(c-1);for(a=1;a<c;++a)g[a-1]=arguments[a];d.call(b,this,g)}},r={on:h,once:n,off:i,emit:k},m={on:b(h),once:b(n),off:b(i),emit:b(k)},q=o({},m),j.exports=s=function(a){return a==null?l(q):o(Object(a),m)},s.methods=r}),a.define('/node_modules/es5-ext/array/#/e-index-of.js',function(d,k,i,j){'use strict';var b=a('/node_modules/es5-ext/number/to-pos-integer.js',d),e=a('/node_modules/es5-ext/object/valid-value.js',d),f=Array.prototype.indexOf,g=Object.prototype.hasOwnProperty,h=Math.abs,c=Math.floor;d.exports=function(j){var d,k,a,i;if(j===j)return f.apply(this,arguments);for(k=b(e(this).length),a=arguments[1],isNaN(a)?a=0:a>=0?a=c(a):a=b(this.length)-c(h(a)),d=a;d<k;++d)if(g.call(this,d)&&(i=this[d],i!==i))return d;return-1}}),a.define('/node_modules/es6-map/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){var a,c,b;if(typeof Map!=='function')return!1;try{a=new Map([['raz','one'],['dwa','two'],['trzy','three']])}catch(a){return!1}return String(a)!=='[object Map]'?!1:a.size!==3?!1:typeof a.clear!=='function'?!1:typeof a.delete!=='function'?!1:typeof a.entries!=='function'?!1:typeof a.forEach!=='function'?!1:typeof a.get!=='function'?!1:typeof a.has!=='function'?!1:typeof a.keys!=='function'?!1:typeof a.set!=='function'?!1:typeof a.values!=='function'?!1:(c=a.entries(),b=c.next(),b.done!==!1?!1:b.value?b.value[0]!=='raz'?!1:b.value[1]!=='one'?!1:!0:!1)}}),a.define('/node_modules/shift-scope/dist/scope-analyzer.js',function(f,t,z,y){'use strict';function h(a){return a&&a.__esModule?a:{default:a}}function x(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function w(b,a){if(!b)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return a&&(typeof a==='object'||typeof a==='function')?a:b}function v(b,a){if(typeof a!=='function'&&a!==null)throw new TypeError('Super expression must either be null or a function, not '+typeof a);b.prototype=Object.create(a&&a.prototype,{constructor:{value:b,enumerable:!1,writable:!0,configurable:!0}}),a&&(Object.setPrototypeOf?Object.setPrototypeOf(b,a):b.__proto__=a)}function i(a){return a.filter(function(a){return a.type==='FunctionDeclaration'}).map(function(a){return a.name})}Object.defineProperty(t,'__esModule',{value:!0});var l=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),b=function a(c,f,g){c===null&&(c=Function.prototype);var b=Object.getOwnPropertyDescriptor(c,f);if(b===undefined){var d=Object.getPrototypeOf(c);return d===null?undefined:a(d,f,g)}else if('value'in b)return b.value;else{var e=b.get;return e===undefined?undefined:e.call(g)}},n=a('/node_modules/multimap/index.js',f),k=h(n),j=a('/node_modules/shift-reducer/dist/index.js',f),q=h(j),r=a('/node_modules/shift-scope/dist/scope-state.js',f),g=h(r),e=a('/node_modules/shift-scope/dist/reference.js',f),d=a('/node_modules/shift-scope/dist/declaration.js',f),c=a('/node_modules/shift-scope/dist/scope.js',f),s=a('/node_modules/es6-set/index.js',f),p=h(s),m=a('/node_modules/shift-scope/dist/strictness-reducer.js',f),u=h(m),o=function(f){function a(c){x(this,a);var b=w(this,Object.getPrototypeOf(a).call(this,g.default));return b.sloppySet=c.type==='Script'?u.default.analyze(c):new p.default,b}return v(a,f),l(a,[{key:'finishFunction',value:function a(b,d,h){var e=b.type==='ArrowExpression',f=e?c.ScopeType.ARROW_FUNCTION:c.ScopeType.FUNCTION,g={shouldResolveArguments:!e,shouldB33:this.sloppySet.has(b)};return d.hasParameterExpressions?d.withoutParameterExpressions().concat(h.finish(b,f,g)).finish(b,c.ScopeType.PARAMETERS):d.concat(h).finish(b,f,g)}},{key:'reduceArrowExpression',value:function a(e,b){var c=b.params,d=b.body;return this.finishFunction(e,c,d)}},{key:'reduceAssignmentExpression',value:function c(h,d){var f=d.binding,g=d.expression;return b(Object.getPrototypeOf(a.prototype),'reduceAssignmentExpression',this).call(this,h,{binding:f.addReferences(e.Accessibility.WRITE),expression:g})}},{key:'reduceAssignmentTargetIdentifier',value:function a(b){return new g.default({atsForParent:[b]})}},{key:'reduceBindingIdentifier',value:function a(b){return b.name=='*default*'?new g.default:new g.default({bindingsForParent:[b]})}},{key:'reduceBindingPropertyIdentifier',value:function c(h,f){var g=f.binding,d=f.init,e=b(Object.getPrototypeOf(a.prototype),'reduceBindingPropertyIdentifier',this).call(this,h,{binding:g,init:d});return d?e.withParameterExpressions():e}},{key:'reduceBindingWithDefault',value:function c(g,d){var e=d.binding,f=d.init;return b(Object.getPrototypeOf(a.prototype),'reduceBindingWithDefault',this).call(this,g,{binding:e,init:f}).withParameterExpressions()}},{key:'reduceBlock',value:function d(e,g){var f=g.statements;return b(Object.getPrototypeOf(a.prototype),'reduceBlock',this).call(this,e,{statements:f}).withPotentialVarFunctions(i(e.statements)).finish(e,c.ScopeType.BLOCK)}},{key:'reduceCallExpression',value:function c(d,f){var g=f.callee,h=f.arguments,e=b(Object.getPrototypeOf(a.prototype),'reduceCallExpression',this).call(this,d,{callee:g,arguments:h});return d.callee.type==='IdentifierExpression'&&d.callee.name==='eval'?e.taint():e}},{key:'reduceCatchClause',value:function e(f,g){var h=g.binding,i=g.body;return b(Object.getPrototypeOf(a.prototype),'reduceCatchClause',this).call(this,f,{binding:h.addDeclarations(d.DeclarationType.CATCH_PARAMETER),body:i}).finish(f,c.ScopeType.CATCH)}},{key:'reduceClassDeclaration',value:function e(h,f){var g=f.name,i=f.super,j=f.elements,k=b(Object.getPrototypeOf(a.prototype),'reduceClassDeclaration',this).call(this,h,{name:g,super:i,elements:j}).addDeclarations(d.DeclarationType.CLASS_NAME).finish(h,c.ScopeType.CLASS_NAME);return k.concat(g.addDeclarations(d.DeclarationType.CLASS_DECLARATION))}},{key:'reduceClassExpression',value:function e(g,f){var h=f.name,i=f.super,j=f.elements;return b(Object.getPrototypeOf(a.prototype),'reduceClassExpression',this).call(this,g,{name:h,super:i,elements:j}).addDeclarations(d.DeclarationType.CLASS_NAME).finish(g,c.ScopeType.CLASS_NAME)}},{key:'reduceCompoundAssignmentExpression',value:function c(h,d){var f=d.binding,g=d.expression;return b(Object.getPrototypeOf(a.prototype),'reduceCompoundAssignmentExpression',this).call(this,h,{binding:f.addReferences(e.Accessibility.READWRITE),expression:g})}},{key:'reduceComputedMemberExpression',value:function c(g,d){var e=d.object,f=d.expression;return b(Object.getPrototypeOf(a.prototype),'reduceComputedMemberExpression',this).call(this,g,{object:e,expression:f}).withParameterExpressions()}},{key:'reduceForInStatement',value:function d(g,f){var h=f.left,i=f.right,j=f.body;return b(Object.getPrototypeOf(a.prototype),'reduceForInStatement',this).call(this,g,{left:h.addReferences(e.Accessibility.WRITE),right:i,body:j}).finish(g,c.ScopeType.BLOCK)}},{key:'reduceForOfStatement',value:function d(g,f){var h=f.left,i=f.right,j=f.body;return b(Object.getPrototypeOf(a.prototype),'reduceForOfStatement',this).call(this,g,{left:h.addReferences(e.Accessibility.WRITE),right:i,body:j}).finish(g,c.ScopeType.BLOCK)}},{key:'reduceForStatement',value:function d(g,e){var f=e.init,h=e.test,i=e.update,j=e.body;return b(Object.getPrototypeOf(a.prototype),'reduceForStatement',this).call(this,g,{init:f?f.withoutBindingsForParent():f,test:h,update:i,body:j}).finish(g,c.ScopeType.BLOCK)}},{key:'reduceFormalParameters',value:function a(i,f){var h=f.items,e=f.rest,b=e?e:new g.default;return h.forEach(function(a,d){return b=b.concat(a.hasParameterExpressions?a.finish(i.items[d],c.ScopeType.PARAMETER_EXPRESSION):a)}),b.addDeclarations(d.DeclarationType.PARAMETER)}},{key:'reduceFunctionDeclaration',value:function a(f,b){var c=b.name,d=b.params,e=b.body;return c.concat(this.finishFunction(f,d,e)).addFunctionDeclaration()}},{key:'reduceFunctionExpression',value:function a(g,b){var e=b.name,h=b.params,i=b.body,f=this.finishFunction(g,h,i);return e?e.concat(f).addDeclarations(d.DeclarationType.FUNCTION_NAME).finish(g,c.ScopeType.FUNCTION_NAME):f}},{key:'reduceGetter',value:function a(b,d){var e=d.name,f=d.body;return e.concat(f.finish(b,c.ScopeType.FUNCTION,{shouldResolveArguments:!0,shouldB33:this.sloppySet.has(b)}))}},{key:'reduceIdentifierExpression',value:function a(b){return new g.default({freeIdentifiers:new k.default([[b.name,new e.Reference(b,e.Accessibility.READ)]])})}},{key:'reduceIfStatement',value:function c(d,f){var g=f.test,h=f.consequent,i=f.alternate,e=[];return d.consequent.type==='FunctionDeclaration'&&e.push(d.consequent.name),d.alternate&&d.alternate.type==='FunctionDeclaration'&&e.push(d.alternate.name),b(Object.getPrototypeOf(a.prototype),'reduceIfStatement',this).call(this,d,{test:g,consequent:h,alternate:i}).withPotentialVarFunctions(e)}},{key:'reduceImport',value:function c(i,e){var f=e.moduleSpecifier,g=e.defaultBinding,h=e.namedImports;return b(Object.getPrototypeOf(a.prototype),'reduceImport',this).call(this,i,{moduleSpecifier:f,defaultBinding:g,namedImports:h}).addDeclarations(d.DeclarationType.IMPORT)}},{key:'reduceMethod',value:function a(f,b){var c=b.name,d=b.params,e=b.body;return c.concat(this.finishFunction(f,d,e))}},{key:'reduceModule',value:function d(e,f){var g=f.directives,h=f.items;return b(Object.getPrototypeOf(a.prototype),'reduceModule',this).call(this,e,{directives:g,items:h}).finish(e,c.ScopeType.MODULE)}},{key:'reduceScript',value:function d(e,f){var g=f.directives,h=f.statements;return b(Object.getPrototypeOf(a.prototype),'reduceScript',this).call(this,e,{directives:g,statements:h}).finish(e,c.ScopeType.SCRIPT)}},{key:'reduceSetter',value:function a(f,e){var g=e.name,b=e.param,h=e.body;return b.hasParameterExpressions&&(b=b.finish(f,c.ScopeType.PARAMETER_EXPRESSION)),g.concat(this.finishFunction(f,b.addDeclarations(d.DeclarationType.PARAMETER),h))}},{key:'reduceSwitchCase',value:function d(e,f){var g=f.test,h=f.consequent;return b(Object.getPrototypeOf(a.prototype),'reduceSwitchCase',this).call(this,e,{test:g,consequent:h}).finish(e,c.ScopeType.BLOCK).withPotentialVarFunctions(i(e.consequent))}},{key:'reduceSwitchDefault',value:function d(e,g){var f=g.consequent;return b(Object.getPrototypeOf(a.prototype),'reduceSwitchDefault',this).call(this,e,{consequent:f}).finish(e,c.ScopeType.BLOCK).withPotentialVarFunctions(i(e.consequent))}},{key:'reduceUpdateExpression',value:function a(d,c){var b=c.operand;return b.addReferences(e.Accessibility.READWRITE)}},{key:'reduceVariableDeclaration',value:function c(e,g){var f=g.declarators;return b(Object.getPrototypeOf(a.prototype),'reduceVariableDeclaration',this).call(this,e,{declarators:f}).addDeclarations(d.DeclarationType.fromVarDeclKind(e.kind),!0)}},{key:'reduceVariableDeclarationStatement',value:function a(d,c){var b=c.declaration;return b.withoutBindingsForParent()}},{key:'reduceVariableDeclarator',value:function c(i,g){var h=g.binding,d=g.init,f=b(Object.getPrototypeOf(a.prototype),'reduceVariableDeclarator',this).call(this,i,{binding:h,init:d});return d?f.addReferences(e.Accessibility.WRITE,!0):f}},{key:'reduceWithStatement',value:function d(e,f){var g=f.object,h=f.body;return b(Object.getPrototypeOf(a.prototype),'reduceWithStatement',this).call(this,e,{object:g,body:h.finish(e,c.ScopeType.WITH)})}}],[{key:'analyze',value:function a(b){return(0,q.default)(new this(b),b).children[0]}}]),a}(j.MonoidalReducer);t.default=o}),a.define('/node_modules/shift-scope/dist/strictness-reducer.js',function(j,l,r,s){'use strict';function k(a){return a&&a.__esModule?a:{default:a}}function n(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function p(b,a){if(!b)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return a&&(typeof a==='object'||typeof a==='function')?a:b}function o(b,a){if(typeof a!=='function'&&a!==null)throw new TypeError('Super expression must either be null or a function, not '+typeof a);b.prototype=Object.create(a&&a.prototype,{constructor:{value:b,enumerable:!1,writable:!0,configurable:!0}}),a&&(Object.setPrototypeOf?Object.setPrototypeOf(b,a):b.__proto__=a)}function d(a){return a.some(function(a){return a.rawValue==='use strict'})}function q(b,c){var a=new g.default;return b.forEach(function(b){return a.add(b)}),c.forEach(function(b){return a.add(b)}),a}Object.defineProperty(l,'__esModule',{value:!0});var e=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),c=function a(c,f,g){c===null&&(c=Function.prototype);var b=Object.getOwnPropertyDescriptor(c,f);if(b===undefined){var d=Object.getPrototypeOf(c);return d===null?undefined:a(d,f,g)}else if('value'in b)return b.value;else{var e=b.get;return e===undefined?undefined:e.call(g)}},m=a('/node_modules/es6-set/index.js',j),g=k(m),f=a('/node_modules/shift-reducer/dist/index.js',j),h=k(f),i=function(f){function a(){return n(this,a),p(this,Object.getPrototypeOf(a).call(this,b))}return o(a,f),e(a,[{key:'reduceArrowExpression',value:function e(f,g){var h=g.params,i=g.body;return f.body.type==='FunctionBody'&&d(f.body.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceArrowExpression',this).call(this,f,{params:h,body:i}).add(f)}},{key:'reduceClassDeclaration',value:function a(g,c){var d=c.name,e=c.super,f=c.elements;return b.empty()}},{key:'reduceClassExpression',value:function a(g,c){var d=c.name,e=c.super,f=c.elements;return b.empty()}},{key:'reduceFunctionDeclaration',value:function e(f,g){var h=g.name,i=g.params,j=g.body;return d(f.body.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceFunctionDeclaration',this).call(this,f,{name:h,params:i,body:j}).add(f)}},{key:'reduceFunctionExpression',value:function e(f,g){var h=g.name,i=g.params,j=g.body;return d(f.body.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceFunctionExpression',this).call(this,f,{name:h,params:i,body:j}).add(f)}},{key:'reduceGetter',value:function e(f,g){var h=g.name,i=g.body;return d(f.body.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceGetter',this).call(this,f,{name:h,body:i}).add(f)}},{key:'reduceMethod',value:function e(f,g){var h=g.name,i=g.params,j=g.body;return d(f.body.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceMethod',this).call(this,f,{name:h,params:i,body:j}).add(f)}},{key:'reduceScript',value:function e(f,g){var h=g.directives,i=g.statements;return d(f.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceScript',this).call(this,f,{directives:h,statements:i}).add(f)}},{key:'reduceSetter',value:function e(f,g){var h=g.name,i=g.param,j=g.body;return d(f.body.directives)?b.empty():c(Object.getPrototypeOf(a.prototype),'reduceSetter',this).call(this,f,{name:h,param:i,body:j}).add(f)}}],[{key:'analyze',value:function a(b){return(0,h.default)(new this,b).extract()}}]),a}(f.MonoidalReducer);l.default=i;var b=function(){function a(b){n(this,a),this.set=b}return e(a,[{key:'concat',value:function b(c){return new a(q(this.set,c.set))}},{key:'extract',value:function a(){return this.set}},{key:'add',value:function a(b){return this.set.add(b),this}}],[{key:'empty',value:function b(){return new a(new g.default)}}]),a}()}),a.define('/node_modules/shift-reducer/dist/index.js',function(c,b,i,j){'use strict';function d(a){return a&&a.__esModule?a:{default:a}}function h(b,a){return g[a.type](b,a)}Object.defineProperty(b,'__esModule',{value:!0}),b.default=h;var e=a('/node_modules/shift-reducer/dist/clone-reducer.js',c);Object.defineProperty(b,'CloneReducer',{enumerable:!0,get:function a(){return d(e).default}});var f=a('/node_modules/shift-reducer/dist/monoidal-reducer.js',c);Object.defineProperty(b,'MonoidalReducer',{enumerable:!0,get:function a(){return d(f).default}});var g={ArrayAssignmentTarget:function a(c,b){var d=this;return c.reduceArrayAssignmentTarget(b,{elements:b.elements.map(function(a){return a&&d[a.type](c,a)}),rest:b.rest&&this[b.rest.type](c,b.rest)})},ArrayBinding:function a(c,b){var d=this;return c.reduceArrayBinding(b,{elements:b.elements.map(function(a){return a&&d[a.type](c,a)}),rest:b.rest&&this[b.rest.type](c,b.rest)})},ArrayExpression:function a(b,c){var d=this;return b.reduceArrayExpression(c,{elements:c.elements.map(function(a){return a&&d[a.type](b,a)})})},ArrowExpression:function a(c,b){return c.reduceArrowExpression(b,{params:this.FormalParameters(c,b.params),body:this[b.body.type](c,b.body)})},AssignmentExpression:function a(c,b){return c.reduceAssignmentExpression(b,{binding:this[b.binding.type](c,b.binding),expression:this[b.expression.type](c,b.expression)})},AssignmentTargetIdentifier:function a(b,c){return b.reduceAssignmentTargetIdentifier(c)},AssignmentTargetPropertyIdentifier:function a(c,b){return c.reduceAssignmentTargetPropertyIdentifier(b,{binding:this.AssignmentTargetIdentifier(c,b.binding),init:b.init&&this[b.init.type](c,b.init)})},AssignmentTargetPropertyProperty:function a(c,b){return c.reduceAssignmentTargetPropertyProperty(b,{name:this[b.name.type](c,b.name),binding:this[b.binding.type](c,b.binding)})},AssignmentTargetWithDefault:function a(c,b){return c.reduceAssignmentTargetWithDefault(b,{binding:this[b.binding.type](c,b.binding),init:this[b.init.type](c,b.init)})},BinaryExpression:function a(c,b){return c.reduceBinaryExpression(b,{left:this[b.left.type](c,b.left),right:this[b.right.type](c,b.right)})},BindingIdentifier:function a(b,c){return b.reduceBindingIdentifier(c)},BindingPropertyIdentifier:function a(c,b){return c.reduceBindingPropertyIdentifier(b,{binding:this.BindingIdentifier(c,b.binding),init:b.init&&this[b.init.type](c,b.init)})},BindingPropertyProperty:function a(c,b){return c.reduceBindingPropertyProperty(b,{name:this[b.name.type](c,b.name),binding:this[b.binding.type](c,b.binding)})},BindingWithDefault:function a(c,b){return c.reduceBindingWithDefault(b,{binding:this[b.binding.type](c,b.binding),init:this[b.init.type](c,b.init)})},Block:function a(b,c){var d=this;return b.reduceBlock(c,{statements:c.statements.map(function(a){return d[a.type](b,a)})})},BlockStatement:function a(b,c){return b.reduceBlockStatement(c,{block:this.Block(b,c.block)})},BreakStatement:function a(b,c){return b.reduceBreakStatement(c)},CallExpression:function a(c,b){var d=this;return c.reduceCallExpression(b,{callee:this[b.callee.type](c,b.callee),arguments:b.arguments.map(function(a){return d[a.type](c,a)})})},CatchClause:function a(c,b){return c.reduceCatchClause(b,{binding:this[b.binding.type](c,b.binding),body:this.Block(c,b.body)})},ClassDeclaration:function a(c,b){var d=this;return c.reduceClassDeclaration(b,{name:this.BindingIdentifier(c,b.name),super:b.super&&this[b.super.type](c,b.super),elements:b.elements.map(function(a){return d.ClassElement(c,a)})})},ClassElement:function a(c,b){return c.reduceClassElement(b,{method:this[b.method.type](c,b.method)})},ClassExpression:function a(c,b){var d=this;return c.reduceClassExpression(b,{name:b.name&&this.BindingIdentifier(c,b.name),super:b.super&&this[b.super.type](c,b.super),elements:b.elements.map(function(a){return d.ClassElement(c,a)})})},CompoundAssignmentExpression:function a(c,b){return c.reduceCompoundAssignmentExpression(b,{binding:this[b.binding.type](c,b.binding),expression:this[b.expression.type](c,b.expression)})},ComputedMemberAssignmentTarget:function a(c,b){return c.reduceComputedMemberAssignmentTarget(b,{object:this[b.object.type](c,b.object),expression:this[b.expression.type](c,b.expression)})},ComputedMemberExpression:function a(c,b){return c.reduceComputedMemberExpression(b,{object:this[b.object.type](c,b.object),expression:this[b.expression.type](c,b.expression)})},ComputedPropertyName:function a(c,b){return c.reduceComputedPropertyName(b,{expression:this[b.expression.type](c,b.expression)})},ConditionalExpression:function a(c,b){return c.reduceConditionalExpression(b,{test:this[b.test.type](c,b.test),consequent:this[b.consequent.type](c,b.consequent),alternate:this[b.alternate.type](c,b.alternate)})},ContinueStatement:function a(b,c){return b.reduceContinueStatement(c)},DataProperty:function a(c,b){return c.reduceDataProperty(b,{name:this[b.name.type](c,b.name),expression:this[b.expression.type](c,b.expression)})},DebuggerStatement:function a(b,c){return b.reduceDebuggerStatement(c)},Directive:function a(b,c){return b.reduceDirective(c)},DoWhileStatement:function a(c,b){return c.reduceDoWhileStatement(b,{body:this[b.body.type](c,b.body),test:this[b.test.type](c,b.test)})},EmptyStatement:function a(b,c){return b.reduceEmptyStatement(c)},Export:function a(c,b){return c.reduceExport(b,{declaration:this[b.declaration.type](c,b.declaration)})},ExportAllFrom:function a(b,c){return b.reduceExportAllFrom(c)},ExportDefault:function a(c,b){return c.reduceExportDefault(b,{body:this[b.body.type](c,b.body)})},ExportFrom:function a(b,c){var d=this;return b.reduceExportFrom(c,{namedExports:c.namedExports.map(function(a){return d.ExportFromSpecifier(b,a)})})},ExportFromSpecifier:function a(b,c){return b.reduceExportFromSpecifier(c)},ExportLocalSpecifier:function a(b,c){return b.reduceExportLocalSpecifier(c,{name:this.IdentifierExpression(b,c.name)})},ExportLocals:function a(b,c){var d=this;return b.reduceExportLocals(c,{namedExports:c.namedExports.map(function(a){return d.ExportLocalSpecifier(b,a)})})},ExpressionStatement:function a(c,b){return c.reduceExpressionStatement(b,{expression:this[b.expression.type](c,b.expression)})},ForInStatement:function a(c,b){return c.reduceForInStatement(b,{left:this[b.left.type](c,b.left),right:this[b.right.type](c,b.right),body:this[b.body.type](c,b.body)})},ForOfStatement:function a(c,b){return c.reduceForOfStatement(b,{left:this[b.left.type](c,b.left),right:this[b.right.type](c,b.right),body:this[b.body.type](c,b.body)})},ForStatement:function a(c,b){return c.reduceForStatement(b,{init:b.init&&this[b.init.type](c,b.init),test:b.test&&this[b.test.type](c,b.test),update:b.update&&this[b.update.type](c,b.update),body:this[b.body.type](c,b.body)})},FormalParameters:function a(c,b){var d=this;return c.reduceFormalParameters(b,{items:b.items.map(function(a){return d[a.type](c,a)}),rest:b.rest&&this[b.rest.type](c,b.rest)})},FunctionBody:function a(b,c){var d=this;return b.reduceFunctionBody(c,{directives:c.directives.map(function(a){return d.Directive(b,a)}),statements:c.statements.map(function(a){return d[a.type](b,a)})})},FunctionDeclaration:function a(b,c){return b.reduceFunctionDeclaration(c,{name:this.BindingIdentifier(b,c.name),params:this.FormalParameters(b,c.params),body:this.FunctionBody(b,c.body)})},FunctionExpression:function a(c,b){return c.reduceFunctionExpression(b,{name:b.name&&this.BindingIdentifier(c,b.name),params:this.FormalParameters(c,b.params),body:this.FunctionBody(c,b.body)})},Getter:function a(c,b){return c.reduceGetter(b,{name:this[b.name.type](c,b.name),body:this.FunctionBody(c,b.body)})},IdentifierExpression:function a(b,c){return b.reduceIdentifierExpression(c)},IfStatement:function a(c,b){return c.reduceIfStatement(b,{test:this[b.test.type](c,b.test),consequent:this[b.consequent.type](c,b.consequent),alternate:b.alternate&&this[b.alternate.type](c,b.alternate)})},Import:function a(c,b){var d=this;return c.reduceImport(b,{defaultBinding:b.defaultBinding&&this.BindingIdentifier(c,b.defaultBinding),namedImports:b.namedImports.map(function(a){return d.ImportSpecifier(c,a)})})},ImportNamespace:function a(c,b){return c.reduceImportNamespace(b,{defaultBinding:b.defaultBinding&&this.BindingIdentifier(c,b.defaultBinding),namespaceBinding:this.BindingIdentifier(c,b.namespaceBinding)})},ImportSpecifier:function a(b,c){return b.reduceImportSpecifier(c,{binding:this.BindingIdentifier(b,c.binding)})},LabeledStatement:function a(c,b){return c.reduceLabeledStatement(b,{body:this[b.body.type](c,b.body)})},LiteralBooleanExpression:function a(b,c){return b.reduceLiteralBooleanExpression(c)},LiteralInfinityExpression:function a(b,c){return b.reduceLiteralInfinityExpression(c)},LiteralNullExpression:function a(b,c){return b.reduceLiteralNullExpression(c)},LiteralNumericExpression:function a(b,c){return b.reduceLiteralNumericExpression(c)},LiteralRegExpExpression:function a(b,c){return b.reduceLiteralRegExpExpression(c)},LiteralStringExpression:function a(b,c){return b.reduceLiteralStringExpression(c)},Method:function a(c,b){return c.reduceMethod(b,{name:this[b.name.type](c,b.name),params:this.FormalParameters(c,b.params),body:this.FunctionBody(c,b.body)})},Module:function a(b,c){var d=this;return b.reduceModule(c,{directives:c.directives.map(function(a){return d.Directive(b,a)}),items:c.items.map(function(a){return d[a.type](b,a)})})},NewExpression:function a(c,b){var d=this;return c.reduceNewExpression(b,{callee:this[b.callee.type](c,b.callee),arguments:b.arguments.map(function(a){return d[a.type](c,a)})})},NewTargetExpression:function a(b,c){return b.reduceNewTargetExpression(c)},ObjectAssignmentTarget:function a(b,c){var d=this;return b.reduceObjectAssignmentTarget(c,{properties:c.properties.map(function(a){return d[a.type](b,a)})})},ObjectBinding:function a(b,c){var d=this;return b.reduceObjectBinding(c,{properties:c.properties.map(function(a){return d[a.type](b,a)})})},ObjectExpression:function a(b,c){var d=this;return b.reduceObjectExpression(c,{properties:c.properties.map(function(a){return d[a.type](b,a)})})},ReturnStatement:function a(c,b){return c.reduceReturnStatement(b,{expression:b.expression&&this[b.expression.type](c,b.expression)})},Script:function a(b,c){var d=this;return b.reduceScript(c,{directives:c.directives.map(function(a){return d.Directive(b,a)}),statements:c.statements.map(function(a){return d[a.type](b,a)})})},Setter:function a(c,b){return c.reduceSetter(b,{name:this[b.name.type](c,b.name),param:this[b.param.type](c,b.param),body:this.FunctionBody(c,b.body)})},ShorthandProperty:function a(b,c){return b.reduceShorthandProperty(c,{name:this.IdentifierExpression(b,c.name)})},SpreadElement:function a(c,b){return c.reduceSpreadElement(b,{expression:this[b.expression.type](c,b.expression)})},StaticMemberAssignmentTarget:function a(c,b){return c.reduceStaticMemberAssignmentTarget(b,{object:this[b.object.type](c,b.object)})},StaticMemberExpression:function a(c,b){return c.reduceStaticMemberExpression(b,{object:this[b.object.type](c,b.object)})},StaticPropertyName:function a(b,c){return b.reduceStaticPropertyName(c)},Super:function a(b,c){return b.reduceSuper(c)},SwitchCase:function a(c,b){var d=this;return c.reduceSwitchCase(b,{test:this[b.test.type](c,b.test),consequent:b.consequent.map(function(a){return d[a.type](c,a)})})},SwitchDefault:function a(b,c){var d=this;return b.reduceSwitchDefault(c,{consequent:c.consequent.map(function(a){return d[a.type](b,a)})})},SwitchStatement:function a(c,b){var d=this;return c.reduceSwitchStatement(b,{discriminant:this[b.discriminant.type](c,b.discriminant),cases:b.cases.map(function(a){return d.SwitchCase(c,a)})})},SwitchStatementWithDefault:function a(c,b){var d=this;return c.reduceSwitchStatementWithDefault(b,{discriminant:this[b.discriminant.type](c,b.discriminant),preDefaultCases:b.preDefaultCases.map(function(a){return d.SwitchCase(c,a)}),defaultCase:this.SwitchDefault(c,b.defaultCase),postDefaultCases:b.postDefaultCases.map(function(a){return d.SwitchCase(c,a)})})},TemplateElement:function a(b,c){return b.reduceTemplateElement(c)},TemplateExpression:function a(c,b){var d=this;return c.reduceTemplateExpression(b,{tag:b.tag&&this[b.tag.type](c,b.tag),elements:b.elements.map(function(a){return d[a.type](c,a)})})},ThisExpression:function a(b,c){return b.reduceThisExpression(c)},ThrowStatement:function a(c,b){return c.reduceThrowStatement(b,{expression:this[b.expression.type](c,b.expression)})},TryCatchStatement:function a(b,c){return b.reduceTryCatchStatement(c,{body:this.Block(b,c.body),catchClause:this.CatchClause(b,c.catchClause)})},TryFinallyStatement:function a(c,b){return c.reduceTryFinallyStatement(b,{body:this.Block(c,b.body),catchClause:b.catchClause&&this.CatchClause(c,b.catchClause),finalizer:this.Block(c,b.finalizer)})},UnaryExpression:function a(c,b){return c.reduceUnaryExpression(b,{operand:this[b.operand.type](c,b.operand)})},UpdateExpression:function a(c,b){return c.reduceUpdateExpression(b,{operand:this[b.operand.type](c,b.operand)})},VariableDeclaration:function a(b,c){var d=this;return b.reduceVariableDeclaration(c,{declarators:c.declarators.map(function(a){return d.VariableDeclarator(b,a)})})},VariableDeclarationStatement:function a(b,c){return b.reduceVariableDeclarationStatement(c,{declaration:this.VariableDeclaration(b,c.declaration)})},VariableDeclarator:function a(c,b){return c.reduceVariableDeclarator(b,{binding:this[b.binding.type](c,b.binding),init:b.init&&this[b.init.type](c,b.init)})},WhileStatement:function a(c,b){return c.reduceWhileStatement(b,{test:this[b.test.type](c,b.test),body:this[b.body.type](c,b.body)})},WithStatement:function a(c,b){return c.reduceWithStatement(b,{object:this[b.object.type](c,b.object),body:this[b.body.type](c,b.body)})},YieldExpression:function a(c,b){return c.reduceYieldExpression(b,{expression:b.expression&&this[b.expression.type](c,b.expression)})},YieldGeneratorExpression:function a(c,b){return c.reduceYieldGeneratorExpression(b,{expression:this[b.expression.type](c,b.expression)})}}}),a.define('/node_modules/shift-reducer/dist/monoidal-reducer.js',function(g,c,k,j){'use strict';function f(a){return a&&a.__esModule?a:{default:a}}function h(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(c,'__esModule',{value:!0});var e=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),d=a('/node_modules/shift-ast/dist/index.js',g),i=f(d),b=function(){function a(b){h(this,a),this.identity=b.empty();var c=b.prototype&&b.prototype.concat||b.concat;this.append=function(a,b){return c.call(a,b)}}return e(a,[{key:'fold',value:function a(d,b){var c=this;return d.reduce(function(a,b){return c.append(a,b)},b==null?this.identity:b)}},{key:'reduceArrayAssignmentTarget',value:function a(e,c){var d=c.elements,b=c.rest;return this.append(this.fold(d.filter(function(a){return a!==null})),b===null?this.identity:b)}},{key:'reduceArrayBinding',value:function a(e,c){var d=c.elements,b=c.rest;return this.append(this.fold(d.filter(function(a){return a!==null})),b===null?this.identity:b)}},{key:'reduceArrayExpression',value:function a(d,c){var b=c.elements;return this.fold(b.filter(function(a){return a!==null}))}},{key:'reduceArrowExpression',value:function a(e,b){var c=b.params,d=b.body;return this.append(c,d)}},{key:'reduceAssignmentExpression',value:function a(e,b){var c=b.binding,d=b.expression;return this.append(c,d)}},{key:'reduceAssignmentTargetIdentifier',value:function a(b){return this.identity}},{key:'reduceAssignmentTargetPropertyIdentifier',value:function a(e,c){var d=c.binding,b=c.init;return this.append(d,b===null?this.identity:b)}},{key:'reduceAssignmentTargetPropertyProperty',value:function a(e,b){var c=b.name,d=b.binding;return this.append(c,d)}},{key:'reduceAssignmentTargetWithDefault',value:function a(e,b){var c=b.binding,d=b.init;return this.append(c,d)}},{key:'reduceBinaryExpression',value:function a(e,b){var c=b.left,d=b.right;return this.append(c,d)}},{key:'reduceBindingIdentifier',value:function a(b){return this.identity}},{key:'reduceBindingPropertyIdentifier',value:function a(e,c){var d=c.binding,b=c.init;return this.append(d,b===null?this.identity:b)}},{key:'reduceBindingPropertyProperty',value:function a(e,b){var c=b.name,d=b.binding;return this.append(c,d)}},{key:'reduceBindingWithDefault',value:function a(e,b){var c=b.binding,d=b.init;return this.append(c,d)}},{key:'reduceBlock',value:function a(d,c){var b=c.statements;return this.fold(b)}},{key:'reduceBlockStatement',value:function a(d,c){var b=c.block;return b}},{key:'reduceBreakStatement',value:function a(b){return this.identity}},{key:'reduceCallExpression',value:function a(e,b){var c=b.callee,d=b.arguments;return this.append(c,this.fold(d))}},{key:'reduceCatchClause',value:function a(e,b){var c=b.binding,d=b.body;return this.append(c,d)}},{key:'reduceClassDeclaration',value:function a(f,b){var d=b.name,c=b.super,e=b.elements;return this.fold([d,c===null?this.identity:c,this.fold(e)])}},{key:'reduceClassElement',value:function a(d,c){var b=c.method;return b}},{key:'reduceClassExpression',value:function a(f,b){var c=b.name,d=b.super,e=b.elements;return this.fold([c===null?this.identity:c,d===null?this.identity:d,this.fold(e)])}},{key:'reduceCompoundAssignmentExpression',value:function a(e,b){var c=b.binding,d=b.expression;return this.append(c,d)}},{key:'reduceComputedMemberAssignmentTarget',value:function a(e,b){var c=b.object,d=b.expression;return this.append(c,d)}},{key:'reduceComputedMemberExpression',value:function a(e,b){var c=b.object,d=b.expression;return this.append(c,d)}},{key:'reduceComputedPropertyName',value:function a(d,c){var b=c.expression;return b}},{key:'reduceConditionalExpression',value:function a(f,b){var c=b.test,d=b.consequent,e=b.alternate;return this.fold([c,d,e])}},{key:'reduceContinueStatement',value:function a(b){return this.identity}},{key:'reduceDataProperty',value:function a(e,b){var c=b.name,d=b.expression;return this.append(c,d)}},{key:'reduceDebuggerStatement',value:function a(b){return this.identity}},{key:'reduceDirective',value:function a(b){return this.identity}},{key:'reduceDoWhileStatement',value:function a(e,b){var c=b.body,d=b.test;return this.append(c,d)}},{key:'reduceEmptyStatement',value:function a(b){return this.identity}},{key:'reduceExport',value:function a(d,c){var b=c.declaration;return b}},{key:'reduceExportAllFrom',value:function a(b){return this.identity}},{key:'reduceExportDefault',value:function a(d,c){var b=c.body;return b}},{key:'reduceExportFrom',value:function a(d,c){var b=c.namedExports;return this.fold(b)}},{key:'reduceExportFromSpecifier',value:function a(b){return this.identity}},{key:'reduceExportLocalSpecifier',value:function a(d,c){var b=c.name;return b}},{key:'reduceExportLocals',value:function a(d,c){var b=c.namedExports;return this.fold(b)}},{key:'reduceExpressionStatement',value:function a(d,c){var b=c.expression;return b}},{key:'reduceForInStatement',value:function a(f,b){var c=b.left,d=b.right,e=b.body;return this.fold([c,d,e])}},{key:'reduceForOfStatement',value:function a(f,b){var c=b.left,d=b.right,e=b.body;return this.fold([c,d,e])}},{key:'reduceForStatement',value:function a(g,b){var c=b.init,d=b.test,e=b.update,f=b.body;return this.fold([c===null?this.identity:c,d===null?this.identity:d,e===null?this.identity:e,f])}},{key:'reduceFormalParameters',value:function a(e,c){var d=c.items,b=c.rest;return this.append(this.fold(d),b===null?this.identity:b)}},{key:'reduceFunctionBody',value:function a(e,b){var c=b.directives,d=b.statements;return this.append(this.fold(c),this.fold(d))}},{key:'reduceFunctionDeclaration',value:function a(f,b){var c=b.name,d=b.params,e=b.body;return this.fold([c,d,e])}},{key:'reduceFunctionExpression',value:function a(f,b){var c=b.name,d=b.params,e=b.body;return this.fold([c===null?this.identity:c,d,e])}},{key:'reduceGetter',value:function a(e,b){var c=b.name,d=b.body;return this.append(c,d)}},{key:'reduceIdentifierExpression',value:function a(b){return this.identity}},{key:'reduceIfStatement',value:function a(f,b){var d=b.test,e=b.consequent,c=b.alternate;return this.fold([d,e,c===null?this.identity:c])}},{key:'reduceImport',value:function a(e,c){var b=c.defaultBinding,d=c.namedImports;return this.append(b===null?this.identity:b,this.fold(d))}},{key:'reduceImportNamespace',value:function a(e,c){var b=c.defaultBinding,d=c.namespaceBinding;return this.append(b===null?this.identity:b,d)}},{key:'reduceImportSpecifier',value:function a(d,c){var b=c.binding;return b}},{key:'reduceLabeledStatement',value:function a(d,c){var b=c.body;return b}},{key:'reduceLiteralBooleanExpression',value:function a(b){return this.identity}},{key:'reduceLiteralInfinityExpression',value:function a(b){return this.identity}},{key:'reduceLiteralNullExpression',value:function a(b){return this.identity}},{key:'reduceLiteralNumericExpression',value:function a(b){return this.identity}},{key:'reduceLiteralRegExpExpression',value:function a(b){return this.identity}},{key:'reduceLiteralStringExpression',value:function a(b){return this.identity}},{key:'reduceMethod',value:function a(f,b){var c=b.name,d=b.params,e=b.body;return this.fold([c,d,e])}},{key:'reduceModule',value:function a(e,b){var c=b.directives,d=b.items;return this.append(this.fold(c),this.fold(d))}},{key:'reduceNewExpression',value:function a(e,b){var c=b.callee,d=b.arguments;return this.append(c,this.fold(d))}},{key:'reduceNewTargetExpression',value:function a(b){return this.identity}},{key:'reduceObjectAssignmentTarget',value:function a(d,c){var b=c.properties;return this.fold(b)}},{key:'reduceObjectBinding',value:function a(d,c){var b=c.properties;return this.fold(b)}},{key:'reduceObjectExpression',value:function a(d,c){var b=c.properties;return this.fold(b)}},{key:'reduceReturnStatement',value:function a(d,c){var b=c.expression;return b===null?this.identity:b}},{key:'reduceScript',value:function a(e,b){var c=b.directives,d=b.statements;return this.append(this.fold(c),this.fold(d))}},{key:'reduceSetter',value:function a(f,b){var c=b.name,d=b.param,e=b.body;return this.fold([c,d,e])}},{key:'reduceShorthandProperty',value:function a(d,c){var b=c.name;return b}},{key:'reduceSpreadElement',value:function a(d,c){var b=c.expression;return b}},{key:'reduceStaticMemberAssignmentTarget',value:function a(d,c){var b=c.object;return b}},{key:'reduceStaticMemberExpression',value:function a(d,c){var b=c.object;return b}},{key:'reduceStaticPropertyName',value:function a(b){return this.identity}},{key:'reduceSuper',value:function a(b){return this.identity}},{key:'reduceSwitchCase',value:function a(e,b){var c=b.test,d=b.consequent;return this.append(c,this.fold(d))}},{key:'reduceSwitchDefault',value:function a(d,c){var b=c.consequent;return this.fold(b)}},{key:'reduceSwitchStatement',value:function a(e,b){var c=b.discriminant,d=b.cases;return this.append(c,this.fold(d))}},{key:'reduceSwitchStatementWithDefault',value:function a(g,b){var c=b.discriminant,d=b.preDefaultCases,e=b.defaultCase,f=b.postDefaultCases;return this.fold([c,this.fold(d),e,this.fold(f)])}},{key:'reduceTemplateElement',value:function a(b){return this.identity}},{key:'reduceTemplateExpression',value:function a(e,c){var b=c.tag,d=c.elements;return this.append(b===null?this.identity:b,this.fold(d))}},{key:'reduceThisExpression',value:function a(b){return this.identity}},{key:'reduceThrowStatement',value:function a(d,c){var b=c.expression;return b}},{key:'reduceTryCatchStatement',value:function a(e,b){var c=b.body,d=b.catchClause;return this.append(c,d)}},{key:'reduceTryFinallyStatement',value:function a(f,b){var d=b.body,c=b.catchClause,e=b.finalizer;return this.fold([d,c===null?this.identity:c,e])}},{key:'reduceUnaryExpression',value:function a(d,c){var b=c.operand;return b}},{key:'reduceUpdateExpression',value:function a(d,c){var b=c.operand;return b}},{key:'reduceVariableDeclaration',value:function a(d,c){var b=c.declarators;return this.fold(b)}},{key:'reduceVariableDeclarationStatement',value:function a(d,c){var b=c.declaration;return b}},{key:'reduceVariableDeclarator',value:function a(e,c){var d=c.binding,b=c.init;return this.append(d,b===null?this.identity:b)}},{key:'reduceWhileStatement',value:function a(e,b){var c=b.test,d=b.body;return this.append(c,d)}},{key:'reduceWithStatement',value:function a(e,b){var c=b.object,d=b.body;return this.append(c,d)}},{key:'reduceYieldExpression',value:function a(d,c){var b=c.expression;return b===null?this.identity:b}},{key:'reduceYieldGeneratorExpression',value:function a(d,c){var b=c.expression;return b}}]),a}();c.default=b}),a.define('/node_modules/shift-ast/dist/index.js',function(aI,a,aK,aJ){'use strict';function b(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(a,'__esModule',{value:!0});var g=a.ArrayAssignmentTarget=function a(c){var d=c.elements,e=c.rest;b(this,a),this.type='ArrayAssignmentTarget',this.elements=d,this.rest=e},h=a.ArrayBinding=function a(c){var d=c.elements,e=c.rest;b(this,a),this.type='ArrayBinding',this.elements=d,this.rest=e},i=a.ArrayExpression=function a(d){var c=d.elements;b(this,a),this.type='ArrayExpression',this.elements=c},j=a.ArrowExpression=function a(c){var d=c.params,e=c.body;b(this,a),this.type='ArrowExpression',this.params=d,this.body=e},k=a.AssignmentExpression=function a(c){var d=c.binding,e=c.expression;b(this,a),this.type='AssignmentExpression',this.binding=d,this.expression=e},l=a.AssignmentTargetIdentifier=function a(d){var c=d.name;b(this,a),this.type='AssignmentTargetIdentifier',this.name=c},m=a.AssignmentTargetPropertyIdentifier=function a(c){var d=c.binding,e=c.init;b(this,a),this.type='AssignmentTargetPropertyIdentifier',this.binding=d,this.init=e},n=a.AssignmentTargetPropertyProperty=function a(c){var d=c.name,e=c.binding;b(this,a),this.type='AssignmentTargetPropertyProperty',this.name=d,this.binding=e},o=a.AssignmentTargetWithDefault=function a(c){var d=c.binding,e=c.init;b(this,a),this.type='AssignmentTargetWithDefault',this.binding=d,this.init=e},p=a.BinaryExpression=function a(c){var d=c.left,e=c.operator,f=c.right;b(this,a),this.type='BinaryExpression',this.left=d,this.operator=e,this.right=f},q=a.BindingIdentifier=function a(d){var c=d.name;b(this,a),this.type='BindingIdentifier',this.name=c},r=a.BindingPropertyIdentifier=function a(c){var d=c.binding,e=c.init;b(this,a),this.type='BindingPropertyIdentifier',this.binding=d,this.init=e},s=a.BindingPropertyProperty=function a(c){var d=c.name,e=c.binding;b(this,a),this.type='BindingPropertyProperty',this.name=d,this.binding=e},t=a.BindingWithDefault=function a(c){var d=c.binding,e=c.init;b(this,a),this.type='BindingWithDefault',this.binding=d,this.init=e},u=a.Block=function a(d){var c=d.statements;b(this,a),this.type='Block',this.statements=c},v=a.BlockStatement=function a(d){var c=d.block;b(this,a),this.type='BlockStatement',this.block=c},w=a.BreakStatement=function a(d){var c=d.label;b(this,a),this.type='BreakStatement',this.label=c},x=a.CallExpression=function a(c){var d=c.callee,e=c.arguments;b(this,a),this.type='CallExpression',this.callee=d,this.arguments=e},y=a.CatchClause=function a(c){var d=c.binding,e=c.body;b(this,a),this.type='CatchClause',this.binding=d,this.body=e},z=a.ClassDeclaration=function a(c){var d=c.name,e=c.super,f=c.elements;b(this,a),this.type='ClassDeclaration',this.name=d,this.super=e,this.elements=f},A=a.ClassElement=function a(c){var d=c.isStatic,e=c.method;b(this,a),this.type='ClassElement',this.isStatic=d,this.method=e},B=a.ClassExpression=function a(c){var d=c.name,e=c.super,f=c.elements;b(this,a),this.type='ClassExpression',this.name=d,this.super=e,this.elements=f},C=a.CompoundAssignmentExpression=function a(c){var d=c.binding,e=c.operator,f=c.expression;b(this,a),this.type='CompoundAssignmentExpression',this.binding=d,this.operator=e,this.expression=f},D=a.ComputedMemberAssignmentTarget=function a(c){var d=c.object,e=c.expression;b(this,a),this.type='ComputedMemberAssignmentTarget',this.object=d,this.expression=e},E=a.ComputedMemberExpression=function a(c){var d=c.object,e=c.expression;b(this,a),this.type='ComputedMemberExpression',this.object=d,this.expression=e},F=a.ComputedPropertyName=function a(d){var c=d.expression;b(this,a),this.type='ComputedPropertyName',this.expression=c},G=a.ConditionalExpression=function a(c){var d=c.test,e=c.consequent,f=c.alternate;b(this,a),this.type='ConditionalExpression',this.test=d,this.consequent=e,this.alternate=f},H=a.ContinueStatement=function a(d){var c=d.label;b(this,a),this.type='ContinueStatement',this.label=c},I=a.DataProperty=function a(c){var d=c.name,e=c.expression;b(this,a),this.type='DataProperty',this.name=d,this.expression=e},J=a.DebuggerStatement=function a(){b(this,a),this.type='DebuggerStatement'},K=a.Directive=function a(d){var c=d.rawValue;b(this,a),this.type='Directive',this.rawValue=c},L=a.DoWhileStatement=function a(c){var d=c.body,e=c.test;b(this,a),this.type='DoWhileStatement',this.body=d,this.test=e},M=a.EmptyStatement=function a(){b(this,a),this.type='EmptyStatement'},N=a.Export=function a(d){var c=d.declaration;b(this,a),this.type='Export',this.declaration=c},O=a.ExportAllFrom=function a(d){var c=d.moduleSpecifier;b(this,a),this.type='ExportAllFrom',this.moduleSpecifier=c},P=a.ExportDefault=function a(d){var c=d.body;b(this,a),this.type='ExportDefault',this.body=c},Q=a.ExportFrom=function a(c){var d=c.namedExports,e=c.moduleSpecifier;b(this,a),this.type='ExportFrom',this.namedExports=d,this.moduleSpecifier=e},R=a.ExportFromSpecifier=function a(c){var d=c.name,e=c.exportedName;b(this,a),this.type='ExportFromSpecifier',this.name=d,this.exportedName=e},S=a.ExportLocalSpecifier=function a(c){var d=c.name,e=c.exportedName;b(this,a),this.type='ExportLocalSpecifier',this.name=d,this.exportedName=e},T=a.ExportLocals=function a(d){var c=d.namedExports;b(this,a),this.type='ExportLocals',this.namedExports=c},U=a.ExpressionStatement=function a(d){var c=d.expression;b(this,a),this.type='ExpressionStatement',this.expression=c},V=a.ForInStatement=function a(c){var d=c.left,e=c.right,f=c.body;b(this,a),this.type='ForInStatement',this.left=d,this.right=e,this.body=f},W=a.ForOfStatement=function a(c){var d=c.left,e=c.right,f=c.body;b(this,a),this.type='ForOfStatement',this.left=d,this.right=e,this.body=f},X=a.ForStatement=function a(c){var d=c.init,e=c.test,f=c.update,g=c.body;b(this,a),this.type='ForStatement',this.init=d,this.test=e,this.update=f,this.body=g},Y=a.FormalParameters=function a(c){var d=c.items,e=c.rest;b(this,a),this.type='FormalParameters',this.items=d,this.rest=e},c=a.FunctionBody=function a(c){var d=c.directives,e=c.statements;b(this,a),this.type='FunctionBody',this.directives=d,this.statements=e},_=a.FunctionDeclaration=function a(c){var d=c.isGenerator,e=c.name,f=c.params,g=c.body;b(this,a),this.type='FunctionDeclaration',this.isGenerator=d,this.name=e,this.params=f,this.body=g},$=a.FunctionExpression=function a(c){var d=c.isGenerator,e=c.name,f=c.params,g=c.body;b(this,a),this.type='FunctionExpression',this.isGenerator=d,this.name=e,this.params=f,this.body=g},a0=a.Getter=function a(c){var d=c.name,e=c.body;b(this,a),this.type='Getter',this.name=d,this.body=e},a1=a.IdentifierExpression=function a(d){var c=d.name;b(this,a),this.type='IdentifierExpression',this.name=c},a2=a.IfStatement=function a(c){var d=c.test,e=c.consequent,f=c.alternate;b(this,a),this.type='IfStatement',this.test=d,this.consequent=e,this.alternate=f},a3=a.Import=function a(c){var d=c.defaultBinding,e=c.namedImports,f=c.moduleSpecifier;b(this,a),this.type='Import',this.defaultBinding=d,this.namedImports=e,this.moduleSpecifier=f},a4=a.ImportNamespace=function a(c){var d=c.defaultBinding,e=c.namespaceBinding,f=c.moduleSpecifier;b(this,a),this.type='ImportNamespace',this.defaultBinding=d,this.namespaceBinding=e,this.moduleSpecifier=f},a5=a.ImportSpecifier=function a(c){var d=c.name,e=c.binding;b(this,a),this.type='ImportSpecifier',this.name=d,this.binding=e},a6=a.LabeledStatement=function a(c){var d=c.label,e=c.body;b(this,a),this.type='LabeledStatement',this.label=d,this.body=e},a7=a.LiteralBooleanExpression=function a(d){var c=d.value;b(this,a),this.type='LiteralBooleanExpression',this.value=c},a8=a.LiteralInfinityExpression=function a(){b(this,a),this.type='LiteralInfinityExpression'},a9=a.LiteralNullExpression=function a(){b(this,a),this.type='LiteralNullExpression'},aa=a.LiteralNumericExpression=function a(d){var c=d.value;b(this,a),this.type='LiteralNumericExpression',this.value=c},ab=a.LiteralRegExpExpression=function a(c){var d=c.pattern,e=c.global,f=c.ignoreCase,g=c.multiLine,h=c.sticky,i=c.unicode;b(this,a),this.type='LiteralRegExpExpression',this.pattern=d,this.global=e,this.ignoreCase=f,this.multiLine=g,this.sticky=h,this.unicode=i},ac=a.LiteralStringExpression=function a(d){var c=d.value;b(this,a),this.type='LiteralStringExpression',this.value=c},ad=a.Method=function a(c){var d=c.isGenerator,e=c.name,f=c.params,g=c.body;b(this,a),this.type='Method',this.isGenerator=d,this.name=e,this.params=f,this.body=g},ae=a.Module=function a(c){var d=c.directives,e=c.items;b(this,a),this.type='Module',this.directives=d,this.items=e},af=a.NewExpression=function a(c){var d=c.callee,e=c.arguments;b(this,a),this.type='NewExpression',this.callee=d,this.arguments=e},ag=a.NewTargetExpression=function a(){b(this,a),this.type='NewTargetExpression'},ah=a.ObjectAssignmentTarget=function a(d){var c=d.properties;b(this,a),this.type='ObjectAssignmentTarget',this.properties=c},ai=a.ObjectBinding=function a(d){var c=d.properties;b(this,a),this.type='ObjectBinding',this.properties=c},aj=a.ObjectExpression=function a(d){var c=d.properties;b(this,a),this.type='ObjectExpression',this.properties=c},ak=a.ReturnStatement=function a(d){var c=d.expression;b(this,a),this.type='ReturnStatement',this.expression=c},al=a.Script=function a(c){var d=c.directives,e=c.statements;b(this,a),this.type='Script',this.directives=d,this.statements=e},am=a.Setter=function a(c){var d=c.name,e=c.param,f=c.body;b(this,a),this.type='Setter',this.name=d,this.param=e,this.body=f},an=a.ShorthandProperty=function a(d){var c=d.name;b(this,a),this.type='ShorthandProperty',this.name=c},ao=a.SpreadElement=function a(d){var c=d.expression;b(this,a),this.type='SpreadElement',this.expression=c},ap=a.StaticMemberAssignmentTarget=function a(c){var d=c.object,e=c.property;b(this,a),this.type='StaticMemberAssignmentTarget',this.object=d,this.property=e},aq=a.StaticMemberExpression=function a(c){var d=c.object,e=c.property;b(this,a),this.type='StaticMemberExpression',this.object=d,this.property=e},ar=a.StaticPropertyName=function a(d){var c=d.value;b(this,a),this.type='StaticPropertyName',this.value=c},as=a.Super=function a(){b(this,a),this.type='Super'},at=a.SwitchCase=function a(c){var d=c.test,e=c.consequent;b(this,a),this.type='SwitchCase',this.test=d,this.consequent=e},au=a.SwitchDefault=function a(d){var c=d.consequent;b(this,a),this.type='SwitchDefault',this.consequent=c},av=a.SwitchStatement=function a(c){var d=c.discriminant,e=c.cases;b(this,a),this.type='SwitchStatement',this.discriminant=d,this.cases=e},aw=a.SwitchStatementWithDefault=function a(c){var d=c.discriminant,e=c.preDefaultCases,f=c.defaultCase,g=c.postDefaultCases;b(this,a),this.type='SwitchStatementWithDefault',this.discriminant=d,this.preDefaultCases=e,this.defaultCase=f,this.postDefaultCases=g},ax=a.TemplateElement=function a(d){var c=d.rawValue;b(this,a),this.type='TemplateElement',this.rawValue=c},ay=a.TemplateExpression=function a(c){var d=c.tag,e=c.elements;b(this,a),this.type='TemplateExpression',this.tag=d,this.elements=e},az=a.ThisExpression=function a(){b(this,a),this.type='ThisExpression'},aA=a.ThrowStatement=function a(d){var c=d.expression;b(this,a),this.type='ThrowStatement',this.expression=c},aB=a.TryCatchStatement=function a(c){var d=c.body,e=c.catchClause;b(this,a),this.type='TryCatchStatement',this.body=d,this.catchClause=e},aC=a.TryFinallyStatement=function a(c){var d=c.body,e=c.catchClause,f=c.finalizer;b(this,a),this.type='TryFinallyStatement',this.body=d,this.catchClause=e,this.finalizer=f},aD=a.UnaryExpression=function a(c){var d=c.operator,e=c.operand;b(this,a),this.type='UnaryExpression',this.operator=d,this.operand=e},aE=a.UpdateExpression=function a(c){var d=c.isPrefix,e=c.operator,f=c.operand;b(this,a),this.type='UpdateExpression',this.isPrefix=d,this.operator=e,this.operand=f},aF=a.VariableDeclaration=function a(c){var d=c.kind,e=c.declarators;b(this,a),this.type='VariableDeclaration',this.kind=d,this.declarators=e},aG=a.VariableDeclarationStatement=function a(d){var c=d.declaration;b(this,a),this.type='VariableDeclarationStatement',this.declaration=c},aH=a.VariableDeclarator=function a(c){var d=c.binding,e=c.init;b(this,a),this.type='VariableDeclarator',this.binding=d,this.init=e},Z=a.WhileStatement=function a(c){var d=c.test,e=c.body;b(this,a),this.type='WhileStatement',this.test=d,this.body=e},e=a.WithStatement=function a(c){var d=c.object,e=c.body;b(this,a),this.type='WithStatement',this.object=d,this.body=e},d=a.YieldExpression=function a(d){var c=d.expression;b(this,a),this.type='YieldExpression',this.expression=c},f=a.YieldGeneratorExpression=function a(d){var c=d.expression;b(this,a),this.type='YieldGeneratorExpression',this.expression=c}}),a.define('/node_modules/shift-reducer/dist/clone-reducer.js',function(g,d,k,j){'use strict';function i(a){if(a&&a.__esModule)return a;else{var b={};if(a!=null)for(var c in a)Object.prototype.hasOwnProperty.call(a,c)&&(b[c]=a[c]);return b.default=a,b}}function h(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(d,'__esModule',{value:!0});var f=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),e=a('/node_modules/shift-ast/dist/index.js',g),b=i(e),c=function(){function a(){h(this,a)}return f(a,[{key:'reduceArrayAssignmentTarget',value:function a(f,c){var d=c.elements,e=c.rest;return new b.ArrayAssignmentTarget(f,{elements:d,rest:e})}},{key:'reduceArrayBinding',value:function a(f,c){var d=c.elements,e=c.rest;return new b.ArrayBinding(f,{elements:d,rest:e})}},{key:'reduceArrayExpression',value:function a(d,e){var c=e.elements;return new b.ArrayExpression(d,{elements:c})}},{key:'reduceArrowExpression',value:function a(f,c){var d=c.params,e=c.body;return new b.ArrowExpression(f,{params:d,body:e})}},{key:'reduceAssignmentExpression',value:function a(f,c){var d=c.binding,e=c.expression;return new b.AssignmentExpression(f,{binding:d,expression:e})}},{key:'reduceAssignmentTargetIdentifier',value:function a(c){return new b.AssignmentTargetIdentifier(c,{name:c.name})}},{key:'reduceAssignmentTargetPropertyIdentifier',value:function a(f,c){var d=c.binding,e=c.init;return new b.AssignmentTargetPropertyIdentifier(f,{binding:d,init:e})}},{key:'reduceAssignmentTargetPropertyProperty',value:function a(f,c){var d=c.name,e=c.binding;return new b.AssignmentTargetPropertyProperty(f,{name:d,binding:e})}},{key:'reduceAssignmentTargetWithDefault',value:function a(f,c){var d=c.binding,e=c.init;return new b.AssignmentTargetWithDefault(f,{binding:d,init:e})}},{key:'reduceBinaryExpression',value:function a(c,d){var e=d.left,f=d.right;return new b.BinaryExpression(c,{left:e,operator:c.operator,right:f})}},{key:'reduceBindingIdentifier',value:function a(c){return new b.BindingIdentifier(c,{name:c.name})}},{key:'reduceBindingPropertyIdentifier',value:function a(f,c){var d=c.binding,e=c.init;return new b.BindingPropertyIdentifier(f,{binding:d,init:e})}},{key:'reduceBindingPropertyProperty',value:function a(f,c){var d=c.name,e=c.binding;return new b.BindingPropertyProperty(f,{name:d,binding:e})}},{key:'reduceBindingWithDefault',value:function a(f,c){var d=c.binding,e=c.init;return new b.BindingWithDefault(f,{binding:d,init:e})}},{key:'reduceBlock',value:function a(d,e){var c=e.statements;return new b.Block(d,{statements:c})}},{key:'reduceBlockStatement',value:function a(d,e){var c=e.block;return new b.BlockStatement(d,{block:c})}},{key:'reduceBreakStatement',value:function a(c){return new b.BreakStatement(c,{label:c.label})}},{key:'reduceCallExpression',value:function a(f,c){var d=c.callee,e=c.arguments;return new b.CallExpression(f,{callee:d,arguments:e})}},{key:'reduceCatchClause',value:function a(f,c){var d=c.binding,e=c.body;return new b.CatchClause(f,{binding:d,body:e})}},{key:'reduceClassDeclaration',value:function a(g,c){var d=c.name,e=c.super,f=c.elements;return new b.ClassDeclaration(g,{name:d,super:e,elements:f})}},{key:'reduceClassElement',value:function a(c,e){var d=e.method;return new b.ClassElement(c,{isStatic:c.isStatic,method:d})}},{key:'reduceClassExpression',value:function a(g,c){var d=c.name,e=c.super,f=c.elements;return new b.ClassExpression(g,{name:d,super:e,elements:f})}},{key:'reduceCompoundAssignmentExpression',value:function a(c,d){var e=d.binding,f=d.expression;return new b.CompoundAssignmentExpression(c,{binding:e,operator:c.operator,expression:f})}},{key:'reduceComputedMemberAssignmentTarget',value:function a(f,c){var d=c.object,e=c.expression;return new b.ComputedMemberAssignmentTarget(f,{object:d,expression:e})}},{key:'reduceComputedMemberExpression',value:function a(f,c){var d=c.object,e=c.expression;return new b.ComputedMemberExpression(f,{object:d,expression:e})}},{key:'reduceComputedPropertyName',value:function a(d,e){var c=e.expression;return new b.ComputedPropertyName(d,{expression:c})}},{key:'reduceConditionalExpression',value:function a(g,c){var d=c.test,e=c.consequent,f=c.alternate;return new b.ConditionalExpression(g,{test:d,consequent:e,alternate:f})}},{key:'reduceContinueStatement',value:function a(c){return new b.ContinueStatement(c,{label:c.label})}},{key:'reduceDataProperty',value:function a(f,c){var d=c.name,e=c.expression;return new b.DataProperty(f,{name:d,expression:e})}},{key:'reduceDebuggerStatement',value:function a(c){return new b.DebuggerStatement}},{key:'reduceDirective',value:function a(c){return new b.Directive(c,{rawValue:c.rawValue})}},{key:'reduceDoWhileStatement',value:function a(f,c){var d=c.body,e=c.test;return new b.DoWhileStatement(f,{body:d,test:e})}},{key:'reduceEmptyStatement',value:function a(c){return new b.EmptyStatement}},{key:'reduceExport',value:function a(d,e){var c=e.declaration;return new b.Export(d,{declaration:c})}},{key:'reduceExportAllFrom',value:function a(c){return new b.ExportAllFrom(c,{moduleSpecifier:c.moduleSpecifier})}},{key:'reduceExportDefault',value:function a(d,e){var c=e.body;return new b.ExportDefault(d,{body:c})}},{key:'reduceExportFrom',value:function a(c,e){var d=e.namedExports;return new b.ExportFrom(c,{namedExports:d,moduleSpecifier:c.moduleSpecifier})}},{key:'reduceExportFromSpecifier',value:function a(c){return new b.ExportFromSpecifier(c,{name:c.name,exportedName:c.exportedName})}},{key:'reduceExportLocalSpecifier',value:function a(c,e){var d=e.name;return new b.ExportLocalSpecifier(c,{name:d,exportedName:c.exportedName})}},{key:'reduceExportLocals',value:function a(d,e){var c=e.namedExports;return new b.ExportLocals(d,{namedExports:c})}},{key:'reduceExpressionStatement',value:function a(d,e){var c=e.expression;return new b.ExpressionStatement(d,{expression:c})}},{key:'reduceForInStatement',value:function a(g,c){var d=c.left,e=c.right,f=c.body;return new b.ForInStatement(g,{left:d,right:e,body:f})}},{key:'reduceForOfStatement',value:function a(g,c){var d=c.left,e=c.right,f=c.body;return new b.ForOfStatement(g,{left:d,right:e,body:f})}},{key:'reduceForStatement',value:function a(h,c){var d=c.init,e=c.test,f=c.update,g=c.body;return new b.ForStatement(h,{init:d,test:e,update:f,body:g})}},{key:'reduceFormalParameters',value:function a(f,c){var d=c.items,e=c.rest;return new b.FormalParameters(f,{items:d,rest:e})}},{key:'reduceFunctionBody',value:function a(f,c){var d=c.directives,e=c.statements;return new b.FunctionBody(f,{directives:d,statements:e})}},{key:'reduceFunctionDeclaration',value:function a(d,c){var e=c.name,f=c.params,g=c.body;return new b.FunctionDeclaration(d,{isGenerator:d.isGenerator,name:e,params:f,body:g})}},{key:'reduceFunctionExpression',value:function a(d,c){var e=c.name,f=c.params,g=c.body;return new b.FunctionExpression(d,{isGenerator:d.isGenerator,name:e,params:f,body:g})}},{key:'reduceGetter',value:function a(f,c){var d=c.name,e=c.body;return new b.Getter(f,{name:d,body:e})}},{key:'reduceIdentifierExpression',value:function a(c){return new b.IdentifierExpression(c,{name:c.name})}},{key:'reduceIfStatement',value:function a(g,c){var d=c.test,e=c.consequent,f=c.alternate;return new b.IfStatement(g,{test:d,consequent:e,alternate:f})}},{key:'reduceImport',value:function a(c,d){var e=d.defaultBinding,f=d.namedImports;return new b.Import(c,{defaultBinding:e,namedImports:f,moduleSpecifier:c.moduleSpecifier})}},{key:'reduceImportNamespace',value:function a(c,d){var e=d.defaultBinding,f=d.namespaceBinding;return new b.ImportNamespace(c,{defaultBinding:e,namespaceBinding:f,moduleSpecifier:c.moduleSpecifier})}},{key:'reduceImportSpecifier',value:function a(c,e){var d=e.binding;return new b.ImportSpecifier(c,{name:c.name,binding:d})}},{key:'reduceLabeledStatement',value:function a(c,e){var d=e.body;return new b.LabeledStatement(c,{label:c.label,body:d})}},{key:'reduceLiteralBooleanExpression',value:function a(c){return new b.LiteralBooleanExpression(c,{value:c.value})}},{key:'reduceLiteralInfinityExpression',value:function a(c){return new b.LiteralInfinityExpression}},{key:'reduceLiteralNullExpression',value:function a(c){return new b.LiteralNullExpression}},{key:'reduceLiteralNumericExpression',value:function a(c){return new b.LiteralNumericExpression(c,{value:c.value})}},{key:'reduceLiteralRegExpExpression',value:function a(c){return new b.LiteralRegExpExpression(c,{pattern:c.pattern,global:c.global,ignoreCase:c.ignoreCase,multiLine:c.multiLine,sticky:c.sticky,unicode:c.unicode})}},{key:'reduceLiteralStringExpression',value:function a(c){return new b.LiteralStringExpression(c,{value:c.value})}},{key:'reduceMethod',value:function a(d,c){var e=c.name,f=c.params,g=c.body;return new b.Method(d,{isGenerator:d.isGenerator,name:e,params:f,body:g})}},{key:'reduceModule',value:function a(f,c){var d=c.directives,e=c.items;return new b.Module(f,{directives:d,items:e})}},{key:'reduceNewExpression',value:function a(f,c){var d=c.callee,e=c.arguments;return new b.NewExpression(f,{callee:d,arguments:e})}},{key:'reduceNewTargetExpression',value:function a(c){return new b.NewTargetExpression}},{key:'reduceObjectAssignmentTarget',value:function a(d,e){var c=e.properties;return new b.ObjectAssignmentTarget(d,{properties:c})}},{key:'reduceObjectBinding',value:function a(d,e){var c=e.properties;return new b.ObjectBinding(d,{properties:c})}},{key:'reduceObjectExpression',value:function a(d,e){var c=e.properties;return new b.ObjectExpression(d,{properties:c})}},{key:'reduceReturnStatement',value:function a(d,e){var c=e.expression;return new b.ReturnStatement(d,{expression:c})}},{key:'reduceScript',value:function a(f,c){var d=c.directives,e=c.statements;return new b.Script(f,{directives:d,statements:e})}},{key:'reduceSetter',value:function a(g,c){var d=c.name,e=c.param,f=c.body;return new b.Setter(g,{name:d,param:e,body:f})}},{key:'reduceShorthandProperty',value:function a(d,e){var c=e.name;return new b.ShorthandProperty(d,{name:c})}},{key:'reduceSpreadElement',value:function a(d,e){var c=e.expression;return new b.SpreadElement(d,{expression:c})}},{key:'reduceStaticMemberAssignmentTarget',value:function a(c,e){var d=e.object;return new b.StaticMemberAssignmentTarget(c,{object:d,property:c.property})}},{key:'reduceStaticMemberExpression',value:function a(c,e){var d=e.object;return new b.StaticMemberExpression(c,{object:d,property:c.property})}},{key:'reduceStaticPropertyName',value:function a(c){return new b.StaticPropertyName(c,{value:c.value})}},{key:'reduceSuper',value:function a(c){return new b.Super}},{key:'reduceSwitchCase',value:function a(f,c){var d=c.test,e=c.consequent;return new b.SwitchCase(f,{test:d,consequent:e})}},{key:'reduceSwitchDefault',value:function a(d,e){var c=e.consequent;return new b.SwitchDefault(d,{consequent:c})}},{key:'reduceSwitchStatement',value:function a(f,c){var d=c.discriminant,e=c.cases;return new b.SwitchStatement(f,{discriminant:d,cases:e})}},{key:'reduceSwitchStatementWithDefault',value:function a(h,c){var d=c.discriminant,e=c.preDefaultCases,f=c.defaultCase,g=c.postDefaultCases;return new b.SwitchStatementWithDefault(h,{discriminant:d,preDefaultCases:e,defaultCase:f,postDefaultCases:g})}},{key:'reduceTemplateElement',value:function a(c){return new b.TemplateElement(c,{rawValue:c.rawValue})}},{key:'reduceTemplateExpression',value:function a(f,c){var d=c.tag,e=c.elements;return new b.TemplateExpression(f,{tag:d,elements:e})}},{key:'reduceThisExpression',value:function a(c){return new b.ThisExpression}},{key:'reduceThrowStatement',value:function a(d,e){var c=e.expression;return new b.ThrowStatement(d,{expression:c})}},{key:'reduceTryCatchStatement',value:function a(f,c){var d=c.body,e=c.catchClause;return new b.TryCatchStatement(f,{body:d,catchClause:e})}},{key:'reduceTryFinallyStatement',value:function a(g,c){var d=c.body,e=c.catchClause,f=c.finalizer;return new b.TryFinallyStatement(g,{body:d,catchClause:e,finalizer:f})}},{key:'reduceUnaryExpression',value:function a(c,e){var d=e.operand;return new b.UnaryExpression(c,{operator:c.operator,operand:d})}},{key:'reduceUpdateExpression',value:function a(c,e){var d=e.operand;return new b.UpdateExpression(c,{isPrefix:c.isPrefix,operator:c.operator,operand:d})}},{key:'reduceVariableDeclaration',value:function a(c,e){var d=e.declarators;return new b.VariableDeclaration(c,{kind:c.kind,declarators:d})}},{key:'reduceVariableDeclarationStatement',value:function a(d,e){var c=e.declaration;return new b.VariableDeclarationStatement(d,{declaration:c})}},{key:'reduceVariableDeclarator',value:function a(f,c){var d=c.binding,e=c.init;return new b.VariableDeclarator(f,{binding:d,init:e})}},{key:'reduceWhileStatement',value:function a(f,c){var d=c.test,e=c.body;return new b.WhileStatement(f,{test:d,body:e})}},{key:'reduceWithStatement',value:function a(f,c){var d=c.object,e=c.body;return new b.WithStatement(f,{object:d,body:e})}},{key:'reduceYieldExpression',value:function a(d,e){var c=e.expression;return new b.YieldExpression(d,{expression:c})}},{key:'reduceYieldGeneratorExpression',value:function a(d,e){var c=e.expression;return new b.YieldGeneratorExpression(d,{expression:c})}}]),a}();d.default=c}),a.define('/node_modules/es6-set/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es6-set/is-implemented.js',b)()?Set:a('/node_modules/es6-set/polyfill.js',b)}),a.define('/node_modules/es6-set/polyfill.js',function(c,u,t,v){'use strict';var p=a('/node_modules/es5-ext/array/#/clear.js',c),i=a('/node_modules/es5-ext/array/#/e-index-of.js',c),e=a('/node_modules/es5-ext/object/set-prototype-of/index.js',c),r=a('/node_modules/es5-ext/object/valid-callable.js',c),b=a('/node_modules/d/index.js',c),m=a('/node_modules/event-emitter/index.js',c),j=a('/node_modules/es6-symbol/index.js',c),n=a('/node_modules/es6-iterator/valid-iterable.js',c),o=a('/node_modules/es6-iterator/for-of.js',c),k=a('/node_modules/es6-set/lib/iterator.js',c),h=a('/node_modules/es6-set/is-native-implemented.js',c),l=Function.prototype.call,g=Object.defineProperty,s=Object.getPrototypeOf,d,q,f;h&&(f=Set),c.exports=d=function a(){var j=arguments[0],c;if(!(this instanceof d))throw new TypeError("Constructor requires 'new'");return h&&e?c=e(new f,s(this)):c=this,j!=null&&n(j),g(c,'__setData__',b('c',[])),j?(o(j,function(a){if(i.call(this,a)!==-1)return;this.push(a)},c.__setData__),c):c},h&&(e&&e(d,f),d.prototype=Object.create(f.prototype,{constructor:b(d)})),m(Object.defineProperties(d.prototype,{add:b(function(a){return this.has(a)?this:(this.emit('_add',this.__setData__.push(a)-1,a),this)}),clear:b(function(){if(!this.__setData__.length)return;p.call(this.__setData__),this.emit('_clear')}),delete:b(function(b){var a=i.call(this.__setData__,b);return a===-1?!1:(this.__setData__.splice(a,1),this.emit('_delete',a,b),!0)}),entries:b(function(){return new k(this,'key+value')}),forEach:b(function(d){var e=arguments[1],a,b,c;r(d),a=this.values(),b=a._next();while(b!==undefined)c=a._resolve(b),l.call(d,e,c,c,this),b=a._next()}),has:b(function(a){return i.call(this.__setData__,a)!==-1}),keys:b(q=function(){return this.values()}),size:b.gs(function(){return this.__setData__.length}),values:b(function(){return new k(this)}),toString:b(function(){return'[object Set]'})})),g(d.prototype,j.iterator,b(q)),g(d.prototype,j.toStringTag,b('c','Set'))}),a.define('/node_modules/es6-set/is-native-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){return typeof Set==='undefined'?!1:Object.prototype.toString.call(Set.prototype)==='[object Set]'}()}),a.define('/node_modules/es6-set/lib/iterator.js',function(c,l,k,j){'use strict';var g=a('/node_modules/es5-ext/object/set-prototype-of/index.js',c),h=a('/node_modules/es5-ext/string/#/contains/index.js',c),d=a('/node_modules/d/index.js',c),e=a('/node_modules/es6-iterator/index.js',c),i=a('/node_modules/es6-symbol/index.js',c).toStringTag,f=Object.defineProperty,b;b=c.exports=function(c,a){if(!(this instanceof b))return new b(c,a);e.call(this,c.__setData__,c),a?h.call(a,'key+value')?a='key+value':a='value':a='value',f(this,'__kind__',d('',a))},g&&g(b,e),b.prototype=Object.create(e.prototype,{constructor:d(b),_resolve:d(function(a){return this.__kind__==='value'?this.__list__[a]:[this.__list__[a],this.__list__[a]]}),toString:d(function(){return'[object Set Iterator]'})}),f(b.prototype,i,d('c','Set Iterator'))}),a.define('/node_modules/es6-set/is-implemented.js',function(a,b,c,d){'use strict';a.exports=function(){var a,c,b;return typeof Set!=='function'?!1:(a=new Set(['raz','dwa','trzy']),String(a)!=='[object Set]'?!1:a.size!==3?!1:typeof a.add!=='function'?!1:typeof a.clear!=='function'?!1:typeof a.delete!=='function'?!1:typeof a.entries!=='function'?!1:typeof a.forEach!=='function'?!1:typeof a.has!=='function'?!1:typeof a.keys!=='function'?!1:typeof a.values!=='function'?!1:(c=a.values(),b=c.next(),b.done!==!1?!1:b.value!=='raz'?!1:!0))}}),a.define('/node_modules/shift-scope/dist/scope.js',function(l,c,q,p){'use strict';function f(a){return a&&a.__esModule?a:{default:a}}function n(b,a){if(!b)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return a&&(typeof a==='object'||typeof a==='function')?a:b}function o(b,a){if(typeof a!=='function'&&a!==null)throw new TypeError('Super expression must either be null or a function, not '+typeof a);b.prototype=Object.create(a&&a.prototype,{constructor:{value:b,enumerable:!1,writable:!0,configurable:!0}}),a&&(Object.setPrototypeOf?Object.setPrototypeOf(b,a):b.__proto__=a)}function d(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(c,'__esModule',{value:!0}),c.GlobalScope=c.Scope=c.ScopeType=undefined;var h=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),i=a('/node_modules/es6-map/index.js',l),j=f(i),k=a('/node_modules/shift-scope/dist/variable.js',l),e=f(k),b=c.ScopeType=function a(b){d(this,a),this.name=b};b.GLOBAL=new b('Global'),b.MODULE=new b('Module'),b.SCRIPT=new b('Script'),b.ARROW_FUNCTION=new b('ArrowFunction'),b.FUNCTION=new b('Function'),b.FUNCTION_NAME=new b('FunctionName'),b.CLASS_NAME=new b('ClassName'),b.PARAMETERS=new b('Parameters'),b.PARAMETER_EXPRESSION=new b('ParameterExpression'),b.WITH=new b('With'),b.CATCH=new b('Catch'),b.BLOCK=new b('Block');var g=c.Scope=function(){function a(m,q,p,f,o,n){var i=this;d(this,a),this.children=m,this.through=p,this.type=f,this.astNode=n,this.variables=new j.default,q.forEach(function(a){return i.variables.set(a.name,a)}),this.variableList=[];var e=!0,h=!1,g=undefined;try{for(var c=this.variables.values()[Symbol.iterator](),k;!(e=(k=c.next()).done);e=!0){var l=k.value;this.variableList.push(l)}}catch(a){h=!0,g=a}finally{try{!e&&c.return&&c.return()}finally{if(h)throw g}}this.dynamic=o||f===b.WITH||f===b.GLOBAL}return h(a,[{key:'isGlobal',value:function a(){return this.type===b.GLOBAL}},{key:'lookupVariable',value:function a(b){return this.variables.get(b)}}]),a}(),m=c.GlobalScope=function(c){function a(m,p,k,o){d(this,a);var c=n(this,Object.getPrototypeOf(a).call(this,m,p,k,b.GLOBAL,!0,o));k.forEachEntry(function(b,a){c.variables.set(a,new e.default(a,b,[]))}),c.variableList=[];var f=!0,i=!1,h=undefined;try{for(var g=c.variables.values()[Symbol.iterator](),j;!(f=(j=g.next()).done);f=!0){var l=j.value;c.variableList.push(l)}}catch(a){i=!0,h=a}finally{try{!f&&g.return&&g.return()}finally{if(i)throw h}}return c}return o(a,c),a}(g)}),a.define('/node_modules/shift-scope/dist/variable.js',function(d,a,e,f){'use strict';function c(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(a,'__esModule',{value:!0});var b=function a(b,d,e){c(this,a),this.name=b,this.references=d,this.declarations=e};a.default=b}),a.define('/node_modules/es6-map/index.js',function(b,c,d,e){'use strict';b.exports=a('/node_modules/es6-map/is-implemented.js',b)()?Map:a('/node_modules/es6-map/polyfill.js',b)}),a.define('/node_modules/shift-scope/dist/declaration.js',function(i,c,k,j){'use strict';function g(b,a){if(!b)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return a&&(typeof a==='object'||typeof a==='function')?a:b}function f(b,a){if(typeof a!=='function'&&a!==null)throw new TypeError('Super expression must either be null or a function, not '+typeof a);b.prototype=Object.create(a&&a.prototype,{constructor:{value:b,enumerable:!1,writable:!0,configurable:!0}}),a&&(Object.setPrototypeOf?Object.setPrototypeOf(b,a):b.__proto__=a)}function e(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(c,'__esModule',{value:!0});var a=c.DeclarationType=function a(c,b){e(this,a),this.name=c,this.isBlockScoped=!!b,this.isFunctionScoped=!b},b=c.BlockScopedDeclaration=function(b){function a(b){return e(this,a),g(this,Object.getPrototypeOf(a).call(this,b,!0))}return f(a,b),a}(a),d=c.FunctionScopedDeclaration=function(b){function a(b){return e(this,a),g(this,Object.getPrototypeOf(a).call(this,b,!1))}return f(a,b),a}(a);a.VAR=new d('Var'),a.CONST=new b('Const'),a.LET=new b('Let'),a.FUNCTION_DECLARATION=new b('FunctionDeclaration'),a.FUNCTION_VAR_DECLARATION=new d('FunctionB33'),a.FUNCTION_NAME=new b('FunctionExpressionName'),a.CLASS_DECLARATION=new b('ClassDeclaration'),a.CLASS_NAME=new b('ClassName'),a.PARAMETER=new d('Parameter'),a.CATCH_PARAMETER=new b('CatchParam'),a.IMPORT=new b('Import'),a.fromVarDeclKind=function(b){switch(b){case'var':return a.VAR;case'const':return a.CONST;case'let':return a.LET;default:throw new Error('Invalid VariableDeclarationKind: '+JSON.stringify(b))}};var h=c.Declaration=function a(b,c){e(this,a),this.node=b,this.type=c}}),a.define('/node_modules/shift-scope/dist/reference.js',function(e,b,f,g){'use strict';function c(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(b,'__esModule',{value:!0});var a=b.Accessibility=function a(b,d){c(this,a),this.isRead=!!b,this.isWrite=!!d,this.isReadWrite=!!(b&&d)};a.READ=new a(!0,!1),a.WRITE=new a(!1,!0),a.READWRITE=new a(!0,!0);var d=b.Reference=function a(b,d){c(this,a),this.node=b,this.accessibility=d}}),a.define('/node_modules/shift-scope/dist/scope-state.js',function(f,o,r,q){'use strict';function m(a){return a&&a.__esModule?a:{default:a}}function p(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function b(a,b){return b.forEachEntry(function(b,c){a.set.apply(a,[c].concat(b))}),a}function g(b,c,a){return c.forEachEntry(function(e,c){var d=b.get(c)||[];a=a.concat(new j.default(c,d,e)),b.delete(c)}),a}Object.defineProperty(o,'__esModule',{value:!0});var i=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),l=a('/node_modules/multimap/index.js',f),d=m(l),e=a('/node_modules/shift-scope/dist/declaration.js',f),h=a('/node_modules/shift-scope/dist/reference.js',f),c=a('/node_modules/shift-scope/dist/scope.js',f),k=a('/node_modules/shift-scope/dist/variable.js',f),j=m(k),n=function(){function a(){var b=arguments.length<=0||arguments[0]===undefined?{}:arguments[0],i=b.freeIdentifiers,w=i===undefined?new d.default:i,e=b.functionScopedDeclarations,u=e===undefined?new d.default:e,f=b.blockScopedDeclarations,o=f===undefined?new d.default:f,g=b.functionDeclarations,s=g===undefined?new d.default:g,h=b.children,n=h===undefined?[]:h,j=b.dynamic,q=j===undefined?!1:j,k=b.bindingsForParent,r=k===undefined?[]:k,l=b.atsForParent,t=l===undefined?[]:l,m=b.potentiallyVarScopedFunctionDeclarations,v=m===undefined?new d.default:m,c=b.hasParameterExpressions,x=c===undefined?!1:c;p(this,a),this.freeIdentifiers=w,this.functionScopedDeclarations=u,this.blockScopedDeclarations=o,this.functionDeclarations=s,this.children=n,this.dynamic=q,this.bindingsForParent=r,this.atsForParent=t,this.potentiallyVarScopedFunctionDeclarations=v,this.hasParameterExpressions=x}return i(a,[{key:'concat',value:function c(e){return this===e?this:new a({freeIdentifiers:b(b(new d.default,this.freeIdentifiers),e.freeIdentifiers),functionScopedDeclarations:b(b(new d.default,this.functionScopedDeclarations),e.functionScopedDeclarations),blockScopedDeclarations:b(b(new d.default,this.blockScopedDeclarations),e.blockScopedDeclarations),functionDeclarations:b(b(new d.default,this.functionDeclarations),e.functionDeclarations),children:this.children.concat(e.children),dynamic:this.dynamic||e.dynamic,bindingsForParent:this.bindingsForParent.concat(e.bindingsForParent),atsForParent:this.atsForParent.concat(e.atsForParent),potentiallyVarScopedFunctionDeclarations:b(b(new d.default,this.potentiallyVarScopedFunctionDeclarations),e.potentiallyVarScopedFunctionDeclarations),hasParameterExpressions:this.hasParameterExpressions||e.hasParameterExpressions})}},{key:'addDeclarations',value:function c(h){var i=arguments.length<=1||arguments[1]===undefined?!1:arguments[1],g=new d.default;b(g,h.isBlockScoped?this.blockScopedDeclarations:this.functionScopedDeclarations),this.bindingsForParent.forEach(function(a){return g.set(a.name,new e.Declaration(a,h))});var f=new a(this);return h.isBlockScoped?f.blockScopedDeclarations=g:f.functionScopedDeclarations=g,i||(f.bindingsForParent=[],f.atsForParent=[]),f}},{key:'addFunctionDeclaration',value:function c(){if(this.bindingsForParent.length==0)return this;var g=this.bindingsForParent[0],f=new a(this);return b(f.functionDeclarations,new d.default([[g.name,new e.Declaration(g,e.DeclarationType.FUNCTION_DECLARATION)]])),f.bindingsForParent=[],f}},{key:'addReferences',value:function c(g){var i=arguments.length<=1||arguments[1]===undefined?!1:arguments[1],e=new d.default;b(e,this.freeIdentifiers),this.bindingsForParent.forEach(function(a){return e.set(a.name,new h.Reference(a,g))}),this.atsForParent.forEach(function(a){return e.set(a.name,new h.Reference(a,g))});var f=new a(this);return f.freeIdentifiers=e,i||(f.bindingsForParent=[],f.atsForParent=[]),f}},{key:'taint',value:function b(){var c=new a(this);return c.dynamic=!0,c}},{key:'withoutBindingsForParent',value:function b(){var c=new a(this);return c.bindingsForParent=[],c}},{key:'withParameterExpressions',value:function b(){var c=new a(this);return c.hasParameterExpressions=!0,c}},{key:'withoutParameterExpressions',value:function b(){var c=new a(this);return c.hasParameterExpressions=!1,c}},{key:'withPotentialVarFunctions',value:function c(h){var f=b(new d.default,this.potentiallyVarScopedFunctionDeclarations);h.forEach(function(a){return f.set(a.name,new e.Declaration(a,e.DeclarationType.FUNCTION_VAR_DECLARATION))});var g=new a(this);return g.potentiallyVarScopedFunctionDeclarations=f,g}},{key:'finish',value:function e(m,l){var q=arguments.length<=2||arguments[2]===undefined?{}:arguments[2],n=q.shouldResolveArguments,s=n===undefined?!1:n,o=q.shouldB33,r=o===undefined?!1:o,h=[],p=new d.default,i=b(new d.default,this.freeIdentifiers),j=b(new d.default,this.potentiallyVarScopedFunctionDeclarations),k=this.children;this.blockScopedDeclarations.forEachEntry(function(b,a){j.delete(a)}),this.functionDeclarations.forEachEntry(function(b,c){var a=j.get(c);a&&(b.length>1||b[0].node!==a[0].node)&&j.delete(c)});var f=new d.default;switch(l){case c.ScopeType.BLOCK:case c.ScopeType.CATCH:case c.ScopeType.WITH:case c.ScopeType.FUNCTION_NAME:case c.ScopeType.CLASS_NAME:case c.ScopeType.PARAMETER_EXPRESSION:b(f,this.blockScopedDeclarations);b(f,this.functionDeclarations);h=g(i,f,h);b(p,this.functionScopedDeclarations);break;case c.ScopeType.PARAMETERS:case c.ScopeType.ARROW_FUNCTION:case c.ScopeType.FUNCTION:case c.ScopeType.MODULE:case c.ScopeType.SCRIPT:l===c.ScopeType.SCRIPT?k=[new c.Scope(k,g(i,this.blockScopedDeclarations,[]),b(new d.default,i),c.ScopeType.SCRIPT,this.dynamic,m)]:b(f,this.blockScopedDeclarations);s&&f.set('arguments');b(f,this.functionScopedDeclarations);b(f,this.functionDeclarations);r&&b(f,j);j=new d.default;h=g(i,f,h);l===c.ScopeType.MODULE&&(k=[new c.Scope(k,h,i,c.ScopeType.MODULE,this.dynamic,m)],h=[]);break;default:throw new Error('not reached')}var t=l===c.ScopeType.SCRIPT||l===c.ScopeType.MODULE?new c.GlobalScope(k,h,i,m):new c.Scope(k,h,i,l,this.dynamic,m);return new a({freeIdentifiers:i,functionScopedDeclarations:p,children:[t],bindingsForParent:this.bindingsForParent,potentiallyVarScopedFunctionDeclarations:j,hasParameterExpressions:this.hasParameterExpressions})}}],[{key:'empty',value:function b(){return new a({})}}]),a}();o.default=n}),a.define('/node_modules/multimap/index.js',function(a,c,d,e){'use strict';var b=function(b){function a(d){var c=this;c._map=b,a.Map&&(c._map=a.Map),c._=c._map?new c._map:{},d&&d.forEach(function(a){c.set(a[0],a[1])})}function c(b){var a=0;return{next:function(){return a<b.length?{value:b[a++],done:!1}:{done:!0}}}}return typeof Map!=='undefined'&&(b=Map),a.prototype.get=function(a){return this._map?this._.get(a):this._[a]},a.prototype.set=function(b,d){var c=Array.prototype.slice.call(arguments);b=c.shift();var a=this.get(b);return a||(a=[],this._map?this._.set(b,a):this._[b]=a),Array.prototype.push.apply(a,c),this},a.prototype.delete=function(a,d){if(!this.has(a))return!1;if(arguments.length==1)return this._map?this._.delete(a):delete this._[a],!0;var b=this.get(a),c=b.indexOf(d);return c!=-1?(b.splice(c,1),!0):!1},a.prototype.has=function(a,d){var b=this._map?this._.has(a):this._.hasOwnProperty(a);if(arguments.length==1||!b)return b;var c=this.get(a)||[];return c.indexOf(d)!=-1},a.prototype.keys=function(){return this._map?this._.keys():c(Object.keys(this._))},a.prototype.values=function(){var a=[];return this.forEachEntry(function(b){Array.prototype.push.apply(a,b)}),c(a)},a.prototype.forEachEntry=function(d){var a=this,c=a.keys(),b;while(!(b=c.next()).done)d(a.get(b.value),b.value,a)},a.prototype.forEach=function(b){var a=this;a.forEachEntry(function(c,d){c.forEach(function(c){b(c,d,a)})})},a.prototype.clear=function(){this._map?this._.clear():this._={}},Object.defineProperty(a.prototype,'size',{configurable:!1,enumerable:!0,get:function(){var a=this,c=a.keys(),d,b=0;while(!(d=c.next()).done)b+=a.get(d.value).length;return b}}),a}();typeof c==='object'&&a&&a.exports?a.exports=b:typeof define==='function'&&define.amd&&define(function(){return b})}),a.define('/node_modules/shift-scope/dist/scope-serializer.js',function(c,g,s,r){'use strict';function e(a){return a&&a.__esModule?a:{default:a}}function m(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function n(a){return new d(a).serialize()}function f(c,d,e){function f(a){switch(a){case b.DeclarationType.VAR:return 0;case b.DeclarationType.CONST:return 1;case b.DeclarationType.LET:return 2;case b.DeclarationType.FUNCTION_DECLARATION:return 3;case b.DeclarationType.FUNCTION_VAR_DECLARATION:return 4;case b.DeclarationType.FUNCTION_NAME:return 5;case b.DeclarationType.CLASS_NAME:return 6;case b.DeclarationType.PARAMETER:return 7;case b.DeclarationType.CATCH_PARAMETER:return 8;case b.DeclarationType.IMPORT:return 9;default:throw'Unrecognized declaration type'}}var a=f(d.type)-f(e.type);return a!=0?a:c.get(d.node)-c.get(e.node)}function p(d,a,b){var c=(a.accessibility.isRead?1:0)+(a.accessibility.isWrite?2:0)-((b.accessibility.isRead?1:0)+(b.accessibility.isWrite?2:0));return c!=0?c:d.get(a.node)-d.get(b.node)}function q(e,b,c){if(b.name<c.name)return-1;if(b.name>c.name)return 1;var a=b.declarations.length-c.declarations.length;if(a!=0)return a;if(a=b.references.length-c.references.length,a!=0)return a;for(var d=0;d<b.declarations.length;++d){var g=b.declarations[d],h=c.declarations[d];if(a=f(e,b,c),a!=0)return a}}Object.defineProperty(g,'__esModule',{value:!0});var h=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}();g.serialize=n;var i=a('/node_modules/es6-map/index.js',c),j=e(i),k=a('/node_modules/shift-scope/dist/flattener.js',c),l=e(k),o=a('/node_modules/shift-scope/dist/reference.js',c),b=a('/node_modules/shift-scope/dist/declaration.js',c),d=function(){function a(c){var b=this;m(this,a),this.scope=c;var d=l.default.flatten(c.astNode);this.ids=new j.default,d.forEach(function(a){return b.ids.set(a,b.ids.size)}),this.declarationCompare=f.bind(this,this.ids),this.referenceCompare=p.bind(this,this.ids),this.variableCompare=q.bind(this,this.ids)}return h(a,[{key:'serialize',value:function a(){return this.serializeScope(this.scope)}},{key:'serializeScope',value:function a(b){return'{"node": "'+this.serializeNode(b.astNode)+'"'+(', "type": "'+b.type.name+'"')+(', "isDynamic": '+b.dynamic)+(', "through": '+this.serializeReferenceList(this.collectThrough(b.through)))+(', "variables": '+this.serializeVariableList(b.variableList))+(', "children": ['+b.children.map(this.serializeScope.bind(this)).join(', ')+']')+'}'}},{key:'serializeNode',value:function a(b){return b.type==='IdentifierExpression'?'IdentifierExpression('+b.name+')_'+this.ids.get(b):b.type==='AssignmentTargetIdentifier'?'AssignmentTargetIdentifier('+b.name+')_'+this.ids.get(b):b.type==='BindingIdentifier'?'BindingIdentifier('+b.name+')_'+this.ids.get(b):b.type+'_'+this.ids.get(b)}},{key:'collectThrough',value:function a(c){var b=[];return c.forEach(function(a,c){return b.push(a)}),b.sort(this.referenceCompare)}},{key:'serializeReference',value:function a(b){return'{"node": "'+this.serializeNode(b.node)+'"'+((b.accessibility.isRead?', "accessibility": "Read':', "accessibility": "')+(b.accessibility.isWrite?'Write':'')+'"')+'}'}},{key:'serializeReferenceList',value:function a(b){return'['+b.map(this.serializeReference.bind(this)).join(', ')+']'}},{key:'serializeDeclaration',value:function a(b){return'{"node": "'+this.serializeNode(b.node)+'"'+(', "kind": "'+b.type.name+'"')+'}'}},{key:'serializeVariable',value:function a(b){return'{"name": "'+b.name+'"'+(', "references": '+this.serializeReferenceList(b.references))+(', "declarations": ['+b.declarations.map(this.serializeDeclaration.bind(this)).join(', ')+']')+'}'}},{key:'serializeVariableList',value:function a(b){return b=b.slice(0).sort(this.variableCompare),'['+b.map(this.serializeVariable.bind(this)).join(', ')+']'}}]),a}()}),a.define('/node_modules/shift-scope/dist/flattener.js',function(k,l,q,r){'use strict';function h(a){return a&&a.__esModule?a:{default:a}}function m(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function p(b,a){if(!b)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return a&&(typeof a==='object'||typeof a==='function')?a:b}function o(b,a){if(typeof a!=='function'&&a!==null)throw new TypeError('Super expression must either be null or a function, not '+typeof a);b.prototype=Object.create(a&&a.prototype,{constructor:{value:b,enumerable:!1,writable:!0,configurable:!0}}),a&&(Object.setPrototypeOf?Object.setPrototypeOf(b,a):b.__proto__=a)}Object.defineProperty(l,'__esModule',{value:!0});var c=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),b=a('/node_modules/shift-reducer/dist/index.js',k),g=h(b),n=a('/node_modules/shift-spec/dist/index.js',k),e=h(n),d=function(b){function a(){return m(this,a),p(this,Object.getPrototypeOf(a).call(this,f))}return o(a,b),c(a,null,[{key:'flatten',value:function a(b){return(0,g.default)(new this,b).extract()}}]),a}(b.MonoidalReducer);l.default=d;var j=function a(c){var g=e.default[c];Object.defineProperty(d.prototype,'reduce'+c,{value:function a(d,e){return new f([d]).concat(b.MonoidalReducer.prototype['reduce'+c].call(this,d,e))}})};for(var i in e.default)j(i);var f=function(){function a(b){m(this,a),this.list=b}return c(a,[{key:'concat',value:function b(c){return new a(this.list.concat(c.list))}},{key:'extract',value:function a(){return this.list}}],[{key:'empty',value:function b(){return new a([])}}]),a}()}),a.define('/node_modules/shift-spec/dist/index.js',function(b,a,c,d){Object.defineProperty(a,'__esModule',{value:!0}),a.default=function(a,n,a$,i,b,b0,b6,b4,b3,aZ,q,l,aR,aM,aK,k,aC,az,G,ay,h,ax,at,v,s,an,am,aa,F,A,E,O,a6,a4,a3,a2,a1,X,W,Q,y,av,R,S,T,U,V,N,M,Y,Z,_,$,a0,w,r,B,I,a5,C,a7,a8,a9,L,ab,ac,ad,ae,af,ag,ah,ai,aj,ak,al,o,m,ao,ap,aq,ar,as,z,au,P,aw,t,D,K,aA,aB,J,aD,aE,aF,aG,aH,aI,aJ,u,aL,H,aN,aO,aP,aQ,a_,aS,b8,aT,x,b9,aU,aY,p,aV,aW,b5,b1,b2,e,j,aX,b7){function f(a){return{typeName:'Maybe',argument:a}}function g(a){return{typeName:'List',argument:a}}function c(a){return{typeName:'Const',argument:a}}function d(){return{typeName:'Union',arguments:[].slice.call(arguments,0)}}return a={},n={typeName:'Boolean'},a$={typeName:'Number'},i={typeName:'String'},b={typeName:'Enum',values:['ArrayAssignmentTarget','ArrayBinding','ArrayExpression','ArrowExpression','AssignmentExpression','AssignmentTargetIdentifier','AssignmentTargetPropertyIdentifier','AssignmentTargetPropertyProperty','AssignmentTargetWithDefault','BinaryExpression','BindingIdentifier','BindingPropertyIdentifier','BindingPropertyProperty','BindingWithDefault','Block','BlockStatement','BreakStatement','CallExpression','CatchClause','ClassDeclaration','ClassElement','ClassExpression','CompoundAssignmentExpression','ComputedMemberAssignmentTarget','ComputedMemberExpression','ComputedPropertyName','ConditionalExpression','ContinueStatement','DataProperty','DebuggerStatement','Directive','DoWhileStatement','EmptyStatement','Export','ExportAllFrom','ExportDefault','ExportFrom','ExportFromSpecifier','ExportLocalSpecifier','ExportLocals','ExpressionStatement','ForInStatement','ForOfStatement','ForStatement','FormalParameters','FunctionBody','FunctionDeclaration','FunctionExpression','Getter','IdentifierExpression','IfStatement','Import','ImportNamespace','ImportSpecifier','LabeledStatement','LiteralBooleanExpression','LiteralInfinityExpression','LiteralNullExpression','LiteralNumericExpression','LiteralRegExpExpression','LiteralStringExpression','Method','Module','NewExpression','NewTargetExpression','ObjectAssignmentTarget','ObjectBinding','ObjectExpression','ReturnStatement','Script','Setter','ShorthandProperty','SpreadElement','StaticMemberAssignmentTarget','StaticMemberExpression','StaticPropertyName','Super','SwitchCase','SwitchDefault','SwitchStatement','SwitchStatementWithDefault','TemplateElement','TemplateExpression','ThisExpression','ThrowStatement','TryCatchStatement','TryFinallyStatement','UnaryExpression','UpdateExpression','VariableDeclaration','VariableDeclarationStatement','VariableDeclarator','WhileStatement','WithStatement','YieldExpression','YieldGeneratorExpression']},b0={typeName:'Enum',values:['==','!=','===','!==','<','<=','>','>=','in','instanceof','<<','>>','>>>','+','-','*','/','%','**',',','||','&&','|','^','&']},b6={typeName:'Enum',values:['+=','-=','*=','/=','%=','**=','<<=','>>=','>>>=','|=','^=','&=']},b4={typeName:'Enum',values:['+','-','!','~','typeof','void','delete']},b3={typeName:'Enum',values:['++','--']},aZ={typeName:'Enum',values:['var','let','const']},q=a.ArrayAssignmentTarget={},l=a.ArrayBinding={},aR=a.ArrayExpression={},aM=a.ArrowExpression={},aK=a.AssignmentExpression={},k=a.AssignmentTargetIdentifier={},aC=a.AssignmentTargetPropertyIdentifier={},az=a.AssignmentTargetPropertyProperty={},G=a.AssignmentTargetWithDefault={},ay=a.BinaryExpression={},h=a.BindingIdentifier={},ax=a.BindingPropertyIdentifier={},at=a.BindingPropertyProperty={},v=a.BindingWithDefault={},s=a.Block={},an=a.BlockStatement={},am=a.BreakStatement={},aa=a.CallExpression={},F=a.CatchClause={},A=a.ClassDeclaration={},E=a.ClassElement={},O=a.ClassExpression={},a6=a.CompoundAssignmentExpression={},a4=a.ComputedMemberAssignmentTarget={},a3=a.ComputedMemberExpression={},a2=a.ComputedPropertyName={},a1=a.ConditionalExpression={},X=a.ContinueStatement={},W=a.DataProperty={},Q=a.DebuggerStatement={},y=a.Directive={},av=a.DoWhileStatement={},R=a.EmptyStatement={},S=a.Export={},T=a.ExportAllFrom={},U=a.ExportDefault={},V=a.ExportFrom={},N=a.ExportFromSpecifier={},M=a.ExportLocalSpecifier={},Y=a.ExportLocals={},Z=a.ExpressionStatement={},_=a.ForInStatement={},$=a.ForOfStatement={},a0=a.ForStatement={},w=a.FormalParameters={},r=a.FunctionBody={},B=a.FunctionDeclaration={},I=a.FunctionExpression={},a5=a.Getter={},C=a.IdentifierExpression={},a7=a.IfStatement={},a8=a.Import={},a9=a.ImportNamespace={},L=a.ImportSpecifier={},ab=a.LabeledStatement={},ac=a.LiteralBooleanExpression={},ad=a.LiteralInfinityExpression={},ae=a.LiteralNullExpression={},af=a.LiteralNumericExpression={},ag=a.LiteralRegExpExpression={},ah=a.LiteralStringExpression={},ai=a.Method={},aj=a.Module={},ak=a.NewExpression={},al=a.NewTargetExpression={},o=a.ObjectAssignmentTarget={},m=a.ObjectBinding={},ao=a.ObjectExpression={},ap=a.ReturnStatement={},aq=a.Script={},ar=a.Setter={},as=a.ShorthandProperty={},z=a.SpreadElement={},au=a.StaticMemberAssignmentTarget={},P=a.StaticMemberExpression={},aw=a.StaticPropertyName={},t=a.Super={},D=a.SwitchCase={},K=a.SwitchDefault={},aA=a.SwitchStatement={},aB=a.SwitchStatementWithDefault={},J=a.TemplateElement={},aD=a.TemplateExpression={},aE=a.ThisExpression={},aF=a.ThrowStatement={},aG=a.TryCatchStatement={},aH=a.TryFinallyStatement={},aI=a.UnaryExpression={},aJ=a.UpdateExpression={},u=a.VariableDeclaration={},aL=a.VariableDeclarationStatement={},H=a.VariableDeclarator={},aN=a.WhileStatement={},aO=a.WithStatement={},aP=a.YieldExpression={},aQ=a.YieldGeneratorExpression={},a_=d(a3,P),aS=d(aC,az),b8=d(A,O),aT=d(S,T,U,V,Y),x=d(a2,aw),b9=d(B,I),aU=d(a8,a9),aY=d(av,_,$,a0,aN),p=d(a4,au),aV=d(ax,at),aW=d(a5,ai,ar),b5=d(aj,aq),b1=d(k,h,C),b2=d(W,aW),e=d(aR,aM,aK,ay,aa,O,a6,a1,I,C,ac,ad,ae,af,ag,ah,a_,ak,al,ao,aD,aE,aI,aJ,aP,aQ),j=d(an,am,A,X,Q,R,Z,B,a7,aY,ab,ap,aA,aB,aF,aG,aH,aL,aO),aX=d(b2,as),b7=d(q,l,aS,G,aV,v,s,F,E,y,aT,N,M,e,w,r,aU,L,p,o,m,aX,b5,x,z,j,t,D,K,J,u,H,b1),q.typeName='ArrayAssignmentTarget',q.fields=[{name:'type',type:c(b),value:'ArrayAssignmentTarget'},{name:'elements',type:g(f(d(G,d(d(q,o),d(k,p)))))},{name:'rest',type:f(d(d(q,o),d(k,p)))}],l.typeName='ArrayBinding',l.fields=[{name:'type',type:c(b),value:'ArrayBinding'},{name:'elements',type:g(f(d(v,d(h,d(l,m)))))},{name:'rest',type:f(d(h,d(l,m)))}],aR.typeName='ArrayExpression',aR.fields=[{name:'type',type:c(b),value:'ArrayExpression'},{name:'elements',type:g(f(d(e,z)))}],aM.typeName='ArrowExpression',aM.fields=[{name:'type',type:c(b),value:'ArrowExpression'},{name:'params',type:w},{name:'body',type:d(e,r)}],aK.typeName='AssignmentExpression',aK.fields=[{name:'type',type:c(b),value:'AssignmentExpression'},{name:'binding',type:d(d(q,o),d(k,p))},{name:'expression',type:e}],k.typeName='AssignmentTargetIdentifier',k.fields=[{name:'type',type:c(b),value:'AssignmentTargetIdentifier'},{name:'name',type:i}],aC.typeName='AssignmentTargetPropertyIdentifier',aC.fields=[{name:'type',type:c(b),value:'AssignmentTargetPropertyIdentifier'},{name:'binding',type:k},{name:'init',type:f(e)}],az.typeName='AssignmentTargetPropertyProperty',az.fields=[{name:'type',type:c(b),value:'AssignmentTargetPropertyProperty'},{name:'name',type:x},{name:'binding',type:d(G,d(d(q,o),d(k,p)))}],G.typeName='AssignmentTargetWithDefault',G.fields=[{name:'type',type:c(b),value:'AssignmentTargetWithDefault'},{name:'binding',type:d(d(q,o),d(k,p))},{name:'init',type:e}],ay.typeName='BinaryExpression',ay.fields=[{name:'type',type:c(b),value:'BinaryExpression'},{name:'left',type:e},{name:'operator',type:b0},{name:'right',type:e}],h.typeName='BindingIdentifier',h.fields=[{name:'type',type:c(b),value:'BindingIdentifier'},{name:'name',type:i}],ax.typeName='BindingPropertyIdentifier',ax.fields=[{name:'type',type:c(b),value:'BindingPropertyIdentifier'},{name:'binding',type:h},{name:'init',type:f(e)}],at.typeName='BindingPropertyProperty',at.fields=[{name:'type',type:c(b),value:'BindingPropertyProperty'},{name:'name',type:x},{name:'binding',type:d(v,d(h,d(l,m)))}],v.typeName='BindingWithDefault',v.fields=[{name:'type',type:c(b),value:'BindingWithDefault'},{name:'binding',type:d(h,d(l,m))},{name:'init',type:e}],s.typeName='Block',s.fields=[{name:'type',type:c(b),value:'Block'},{name:'statements',type:g(j)}],an.typeName='BlockStatement',an.fields=[{name:'type',type:c(b),value:'BlockStatement'},{name:'block',type:s}],am.typeName='BreakStatement',am.fields=[{name:'type',type:c(b),value:'BreakStatement'},{name:'label',type:f(i)}],aa.typeName='CallExpression',aa.fields=[{name:'type',type:c(b),value:'CallExpression'},{name:'callee',type:d(e,t)},{name:'arguments',type:g(d(e,z))}],F.typeName='CatchClause',F.fields=[{name:'type',type:c(b),value:'CatchClause'},{name:'binding',type:d(h,d(l,m))},{name:'body',type:s}],A.typeName='ClassDeclaration',A.fields=[{name:'type',type:c(b),value:'ClassDeclaration'},{name:'name',type:h},{name:'super',type:f(e)},{name:'elements',type:g(E)}],E.typeName='ClassElement',E.fields=[{name:'type',type:c(b),value:'ClassElement'},{name:'isStatic',type:n},{name:'method',type:aW}],O.typeName='ClassExpression',O.fields=[{name:'type',type:c(b),value:'ClassExpression'},{name:'name',type:f(h)},{name:'super',type:f(e)},{name:'elements',type:g(E)}],a6.typeName='CompoundAssignmentExpression',a6.fields=[{name:'type',type:c(b),value:'CompoundAssignmentExpression'},{name:'binding',type:d(k,p)},{name:'operator',type:b6},{name:'expression',type:e}],a4.typeName='ComputedMemberAssignmentTarget',a4.fields=[{name:'type',type:c(b),value:'ComputedMemberAssignmentTarget'},{name:'object',type:d(e,t)},{name:'expression',type:e}],a3.typeName='ComputedMemberExpression',a3.fields=[{name:'type',type:c(b),value:'ComputedMemberExpression'},{name:'object',type:d(e,t)},{name:'expression',type:e}],a2.typeName='ComputedPropertyName',a2.fields=[{name:'type',type:c(b),value:'ComputedPropertyName'},{name:'expression',type:e}],a1.typeName='ConditionalExpression',a1.fields=[{name:'type',type:c(b),value:'ConditionalExpression'},{name:'test',type:e},{name:'consequent',type:e},{name:'alternate',type:e}],X.typeName='ContinueStatement',X.fields=[{name:'type',type:c(b),value:'ContinueStatement'},{name:'label',type:f(i)}],W.typeName='DataProperty',W.fields=[{name:'type',type:c(b),value:'DataProperty'},{name:'name',type:x},{name:'expression',type:e}],Q.typeName='DebuggerStatement',Q.fields=[{name:'type',type:c(b),value:'DebuggerStatement'}],y.typeName='Directive',y.fields=[{name:'type',type:c(b),value:'Directive'},{name:'rawValue',type:i}],av.typeName='DoWhileStatement',av.fields=[{name:'type',type:c(b),value:'DoWhileStatement'},{name:'body',type:j},{name:'test',type:e}],R.typeName='EmptyStatement',R.fields=[{name:'type',type:c(b),value:'EmptyStatement'}],S.typeName='Export',S.fields=[{name:'type',type:c(b),value:'Export'},{name:'declaration',type:d(A,B,u)}],T.typeName='ExportAllFrom',T.fields=[{name:'type',type:c(b),value:'ExportAllFrom'},{name:'moduleSpecifier',type:i}],U.typeName='ExportDefault',U.fields=[{name:'type',type:c(b),value:'ExportDefault'},{name:'body',type:d(A,e,B)}],V.typeName='ExportFrom',V.fields=[{name:'type',type:c(b),value:'ExportFrom'},{name:'namedExports',type:g(N)},{name:'moduleSpecifier',type:i}],N.typeName='ExportFromSpecifier',N.fields=[{name:'type',type:c(b),value:'ExportFromSpecifier'},{name:'name',type:i},{name:'exportedName',type:f(i)}],M.typeName='ExportLocalSpecifier',M.fields=[{name:'type',type:c(b),value:'ExportLocalSpecifier'},{name:'name',type:C},{name:'exportedName',type:f(i)}],Y.typeName='ExportLocals',Y.fields=[{name:'type',type:c(b),value:'ExportLocals'},{name:'namedExports',type:g(M)}],Z.typeName='ExpressionStatement',Z.fields=[{name:'type',type:c(b),value:'ExpressionStatement'},{name:'expression',type:e}],_.typeName='ForInStatement',_.fields=[{name:'type',type:c(b),value:'ForInStatement'},{name:'left',type:d(d(d(q,o),d(k,p)),u)},{name:'right',type:e},{name:'body',type:j}],$.typeName='ForOfStatement',$.fields=[{name:'type',type:c(b),value:'ForOfStatement'},{name:'left',type:d(d(d(q,o),d(k,p)),u)},{name:'right',type:e},{name:'body',type:j}],a0.typeName='ForStatement',a0.fields=[{name:'type',type:c(b),value:'ForStatement'},{name:'init',type:f(d(e,u))},{name:'test',type:f(e)},{name:'update',type:f(e)},{name:'body',type:j}],w.typeName='FormalParameters',w.fields=[{name:'type',type:c(b),value:'FormalParameters'},{name:'items',type:g(d(v,d(h,d(l,m))))},{name:'rest',type:f(d(h,d(l,m)))}],r.typeName='FunctionBody',r.fields=[{name:'type',type:c(b),value:'FunctionBody'},{name:'directives',type:g(y)},{name:'statements',type:g(j)}],B.typeName='FunctionDeclaration',B.fields=[{name:'type',type:c(b),value:'FunctionDeclaration'},{name:'isGenerator',type:n},{name:'name',type:h},{name:'params',type:w},{name:'body',type:r}],I.typeName='FunctionExpression',I.fields=[{name:'type',type:c(b),value:'FunctionExpression'},{name:'isGenerator',type:n},{name:'name',type:f(h)},{name:'params',type:w},{name:'body',type:r}],a5.typeName='Getter',a5.fields=[{name:'type',type:c(b),value:'Getter'},{name:'name',type:x},{name:'body',type:r}],C.typeName='IdentifierExpression',C.fields=[{name:'type',type:c(b),value:'IdentifierExpression'},{name:'name',type:i}],a7.typeName='IfStatement',a7.fields=[{name:'type',type:c(b),value:'IfStatement'},{name:'test',type:e},{name:'consequent',type:j},{name:'alternate',type:f(j)}],a8.typeName='Import',a8.fields=[{name:'type',type:c(b),value:'Import'},{name:'defaultBinding',type:f(h)},{name:'namedImports',type:g(L)},{name:'moduleSpecifier',type:i}],a9.typeName='ImportNamespace',a9.fields=[{name:'type',type:c(b),value:'ImportNamespace'},{name:'defaultBinding',type:f(h)},{name:'namespaceBinding',type:h},{name:'moduleSpecifier',type:i}],L.typeName='ImportSpecifier',L.fields=[{name:'type',type:c(b),value:'ImportSpecifier'},{name:'name',type:f(i)},{name:'binding',type:h}],ab.typeName='LabeledStatement',ab.fields=[{name:'type',type:c(b),value:'LabeledStatement'},{name:'label',type:i},{name:'body',type:j}],ac.typeName='LiteralBooleanExpression',ac.fields=[{name:'type',type:c(b),value:'LiteralBooleanExpression'},{name:'value',type:n}],ad.typeName='LiteralInfinityExpression',ad.fields=[{name:'type',type:c(b),value:'LiteralInfinityExpression'}],ae.typeName='LiteralNullExpression',ae.fields=[{name:'type',type:c(b),value:'LiteralNullExpression'}],af.typeName='LiteralNumericExpression',af.fields=[{name:'type',type:c(b),value:'LiteralNumericExpression'},{name:'value',type:a$}],ag.typeName='LiteralRegExpExpression',ag.fields=[{name:'type',type:c(b),value:'LiteralRegExpExpression'},{name:'pattern',type:i},{name:'global',type:n},{name:'ignoreCase',type:n},{name:'multiLine',type:n},{name:'sticky',type:n},{name:'unicode',type:n}],ah.typeName='LiteralStringExpression',ah.fields=[{name:'type',type:c(b),value:'LiteralStringExpression'},{name:'value',type:i}],ai.typeName='Method',ai.fields=[{name:'type',type:c(b),value:'Method'},{name:'isGenerator',type:n},{name:'name',type:x},{name:'params',type:w},{name:'body',type:r}],aj.typeName='Module',aj.fields=[{name:'type',type:c(b),value:'Module'},{name:'directives',type:g(y)},{name:'items',type:g(d(aT,aU,j))}],ak.typeName='NewExpression',ak.fields=[{name:'type',type:c(b),value:'NewExpression'},{name:'callee',type:e},{name:'arguments',type:g(d(e,z))}],al.typeName='NewTargetExpression',al.fields=[{name:'type',type:c(b),value:'NewTargetExpression'}],o.typeName='ObjectAssignmentTarget',o.fields=[{name:'type',type:c(b),value:'ObjectAssignmentTarget'},{name:'properties',type:g(aS)}],m.typeName='ObjectBinding',m.fields=[{name:'type',type:c(b),value:'ObjectBinding'},{name:'properties',type:g(aV)}],ao.typeName='ObjectExpression',ao.fields=[{name:'type',type:c(b),value:'ObjectExpression'},{name:'properties',type:g(aX)}],ap.typeName='ReturnStatement',ap.fields=[{name:'type',type:c(b),value:'ReturnStatement'},{name:'expression',type:f(e)}],aq.typeName='Script',aq.fields=[{name:'type',type:c(b),value:'Script'},{name:'directives',type:g(y)},{name:'statements',type:g(j)}],ar.typeName='Setter',ar.fields=[{name:'type',type:c(b),value:'Setter'},{name:'name',type:x},{name:'param',type:d(v,d(h,d(l,m)))},{name:'body',type:r}],as.typeName='ShorthandProperty',as.fields=[{name:'type',type:c(b),value:'ShorthandProperty'},{name:'name',type:C}],z.typeName='SpreadElement',z.fields=[{name:'type',type:c(b),value:'SpreadElement'},{name:'expression',type:e}],au.typeName='StaticMemberAssignmentTarget',au.fields=[{name:'type',type:c(b),value:'StaticMemberAssignmentTarget'},{name:'object',type:d(e,t)},{name:'property',type:i}],P.typeName='StaticMemberExpression',P.fields=[{name:'type',type:c(b),value:'StaticMemberExpression'},{name:'object',type:d(e,t)},{name:'property',type:i}],aw.typeName='StaticPropertyName',aw.fields=[{name:'type',type:c(b),value:'StaticPropertyName'},{name:'value',type:i}],t.typeName='Super',t.fields=[{name:'type',type:c(b),value:'Super'}],D.typeName='SwitchCase',D.fields=[{name:'type',type:c(b),value:'SwitchCase'},{name:'test',type:e},{name:'consequent',type:g(j)}],K.typeName='SwitchDefault',K.fields=[{name:'type',type:c(b),value:'SwitchDefault'},{name:'consequent',type:g(j)}],aA.typeName='SwitchStatement',aA.fields=[{name:'type',type:c(b),value:'SwitchStatement'},{name:'discriminant',type:e},{name:'cases',type:g(D)}],aB.typeName='SwitchStatementWithDefault',aB.fields=[{name:'type',type:c(b),value:'SwitchStatementWithDefault'},{name:'discriminant',type:e},{name:'preDefaultCases',type:g(D)},{name:'defaultCase',type:K},{name:'postDefaultCases',type:g(D)}],J.typeName='TemplateElement',J.fields=[{name:'type',type:c(b),value:'TemplateElement'},{name:'rawValue',type:i}],aD.typeName='TemplateExpression',aD.fields=[{name:'type',type:c(b),value:'TemplateExpression'},{name:'tag',type:f(e)},{name:'elements',type:g(d(e,J))}],aE.typeName='ThisExpression',aE.fields=[{name:'type',type:c(b),value:'ThisExpression'}],aF.typeName='ThrowStatement',aF.fields=[{name:'type',type:c(b),value:'ThrowStatement'},{name:'expression',type:e}],aG.typeName='TryCatchStatement',aG.fields=[{name:'type',type:c(b),value:'TryCatchStatement'},{name:'body',type:s},{name:'catchClause',type:F}],aH.typeName='TryFinallyStatement',aH.fields=[{name:'type',type:c(b),value:'TryFinallyStatement'},{name:'body',type:s},{name:'catchClause',type:f(F)},{name:'finalizer',type:s}],aI.typeName='UnaryExpression',aI.fields=[{name:'type',type:c(b),value:'UnaryExpression'},{name:'operator',type:b4},{name:'operand',type:e}],aJ.typeName='UpdateExpression',aJ.fields=[{name:'type',type:c(b),value:'UpdateExpression'},{name:'isPrefix',type:n},{name:'operator',type:b3},{name:'operand',type:d(k,p)}],u.typeName='VariableDeclaration',u.fields=[{name:'type',type:c(b),value:'VariableDeclaration'},{name:'kind',type:aZ},{name:'declarators',type:g(H)}],aL.typeName='VariableDeclarationStatement',aL.fields=[{name:'type',type:c(b),value:'VariableDeclarationStatement'},{name:'declaration',type:u}],H.typeName='VariableDeclarator',H.fields=[{name:'type',type:c(b),value:'VariableDeclarator'},{name:'binding',type:d(h,d(l,m))},{name:'init',type:f(e)}],aN.typeName='WhileStatement',aN.fields=[{name:'type',type:c(b),value:'WhileStatement'},{name:'test',type:e},{name:'body',type:j}],aO.typeName='WithStatement',aO.fields=[{name:'type',type:c(b),value:'WithStatement'},{name:'object',type:e},{name:'body',type:j}],aP.typeName='YieldExpression',aP.fields=[{name:'type',type:c(b),value:'YieldExpression'},{name:'expression',type:f(e)}],aQ.typeName='YieldGeneratorExpression',aQ.fields=[{name:'type',type:c(b),value:'YieldGeneratorExpression'},{name:'expression',type:e}],a}()}),a.define('/node_modules/shift-scope/dist/scope-lookup.js',function(f,c,l,k){'use strict';function i(a){return a&&a.__esModule?a:{default:a}}function j(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}Object.defineProperty(c,'__esModule',{value:!0});var g=function(){function a(d,c){for(var b=0;b<c.length;b++){var a=c[b];a.enumerable=a.enumerable||!1,a.configurable=!0,'value'in a&&(a.writable=!0),Object.defineProperty(d,a.key,a)}}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}(),h=a('/node_modules/multimap/index.js',f),e=i(h),d=a('/node_modules/shift-scope/dist/scope.js',f),b=function(){function a(c){var b=this;j(this,a),this.scope=c,this.variableMap=new e.default;var d=function a(c){c.declarations.forEach(function(a){return b.variableMap.set(a.node,c)}),c.references.forEach(function(a){(!b.variableMap.has(a.node)||b.variableMap.get(a.node).indexOf(c)===-1)&&b.variableMap.set(a.node,c)})};!function a(b){b.children.forEach(a),b.variables.forEach(d)}(c)}return g(a,[{key:'lookup',value:function a(b){return this.variableMap.get(b)}},{key:'isGlobal',value:function a(b){return this.scope instanceof d.GlobalScope&&this.scope.has(b)}}]),a}();c.default=b}),b.scope=a('/node_modules/shift-scope/dist/index.js')}.call(this,this))
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.scope = require("shift-scope");
+
+},{"shift-scope":9}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Generated by src/generate.js.
+
+/**
+ * Copyright 2016 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var ArrayAssignmentTarget = exports.ArrayAssignmentTarget = function ArrayAssignmentTarget(_ref) {
+  var elements = _ref.elements;
+  var rest = _ref.rest;
+
+  _classCallCheck(this, ArrayAssignmentTarget);
+
+  this.type = 'ArrayAssignmentTarget';
+  this.elements = elements;
+  this.rest = rest;
+};
+
+var ArrayBinding = exports.ArrayBinding = function ArrayBinding(_ref2) {
+  var elements = _ref2.elements;
+  var rest = _ref2.rest;
+
+  _classCallCheck(this, ArrayBinding);
+
+  this.type = 'ArrayBinding';
+  this.elements = elements;
+  this.rest = rest;
+};
+
+var ArrayExpression = exports.ArrayExpression = function ArrayExpression(_ref3) {
+  var elements = _ref3.elements;
+
+  _classCallCheck(this, ArrayExpression);
+
+  this.type = 'ArrayExpression';
+  this.elements = elements;
+};
+
+var ArrowExpression = exports.ArrowExpression = function ArrowExpression(_ref4) {
+  var params = _ref4.params;
+  var body = _ref4.body;
+
+  _classCallCheck(this, ArrowExpression);
+
+  this.type = 'ArrowExpression';
+  this.params = params;
+  this.body = body;
+};
+
+var AssignmentExpression = exports.AssignmentExpression = function AssignmentExpression(_ref5) {
+  var binding = _ref5.binding;
+  var expression = _ref5.expression;
+
+  _classCallCheck(this, AssignmentExpression);
+
+  this.type = 'AssignmentExpression';
+  this.binding = binding;
+  this.expression = expression;
+};
+
+var AssignmentTargetIdentifier = exports.AssignmentTargetIdentifier = function AssignmentTargetIdentifier(_ref6) {
+  var name = _ref6.name;
+
+  _classCallCheck(this, AssignmentTargetIdentifier);
+
+  this.type = 'AssignmentTargetIdentifier';
+  this.name = name;
+};
+
+var AssignmentTargetPropertyIdentifier = exports.AssignmentTargetPropertyIdentifier = function AssignmentTargetPropertyIdentifier(_ref7) {
+  var binding = _ref7.binding;
+  var init = _ref7.init;
+
+  _classCallCheck(this, AssignmentTargetPropertyIdentifier);
+
+  this.type = 'AssignmentTargetPropertyIdentifier';
+  this.binding = binding;
+  this.init = init;
+};
+
+var AssignmentTargetPropertyProperty = exports.AssignmentTargetPropertyProperty = function AssignmentTargetPropertyProperty(_ref8) {
+  var name = _ref8.name;
+  var binding = _ref8.binding;
+
+  _classCallCheck(this, AssignmentTargetPropertyProperty);
+
+  this.type = 'AssignmentTargetPropertyProperty';
+  this.name = name;
+  this.binding = binding;
+};
+
+var AssignmentTargetWithDefault = exports.AssignmentTargetWithDefault = function AssignmentTargetWithDefault(_ref9) {
+  var binding = _ref9.binding;
+  var init = _ref9.init;
+
+  _classCallCheck(this, AssignmentTargetWithDefault);
+
+  this.type = 'AssignmentTargetWithDefault';
+  this.binding = binding;
+  this.init = init;
+};
+
+var BinaryExpression = exports.BinaryExpression = function BinaryExpression(_ref10) {
+  var left = _ref10.left;
+  var operator = _ref10.operator;
+  var right = _ref10.right;
+
+  _classCallCheck(this, BinaryExpression);
+
+  this.type = 'BinaryExpression';
+  this.left = left;
+  this.operator = operator;
+  this.right = right;
+};
+
+var BindingIdentifier = exports.BindingIdentifier = function BindingIdentifier(_ref11) {
+  var name = _ref11.name;
+
+  _classCallCheck(this, BindingIdentifier);
+
+  this.type = 'BindingIdentifier';
+  this.name = name;
+};
+
+var BindingPropertyIdentifier = exports.BindingPropertyIdentifier = function BindingPropertyIdentifier(_ref12) {
+  var binding = _ref12.binding;
+  var init = _ref12.init;
+
+  _classCallCheck(this, BindingPropertyIdentifier);
+
+  this.type = 'BindingPropertyIdentifier';
+  this.binding = binding;
+  this.init = init;
+};
+
+var BindingPropertyProperty = exports.BindingPropertyProperty = function BindingPropertyProperty(_ref13) {
+  var name = _ref13.name;
+  var binding = _ref13.binding;
+
+  _classCallCheck(this, BindingPropertyProperty);
+
+  this.type = 'BindingPropertyProperty';
+  this.name = name;
+  this.binding = binding;
+};
+
+var BindingWithDefault = exports.BindingWithDefault = function BindingWithDefault(_ref14) {
+  var binding = _ref14.binding;
+  var init = _ref14.init;
+
+  _classCallCheck(this, BindingWithDefault);
+
+  this.type = 'BindingWithDefault';
+  this.binding = binding;
+  this.init = init;
+};
+
+var Block = exports.Block = function Block(_ref15) {
+  var statements = _ref15.statements;
+
+  _classCallCheck(this, Block);
+
+  this.type = 'Block';
+  this.statements = statements;
+};
+
+var BlockStatement = exports.BlockStatement = function BlockStatement(_ref16) {
+  var block = _ref16.block;
+
+  _classCallCheck(this, BlockStatement);
+
+  this.type = 'BlockStatement';
+  this.block = block;
+};
+
+var BreakStatement = exports.BreakStatement = function BreakStatement(_ref17) {
+  var label = _ref17.label;
+
+  _classCallCheck(this, BreakStatement);
+
+  this.type = 'BreakStatement';
+  this.label = label;
+};
+
+var CallExpression = exports.CallExpression = function CallExpression(_ref18) {
+  var callee = _ref18.callee;
+  var _arguments = _ref18.arguments;
+
+  _classCallCheck(this, CallExpression);
+
+  this.type = 'CallExpression';
+  this.callee = callee;
+  this.arguments = _arguments;
+};
+
+var CatchClause = exports.CatchClause = function CatchClause(_ref19) {
+  var binding = _ref19.binding;
+  var body = _ref19.body;
+
+  _classCallCheck(this, CatchClause);
+
+  this.type = 'CatchClause';
+  this.binding = binding;
+  this.body = body;
+};
+
+var ClassDeclaration = exports.ClassDeclaration = function ClassDeclaration(_ref20) {
+  var name = _ref20.name;
+  var _super = _ref20.super;
+  var elements = _ref20.elements;
+
+  _classCallCheck(this, ClassDeclaration);
+
+  this.type = 'ClassDeclaration';
+  this.name = name;
+  this.super = _super;
+  this.elements = elements;
+};
+
+var ClassElement = exports.ClassElement = function ClassElement(_ref21) {
+  var isStatic = _ref21.isStatic;
+  var method = _ref21.method;
+
+  _classCallCheck(this, ClassElement);
+
+  this.type = 'ClassElement';
+  this.isStatic = isStatic;
+  this.method = method;
+};
+
+var ClassExpression = exports.ClassExpression = function ClassExpression(_ref22) {
+  var name = _ref22.name;
+  var _super = _ref22.super;
+  var elements = _ref22.elements;
+
+  _classCallCheck(this, ClassExpression);
+
+  this.type = 'ClassExpression';
+  this.name = name;
+  this.super = _super;
+  this.elements = elements;
+};
+
+var CompoundAssignmentExpression = exports.CompoundAssignmentExpression = function CompoundAssignmentExpression(_ref23) {
+  var binding = _ref23.binding;
+  var operator = _ref23.operator;
+  var expression = _ref23.expression;
+
+  _classCallCheck(this, CompoundAssignmentExpression);
+
+  this.type = 'CompoundAssignmentExpression';
+  this.binding = binding;
+  this.operator = operator;
+  this.expression = expression;
+};
+
+var ComputedMemberAssignmentTarget = exports.ComputedMemberAssignmentTarget = function ComputedMemberAssignmentTarget(_ref24) {
+  var object = _ref24.object;
+  var expression = _ref24.expression;
+
+  _classCallCheck(this, ComputedMemberAssignmentTarget);
+
+  this.type = 'ComputedMemberAssignmentTarget';
+  this.object = object;
+  this.expression = expression;
+};
+
+var ComputedMemberExpression = exports.ComputedMemberExpression = function ComputedMemberExpression(_ref25) {
+  var object = _ref25.object;
+  var expression = _ref25.expression;
+
+  _classCallCheck(this, ComputedMemberExpression);
+
+  this.type = 'ComputedMemberExpression';
+  this.object = object;
+  this.expression = expression;
+};
+
+var ComputedPropertyName = exports.ComputedPropertyName = function ComputedPropertyName(_ref26) {
+  var expression = _ref26.expression;
+
+  _classCallCheck(this, ComputedPropertyName);
+
+  this.type = 'ComputedPropertyName';
+  this.expression = expression;
+};
+
+var ConditionalExpression = exports.ConditionalExpression = function ConditionalExpression(_ref27) {
+  var test = _ref27.test;
+  var consequent = _ref27.consequent;
+  var alternate = _ref27.alternate;
+
+  _classCallCheck(this, ConditionalExpression);
+
+  this.type = 'ConditionalExpression';
+  this.test = test;
+  this.consequent = consequent;
+  this.alternate = alternate;
+};
+
+var ContinueStatement = exports.ContinueStatement = function ContinueStatement(_ref28) {
+  var label = _ref28.label;
+
+  _classCallCheck(this, ContinueStatement);
+
+  this.type = 'ContinueStatement';
+  this.label = label;
+};
+
+var DataProperty = exports.DataProperty = function DataProperty(_ref29) {
+  var name = _ref29.name;
+  var expression = _ref29.expression;
+
+  _classCallCheck(this, DataProperty);
+
+  this.type = 'DataProperty';
+  this.name = name;
+  this.expression = expression;
+};
+
+var DebuggerStatement = exports.DebuggerStatement = function DebuggerStatement() {
+  _classCallCheck(this, DebuggerStatement);
+
+  this.type = 'DebuggerStatement';
+};
+
+var Directive = exports.Directive = function Directive(_ref30) {
+  var rawValue = _ref30.rawValue;
+
+  _classCallCheck(this, Directive);
+
+  this.type = 'Directive';
+  this.rawValue = rawValue;
+};
+
+var DoWhileStatement = exports.DoWhileStatement = function DoWhileStatement(_ref31) {
+  var body = _ref31.body;
+  var test = _ref31.test;
+
+  _classCallCheck(this, DoWhileStatement);
+
+  this.type = 'DoWhileStatement';
+  this.body = body;
+  this.test = test;
+};
+
+var EmptyStatement = exports.EmptyStatement = function EmptyStatement() {
+  _classCallCheck(this, EmptyStatement);
+
+  this.type = 'EmptyStatement';
+};
+
+var Export = exports.Export = function Export(_ref32) {
+  var declaration = _ref32.declaration;
+
+  _classCallCheck(this, Export);
+
+  this.type = 'Export';
+  this.declaration = declaration;
+};
+
+var ExportAllFrom = exports.ExportAllFrom = function ExportAllFrom(_ref33) {
+  var moduleSpecifier = _ref33.moduleSpecifier;
+
+  _classCallCheck(this, ExportAllFrom);
+
+  this.type = 'ExportAllFrom';
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ExportDefault = exports.ExportDefault = function ExportDefault(_ref34) {
+  var body = _ref34.body;
+
+  _classCallCheck(this, ExportDefault);
+
+  this.type = 'ExportDefault';
+  this.body = body;
+};
+
+var ExportFrom = exports.ExportFrom = function ExportFrom(_ref35) {
+  var namedExports = _ref35.namedExports;
+  var moduleSpecifier = _ref35.moduleSpecifier;
+
+  _classCallCheck(this, ExportFrom);
+
+  this.type = 'ExportFrom';
+  this.namedExports = namedExports;
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ExportFromSpecifier = exports.ExportFromSpecifier = function ExportFromSpecifier(_ref36) {
+  var name = _ref36.name;
+  var exportedName = _ref36.exportedName;
+
+  _classCallCheck(this, ExportFromSpecifier);
+
+  this.type = 'ExportFromSpecifier';
+  this.name = name;
+  this.exportedName = exportedName;
+};
+
+var ExportLocalSpecifier = exports.ExportLocalSpecifier = function ExportLocalSpecifier(_ref37) {
+  var name = _ref37.name;
+  var exportedName = _ref37.exportedName;
+
+  _classCallCheck(this, ExportLocalSpecifier);
+
+  this.type = 'ExportLocalSpecifier';
+  this.name = name;
+  this.exportedName = exportedName;
+};
+
+var ExportLocals = exports.ExportLocals = function ExportLocals(_ref38) {
+  var namedExports = _ref38.namedExports;
+
+  _classCallCheck(this, ExportLocals);
+
+  this.type = 'ExportLocals';
+  this.namedExports = namedExports;
+};
+
+var ExpressionStatement = exports.ExpressionStatement = function ExpressionStatement(_ref39) {
+  var expression = _ref39.expression;
+
+  _classCallCheck(this, ExpressionStatement);
+
+  this.type = 'ExpressionStatement';
+  this.expression = expression;
+};
+
+var ForInStatement = exports.ForInStatement = function ForInStatement(_ref40) {
+  var left = _ref40.left;
+  var right = _ref40.right;
+  var body = _ref40.body;
+
+  _classCallCheck(this, ForInStatement);
+
+  this.type = 'ForInStatement';
+  this.left = left;
+  this.right = right;
+  this.body = body;
+};
+
+var ForOfStatement = exports.ForOfStatement = function ForOfStatement(_ref41) {
+  var left = _ref41.left;
+  var right = _ref41.right;
+  var body = _ref41.body;
+
+  _classCallCheck(this, ForOfStatement);
+
+  this.type = 'ForOfStatement';
+  this.left = left;
+  this.right = right;
+  this.body = body;
+};
+
+var ForStatement = exports.ForStatement = function ForStatement(_ref42) {
+  var init = _ref42.init;
+  var test = _ref42.test;
+  var update = _ref42.update;
+  var body = _ref42.body;
+
+  _classCallCheck(this, ForStatement);
+
+  this.type = 'ForStatement';
+  this.init = init;
+  this.test = test;
+  this.update = update;
+  this.body = body;
+};
+
+var FormalParameters = exports.FormalParameters = function FormalParameters(_ref43) {
+  var items = _ref43.items;
+  var rest = _ref43.rest;
+
+  _classCallCheck(this, FormalParameters);
+
+  this.type = 'FormalParameters';
+  this.items = items;
+  this.rest = rest;
+};
+
+var FunctionBody = exports.FunctionBody = function FunctionBody(_ref44) {
+  var directives = _ref44.directives;
+  var statements = _ref44.statements;
+
+  _classCallCheck(this, FunctionBody);
+
+  this.type = 'FunctionBody';
+  this.directives = directives;
+  this.statements = statements;
+};
+
+var FunctionDeclaration = exports.FunctionDeclaration = function FunctionDeclaration(_ref45) {
+  var isGenerator = _ref45.isGenerator;
+  var name = _ref45.name;
+  var params = _ref45.params;
+  var body = _ref45.body;
+
+  _classCallCheck(this, FunctionDeclaration);
+
+  this.type = 'FunctionDeclaration';
+  this.isGenerator = isGenerator;
+  this.name = name;
+  this.params = params;
+  this.body = body;
+};
+
+var FunctionExpression = exports.FunctionExpression = function FunctionExpression(_ref46) {
+  var isGenerator = _ref46.isGenerator;
+  var name = _ref46.name;
+  var params = _ref46.params;
+  var body = _ref46.body;
+
+  _classCallCheck(this, FunctionExpression);
+
+  this.type = 'FunctionExpression';
+  this.isGenerator = isGenerator;
+  this.name = name;
+  this.params = params;
+  this.body = body;
+};
+
+var Getter = exports.Getter = function Getter(_ref47) {
+  var name = _ref47.name;
+  var body = _ref47.body;
+
+  _classCallCheck(this, Getter);
+
+  this.type = 'Getter';
+  this.name = name;
+  this.body = body;
+};
+
+var IdentifierExpression = exports.IdentifierExpression = function IdentifierExpression(_ref48) {
+  var name = _ref48.name;
+
+  _classCallCheck(this, IdentifierExpression);
+
+  this.type = 'IdentifierExpression';
+  this.name = name;
+};
+
+var IfStatement = exports.IfStatement = function IfStatement(_ref49) {
+  var test = _ref49.test;
+  var consequent = _ref49.consequent;
+  var alternate = _ref49.alternate;
+
+  _classCallCheck(this, IfStatement);
+
+  this.type = 'IfStatement';
+  this.test = test;
+  this.consequent = consequent;
+  this.alternate = alternate;
+};
+
+var Import = exports.Import = function Import(_ref50) {
+  var defaultBinding = _ref50.defaultBinding;
+  var namedImports = _ref50.namedImports;
+  var moduleSpecifier = _ref50.moduleSpecifier;
+
+  _classCallCheck(this, Import);
+
+  this.type = 'Import';
+  this.defaultBinding = defaultBinding;
+  this.namedImports = namedImports;
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ImportNamespace = exports.ImportNamespace = function ImportNamespace(_ref51) {
+  var defaultBinding = _ref51.defaultBinding;
+  var namespaceBinding = _ref51.namespaceBinding;
+  var moduleSpecifier = _ref51.moduleSpecifier;
+
+  _classCallCheck(this, ImportNamespace);
+
+  this.type = 'ImportNamespace';
+  this.defaultBinding = defaultBinding;
+  this.namespaceBinding = namespaceBinding;
+  this.moduleSpecifier = moduleSpecifier;
+};
+
+var ImportSpecifier = exports.ImportSpecifier = function ImportSpecifier(_ref52) {
+  var name = _ref52.name;
+  var binding = _ref52.binding;
+
+  _classCallCheck(this, ImportSpecifier);
+
+  this.type = 'ImportSpecifier';
+  this.name = name;
+  this.binding = binding;
+};
+
+var LabeledStatement = exports.LabeledStatement = function LabeledStatement(_ref53) {
+  var label = _ref53.label;
+  var body = _ref53.body;
+
+  _classCallCheck(this, LabeledStatement);
+
+  this.type = 'LabeledStatement';
+  this.label = label;
+  this.body = body;
+};
+
+var LiteralBooleanExpression = exports.LiteralBooleanExpression = function LiteralBooleanExpression(_ref54) {
+  var value = _ref54.value;
+
+  _classCallCheck(this, LiteralBooleanExpression);
+
+  this.type = 'LiteralBooleanExpression';
+  this.value = value;
+};
+
+var LiteralInfinityExpression = exports.LiteralInfinityExpression = function LiteralInfinityExpression() {
+  _classCallCheck(this, LiteralInfinityExpression);
+
+  this.type = 'LiteralInfinityExpression';
+};
+
+var LiteralNullExpression = exports.LiteralNullExpression = function LiteralNullExpression() {
+  _classCallCheck(this, LiteralNullExpression);
+
+  this.type = 'LiteralNullExpression';
+};
+
+var LiteralNumericExpression = exports.LiteralNumericExpression = function LiteralNumericExpression(_ref55) {
+  var value = _ref55.value;
+
+  _classCallCheck(this, LiteralNumericExpression);
+
+  this.type = 'LiteralNumericExpression';
+  this.value = value;
+};
+
+var LiteralRegExpExpression = exports.LiteralRegExpExpression = function LiteralRegExpExpression(_ref56) {
+  var pattern = _ref56.pattern;
+  var global = _ref56.global;
+  var ignoreCase = _ref56.ignoreCase;
+  var multiLine = _ref56.multiLine;
+  var sticky = _ref56.sticky;
+  var unicode = _ref56.unicode;
+
+  _classCallCheck(this, LiteralRegExpExpression);
+
+  this.type = 'LiteralRegExpExpression';
+  this.pattern = pattern;
+  this.global = global;
+  this.ignoreCase = ignoreCase;
+  this.multiLine = multiLine;
+  this.sticky = sticky;
+  this.unicode = unicode;
+};
+
+var LiteralStringExpression = exports.LiteralStringExpression = function LiteralStringExpression(_ref57) {
+  var value = _ref57.value;
+
+  _classCallCheck(this, LiteralStringExpression);
+
+  this.type = 'LiteralStringExpression';
+  this.value = value;
+};
+
+var Method = exports.Method = function Method(_ref58) {
+  var isGenerator = _ref58.isGenerator;
+  var name = _ref58.name;
+  var params = _ref58.params;
+  var body = _ref58.body;
+
+  _classCallCheck(this, Method);
+
+  this.type = 'Method';
+  this.isGenerator = isGenerator;
+  this.name = name;
+  this.params = params;
+  this.body = body;
+};
+
+var Module = exports.Module = function Module(_ref59) {
+  var directives = _ref59.directives;
+  var items = _ref59.items;
+
+  _classCallCheck(this, Module);
+
+  this.type = 'Module';
+  this.directives = directives;
+  this.items = items;
+};
+
+var NewExpression = exports.NewExpression = function NewExpression(_ref60) {
+  var callee = _ref60.callee;
+  var _arguments = _ref60.arguments;
+
+  _classCallCheck(this, NewExpression);
+
+  this.type = 'NewExpression';
+  this.callee = callee;
+  this.arguments = _arguments;
+};
+
+var NewTargetExpression = exports.NewTargetExpression = function NewTargetExpression() {
+  _classCallCheck(this, NewTargetExpression);
+
+  this.type = 'NewTargetExpression';
+};
+
+var ObjectAssignmentTarget = exports.ObjectAssignmentTarget = function ObjectAssignmentTarget(_ref61) {
+  var properties = _ref61.properties;
+
+  _classCallCheck(this, ObjectAssignmentTarget);
+
+  this.type = 'ObjectAssignmentTarget';
+  this.properties = properties;
+};
+
+var ObjectBinding = exports.ObjectBinding = function ObjectBinding(_ref62) {
+  var properties = _ref62.properties;
+
+  _classCallCheck(this, ObjectBinding);
+
+  this.type = 'ObjectBinding';
+  this.properties = properties;
+};
+
+var ObjectExpression = exports.ObjectExpression = function ObjectExpression(_ref63) {
+  var properties = _ref63.properties;
+
+  _classCallCheck(this, ObjectExpression);
+
+  this.type = 'ObjectExpression';
+  this.properties = properties;
+};
+
+var ReturnStatement = exports.ReturnStatement = function ReturnStatement(_ref64) {
+  var expression = _ref64.expression;
+
+  _classCallCheck(this, ReturnStatement);
+
+  this.type = 'ReturnStatement';
+  this.expression = expression;
+};
+
+var Script = exports.Script = function Script(_ref65) {
+  var directives = _ref65.directives;
+  var statements = _ref65.statements;
+
+  _classCallCheck(this, Script);
+
+  this.type = 'Script';
+  this.directives = directives;
+  this.statements = statements;
+};
+
+var Setter = exports.Setter = function Setter(_ref66) {
+  var name = _ref66.name;
+  var param = _ref66.param;
+  var body = _ref66.body;
+
+  _classCallCheck(this, Setter);
+
+  this.type = 'Setter';
+  this.name = name;
+  this.param = param;
+  this.body = body;
+};
+
+var ShorthandProperty = exports.ShorthandProperty = function ShorthandProperty(_ref67) {
+  var name = _ref67.name;
+
+  _classCallCheck(this, ShorthandProperty);
+
+  this.type = 'ShorthandProperty';
+  this.name = name;
+};
+
+var SpreadElement = exports.SpreadElement = function SpreadElement(_ref68) {
+  var expression = _ref68.expression;
+
+  _classCallCheck(this, SpreadElement);
+
+  this.type = 'SpreadElement';
+  this.expression = expression;
+};
+
+var StaticMemberAssignmentTarget = exports.StaticMemberAssignmentTarget = function StaticMemberAssignmentTarget(_ref69) {
+  var object = _ref69.object;
+  var property = _ref69.property;
+
+  _classCallCheck(this, StaticMemberAssignmentTarget);
+
+  this.type = 'StaticMemberAssignmentTarget';
+  this.object = object;
+  this.property = property;
+};
+
+var StaticMemberExpression = exports.StaticMemberExpression = function StaticMemberExpression(_ref70) {
+  var object = _ref70.object;
+  var property = _ref70.property;
+
+  _classCallCheck(this, StaticMemberExpression);
+
+  this.type = 'StaticMemberExpression';
+  this.object = object;
+  this.property = property;
+};
+
+var StaticPropertyName = exports.StaticPropertyName = function StaticPropertyName(_ref71) {
+  var value = _ref71.value;
+
+  _classCallCheck(this, StaticPropertyName);
+
+  this.type = 'StaticPropertyName';
+  this.value = value;
+};
+
+var Super = exports.Super = function Super() {
+  _classCallCheck(this, Super);
+
+  this.type = 'Super';
+};
+
+var SwitchCase = exports.SwitchCase = function SwitchCase(_ref72) {
+  var test = _ref72.test;
+  var consequent = _ref72.consequent;
+
+  _classCallCheck(this, SwitchCase);
+
+  this.type = 'SwitchCase';
+  this.test = test;
+  this.consequent = consequent;
+};
+
+var SwitchDefault = exports.SwitchDefault = function SwitchDefault(_ref73) {
+  var consequent = _ref73.consequent;
+
+  _classCallCheck(this, SwitchDefault);
+
+  this.type = 'SwitchDefault';
+  this.consequent = consequent;
+};
+
+var SwitchStatement = exports.SwitchStatement = function SwitchStatement(_ref74) {
+  var discriminant = _ref74.discriminant;
+  var cases = _ref74.cases;
+
+  _classCallCheck(this, SwitchStatement);
+
+  this.type = 'SwitchStatement';
+  this.discriminant = discriminant;
+  this.cases = cases;
+};
+
+var SwitchStatementWithDefault = exports.SwitchStatementWithDefault = function SwitchStatementWithDefault(_ref75) {
+  var discriminant = _ref75.discriminant;
+  var preDefaultCases = _ref75.preDefaultCases;
+  var defaultCase = _ref75.defaultCase;
+  var postDefaultCases = _ref75.postDefaultCases;
+
+  _classCallCheck(this, SwitchStatementWithDefault);
+
+  this.type = 'SwitchStatementWithDefault';
+  this.discriminant = discriminant;
+  this.preDefaultCases = preDefaultCases;
+  this.defaultCase = defaultCase;
+  this.postDefaultCases = postDefaultCases;
+};
+
+var TemplateElement = exports.TemplateElement = function TemplateElement(_ref76) {
+  var rawValue = _ref76.rawValue;
+
+  _classCallCheck(this, TemplateElement);
+
+  this.type = 'TemplateElement';
+  this.rawValue = rawValue;
+};
+
+var TemplateExpression = exports.TemplateExpression = function TemplateExpression(_ref77) {
+  var tag = _ref77.tag;
+  var elements = _ref77.elements;
+
+  _classCallCheck(this, TemplateExpression);
+
+  this.type = 'TemplateExpression';
+  this.tag = tag;
+  this.elements = elements;
+};
+
+var ThisExpression = exports.ThisExpression = function ThisExpression() {
+  _classCallCheck(this, ThisExpression);
+
+  this.type = 'ThisExpression';
+};
+
+var ThrowStatement = exports.ThrowStatement = function ThrowStatement(_ref78) {
+  var expression = _ref78.expression;
+
+  _classCallCheck(this, ThrowStatement);
+
+  this.type = 'ThrowStatement';
+  this.expression = expression;
+};
+
+var TryCatchStatement = exports.TryCatchStatement = function TryCatchStatement(_ref79) {
+  var body = _ref79.body;
+  var catchClause = _ref79.catchClause;
+
+  _classCallCheck(this, TryCatchStatement);
+
+  this.type = 'TryCatchStatement';
+  this.body = body;
+  this.catchClause = catchClause;
+};
+
+var TryFinallyStatement = exports.TryFinallyStatement = function TryFinallyStatement(_ref80) {
+  var body = _ref80.body;
+  var catchClause = _ref80.catchClause;
+  var finalizer = _ref80.finalizer;
+
+  _classCallCheck(this, TryFinallyStatement);
+
+  this.type = 'TryFinallyStatement';
+  this.body = body;
+  this.catchClause = catchClause;
+  this.finalizer = finalizer;
+};
+
+var UnaryExpression = exports.UnaryExpression = function UnaryExpression(_ref81) {
+  var operator = _ref81.operator;
+  var operand = _ref81.operand;
+
+  _classCallCheck(this, UnaryExpression);
+
+  this.type = 'UnaryExpression';
+  this.operator = operator;
+  this.operand = operand;
+};
+
+var UpdateExpression = exports.UpdateExpression = function UpdateExpression(_ref82) {
+  var isPrefix = _ref82.isPrefix;
+  var operator = _ref82.operator;
+  var operand = _ref82.operand;
+
+  _classCallCheck(this, UpdateExpression);
+
+  this.type = 'UpdateExpression';
+  this.isPrefix = isPrefix;
+  this.operator = operator;
+  this.operand = operand;
+};
+
+var VariableDeclaration = exports.VariableDeclaration = function VariableDeclaration(_ref83) {
+  var kind = _ref83.kind;
+  var declarators = _ref83.declarators;
+
+  _classCallCheck(this, VariableDeclaration);
+
+  this.type = 'VariableDeclaration';
+  this.kind = kind;
+  this.declarators = declarators;
+};
+
+var VariableDeclarationStatement = exports.VariableDeclarationStatement = function VariableDeclarationStatement(_ref84) {
+  var declaration = _ref84.declaration;
+
+  _classCallCheck(this, VariableDeclarationStatement);
+
+  this.type = 'VariableDeclarationStatement';
+  this.declaration = declaration;
+};
+
+var VariableDeclarator = exports.VariableDeclarator = function VariableDeclarator(_ref85) {
+  var binding = _ref85.binding;
+  var init = _ref85.init;
+
+  _classCallCheck(this, VariableDeclarator);
+
+  this.type = 'VariableDeclarator';
+  this.binding = binding;
+  this.init = init;
+};
+
+var WhileStatement = exports.WhileStatement = function WhileStatement(_ref86) {
+  var test = _ref86.test;
+  var body = _ref86.body;
+
+  _classCallCheck(this, WhileStatement);
+
+  this.type = 'WhileStatement';
+  this.test = test;
+  this.body = body;
+};
+
+var WithStatement = exports.WithStatement = function WithStatement(_ref87) {
+  var object = _ref87.object;
+  var body = _ref87.body;
+
+  _classCallCheck(this, WithStatement);
+
+  this.type = 'WithStatement';
+  this.object = object;
+  this.body = body;
+};
+
+var YieldExpression = exports.YieldExpression = function YieldExpression(_ref88) {
+  var expression = _ref88.expression;
+
+  _classCallCheck(this, YieldExpression);
+
+  this.type = 'YieldExpression';
+  this.expression = expression;
+};
+
+var YieldGeneratorExpression = exports.YieldGeneratorExpression = function YieldGeneratorExpression(_ref89) {
+  var expression = _ref89.expression;
+
+  _classCallCheck(this, YieldGeneratorExpression);
+
+  this.type = 'YieldGeneratorExpression';
+  this.expression = expression;
+};
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright 2016 Shape Security, Inc.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Licensed under the Apache License, Version 2.0 (the "License")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * you may not use this file except in compliance with the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * You may obtain a copy of the License at
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *     http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * See the License for the specific language governing permissions and
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * limitations under the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _shiftAst = require('shift-ast');
+
+var Shift = _interopRequireWildcard(_shiftAst);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var CloneReducer = function () {
+  function CloneReducer() {
+    _classCallCheck(this, CloneReducer);
+  }
+
+  _createClass(CloneReducer, [{
+    key: 'reduceArrayAssignmentTarget',
+    value: function reduceArrayAssignmentTarget(node, _ref) {
+      var elements = _ref.elements,
+          rest = _ref.rest;
+
+      return new Shift.ArrayAssignmentTarget({ elements: elements, rest: rest });
+    }
+  }, {
+    key: 'reduceArrayBinding',
+    value: function reduceArrayBinding(node, _ref2) {
+      var elements = _ref2.elements,
+          rest = _ref2.rest;
+
+      return new Shift.ArrayBinding({ elements: elements, rest: rest });
+    }
+  }, {
+    key: 'reduceArrayExpression',
+    value: function reduceArrayExpression(node, _ref3) {
+      var elements = _ref3.elements;
+
+      return new Shift.ArrayExpression({ elements: elements });
+    }
+  }, {
+    key: 'reduceArrowExpression',
+    value: function reduceArrowExpression(node, _ref4) {
+      var params = _ref4.params,
+          body = _ref4.body;
+
+      return new Shift.ArrowExpression({ params: params, body: body });
+    }
+  }, {
+    key: 'reduceAssignmentExpression',
+    value: function reduceAssignmentExpression(node, _ref5) {
+      var binding = _ref5.binding,
+          expression = _ref5.expression;
+
+      return new Shift.AssignmentExpression({ binding: binding, expression: expression });
+    }
+  }, {
+    key: 'reduceAssignmentTargetIdentifier',
+    value: function reduceAssignmentTargetIdentifier(node) {
+      return new Shift.AssignmentTargetIdentifier({ name: node.name });
+    }
+  }, {
+    key: 'reduceAssignmentTargetPropertyIdentifier',
+    value: function reduceAssignmentTargetPropertyIdentifier(node, _ref6) {
+      var binding = _ref6.binding,
+          init = _ref6.init;
+
+      return new Shift.AssignmentTargetPropertyIdentifier({ binding: binding, init: init });
+    }
+  }, {
+    key: 'reduceAssignmentTargetPropertyProperty',
+    value: function reduceAssignmentTargetPropertyProperty(node, _ref7) {
+      var name = _ref7.name,
+          binding = _ref7.binding;
+
+      return new Shift.AssignmentTargetPropertyProperty({ name: name, binding: binding });
+    }
+  }, {
+    key: 'reduceAssignmentTargetWithDefault',
+    value: function reduceAssignmentTargetWithDefault(node, _ref8) {
+      var binding = _ref8.binding,
+          init = _ref8.init;
+
+      return new Shift.AssignmentTargetWithDefault({ binding: binding, init: init });
+    }
+  }, {
+    key: 'reduceBinaryExpression',
+    value: function reduceBinaryExpression(node, _ref9) {
+      var left = _ref9.left,
+          right = _ref9.right;
+
+      return new Shift.BinaryExpression({ left: left, operator: node.operator, right: right });
+    }
+  }, {
+    key: 'reduceBindingIdentifier',
+    value: function reduceBindingIdentifier(node) {
+      return new Shift.BindingIdentifier({ name: node.name });
+    }
+  }, {
+    key: 'reduceBindingPropertyIdentifier',
+    value: function reduceBindingPropertyIdentifier(node, _ref10) {
+      var binding = _ref10.binding,
+          init = _ref10.init;
+
+      return new Shift.BindingPropertyIdentifier({ binding: binding, init: init });
+    }
+  }, {
+    key: 'reduceBindingPropertyProperty',
+    value: function reduceBindingPropertyProperty(node, _ref11) {
+      var name = _ref11.name,
+          binding = _ref11.binding;
+
+      return new Shift.BindingPropertyProperty({ name: name, binding: binding });
+    }
+  }, {
+    key: 'reduceBindingWithDefault',
+    value: function reduceBindingWithDefault(node, _ref12) {
+      var binding = _ref12.binding,
+          init = _ref12.init;
+
+      return new Shift.BindingWithDefault({ binding: binding, init: init });
+    }
+  }, {
+    key: 'reduceBlock',
+    value: function reduceBlock(node, _ref13) {
+      var statements = _ref13.statements;
+
+      return new Shift.Block({ statements: statements });
+    }
+  }, {
+    key: 'reduceBlockStatement',
+    value: function reduceBlockStatement(node, _ref14) {
+      var block = _ref14.block;
+
+      return new Shift.BlockStatement({ block: block });
+    }
+  }, {
+    key: 'reduceBreakStatement',
+    value: function reduceBreakStatement(node) {
+      return new Shift.BreakStatement({ label: node.label });
+    }
+  }, {
+    key: 'reduceCallExpression',
+    value: function reduceCallExpression(node, _ref15) {
+      var callee = _ref15.callee,
+          _arguments = _ref15.arguments;
+
+      return new Shift.CallExpression({ callee: callee, arguments: _arguments });
+    }
+  }, {
+    key: 'reduceCatchClause',
+    value: function reduceCatchClause(node, _ref16) {
+      var binding = _ref16.binding,
+          body = _ref16.body;
+
+      return new Shift.CatchClause({ binding: binding, body: body });
+    }
+  }, {
+    key: 'reduceClassDeclaration',
+    value: function reduceClassDeclaration(node, _ref17) {
+      var name = _ref17.name,
+          _super = _ref17.super,
+          elements = _ref17.elements;
+
+      return new Shift.ClassDeclaration({ name: name, super: _super, elements: elements });
+    }
+  }, {
+    key: 'reduceClassElement',
+    value: function reduceClassElement(node, _ref18) {
+      var method = _ref18.method;
+
+      return new Shift.ClassElement({ isStatic: node.isStatic, method: method });
+    }
+  }, {
+    key: 'reduceClassExpression',
+    value: function reduceClassExpression(node, _ref19) {
+      var name = _ref19.name,
+          _super = _ref19.super,
+          elements = _ref19.elements;
+
+      return new Shift.ClassExpression({ name: name, super: _super, elements: elements });
+    }
+  }, {
+    key: 'reduceCompoundAssignmentExpression',
+    value: function reduceCompoundAssignmentExpression(node, _ref20) {
+      var binding = _ref20.binding,
+          expression = _ref20.expression;
+
+      return new Shift.CompoundAssignmentExpression({ binding: binding, operator: node.operator, expression: expression });
+    }
+  }, {
+    key: 'reduceComputedMemberAssignmentTarget',
+    value: function reduceComputedMemberAssignmentTarget(node, _ref21) {
+      var object = _ref21.object,
+          expression = _ref21.expression;
+
+      return new Shift.ComputedMemberAssignmentTarget({ object: object, expression: expression });
+    }
+  }, {
+    key: 'reduceComputedMemberExpression',
+    value: function reduceComputedMemberExpression(node, _ref22) {
+      var object = _ref22.object,
+          expression = _ref22.expression;
+
+      return new Shift.ComputedMemberExpression({ object: object, expression: expression });
+    }
+  }, {
+    key: 'reduceComputedPropertyName',
+    value: function reduceComputedPropertyName(node, _ref23) {
+      var expression = _ref23.expression;
+
+      return new Shift.ComputedPropertyName({ expression: expression });
+    }
+  }, {
+    key: 'reduceConditionalExpression',
+    value: function reduceConditionalExpression(node, _ref24) {
+      var test = _ref24.test,
+          consequent = _ref24.consequent,
+          alternate = _ref24.alternate;
+
+      return new Shift.ConditionalExpression({ test: test, consequent: consequent, alternate: alternate });
+    }
+  }, {
+    key: 'reduceContinueStatement',
+    value: function reduceContinueStatement(node) {
+      return new Shift.ContinueStatement({ label: node.label });
+    }
+  }, {
+    key: 'reduceDataProperty',
+    value: function reduceDataProperty(node, _ref25) {
+      var name = _ref25.name,
+          expression = _ref25.expression;
+
+      return new Shift.DataProperty({ name: name, expression: expression });
+    }
+  }, {
+    key: 'reduceDebuggerStatement',
+    value: function reduceDebuggerStatement(node) {
+      return new Shift.DebuggerStatement();
+    }
+  }, {
+    key: 'reduceDirective',
+    value: function reduceDirective(node) {
+      return new Shift.Directive({ rawValue: node.rawValue });
+    }
+  }, {
+    key: 'reduceDoWhileStatement',
+    value: function reduceDoWhileStatement(node, _ref26) {
+      var body = _ref26.body,
+          test = _ref26.test;
+
+      return new Shift.DoWhileStatement({ body: body, test: test });
+    }
+  }, {
+    key: 'reduceEmptyStatement',
+    value: function reduceEmptyStatement(node) {
+      return new Shift.EmptyStatement();
+    }
+  }, {
+    key: 'reduceExport',
+    value: function reduceExport(node, _ref27) {
+      var declaration = _ref27.declaration;
+
+      return new Shift.Export({ declaration: declaration });
+    }
+  }, {
+    key: 'reduceExportAllFrom',
+    value: function reduceExportAllFrom(node) {
+      return new Shift.ExportAllFrom({ moduleSpecifier: node.moduleSpecifier });
+    }
+  }, {
+    key: 'reduceExportDefault',
+    value: function reduceExportDefault(node, _ref28) {
+      var body = _ref28.body;
+
+      return new Shift.ExportDefault({ body: body });
+    }
+  }, {
+    key: 'reduceExportFrom',
+    value: function reduceExportFrom(node, _ref29) {
+      var namedExports = _ref29.namedExports;
+
+      return new Shift.ExportFrom({ namedExports: namedExports, moduleSpecifier: node.moduleSpecifier });
+    }
+  }, {
+    key: 'reduceExportFromSpecifier',
+    value: function reduceExportFromSpecifier(node) {
+      return new Shift.ExportFromSpecifier({ name: node.name, exportedName: node.exportedName });
+    }
+  }, {
+    key: 'reduceExportLocalSpecifier',
+    value: function reduceExportLocalSpecifier(node, _ref30) {
+      var name = _ref30.name;
+
+      return new Shift.ExportLocalSpecifier({ name: name, exportedName: node.exportedName });
+    }
+  }, {
+    key: 'reduceExportLocals',
+    value: function reduceExportLocals(node, _ref31) {
+      var namedExports = _ref31.namedExports;
+
+      return new Shift.ExportLocals({ namedExports: namedExports });
+    }
+  }, {
+    key: 'reduceExpressionStatement',
+    value: function reduceExpressionStatement(node, _ref32) {
+      var expression = _ref32.expression;
+
+      return new Shift.ExpressionStatement({ expression: expression });
+    }
+  }, {
+    key: 'reduceForInStatement',
+    value: function reduceForInStatement(node, _ref33) {
+      var left = _ref33.left,
+          right = _ref33.right,
+          body = _ref33.body;
+
+      return new Shift.ForInStatement({ left: left, right: right, body: body });
+    }
+  }, {
+    key: 'reduceForOfStatement',
+    value: function reduceForOfStatement(node, _ref34) {
+      var left = _ref34.left,
+          right = _ref34.right,
+          body = _ref34.body;
+
+      return new Shift.ForOfStatement({ left: left, right: right, body: body });
+    }
+  }, {
+    key: 'reduceForStatement',
+    value: function reduceForStatement(node, _ref35) {
+      var init = _ref35.init,
+          test = _ref35.test,
+          update = _ref35.update,
+          body = _ref35.body;
+
+      return new Shift.ForStatement({ init: init, test: test, update: update, body: body });
+    }
+  }, {
+    key: 'reduceFormalParameters',
+    value: function reduceFormalParameters(node, _ref36) {
+      var items = _ref36.items,
+          rest = _ref36.rest;
+
+      return new Shift.FormalParameters({ items: items, rest: rest });
+    }
+  }, {
+    key: 'reduceFunctionBody',
+    value: function reduceFunctionBody(node, _ref37) {
+      var directives = _ref37.directives,
+          statements = _ref37.statements;
+
+      return new Shift.FunctionBody({ directives: directives, statements: statements });
+    }
+  }, {
+    key: 'reduceFunctionDeclaration',
+    value: function reduceFunctionDeclaration(node, _ref38) {
+      var name = _ref38.name,
+          params = _ref38.params,
+          body = _ref38.body;
+
+      return new Shift.FunctionDeclaration({ isGenerator: node.isGenerator, name: name, params: params, body: body });
+    }
+  }, {
+    key: 'reduceFunctionExpression',
+    value: function reduceFunctionExpression(node, _ref39) {
+      var name = _ref39.name,
+          params = _ref39.params,
+          body = _ref39.body;
+
+      return new Shift.FunctionExpression({ isGenerator: node.isGenerator, name: name, params: params, body: body });
+    }
+  }, {
+    key: 'reduceGetter',
+    value: function reduceGetter(node, _ref40) {
+      var name = _ref40.name,
+          body = _ref40.body;
+
+      return new Shift.Getter({ name: name, body: body });
+    }
+  }, {
+    key: 'reduceIdentifierExpression',
+    value: function reduceIdentifierExpression(node) {
+      return new Shift.IdentifierExpression({ name: node.name });
+    }
+  }, {
+    key: 'reduceIfStatement',
+    value: function reduceIfStatement(node, _ref41) {
+      var test = _ref41.test,
+          consequent = _ref41.consequent,
+          alternate = _ref41.alternate;
+
+      return new Shift.IfStatement({ test: test, consequent: consequent, alternate: alternate });
+    }
+  }, {
+    key: 'reduceImport',
+    value: function reduceImport(node, _ref42) {
+      var defaultBinding = _ref42.defaultBinding,
+          namedImports = _ref42.namedImports;
+
+      return new Shift.Import({ defaultBinding: defaultBinding, namedImports: namedImports, moduleSpecifier: node.moduleSpecifier });
+    }
+  }, {
+    key: 'reduceImportNamespace',
+    value: function reduceImportNamespace(node, _ref43) {
+      var defaultBinding = _ref43.defaultBinding,
+          namespaceBinding = _ref43.namespaceBinding;
+
+      return new Shift.ImportNamespace({ defaultBinding: defaultBinding, namespaceBinding: namespaceBinding, moduleSpecifier: node.moduleSpecifier });
+    }
+  }, {
+    key: 'reduceImportSpecifier',
+    value: function reduceImportSpecifier(node, _ref44) {
+      var binding = _ref44.binding;
+
+      return new Shift.ImportSpecifier({ name: node.name, binding: binding });
+    }
+  }, {
+    key: 'reduceLabeledStatement',
+    value: function reduceLabeledStatement(node, _ref45) {
+      var body = _ref45.body;
+
+      return new Shift.LabeledStatement({ label: node.label, body: body });
+    }
+  }, {
+    key: 'reduceLiteralBooleanExpression',
+    value: function reduceLiteralBooleanExpression(node) {
+      return new Shift.LiteralBooleanExpression({ value: node.value });
+    }
+  }, {
+    key: 'reduceLiteralInfinityExpression',
+    value: function reduceLiteralInfinityExpression(node) {
+      return new Shift.LiteralInfinityExpression();
+    }
+  }, {
+    key: 'reduceLiteralNullExpression',
+    value: function reduceLiteralNullExpression(node) {
+      return new Shift.LiteralNullExpression();
+    }
+  }, {
+    key: 'reduceLiteralNumericExpression',
+    value: function reduceLiteralNumericExpression(node) {
+      return new Shift.LiteralNumericExpression({ value: node.value });
+    }
+  }, {
+    key: 'reduceLiteralRegExpExpression',
+    value: function reduceLiteralRegExpExpression(node) {
+      return new Shift.LiteralRegExpExpression({ pattern: node.pattern, global: node.global, ignoreCase: node.ignoreCase, multiLine: node.multiLine, sticky: node.sticky, unicode: node.unicode });
+    }
+  }, {
+    key: 'reduceLiteralStringExpression',
+    value: function reduceLiteralStringExpression(node) {
+      return new Shift.LiteralStringExpression({ value: node.value });
+    }
+  }, {
+    key: 'reduceMethod',
+    value: function reduceMethod(node, _ref46) {
+      var name = _ref46.name,
+          params = _ref46.params,
+          body = _ref46.body;
+
+      return new Shift.Method({ isGenerator: node.isGenerator, name: name, params: params, body: body });
+    }
+  }, {
+    key: 'reduceModule',
+    value: function reduceModule(node, _ref47) {
+      var directives = _ref47.directives,
+          items = _ref47.items;
+
+      return new Shift.Module({ directives: directives, items: items });
+    }
+  }, {
+    key: 'reduceNewExpression',
+    value: function reduceNewExpression(node, _ref48) {
+      var callee = _ref48.callee,
+          _arguments = _ref48.arguments;
+
+      return new Shift.NewExpression({ callee: callee, arguments: _arguments });
+    }
+  }, {
+    key: 'reduceNewTargetExpression',
+    value: function reduceNewTargetExpression(node) {
+      return new Shift.NewTargetExpression();
+    }
+  }, {
+    key: 'reduceObjectAssignmentTarget',
+    value: function reduceObjectAssignmentTarget(node, _ref49) {
+      var properties = _ref49.properties;
+
+      return new Shift.ObjectAssignmentTarget({ properties: properties });
+    }
+  }, {
+    key: 'reduceObjectBinding',
+    value: function reduceObjectBinding(node, _ref50) {
+      var properties = _ref50.properties;
+
+      return new Shift.ObjectBinding({ properties: properties });
+    }
+  }, {
+    key: 'reduceObjectExpression',
+    value: function reduceObjectExpression(node, _ref51) {
+      var properties = _ref51.properties;
+
+      return new Shift.ObjectExpression({ properties: properties });
+    }
+  }, {
+    key: 'reduceReturnStatement',
+    value: function reduceReturnStatement(node, _ref52) {
+      var expression = _ref52.expression;
+
+      return new Shift.ReturnStatement({ expression: expression });
+    }
+  }, {
+    key: 'reduceScript',
+    value: function reduceScript(node, _ref53) {
+      var directives = _ref53.directives,
+          statements = _ref53.statements;
+
+      return new Shift.Script({ directives: directives, statements: statements });
+    }
+  }, {
+    key: 'reduceSetter',
+    value: function reduceSetter(node, _ref54) {
+      var name = _ref54.name,
+          param = _ref54.param,
+          body = _ref54.body;
+
+      return new Shift.Setter({ name: name, param: param, body: body });
+    }
+  }, {
+    key: 'reduceShorthandProperty',
+    value: function reduceShorthandProperty(node, _ref55) {
+      var name = _ref55.name;
+
+      return new Shift.ShorthandProperty({ name: name });
+    }
+  }, {
+    key: 'reduceSpreadElement',
+    value: function reduceSpreadElement(node, _ref56) {
+      var expression = _ref56.expression;
+
+      return new Shift.SpreadElement({ expression: expression });
+    }
+  }, {
+    key: 'reduceStaticMemberAssignmentTarget',
+    value: function reduceStaticMemberAssignmentTarget(node, _ref57) {
+      var object = _ref57.object;
+
+      return new Shift.StaticMemberAssignmentTarget({ object: object, property: node.property });
+    }
+  }, {
+    key: 'reduceStaticMemberExpression',
+    value: function reduceStaticMemberExpression(node, _ref58) {
+      var object = _ref58.object;
+
+      return new Shift.StaticMemberExpression({ object: object, property: node.property });
+    }
+  }, {
+    key: 'reduceStaticPropertyName',
+    value: function reduceStaticPropertyName(node) {
+      return new Shift.StaticPropertyName({ value: node.value });
+    }
+  }, {
+    key: 'reduceSuper',
+    value: function reduceSuper(node) {
+      return new Shift.Super();
+    }
+  }, {
+    key: 'reduceSwitchCase',
+    value: function reduceSwitchCase(node, _ref59) {
+      var test = _ref59.test,
+          consequent = _ref59.consequent;
+
+      return new Shift.SwitchCase({ test: test, consequent: consequent });
+    }
+  }, {
+    key: 'reduceSwitchDefault',
+    value: function reduceSwitchDefault(node, _ref60) {
+      var consequent = _ref60.consequent;
+
+      return new Shift.SwitchDefault({ consequent: consequent });
+    }
+  }, {
+    key: 'reduceSwitchStatement',
+    value: function reduceSwitchStatement(node, _ref61) {
+      var discriminant = _ref61.discriminant,
+          cases = _ref61.cases;
+
+      return new Shift.SwitchStatement({ discriminant: discriminant, cases: cases });
+    }
+  }, {
+    key: 'reduceSwitchStatementWithDefault',
+    value: function reduceSwitchStatementWithDefault(node, _ref62) {
+      var discriminant = _ref62.discriminant,
+          preDefaultCases = _ref62.preDefaultCases,
+          defaultCase = _ref62.defaultCase,
+          postDefaultCases = _ref62.postDefaultCases;
+
+      return new Shift.SwitchStatementWithDefault({ discriminant: discriminant, preDefaultCases: preDefaultCases, defaultCase: defaultCase, postDefaultCases: postDefaultCases });
+    }
+  }, {
+    key: 'reduceTemplateElement',
+    value: function reduceTemplateElement(node) {
+      return new Shift.TemplateElement({ rawValue: node.rawValue });
+    }
+  }, {
+    key: 'reduceTemplateExpression',
+    value: function reduceTemplateExpression(node, _ref63) {
+      var tag = _ref63.tag,
+          elements = _ref63.elements;
+
+      return new Shift.TemplateExpression({ tag: tag, elements: elements });
+    }
+  }, {
+    key: 'reduceThisExpression',
+    value: function reduceThisExpression(node) {
+      return new Shift.ThisExpression();
+    }
+  }, {
+    key: 'reduceThrowStatement',
+    value: function reduceThrowStatement(node, _ref64) {
+      var expression = _ref64.expression;
+
+      return new Shift.ThrowStatement({ expression: expression });
+    }
+  }, {
+    key: 'reduceTryCatchStatement',
+    value: function reduceTryCatchStatement(node, _ref65) {
+      var body = _ref65.body,
+          catchClause = _ref65.catchClause;
+
+      return new Shift.TryCatchStatement({ body: body, catchClause: catchClause });
+    }
+  }, {
+    key: 'reduceTryFinallyStatement',
+    value: function reduceTryFinallyStatement(node, _ref66) {
+      var body = _ref66.body,
+          catchClause = _ref66.catchClause,
+          finalizer = _ref66.finalizer;
+
+      return new Shift.TryFinallyStatement({ body: body, catchClause: catchClause, finalizer: finalizer });
+    }
+  }, {
+    key: 'reduceUnaryExpression',
+    value: function reduceUnaryExpression(node, _ref67) {
+      var operand = _ref67.operand;
+
+      return new Shift.UnaryExpression({ operator: node.operator, operand: operand });
+    }
+  }, {
+    key: 'reduceUpdateExpression',
+    value: function reduceUpdateExpression(node, _ref68) {
+      var operand = _ref68.operand;
+
+      return new Shift.UpdateExpression({ isPrefix: node.isPrefix, operator: node.operator, operand: operand });
+    }
+  }, {
+    key: 'reduceVariableDeclaration',
+    value: function reduceVariableDeclaration(node, _ref69) {
+      var declarators = _ref69.declarators;
+
+      return new Shift.VariableDeclaration({ kind: node.kind, declarators: declarators });
+    }
+  }, {
+    key: 'reduceVariableDeclarationStatement',
+    value: function reduceVariableDeclarationStatement(node, _ref70) {
+      var declaration = _ref70.declaration;
+
+      return new Shift.VariableDeclarationStatement({ declaration: declaration });
+    }
+  }, {
+    key: 'reduceVariableDeclarator',
+    value: function reduceVariableDeclarator(node, _ref71) {
+      var binding = _ref71.binding,
+          init = _ref71.init;
+
+      return new Shift.VariableDeclarator({ binding: binding, init: init });
+    }
+  }, {
+    key: 'reduceWhileStatement',
+    value: function reduceWhileStatement(node, _ref72) {
+      var test = _ref72.test,
+          body = _ref72.body;
+
+      return new Shift.WhileStatement({ test: test, body: body });
+    }
+  }, {
+    key: 'reduceWithStatement',
+    value: function reduceWithStatement(node, _ref73) {
+      var object = _ref73.object,
+          body = _ref73.body;
+
+      return new Shift.WithStatement({ object: object, body: body });
+    }
+  }, {
+    key: 'reduceYieldExpression',
+    value: function reduceYieldExpression(node, _ref74) {
+      var expression = _ref74.expression;
+
+      return new Shift.YieldExpression({ expression: expression });
+    }
+  }, {
+    key: 'reduceYieldGeneratorExpression',
+    value: function reduceYieldGeneratorExpression(node, _ref75) {
+      var expression = _ref75.expression;
+
+      return new Shift.YieldGeneratorExpression({ expression: expression });
+    }
+  }]);
+
+  return CloneReducer;
+}();
+
+exports.default = CloneReducer;
+},{"shift-ast":2}],4:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = reduce;
+
+var _cloneReducer = require("./clone-reducer");
+
+Object.defineProperty(exports, "CloneReducer", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_cloneReducer).default;
+  }
+});
+
+var _monoidalReducer = require("./monoidal-reducer");
+
+Object.defineProperty(exports, "MonoidalReducer", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_monoidalReducer).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright 2016 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var director = {
+  ArrayAssignmentTarget: function ArrayAssignmentTarget(reducer, node) {
+    var _this = this;
+
+    return reducer.reduceArrayAssignmentTarget(node, { elements: node.elements.map(function (v) {
+        return v && _this[v.type](reducer, v);
+      }), rest: node.rest && this[node.rest.type](reducer, node.rest) });
+  },
+  ArrayBinding: function ArrayBinding(reducer, node) {
+    var _this2 = this;
+
+    return reducer.reduceArrayBinding(node, { elements: node.elements.map(function (v) {
+        return v && _this2[v.type](reducer, v);
+      }), rest: node.rest && this[node.rest.type](reducer, node.rest) });
+  },
+  ArrayExpression: function ArrayExpression(reducer, node) {
+    var _this3 = this;
+
+    return reducer.reduceArrayExpression(node, { elements: node.elements.map(function (v) {
+        return v && _this3[v.type](reducer, v);
+      }) });
+  },
+  ArrowExpression: function ArrowExpression(reducer, node) {
+    return reducer.reduceArrowExpression(node, { params: this.FormalParameters(reducer, node.params), body: this[node.body.type](reducer, node.body) });
+  },
+  AssignmentExpression: function AssignmentExpression(reducer, node) {
+    return reducer.reduceAssignmentExpression(node, { binding: this[node.binding.type](reducer, node.binding), expression: this[node.expression.type](reducer, node.expression) });
+  },
+  AssignmentTargetIdentifier: function AssignmentTargetIdentifier(reducer, node) {
+    return reducer.reduceAssignmentTargetIdentifier(node);
+  },
+  AssignmentTargetPropertyIdentifier: function AssignmentTargetPropertyIdentifier(reducer, node) {
+    return reducer.reduceAssignmentTargetPropertyIdentifier(node, { binding: this.AssignmentTargetIdentifier(reducer, node.binding), init: node.init && this[node.init.type](reducer, node.init) });
+  },
+  AssignmentTargetPropertyProperty: function AssignmentTargetPropertyProperty(reducer, node) {
+    return reducer.reduceAssignmentTargetPropertyProperty(node, { name: this[node.name.type](reducer, node.name), binding: this[node.binding.type](reducer, node.binding) });
+  },
+  AssignmentTargetWithDefault: function AssignmentTargetWithDefault(reducer, node) {
+    return reducer.reduceAssignmentTargetWithDefault(node, { binding: this[node.binding.type](reducer, node.binding), init: this[node.init.type](reducer, node.init) });
+  },
+  BinaryExpression: function BinaryExpression(reducer, node) {
+    return reducer.reduceBinaryExpression(node, { left: this[node.left.type](reducer, node.left), right: this[node.right.type](reducer, node.right) });
+  },
+  BindingIdentifier: function BindingIdentifier(reducer, node) {
+    return reducer.reduceBindingIdentifier(node);
+  },
+  BindingPropertyIdentifier: function BindingPropertyIdentifier(reducer, node) {
+    return reducer.reduceBindingPropertyIdentifier(node, { binding: this.BindingIdentifier(reducer, node.binding), init: node.init && this[node.init.type](reducer, node.init) });
+  },
+  BindingPropertyProperty: function BindingPropertyProperty(reducer, node) {
+    return reducer.reduceBindingPropertyProperty(node, { name: this[node.name.type](reducer, node.name), binding: this[node.binding.type](reducer, node.binding) });
+  },
+  BindingWithDefault: function BindingWithDefault(reducer, node) {
+    return reducer.reduceBindingWithDefault(node, { binding: this[node.binding.type](reducer, node.binding), init: this[node.init.type](reducer, node.init) });
+  },
+  Block: function Block(reducer, node) {
+    var _this4 = this;
+
+    return reducer.reduceBlock(node, { statements: node.statements.map(function (v) {
+        return _this4[v.type](reducer, v);
+      }) });
+  },
+  BlockStatement: function BlockStatement(reducer, node) {
+    return reducer.reduceBlockStatement(node, { block: this.Block(reducer, node.block) });
+  },
+  BreakStatement: function BreakStatement(reducer, node) {
+    return reducer.reduceBreakStatement(node);
+  },
+  CallExpression: function CallExpression(reducer, node) {
+    var _this5 = this;
+
+    return reducer.reduceCallExpression(node, { callee: this[node.callee.type](reducer, node.callee), arguments: node.arguments.map(function (v) {
+        return _this5[v.type](reducer, v);
+      }) });
+  },
+  CatchClause: function CatchClause(reducer, node) {
+    return reducer.reduceCatchClause(node, { binding: this[node.binding.type](reducer, node.binding), body: this.Block(reducer, node.body) });
+  },
+  ClassDeclaration: function ClassDeclaration(reducer, node) {
+    var _this6 = this;
+
+    return reducer.reduceClassDeclaration(node, { name: this.BindingIdentifier(reducer, node.name), super: node.super && this[node.super.type](reducer, node.super), elements: node.elements.map(function (v) {
+        return _this6.ClassElement(reducer, v);
+      }) });
+  },
+  ClassElement: function ClassElement(reducer, node) {
+    return reducer.reduceClassElement(node, { method: this[node.method.type](reducer, node.method) });
+  },
+  ClassExpression: function ClassExpression(reducer, node) {
+    var _this7 = this;
+
+    return reducer.reduceClassExpression(node, { name: node.name && this.BindingIdentifier(reducer, node.name), super: node.super && this[node.super.type](reducer, node.super), elements: node.elements.map(function (v) {
+        return _this7.ClassElement(reducer, v);
+      }) });
+  },
+  CompoundAssignmentExpression: function CompoundAssignmentExpression(reducer, node) {
+    return reducer.reduceCompoundAssignmentExpression(node, { binding: this[node.binding.type](reducer, node.binding), expression: this[node.expression.type](reducer, node.expression) });
+  },
+  ComputedMemberAssignmentTarget: function ComputedMemberAssignmentTarget(reducer, node) {
+    return reducer.reduceComputedMemberAssignmentTarget(node, { object: this[node.object.type](reducer, node.object), expression: this[node.expression.type](reducer, node.expression) });
+  },
+  ComputedMemberExpression: function ComputedMemberExpression(reducer, node) {
+    return reducer.reduceComputedMemberExpression(node, { object: this[node.object.type](reducer, node.object), expression: this[node.expression.type](reducer, node.expression) });
+  },
+  ComputedPropertyName: function ComputedPropertyName(reducer, node) {
+    return reducer.reduceComputedPropertyName(node, { expression: this[node.expression.type](reducer, node.expression) });
+  },
+  ConditionalExpression: function ConditionalExpression(reducer, node) {
+    return reducer.reduceConditionalExpression(node, { test: this[node.test.type](reducer, node.test), consequent: this[node.consequent.type](reducer, node.consequent), alternate: this[node.alternate.type](reducer, node.alternate) });
+  },
+  ContinueStatement: function ContinueStatement(reducer, node) {
+    return reducer.reduceContinueStatement(node);
+  },
+  DataProperty: function DataProperty(reducer, node) {
+    return reducer.reduceDataProperty(node, { name: this[node.name.type](reducer, node.name), expression: this[node.expression.type](reducer, node.expression) });
+  },
+  DebuggerStatement: function DebuggerStatement(reducer, node) {
+    return reducer.reduceDebuggerStatement(node);
+  },
+  Directive: function Directive(reducer, node) {
+    return reducer.reduceDirective(node);
+  },
+  DoWhileStatement: function DoWhileStatement(reducer, node) {
+    return reducer.reduceDoWhileStatement(node, { body: this[node.body.type](reducer, node.body), test: this[node.test.type](reducer, node.test) });
+  },
+  EmptyStatement: function EmptyStatement(reducer, node) {
+    return reducer.reduceEmptyStatement(node);
+  },
+  Export: function Export(reducer, node) {
+    return reducer.reduceExport(node, { declaration: this[node.declaration.type](reducer, node.declaration) });
+  },
+  ExportAllFrom: function ExportAllFrom(reducer, node) {
+    return reducer.reduceExportAllFrom(node);
+  },
+  ExportDefault: function ExportDefault(reducer, node) {
+    return reducer.reduceExportDefault(node, { body: this[node.body.type](reducer, node.body) });
+  },
+  ExportFrom: function ExportFrom(reducer, node) {
+    var _this8 = this;
+
+    return reducer.reduceExportFrom(node, { namedExports: node.namedExports.map(function (v) {
+        return _this8.ExportFromSpecifier(reducer, v);
+      }) });
+  },
+  ExportFromSpecifier: function ExportFromSpecifier(reducer, node) {
+    return reducer.reduceExportFromSpecifier(node);
+  },
+  ExportLocalSpecifier: function ExportLocalSpecifier(reducer, node) {
+    return reducer.reduceExportLocalSpecifier(node, { name: this.IdentifierExpression(reducer, node.name) });
+  },
+  ExportLocals: function ExportLocals(reducer, node) {
+    var _this9 = this;
+
+    return reducer.reduceExportLocals(node, { namedExports: node.namedExports.map(function (v) {
+        return _this9.ExportLocalSpecifier(reducer, v);
+      }) });
+  },
+  ExpressionStatement: function ExpressionStatement(reducer, node) {
+    return reducer.reduceExpressionStatement(node, { expression: this[node.expression.type](reducer, node.expression) });
+  },
+  ForInStatement: function ForInStatement(reducer, node) {
+    return reducer.reduceForInStatement(node, { left: this[node.left.type](reducer, node.left), right: this[node.right.type](reducer, node.right), body: this[node.body.type](reducer, node.body) });
+  },
+  ForOfStatement: function ForOfStatement(reducer, node) {
+    return reducer.reduceForOfStatement(node, { left: this[node.left.type](reducer, node.left), right: this[node.right.type](reducer, node.right), body: this[node.body.type](reducer, node.body) });
+  },
+  ForStatement: function ForStatement(reducer, node) {
+    return reducer.reduceForStatement(node, { init: node.init && this[node.init.type](reducer, node.init), test: node.test && this[node.test.type](reducer, node.test), update: node.update && this[node.update.type](reducer, node.update), body: this[node.body.type](reducer, node.body) });
+  },
+  FormalParameters: function FormalParameters(reducer, node) {
+    var _this10 = this;
+
+    return reducer.reduceFormalParameters(node, { items: node.items.map(function (v) {
+        return _this10[v.type](reducer, v);
+      }), rest: node.rest && this[node.rest.type](reducer, node.rest) });
+  },
+  FunctionBody: function FunctionBody(reducer, node) {
+    var _this11 = this;
+
+    return reducer.reduceFunctionBody(node, { directives: node.directives.map(function (v) {
+        return _this11.Directive(reducer, v);
+      }), statements: node.statements.map(function (v) {
+        return _this11[v.type](reducer, v);
+      }) });
+  },
+  FunctionDeclaration: function FunctionDeclaration(reducer, node) {
+    return reducer.reduceFunctionDeclaration(node, { name: this.BindingIdentifier(reducer, node.name), params: this.FormalParameters(reducer, node.params), body: this.FunctionBody(reducer, node.body) });
+  },
+  FunctionExpression: function FunctionExpression(reducer, node) {
+    return reducer.reduceFunctionExpression(node, { name: node.name && this.BindingIdentifier(reducer, node.name), params: this.FormalParameters(reducer, node.params), body: this.FunctionBody(reducer, node.body) });
+  },
+  Getter: function Getter(reducer, node) {
+    return reducer.reduceGetter(node, { name: this[node.name.type](reducer, node.name), body: this.FunctionBody(reducer, node.body) });
+  },
+  IdentifierExpression: function IdentifierExpression(reducer, node) {
+    return reducer.reduceIdentifierExpression(node);
+  },
+  IfStatement: function IfStatement(reducer, node) {
+    return reducer.reduceIfStatement(node, { test: this[node.test.type](reducer, node.test), consequent: this[node.consequent.type](reducer, node.consequent), alternate: node.alternate && this[node.alternate.type](reducer, node.alternate) });
+  },
+  Import: function Import(reducer, node) {
+    var _this12 = this;
+
+    return reducer.reduceImport(node, { defaultBinding: node.defaultBinding && this.BindingIdentifier(reducer, node.defaultBinding), namedImports: node.namedImports.map(function (v) {
+        return _this12.ImportSpecifier(reducer, v);
+      }) });
+  },
+  ImportNamespace: function ImportNamespace(reducer, node) {
+    return reducer.reduceImportNamespace(node, { defaultBinding: node.defaultBinding && this.BindingIdentifier(reducer, node.defaultBinding), namespaceBinding: this.BindingIdentifier(reducer, node.namespaceBinding) });
+  },
+  ImportSpecifier: function ImportSpecifier(reducer, node) {
+    return reducer.reduceImportSpecifier(node, { binding: this.BindingIdentifier(reducer, node.binding) });
+  },
+  LabeledStatement: function LabeledStatement(reducer, node) {
+    return reducer.reduceLabeledStatement(node, { body: this[node.body.type](reducer, node.body) });
+  },
+  LiteralBooleanExpression: function LiteralBooleanExpression(reducer, node) {
+    return reducer.reduceLiteralBooleanExpression(node);
+  },
+  LiteralInfinityExpression: function LiteralInfinityExpression(reducer, node) {
+    return reducer.reduceLiteralInfinityExpression(node);
+  },
+  LiteralNullExpression: function LiteralNullExpression(reducer, node) {
+    return reducer.reduceLiteralNullExpression(node);
+  },
+  LiteralNumericExpression: function LiteralNumericExpression(reducer, node) {
+    return reducer.reduceLiteralNumericExpression(node);
+  },
+  LiteralRegExpExpression: function LiteralRegExpExpression(reducer, node) {
+    return reducer.reduceLiteralRegExpExpression(node);
+  },
+  LiteralStringExpression: function LiteralStringExpression(reducer, node) {
+    return reducer.reduceLiteralStringExpression(node);
+  },
+  Method: function Method(reducer, node) {
+    return reducer.reduceMethod(node, { name: this[node.name.type](reducer, node.name), params: this.FormalParameters(reducer, node.params), body: this.FunctionBody(reducer, node.body) });
+  },
+  Module: function Module(reducer, node) {
+    var _this13 = this;
+
+    return reducer.reduceModule(node, { directives: node.directives.map(function (v) {
+        return _this13.Directive(reducer, v);
+      }), items: node.items.map(function (v) {
+        return _this13[v.type](reducer, v);
+      }) });
+  },
+  NewExpression: function NewExpression(reducer, node) {
+    var _this14 = this;
+
+    return reducer.reduceNewExpression(node, { callee: this[node.callee.type](reducer, node.callee), arguments: node.arguments.map(function (v) {
+        return _this14[v.type](reducer, v);
+      }) });
+  },
+  NewTargetExpression: function NewTargetExpression(reducer, node) {
+    return reducer.reduceNewTargetExpression(node);
+  },
+  ObjectAssignmentTarget: function ObjectAssignmentTarget(reducer, node) {
+    var _this15 = this;
+
+    return reducer.reduceObjectAssignmentTarget(node, { properties: node.properties.map(function (v) {
+        return _this15[v.type](reducer, v);
+      }) });
+  },
+  ObjectBinding: function ObjectBinding(reducer, node) {
+    var _this16 = this;
+
+    return reducer.reduceObjectBinding(node, { properties: node.properties.map(function (v) {
+        return _this16[v.type](reducer, v);
+      }) });
+  },
+  ObjectExpression: function ObjectExpression(reducer, node) {
+    var _this17 = this;
+
+    return reducer.reduceObjectExpression(node, { properties: node.properties.map(function (v) {
+        return _this17[v.type](reducer, v);
+      }) });
+  },
+  ReturnStatement: function ReturnStatement(reducer, node) {
+    return reducer.reduceReturnStatement(node, { expression: node.expression && this[node.expression.type](reducer, node.expression) });
+  },
+  Script: function Script(reducer, node) {
+    var _this18 = this;
+
+    return reducer.reduceScript(node, { directives: node.directives.map(function (v) {
+        return _this18.Directive(reducer, v);
+      }), statements: node.statements.map(function (v) {
+        return _this18[v.type](reducer, v);
+      }) });
+  },
+  Setter: function Setter(reducer, node) {
+    return reducer.reduceSetter(node, { name: this[node.name.type](reducer, node.name), param: this[node.param.type](reducer, node.param), body: this.FunctionBody(reducer, node.body) });
+  },
+  ShorthandProperty: function ShorthandProperty(reducer, node) {
+    return reducer.reduceShorthandProperty(node, { name: this.IdentifierExpression(reducer, node.name) });
+  },
+  SpreadElement: function SpreadElement(reducer, node) {
+    return reducer.reduceSpreadElement(node, { expression: this[node.expression.type](reducer, node.expression) });
+  },
+  StaticMemberAssignmentTarget: function StaticMemberAssignmentTarget(reducer, node) {
+    return reducer.reduceStaticMemberAssignmentTarget(node, { object: this[node.object.type](reducer, node.object) });
+  },
+  StaticMemberExpression: function StaticMemberExpression(reducer, node) {
+    return reducer.reduceStaticMemberExpression(node, { object: this[node.object.type](reducer, node.object) });
+  },
+  StaticPropertyName: function StaticPropertyName(reducer, node) {
+    return reducer.reduceStaticPropertyName(node);
+  },
+  Super: function Super(reducer, node) {
+    return reducer.reduceSuper(node);
+  },
+  SwitchCase: function SwitchCase(reducer, node) {
+    var _this19 = this;
+
+    return reducer.reduceSwitchCase(node, { test: this[node.test.type](reducer, node.test), consequent: node.consequent.map(function (v) {
+        return _this19[v.type](reducer, v);
+      }) });
+  },
+  SwitchDefault: function SwitchDefault(reducer, node) {
+    var _this20 = this;
+
+    return reducer.reduceSwitchDefault(node, { consequent: node.consequent.map(function (v) {
+        return _this20[v.type](reducer, v);
+      }) });
+  },
+  SwitchStatement: function SwitchStatement(reducer, node) {
+    var _this21 = this;
+
+    return reducer.reduceSwitchStatement(node, { discriminant: this[node.discriminant.type](reducer, node.discriminant), cases: node.cases.map(function (v) {
+        return _this21.SwitchCase(reducer, v);
+      }) });
+  },
+  SwitchStatementWithDefault: function SwitchStatementWithDefault(reducer, node) {
+    var _this22 = this;
+
+    return reducer.reduceSwitchStatementWithDefault(node, { discriminant: this[node.discriminant.type](reducer, node.discriminant), preDefaultCases: node.preDefaultCases.map(function (v) {
+        return _this22.SwitchCase(reducer, v);
+      }), defaultCase: this.SwitchDefault(reducer, node.defaultCase), postDefaultCases: node.postDefaultCases.map(function (v) {
+        return _this22.SwitchCase(reducer, v);
+      }) });
+  },
+  TemplateElement: function TemplateElement(reducer, node) {
+    return reducer.reduceTemplateElement(node);
+  },
+  TemplateExpression: function TemplateExpression(reducer, node) {
+    var _this23 = this;
+
+    return reducer.reduceTemplateExpression(node, { tag: node.tag && this[node.tag.type](reducer, node.tag), elements: node.elements.map(function (v) {
+        return _this23[v.type](reducer, v);
+      }) });
+  },
+  ThisExpression: function ThisExpression(reducer, node) {
+    return reducer.reduceThisExpression(node);
+  },
+  ThrowStatement: function ThrowStatement(reducer, node) {
+    return reducer.reduceThrowStatement(node, { expression: this[node.expression.type](reducer, node.expression) });
+  },
+  TryCatchStatement: function TryCatchStatement(reducer, node) {
+    return reducer.reduceTryCatchStatement(node, { body: this.Block(reducer, node.body), catchClause: this.CatchClause(reducer, node.catchClause) });
+  },
+  TryFinallyStatement: function TryFinallyStatement(reducer, node) {
+    return reducer.reduceTryFinallyStatement(node, { body: this.Block(reducer, node.body), catchClause: node.catchClause && this.CatchClause(reducer, node.catchClause), finalizer: this.Block(reducer, node.finalizer) });
+  },
+  UnaryExpression: function UnaryExpression(reducer, node) {
+    return reducer.reduceUnaryExpression(node, { operand: this[node.operand.type](reducer, node.operand) });
+  },
+  UpdateExpression: function UpdateExpression(reducer, node) {
+    return reducer.reduceUpdateExpression(node, { operand: this[node.operand.type](reducer, node.operand) });
+  },
+  VariableDeclaration: function VariableDeclaration(reducer, node) {
+    var _this24 = this;
+
+    return reducer.reduceVariableDeclaration(node, { declarators: node.declarators.map(function (v) {
+        return _this24.VariableDeclarator(reducer, v);
+      }) });
+  },
+  VariableDeclarationStatement: function VariableDeclarationStatement(reducer, node) {
+    return reducer.reduceVariableDeclarationStatement(node, { declaration: this.VariableDeclaration(reducer, node.declaration) });
+  },
+  VariableDeclarator: function VariableDeclarator(reducer, node) {
+    return reducer.reduceVariableDeclarator(node, { binding: this[node.binding.type](reducer, node.binding), init: node.init && this[node.init.type](reducer, node.init) });
+  },
+  WhileStatement: function WhileStatement(reducer, node) {
+    return reducer.reduceWhileStatement(node, { test: this[node.test.type](reducer, node.test), body: this[node.body.type](reducer, node.body) });
+  },
+  WithStatement: function WithStatement(reducer, node) {
+    return reducer.reduceWithStatement(node, { object: this[node.object.type](reducer, node.object), body: this[node.body.type](reducer, node.body) });
+  },
+  YieldExpression: function YieldExpression(reducer, node) {
+    return reducer.reduceYieldExpression(node, { expression: node.expression && this[node.expression.type](reducer, node.expression) });
+  },
+  YieldGeneratorExpression: function YieldGeneratorExpression(reducer, node) {
+    return reducer.reduceYieldGeneratorExpression(node, { expression: this[node.expression.type](reducer, node.expression) });
+  }
+};
+
+function reduce(reducer, node) {
+  return director[node.type](reducer, node);
+}
+},{"./clone-reducer":3,"./monoidal-reducer":5}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Copyright 2016 Shape Security, Inc.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Licensed under the Apache License, Version 2.0 (the "License")
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * you may not use this file except in compliance with the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * You may obtain a copy of the License at
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *     http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * See the License for the specific language governing permissions and
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * limitations under the License.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+
+var _shiftAst = require('shift-ast');
+
+var _shiftAst2 = _interopRequireDefault(_shiftAst);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MonoidalReducer = function () {
+  function MonoidalReducer(monoid) {
+    _classCallCheck(this, MonoidalReducer);
+
+    this.identity = monoid.empty();
+    var concat = monoid.prototype && monoid.prototype.concat || monoid.concat;
+    this.append = function (a, b) {
+      return concat.call(a, b);
+    };
+  }
+
+  _createClass(MonoidalReducer, [{
+    key: 'fold',
+    value: function fold(list, a) {
+      var _this = this;
+
+      return list.reduce(function (memo, x) {
+        return _this.append(memo, x);
+      }, a == null ? this.identity : a);
+    }
+  }, {
+    key: 'reduceArrayAssignmentTarget',
+    value: function reduceArrayAssignmentTarget(node, _ref) {
+      var elements = _ref.elements,
+          rest = _ref.rest;
+
+      return this.append(this.fold(elements.filter(function (n) {
+        return n !== null;
+      })), rest === null ? this.identity : rest);
+    }
+  }, {
+    key: 'reduceArrayBinding',
+    value: function reduceArrayBinding(node, _ref2) {
+      var elements = _ref2.elements,
+          rest = _ref2.rest;
+
+      return this.append(this.fold(elements.filter(function (n) {
+        return n !== null;
+      })), rest === null ? this.identity : rest);
+    }
+  }, {
+    key: 'reduceArrayExpression',
+    value: function reduceArrayExpression(node, _ref3) {
+      var elements = _ref3.elements;
+
+      return this.fold(elements.filter(function (n) {
+        return n !== null;
+      }));
+    }
+  }, {
+    key: 'reduceArrowExpression',
+    value: function reduceArrowExpression(node, _ref4) {
+      var params = _ref4.params,
+          body = _ref4.body;
+
+      return this.append(params, body);
+    }
+  }, {
+    key: 'reduceAssignmentExpression',
+    value: function reduceAssignmentExpression(node, _ref5) {
+      var binding = _ref5.binding,
+          expression = _ref5.expression;
+
+      return this.append(binding, expression);
+    }
+  }, {
+    key: 'reduceAssignmentTargetIdentifier',
+    value: function reduceAssignmentTargetIdentifier(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceAssignmentTargetPropertyIdentifier',
+    value: function reduceAssignmentTargetPropertyIdentifier(node, _ref6) {
+      var binding = _ref6.binding,
+          init = _ref6.init;
+
+      return this.append(binding, init === null ? this.identity : init);
+    }
+  }, {
+    key: 'reduceAssignmentTargetPropertyProperty',
+    value: function reduceAssignmentTargetPropertyProperty(node, _ref7) {
+      var name = _ref7.name,
+          binding = _ref7.binding;
+
+      return this.append(name, binding);
+    }
+  }, {
+    key: 'reduceAssignmentTargetWithDefault',
+    value: function reduceAssignmentTargetWithDefault(node, _ref8) {
+      var binding = _ref8.binding,
+          init = _ref8.init;
+
+      return this.append(binding, init);
+    }
+  }, {
+    key: 'reduceBinaryExpression',
+    value: function reduceBinaryExpression(node, _ref9) {
+      var left = _ref9.left,
+          right = _ref9.right;
+
+      return this.append(left, right);
+    }
+  }, {
+    key: 'reduceBindingIdentifier',
+    value: function reduceBindingIdentifier(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceBindingPropertyIdentifier',
+    value: function reduceBindingPropertyIdentifier(node, _ref10) {
+      var binding = _ref10.binding,
+          init = _ref10.init;
+
+      return this.append(binding, init === null ? this.identity : init);
+    }
+  }, {
+    key: 'reduceBindingPropertyProperty',
+    value: function reduceBindingPropertyProperty(node, _ref11) {
+      var name = _ref11.name,
+          binding = _ref11.binding;
+
+      return this.append(name, binding);
+    }
+  }, {
+    key: 'reduceBindingWithDefault',
+    value: function reduceBindingWithDefault(node, _ref12) {
+      var binding = _ref12.binding,
+          init = _ref12.init;
+
+      return this.append(binding, init);
+    }
+  }, {
+    key: 'reduceBlock',
+    value: function reduceBlock(node, _ref13) {
+      var statements = _ref13.statements;
+
+      return this.fold(statements);
+    }
+  }, {
+    key: 'reduceBlockStatement',
+    value: function reduceBlockStatement(node, _ref14) {
+      var block = _ref14.block;
+
+      return block;
+    }
+  }, {
+    key: 'reduceBreakStatement',
+    value: function reduceBreakStatement(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceCallExpression',
+    value: function reduceCallExpression(node, _ref15) {
+      var callee = _ref15.callee,
+          _arguments = _ref15.arguments;
+
+      return this.append(callee, this.fold(_arguments));
+    }
+  }, {
+    key: 'reduceCatchClause',
+    value: function reduceCatchClause(node, _ref16) {
+      var binding = _ref16.binding,
+          body = _ref16.body;
+
+      return this.append(binding, body);
+    }
+  }, {
+    key: 'reduceClassDeclaration',
+    value: function reduceClassDeclaration(node, _ref17) {
+      var name = _ref17.name,
+          _super = _ref17.super,
+          elements = _ref17.elements;
+
+      return this.fold([name, _super === null ? this.identity : _super, this.fold(elements)]);
+    }
+  }, {
+    key: 'reduceClassElement',
+    value: function reduceClassElement(node, _ref18) {
+      var method = _ref18.method;
+
+      return method;
+    }
+  }, {
+    key: 'reduceClassExpression',
+    value: function reduceClassExpression(node, _ref19) {
+      var name = _ref19.name,
+          _super = _ref19.super,
+          elements = _ref19.elements;
+
+      return this.fold([name === null ? this.identity : name, _super === null ? this.identity : _super, this.fold(elements)]);
+    }
+  }, {
+    key: 'reduceCompoundAssignmentExpression',
+    value: function reduceCompoundAssignmentExpression(node, _ref20) {
+      var binding = _ref20.binding,
+          expression = _ref20.expression;
+
+      return this.append(binding, expression);
+    }
+  }, {
+    key: 'reduceComputedMemberAssignmentTarget',
+    value: function reduceComputedMemberAssignmentTarget(node, _ref21) {
+      var object = _ref21.object,
+          expression = _ref21.expression;
+
+      return this.append(object, expression);
+    }
+  }, {
+    key: 'reduceComputedMemberExpression',
+    value: function reduceComputedMemberExpression(node, _ref22) {
+      var object = _ref22.object,
+          expression = _ref22.expression;
+
+      return this.append(object, expression);
+    }
+  }, {
+    key: 'reduceComputedPropertyName',
+    value: function reduceComputedPropertyName(node, _ref23) {
+      var expression = _ref23.expression;
+
+      return expression;
+    }
+  }, {
+    key: 'reduceConditionalExpression',
+    value: function reduceConditionalExpression(node, _ref24) {
+      var test = _ref24.test,
+          consequent = _ref24.consequent,
+          alternate = _ref24.alternate;
+
+      return this.fold([test, consequent, alternate]);
+    }
+  }, {
+    key: 'reduceContinueStatement',
+    value: function reduceContinueStatement(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceDataProperty',
+    value: function reduceDataProperty(node, _ref25) {
+      var name = _ref25.name,
+          expression = _ref25.expression;
+
+      return this.append(name, expression);
+    }
+  }, {
+    key: 'reduceDebuggerStatement',
+    value: function reduceDebuggerStatement(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceDirective',
+    value: function reduceDirective(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceDoWhileStatement',
+    value: function reduceDoWhileStatement(node, _ref26) {
+      var body = _ref26.body,
+          test = _ref26.test;
+
+      return this.append(body, test);
+    }
+  }, {
+    key: 'reduceEmptyStatement',
+    value: function reduceEmptyStatement(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceExport',
+    value: function reduceExport(node, _ref27) {
+      var declaration = _ref27.declaration;
+
+      return declaration;
+    }
+  }, {
+    key: 'reduceExportAllFrom',
+    value: function reduceExportAllFrom(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceExportDefault',
+    value: function reduceExportDefault(node, _ref28) {
+      var body = _ref28.body;
+
+      return body;
+    }
+  }, {
+    key: 'reduceExportFrom',
+    value: function reduceExportFrom(node, _ref29) {
+      var namedExports = _ref29.namedExports;
+
+      return this.fold(namedExports);
+    }
+  }, {
+    key: 'reduceExportFromSpecifier',
+    value: function reduceExportFromSpecifier(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceExportLocalSpecifier',
+    value: function reduceExportLocalSpecifier(node, _ref30) {
+      var name = _ref30.name;
+
+      return name;
+    }
+  }, {
+    key: 'reduceExportLocals',
+    value: function reduceExportLocals(node, _ref31) {
+      var namedExports = _ref31.namedExports;
+
+      return this.fold(namedExports);
+    }
+  }, {
+    key: 'reduceExpressionStatement',
+    value: function reduceExpressionStatement(node, _ref32) {
+      var expression = _ref32.expression;
+
+      return expression;
+    }
+  }, {
+    key: 'reduceForInStatement',
+    value: function reduceForInStatement(node, _ref33) {
+      var left = _ref33.left,
+          right = _ref33.right,
+          body = _ref33.body;
+
+      return this.fold([left, right, body]);
+    }
+  }, {
+    key: 'reduceForOfStatement',
+    value: function reduceForOfStatement(node, _ref34) {
+      var left = _ref34.left,
+          right = _ref34.right,
+          body = _ref34.body;
+
+      return this.fold([left, right, body]);
+    }
+  }, {
+    key: 'reduceForStatement',
+    value: function reduceForStatement(node, _ref35) {
+      var init = _ref35.init,
+          test = _ref35.test,
+          update = _ref35.update,
+          body = _ref35.body;
+
+      return this.fold([init === null ? this.identity : init, test === null ? this.identity : test, update === null ? this.identity : update, body]);
+    }
+  }, {
+    key: 'reduceFormalParameters',
+    value: function reduceFormalParameters(node, _ref36) {
+      var items = _ref36.items,
+          rest = _ref36.rest;
+
+      return this.append(this.fold(items), rest === null ? this.identity : rest);
+    }
+  }, {
+    key: 'reduceFunctionBody',
+    value: function reduceFunctionBody(node, _ref37) {
+      var directives = _ref37.directives,
+          statements = _ref37.statements;
+
+      return this.append(this.fold(directives), this.fold(statements));
+    }
+  }, {
+    key: 'reduceFunctionDeclaration',
+    value: function reduceFunctionDeclaration(node, _ref38) {
+      var name = _ref38.name,
+          params = _ref38.params,
+          body = _ref38.body;
+
+      return this.fold([name, params, body]);
+    }
+  }, {
+    key: 'reduceFunctionExpression',
+    value: function reduceFunctionExpression(node, _ref39) {
+      var name = _ref39.name,
+          params = _ref39.params,
+          body = _ref39.body;
+
+      return this.fold([name === null ? this.identity : name, params, body]);
+    }
+  }, {
+    key: 'reduceGetter',
+    value: function reduceGetter(node, _ref40) {
+      var name = _ref40.name,
+          body = _ref40.body;
+
+      return this.append(name, body);
+    }
+  }, {
+    key: 'reduceIdentifierExpression',
+    value: function reduceIdentifierExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceIfStatement',
+    value: function reduceIfStatement(node, _ref41) {
+      var test = _ref41.test,
+          consequent = _ref41.consequent,
+          alternate = _ref41.alternate;
+
+      return this.fold([test, consequent, alternate === null ? this.identity : alternate]);
+    }
+  }, {
+    key: 'reduceImport',
+    value: function reduceImport(node, _ref42) {
+      var defaultBinding = _ref42.defaultBinding,
+          namedImports = _ref42.namedImports;
+
+      return this.append(defaultBinding === null ? this.identity : defaultBinding, this.fold(namedImports));
+    }
+  }, {
+    key: 'reduceImportNamespace',
+    value: function reduceImportNamespace(node, _ref43) {
+      var defaultBinding = _ref43.defaultBinding,
+          namespaceBinding = _ref43.namespaceBinding;
+
+      return this.append(defaultBinding === null ? this.identity : defaultBinding, namespaceBinding);
+    }
+  }, {
+    key: 'reduceImportSpecifier',
+    value: function reduceImportSpecifier(node, _ref44) {
+      var binding = _ref44.binding;
+
+      return binding;
+    }
+  }, {
+    key: 'reduceLabeledStatement',
+    value: function reduceLabeledStatement(node, _ref45) {
+      var body = _ref45.body;
+
+      return body;
+    }
+  }, {
+    key: 'reduceLiteralBooleanExpression',
+    value: function reduceLiteralBooleanExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceLiteralInfinityExpression',
+    value: function reduceLiteralInfinityExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceLiteralNullExpression',
+    value: function reduceLiteralNullExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceLiteralNumericExpression',
+    value: function reduceLiteralNumericExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceLiteralRegExpExpression',
+    value: function reduceLiteralRegExpExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceLiteralStringExpression',
+    value: function reduceLiteralStringExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceMethod',
+    value: function reduceMethod(node, _ref46) {
+      var name = _ref46.name,
+          params = _ref46.params,
+          body = _ref46.body;
+
+      return this.fold([name, params, body]);
+    }
+  }, {
+    key: 'reduceModule',
+    value: function reduceModule(node, _ref47) {
+      var directives = _ref47.directives,
+          items = _ref47.items;
+
+      return this.append(this.fold(directives), this.fold(items));
+    }
+  }, {
+    key: 'reduceNewExpression',
+    value: function reduceNewExpression(node, _ref48) {
+      var callee = _ref48.callee,
+          _arguments = _ref48.arguments;
+
+      return this.append(callee, this.fold(_arguments));
+    }
+  }, {
+    key: 'reduceNewTargetExpression',
+    value: function reduceNewTargetExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceObjectAssignmentTarget',
+    value: function reduceObjectAssignmentTarget(node, _ref49) {
+      var properties = _ref49.properties;
+
+      return this.fold(properties);
+    }
+  }, {
+    key: 'reduceObjectBinding',
+    value: function reduceObjectBinding(node, _ref50) {
+      var properties = _ref50.properties;
+
+      return this.fold(properties);
+    }
+  }, {
+    key: 'reduceObjectExpression',
+    value: function reduceObjectExpression(node, _ref51) {
+      var properties = _ref51.properties;
+
+      return this.fold(properties);
+    }
+  }, {
+    key: 'reduceReturnStatement',
+    value: function reduceReturnStatement(node, _ref52) {
+      var expression = _ref52.expression;
+
+      return expression === null ? this.identity : expression;
+    }
+  }, {
+    key: 'reduceScript',
+    value: function reduceScript(node, _ref53) {
+      var directives = _ref53.directives,
+          statements = _ref53.statements;
+
+      return this.append(this.fold(directives), this.fold(statements));
+    }
+  }, {
+    key: 'reduceSetter',
+    value: function reduceSetter(node, _ref54) {
+      var name = _ref54.name,
+          param = _ref54.param,
+          body = _ref54.body;
+
+      return this.fold([name, param, body]);
+    }
+  }, {
+    key: 'reduceShorthandProperty',
+    value: function reduceShorthandProperty(node, _ref55) {
+      var name = _ref55.name;
+
+      return name;
+    }
+  }, {
+    key: 'reduceSpreadElement',
+    value: function reduceSpreadElement(node, _ref56) {
+      var expression = _ref56.expression;
+
+      return expression;
+    }
+  }, {
+    key: 'reduceStaticMemberAssignmentTarget',
+    value: function reduceStaticMemberAssignmentTarget(node, _ref57) {
+      var object = _ref57.object;
+
+      return object;
+    }
+  }, {
+    key: 'reduceStaticMemberExpression',
+    value: function reduceStaticMemberExpression(node, _ref58) {
+      var object = _ref58.object;
+
+      return object;
+    }
+  }, {
+    key: 'reduceStaticPropertyName',
+    value: function reduceStaticPropertyName(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceSuper',
+    value: function reduceSuper(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceSwitchCase',
+    value: function reduceSwitchCase(node, _ref59) {
+      var test = _ref59.test,
+          consequent = _ref59.consequent;
+
+      return this.append(test, this.fold(consequent));
+    }
+  }, {
+    key: 'reduceSwitchDefault',
+    value: function reduceSwitchDefault(node, _ref60) {
+      var consequent = _ref60.consequent;
+
+      return this.fold(consequent);
+    }
+  }, {
+    key: 'reduceSwitchStatement',
+    value: function reduceSwitchStatement(node, _ref61) {
+      var discriminant = _ref61.discriminant,
+          cases = _ref61.cases;
+
+      return this.append(discriminant, this.fold(cases));
+    }
+  }, {
+    key: 'reduceSwitchStatementWithDefault',
+    value: function reduceSwitchStatementWithDefault(node, _ref62) {
+      var discriminant = _ref62.discriminant,
+          preDefaultCases = _ref62.preDefaultCases,
+          defaultCase = _ref62.defaultCase,
+          postDefaultCases = _ref62.postDefaultCases;
+
+      return this.fold([discriminant, this.fold(preDefaultCases), defaultCase, this.fold(postDefaultCases)]);
+    }
+  }, {
+    key: 'reduceTemplateElement',
+    value: function reduceTemplateElement(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceTemplateExpression',
+    value: function reduceTemplateExpression(node, _ref63) {
+      var tag = _ref63.tag,
+          elements = _ref63.elements;
+
+      return this.append(tag === null ? this.identity : tag, this.fold(elements));
+    }
+  }, {
+    key: 'reduceThisExpression',
+    value: function reduceThisExpression(node) {
+      return this.identity;
+    }
+  }, {
+    key: 'reduceThrowStatement',
+    value: function reduceThrowStatement(node, _ref64) {
+      var expression = _ref64.expression;
+
+      return expression;
+    }
+  }, {
+    key: 'reduceTryCatchStatement',
+    value: function reduceTryCatchStatement(node, _ref65) {
+      var body = _ref65.body,
+          catchClause = _ref65.catchClause;
+
+      return this.append(body, catchClause);
+    }
+  }, {
+    key: 'reduceTryFinallyStatement',
+    value: function reduceTryFinallyStatement(node, _ref66) {
+      var body = _ref66.body,
+          catchClause = _ref66.catchClause,
+          finalizer = _ref66.finalizer;
+
+      return this.fold([body, catchClause === null ? this.identity : catchClause, finalizer]);
+    }
+  }, {
+    key: 'reduceUnaryExpression',
+    value: function reduceUnaryExpression(node, _ref67) {
+      var operand = _ref67.operand;
+
+      return operand;
+    }
+  }, {
+    key: 'reduceUpdateExpression',
+    value: function reduceUpdateExpression(node, _ref68) {
+      var operand = _ref68.operand;
+
+      return operand;
+    }
+  }, {
+    key: 'reduceVariableDeclaration',
+    value: function reduceVariableDeclaration(node, _ref69) {
+      var declarators = _ref69.declarators;
+
+      return this.fold(declarators);
+    }
+  }, {
+    key: 'reduceVariableDeclarationStatement',
+    value: function reduceVariableDeclarationStatement(node, _ref70) {
+      var declaration = _ref70.declaration;
+
+      return declaration;
+    }
+  }, {
+    key: 'reduceVariableDeclarator',
+    value: function reduceVariableDeclarator(node, _ref71) {
+      var binding = _ref71.binding,
+          init = _ref71.init;
+
+      return this.append(binding, init === null ? this.identity : init);
+    }
+  }, {
+    key: 'reduceWhileStatement',
+    value: function reduceWhileStatement(node, _ref72) {
+      var test = _ref72.test,
+          body = _ref72.body;
+
+      return this.append(test, body);
+    }
+  }, {
+    key: 'reduceWithStatement',
+    value: function reduceWithStatement(node, _ref73) {
+      var object = _ref73.object,
+          body = _ref73.body;
+
+      return this.append(object, body);
+    }
+  }, {
+    key: 'reduceYieldExpression',
+    value: function reduceYieldExpression(node, _ref74) {
+      var expression = _ref74.expression;
+
+      return expression === null ? this.identity : expression;
+    }
+  }, {
+    key: 'reduceYieldGeneratorExpression',
+    value: function reduceYieldGeneratorExpression(node, _ref75) {
+      var expression = _ref75.expression;
+
+      return expression;
+    }
+  }]);
+
+  return MonoidalReducer;
+}();
+
+exports.default = MonoidalReducer;
+},{"shift-ast":2}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+exports.default = annotate;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/**
+ * Copyright 2017 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+function insertInto(annotations, index, text, afterExisting) {
+  for (var i = 0; i < annotations.length; ++i) {
+    if (annotations[i].index >= index) {
+      if (afterExisting) {
+        while (i < annotations.length && annotations[i].index === index) {
+          ++i;
+        }
+      }
+
+      annotations.splice(i, 0, { index, text });
+      return;
+    }
+  }
+  annotations.push({ index, text });
+}
+
+class Info {
+  constructor() {
+    this.declares = [];
+    this.reads = [];
+    this.writes = [];
+    this.deletes = [];
+    this.scopes = [];
+  }
+}
+
+class DefaultMap extends Map {
+  constructor(thunk) {
+    super();
+    this.thunk = thunk;
+  }
+
+  get(v) {
+    if (!this.has(v)) {
+      this.set(v, this.thunk());
+    }
+    return super.get(v);
+  }
+}
+
+function annotate(_ref) {
+  var source = _ref.source,
+      locations = _ref.locations,
+      globalScope = _ref.globalScope,
+      _ref$skipUnambiguous = _ref.skipUnambiguous,
+      skipUnambiguous = _ref$skipUnambiguous === undefined ? false : _ref$skipUnambiguous,
+      _ref$skipScopes = _ref.skipScopes,
+      skipScopes = _ref$skipScopes === undefined ? false : _ref$skipScopes;
+
+
+  var nodeInfo = new DefaultMap(function () {
+    return new Info();
+  });
+
+  var vars = new DefaultMap(function () {
+    return [];
+  }); // MultiMap, I guess?
+
+  function addVariable(v) {
+    vars.get(v.name).push(v);
+    v.declarations.forEach(function (d) {
+      nodeInfo.get(d.node).declares.push(v);
+    });
+    v.references.forEach(function (r) {
+      var info = nodeInfo.get(r.node);
+      if (r.accessibility.isDelete) {
+        if (r.accessibility.isRead || r.accessibility.isWrite) {
+          throw new Error('some reference is a delete *and* something else');
+        }
+        info.deletes.push(v);
+      } else {
+        if (r.accessibility.isRead) {
+          info.reads.push(v);
+        }
+        if (r.accessibility.isWrite) {
+          info.writes.push(v);
+        }
+      }
+    });
+  }
+
+  (function visit(scope) {
+    if (!skipScopes) nodeInfo.get(scope.astNode).scopes.push(scope);
+    scope.variables.forEach(addVariable);
+    scope.children.forEach(visit);
+  })(globalScope);
+
+  // an annotation is { index, text }
+  var annotations = [];
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = nodeInfo.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var _ref2 = _step.value;
+
+      var _ref3 = _slicedToArray(_ref2, 2);
+
+      var node = _ref3[0];
+      var info = _ref3[1];
+
+      var location = locations.get(node);
+      if (info.scopes.length > 0) {
+        if (info.declares.length !== 0 || info.reads.length !== 0 || info.writes.length !== 0 || info.deletes.length !== 0) {
+          throw new Error('unhandled condition: node is scope and reference');
+        }
+
+        var _arr = [].concat(_toConsumableArray(info.scopes));
+
+        for (var _i = 0; _i < _arr.length; _i++) {
+          var scope = _arr[_i];
+          var scopeVars = [].concat(_toConsumableArray(scope.variables.values()));
+          var _text = 'Scope (' + scope.type.name + ')';
+          if (scopeVars.length > 0) {
+            _text += ' declaring ' + scopeVars.map(function (v) {
+              return v.name + '#' + vars.get(v.name).indexOf(v);
+            }).join(', ');
+          }
+          insertInto(annotations, location.start.offset, '/* ' + _text + ' */', true);
+          insertInto(annotations, location.end.offset, '/* end scope */', true);
+        }
+      } else if (info.deletes.length > 0) {
+        var deletes = skipUnambiguous ? info.deletes.filter(function (v) {
+          return vars.get(v.name).length > 1;
+        }) : info.deletes;
+        if (deletes.length > 0) {
+          insertInto(annotations, location.end.offset, '/* deletes ' + deletes.map(function (v) {
+            return v.name + '#' + vars.get(v.name).indexOf(v);
+          }).join(', ') + ' */', false);
+        }
+      } else {
+        var _text2 = '';
+        var declares = skipUnambiguous ? info.declares.filter(function (v) {
+          return vars.get(v.name).length > 1;
+        }) : info.declares;
+        if (declares.length > 0) {
+          _text2 += 'declares ' + declares.map(function (v) {
+            return v.name + '#' + vars.get(v.name).indexOf(v);
+          }).join(', ');
+        }
+        var reads = skipUnambiguous ? info.reads.filter(function (v) {
+          return vars.get(v.name).length > 1;
+        }) : info.reads;
+        if (reads.length > 0) {
+          if (_text2.length > 0) _text2 += '; ';
+          _text2 += 'reads ' + reads.map(function (v) {
+            return v.name + '#' + vars.get(v.name).indexOf(v);
+          }).join(', ');
+        }
+        var writes = skipUnambiguous ? info.writes.filter(function (v) {
+          return vars.get(v.name).length > 1;
+        }) : info.writes;
+        if (writes.length > 0) {
+          if (_text2.length > 0) _text2 += '; ';
+          _text2 += 'writes ' + writes.map(function (v) {
+            return v.name + '#' + vars.get(v.name).indexOf(v);
+          }).join(', ');
+        }
+        if (_text2 !== '') {
+          insertInto(annotations, location.end.offset, '/* ' + _text2 + ' */', false);
+        }
+      }
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  var out = '';
+  var previousIndex = 0;
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = annotations[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var _ref4 = _step2.value;
+      var index = _ref4.index;
+      var text = _ref4.text;
+
+      out += source.substring(previousIndex, index) + text;
+      previousIndex = index;
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+
+  out += source.substring(previousIndex);
+  return out;
+}
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Copyright 2015 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class DeclarationType {
+  constructor(name, isBlockScoped) {
+    this.name = name;
+    this.isBlockScoped = !!isBlockScoped;
+    this.isFunctionScoped = !isBlockScoped;
+  }
+}
+
+exports.DeclarationType = DeclarationType;
+class BlockScopedDeclaration extends DeclarationType {
+  constructor(name) {
+    super(name, true);
+  }
+}
+
+exports.BlockScopedDeclaration = BlockScopedDeclaration;
+class FunctionScopedDeclaration extends DeclarationType {
+  constructor(name) {
+    super(name, false);
+  }
+}
+
+exports.FunctionScopedDeclaration = FunctionScopedDeclaration;
+DeclarationType.VAR = new FunctionScopedDeclaration('Var');
+DeclarationType.CONST = new BlockScopedDeclaration('Const');
+DeclarationType.LET = new BlockScopedDeclaration('Let');
+DeclarationType.FUNCTION_DECLARATION = new BlockScopedDeclaration('FunctionDeclaration'); // potentially also `FunctionScoped` versions of this, for functions at top of functions/etc?
+DeclarationType.FUNCTION_VAR_DECLARATION = new FunctionScopedDeclaration('FunctionB33'); // The additional variable created by B.3.3.
+DeclarationType.FUNCTION_NAME = new BlockScopedDeclaration('FunctionExpressionName');
+DeclarationType.CLASS_DECLARATION = new BlockScopedDeclaration('ClassDeclaration');
+DeclarationType.CLASS_NAME = new BlockScopedDeclaration('ClassName');
+DeclarationType.PARAMETER = new FunctionScopedDeclaration('Parameter');
+DeclarationType.CATCH_PARAMETER = new BlockScopedDeclaration('CatchParam');
+DeclarationType.IMPORT = new BlockScopedDeclaration('Import');
+
+DeclarationType.fromVarDeclKind = function (variableDeclarationKind) {
+  switch (variableDeclarationKind) {
+    case 'var':
+      return DeclarationType.VAR;
+    case 'const':
+      return DeclarationType.CONST;
+    case 'let':
+      return DeclarationType.LET;
+    default:
+      throw new Error('Invalid VariableDeclarationKind: ' + JSON.stringify(variableDeclarationKind));
+  }
+};
+
+class Declaration {
+  constructor(node, type) {
+    this.node = node;
+    this.type = type;
+  }
+}
+exports.Declaration = Declaration;
+},{}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _shiftReducer = require('shift-reducer');
+
+var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
+
+var _shiftSpec = require('shift-spec');
+
+var _shiftSpec2 = _interopRequireDefault(_shiftSpec);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// TODO this file should live elsewhere
+
+/**
+ * Copyright 2015 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class ListMonoid {
+  constructor(list) {
+    this.list = list;
+  }
+
+  static empty() {
+    return new ListMonoid([]);
+  }
+
+  concat(b) {
+    return new ListMonoid(this.list.concat(b.list));
+  }
+
+  extract() {
+    return this.list;
+  }
+}
+
+// Gives a flat list of all nodes rooted at the given node, in preorder: that is, a node appears before its children.
+class Flattener extends _shiftReducer.MonoidalReducer {
+  // We explicitly invoke Monoidal.prototype methods so that we can automatically generate methods from the spec.
+  constructor() {
+    super(ListMonoid);
+  }
+
+  static flatten(node) {
+    return (0, _shiftReducer2.default)(new this(), node).extract();
+  }
+}
+
+exports.default = Flattener;
+
+var _loop = function _loop(typeName) {
+  Object.defineProperty(Flattener.prototype, `reduce${typeName}`, {
+    value(node, state) {
+      return new ListMonoid([node]).concat(_shiftReducer.MonoidalReducer.prototype[`reduce${typeName}`].call(this, node, state));
+    }
+  });
+};
+
+var _iteratorNormalCompletion = true;
+var _didIteratorError = false;
+var _iteratorError = undefined;
+
+try {
+  for (var _iterator = Object.keys(_shiftSpec2.default)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    var typeName = _step.value;
+
+    _loop(typeName);
+  }
+} catch (err) {
+  _didIteratorError = true;
+  _iteratorError = err;
+} finally {
+  try {
+    if (!_iteratorNormalCompletion && _iterator.return) {
+      _iterator.return();
+    }
+  } finally {
+    if (_didIteratorError) {
+      throw _iteratorError;
+    }
+  }
+}
+},{"shift-reducer":4,"shift-spec":19}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.serialize = exports.Accessibility = exports.DeclarationType = exports.ScopeType = exports.annotate = exports.ScopeLookup = undefined;
+
+var _scopeLookup = require('./scope-lookup');
+
+Object.defineProperty(exports, 'ScopeLookup', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_scopeLookup).default;
+  }
+});
+
+var _annotateSource = require('./annotate-source');
+
+Object.defineProperty(exports, 'annotate', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_annotateSource).default;
+  }
+});
+
+var _scope = require('./scope');
+
+Object.defineProperty(exports, 'ScopeType', {
+  enumerable: true,
+  get: function get() {
+    return _scope.ScopeType;
+  }
+});
+
+var _declaration = require('./declaration');
+
+Object.defineProperty(exports, 'DeclarationType', {
+  enumerable: true,
+  get: function get() {
+    return _declaration.DeclarationType;
+  }
+});
+
+var _reference = require('./reference');
+
+Object.defineProperty(exports, 'Accessibility', {
+  enumerable: true,
+  get: function get() {
+    return _reference.Accessibility;
+  }
+});
+
+var _scopeSerializer = require('./scope-serializer');
+
+Object.defineProperty(exports, 'serialize', {
+  enumerable: true,
+  get: function get() {
+    return _scopeSerializer.serialize;
+  }
+});
+exports.default = analyze;
+
+var _scopeAnalyzer = require('./scope-analyzer');
+
+var _scopeAnalyzer2 = _interopRequireDefault(_scopeAnalyzer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function analyze(script) {
+  return _scopeAnalyzer2.default.analyze(script);
+}
+},{"./annotate-source":6,"./declaration":7,"./reference":10,"./scope":15,"./scope-analyzer":11,"./scope-lookup":12,"./scope-serializer":13}],10:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Copyright 2015 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class Accessibility {
+  constructor(isRead, isWrite, isDelete) {
+    this.isRead = !!isRead;
+    this.isWrite = !!isWrite;
+    this.isReadWrite = !!(isRead && isWrite);
+    this.isDelete = !!isDelete;
+  }
+}
+
+exports.Accessibility = Accessibility;
+Accessibility.READ = new Accessibility(true, false, false);
+Accessibility.WRITE = new Accessibility(false, true, false);
+Accessibility.READWRITE = new Accessibility(true, true, false);
+Accessibility.DELETE = new Accessibility(false, false, true);
+
+class Reference {
+  constructor(node, accessibility) {
+    this.node = node;
+    this.accessibility = accessibility;
+  }
+}
+exports.Reference = Reference;
+},{}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _multimap = require('multimap');
+
+var _multimap2 = _interopRequireDefault(_multimap);
+
+var _shiftReducer = require('shift-reducer');
+
+var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
+
+var _scopeState = require('./scope-state');
+
+var _scopeState2 = _interopRequireDefault(_scopeState);
+
+var _reference = require('./reference');
+
+var _declaration = require('./declaration');
+
+var _scope = require('./scope');
+
+var _strictnessReducer = require('./strictness-reducer');
+
+var _strictnessReducer2 = _interopRequireDefault(_strictnessReducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
+                                                                                                                                                                                                     * Copyright 2015 Shape Security, Inc.
+                                                                                                                                                                                                     *
+                                                                                                                                                                                                     * Licensed under the Apache License, Version 2.0 (the "License")
+                                                                                                                                                                                                     * you may not use this file except in compliance with the License.
+                                                                                                                                                                                                     * You may obtain a copy of the License at
+                                                                                                                                                                                                     *
+                                                                                                                                                                                                     *     http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                                     *
+                                                                                                                                                                                                     * Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                                     * distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                                     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                                     * See the License for the specific language governing permissions and
+                                                                                                                                                                                                     * limitations under the License.
+                                                                                                                                                                                                     */
+
+function getFunctionDeclarations(statements) {
+  return statements.filter(function (s) {
+    return s.type === 'FunctionDeclaration';
+  }).map(function (f) {
+    return f.name;
+  });
+}
+
+class ScopeAnalyzer extends _shiftReducer.MonoidalReducer {
+  constructor(program) {
+    super(_scopeState2.default);
+    this.sloppySet = program.type === 'Script' ? _strictnessReducer2.default.analyze(program) : new Set();
+  }
+
+  static analyze(program) {
+    return (0, _shiftReducer2.default)(new this(program), program).children[0];
+  }
+
+  finishFunction(fnNode, params, body) {
+    var isArrowFn = fnNode.type === 'ArrowExpression';
+    var fnType = isArrowFn ? _scope.ScopeType.ARROW_FUNCTION : _scope.ScopeType.FUNCTION;
+    var opts = { shouldResolveArguments: !isArrowFn, shouldB33: this.sloppySet.has(fnNode) };
+    if (params.hasParameterExpressions) {
+      return params.withoutParameterExpressions().concat(body.finish(fnNode, fnType, { isFunctionWithParameterExpressions: true })).finish(fnNode, _scope.ScopeType.PARAMETERS, opts);
+    }
+    return params.concat(body).finish(fnNode, fnType, opts);
+  }
+
+  reduceArrowExpression(node, _ref) {
+    var params = _ref.params,
+        body = _ref.body;
+
+    return this.finishFunction(node, params, body);
+  }
+
+  reduceAssignmentExpression(node, _ref2) {
+    var binding = _ref2.binding,
+        expression = _ref2.expression;
+
+    return super.reduceAssignmentExpression(node, {
+      binding: binding.addReferences(_reference.Accessibility.WRITE),
+      expression
+    });
+  }
+
+  reduceAssignmentTargetIdentifier(node) {
+    return new _scopeState2.default({ atsForParent: [node] });
+  }
+
+  reduceBindingIdentifier(node) {
+    if (node.name === '*default*') {
+      return new _scopeState2.default();
+    }
+    return new _scopeState2.default({ bindingsForParent: [node] });
+  }
+
+  reduceBindingPropertyIdentifier(node, _ref3) {
+    var binding = _ref3.binding,
+        init = _ref3.init;
+
+    var s = super.reduceBindingPropertyIdentifier(node, { binding, init });
+    if (init) {
+      return s.withParameterExpressions();
+    }
+    return s;
+  }
+
+  reduceBindingWithDefault(node, _ref4) {
+    var binding = _ref4.binding,
+        init = _ref4.init;
+
+    return super.reduceBindingWithDefault(node, { binding, init }).withParameterExpressions();
+  }
+
+  reduceBlock(node, _ref5) {
+    var statements = _ref5.statements;
+
+    return super.reduceBlock(node, { statements }).withPotentialVarFunctions(getFunctionDeclarations(node.statements)).finish(node, _scope.ScopeType.BLOCK);
+  }
+
+  reduceCallExpression(node, _ref6) {
+    var callee = _ref6.callee,
+        _arguments = _ref6.arguments;
+
+    var s = super.reduceCallExpression(node, { callee, arguments: _arguments });
+    if (node.callee.type === 'IdentifierExpression' && node.callee.name === 'eval') {
+      return s.taint();
+    }
+    return s;
+  }
+
+  reduceCatchClause(node, _ref7) {
+    var binding = _ref7.binding,
+        body = _ref7.body;
+
+    return super.reduceCatchClause(node, {
+      binding: binding.addDeclarations(_declaration.DeclarationType.CATCH_PARAMETER),
+      body
+    }).finish(node, _scope.ScopeType.CATCH);
+  }
+
+  reduceClassDeclaration(node, _ref8) {
+    var name = _ref8.name,
+        _super = _ref8.super,
+        elements = _ref8.elements;
+
+    var s = super.reduceClassDeclaration(node, { name, super: _super, elements }).addDeclarations(_declaration.DeclarationType.CLASS_NAME).finish(node, _scope.ScopeType.CLASS_NAME);
+    return s.concat(name.addDeclarations(_declaration.DeclarationType.CLASS_DECLARATION));
+  }
+
+  reduceClassExpression(node, _ref9) {
+    var name = _ref9.name,
+        _super = _ref9.super,
+        elements = _ref9.elements;
+
+    return super.reduceClassExpression(node, { name, super: _super, elements }).addDeclarations(_declaration.DeclarationType.CLASS_NAME).finish(node, _scope.ScopeType.CLASS_NAME);
+  }
+
+  reduceCompoundAssignmentExpression(node, _ref10) {
+    var binding = _ref10.binding,
+        expression = _ref10.expression;
+
+    return super.reduceCompoundAssignmentExpression(node, {
+      binding: binding.addReferences(_reference.Accessibility.READWRITE),
+      expression
+    });
+  }
+
+  reduceComputedMemberExpression(node, _ref11) {
+    var object = _ref11.object,
+        expression = _ref11.expression;
+
+    return super.reduceComputedMemberExpression(node, { object, expression }).withParameterExpressions();
+  }
+
+  reduceForInStatement(node, _ref12) {
+    var left = _ref12.left,
+        right = _ref12.right,
+        body = _ref12.body;
+
+    return super.reduceForInStatement(node, { left: left.addReferences(_reference.Accessibility.WRITE), right, body }).finish(node, _scope.ScopeType.BLOCK);
+  }
+
+  reduceForOfStatement(node, _ref13) {
+    var left = _ref13.left,
+        right = _ref13.right,
+        body = _ref13.body;
+
+    return super.reduceForOfStatement(node, { left: left.addReferences(_reference.Accessibility.WRITE), right, body }).finish(node, _scope.ScopeType.BLOCK);
+  }
+
+  reduceForStatement(node, _ref14) {
+    var init = _ref14.init,
+        test = _ref14.test,
+        update = _ref14.update,
+        body = _ref14.body;
+
+    return super.reduceForStatement(node, {
+      init: init ? init.withoutBindingsForParent() : init,
+      test,
+      update,
+      body
+    }).finish(node, _scope.ScopeType.BLOCK);
+  }
+
+  reduceFormalParameters(node, _ref15) {
+    var items = _ref15.items,
+        rest = _ref15.rest;
+
+    var s = rest ? rest : new _scopeState2.default();
+    items.forEach(function (item, ind) {
+      s = s.concat(item.hasParameterExpressions ? item.finish(node.items[ind], _scope.ScopeType.PARAMETER_EXPRESSION) : item);
+    });
+    return s.addDeclarations(_declaration.DeclarationType.PARAMETER);
+  }
+
+  reduceFunctionDeclaration(node, _ref16) {
+    var name = _ref16.name,
+        params = _ref16.params,
+        body = _ref16.body;
+
+    return name.concat(this.finishFunction(node, params, body)).addFunctionDeclaration();
+  }
+
+  reduceFunctionExpression(node, _ref17) {
+    var name = _ref17.name,
+        params = _ref17.params,
+        body = _ref17.body;
+
+    var s = this.finishFunction(node, params, body);
+    if (name) {
+      return name.concat(s).addDeclarations(_declaration.DeclarationType.FUNCTION_NAME).finish(node, _scope.ScopeType.FUNCTION_NAME);
+    }
+    return s;
+  }
+
+  reduceGetter(node, _ref18) {
+    var name = _ref18.name,
+        body = _ref18.body;
+
+    return name.concat(body.finish(node, _scope.ScopeType.FUNCTION, {
+      shouldResolveArguments: true,
+      shouldB33: this.sloppySet.has(node)
+    }));
+  }
+
+  reduceIdentifierExpression(node) {
+    return new _scopeState2.default({
+      freeIdentifiers: new _multimap2.default([[node.name, new _reference.Reference(node, _reference.Accessibility.READ)]])
+    });
+  }
+
+  reduceIfStatement(node, _ref19) {
+    var test = _ref19.test,
+        consequent = _ref19.consequent,
+        alternate = _ref19.alternate;
+
+    var pvsfd = [];
+    if (node.consequent.type === 'FunctionDeclaration') {
+      pvsfd.push(node.consequent.name);
+    }
+    if (node.alternate && node.alternate.type === 'FunctionDeclaration') {
+      pvsfd.push(node.alternate.name);
+    }
+    return super.reduceIfStatement(node, { test, consequent, alternate }).withPotentialVarFunctions(pvsfd);
+  }
+
+  reduceImport(node, _ref20) {
+    var moduleSpecifier = _ref20.moduleSpecifier,
+        defaultBinding = _ref20.defaultBinding,
+        namedImports = _ref20.namedImports;
+
+    return super.reduceImport(node, { moduleSpecifier, defaultBinding, namedImports }).addDeclarations(_declaration.DeclarationType.IMPORT);
+  }
+
+  reduceMethod(node, _ref21) {
+    var name = _ref21.name,
+        params = _ref21.params,
+        body = _ref21.body;
+
+    return name.concat(this.finishFunction(node, params, body));
+  }
+
+  reduceModule(node, _ref22) {
+    var directives = _ref22.directives,
+        items = _ref22.items;
+
+    return super.reduceModule(node, { directives, items }).finish(node, _scope.ScopeType.MODULE);
+  }
+
+  reduceScript(node, _ref23) {
+    var directives = _ref23.directives,
+        statements = _ref23.statements;
+
+    return super.reduceScript(node, { directives, statements }).finish(node, _scope.ScopeType.SCRIPT, { shouldB33: !node.directives.some(function (d) {
+        return d.rawValue === 'use strict';
+      }) });
+  }
+
+  reduceSetter(node, _ref24) {
+    var name = _ref24.name,
+        param = _ref24.param,
+        body = _ref24.body;
+
+    if (param.hasParameterExpressions) {
+      param = param.finish(node, _scope.ScopeType.PARAMETER_EXPRESSION);
+    }
+    return name.concat(this.finishFunction(node, param.addDeclarations(_declaration.DeclarationType.PARAMETER), body));
+  }
+
+  reduceSwitchStatement(node, _ref25) {
+    var discriminant = _ref25.discriminant,
+        cases = _ref25.cases;
+
+    return this.fold(cases).finish(node, _scope.ScopeType.BLOCK).withPotentialVarFunctions(getFunctionDeclarations([].concat(_toConsumableArray(node.cases.map(function (c) {
+      return c.consequent;
+    }))))).concat(discriminant);
+  }
+
+  reduceSwitchStatementWithDefault(node, _ref26) {
+    var discriminant = _ref26.discriminant,
+        preDefaultCases = _ref26.preDefaultCases,
+        defaultCase = _ref26.defaultCase,
+        postDefaultCases = _ref26.postDefaultCases;
+
+    var functionDeclarations = getFunctionDeclarations([].concat(_toConsumableArray(node.preDefaultCases.concat([node.defaultCase], node.postDefaultCases).map(function (c) {
+      return c.consequent;
+    }))));
+    var cases = preDefaultCases.concat([defaultCase], postDefaultCases);
+    return this.fold(cases).finish(node, _scope.ScopeType.BLOCK).withPotentialVarFunctions(functionDeclarations).concat(discriminant);
+  }
+
+  reduceUnaryExpression(node, _ref27) {
+    var operand = _ref27.operand;
+
+    if (node.operator === 'delete' && node.operand.type === 'IdentifierExpression') {
+      // 'delete x' is a special case.
+      return new _scopeState2.default({ freeIdentifiers: new _multimap2.default([[node.operand.name, new _reference.Reference(node.operand, _reference.Accessibility.DELETE)]]) });
+    }
+    return super.reduceUnaryExpression(node, { operand });
+  }
+
+  reduceUpdateExpression(node, _ref28) {
+    var operand = _ref28.operand;
+
+    return operand.addReferences(_reference.Accessibility.READWRITE);
+  }
+
+  reduceVariableDeclaration(node, _ref29) {
+    var declarators = _ref29.declarators;
+
+    return super.reduceVariableDeclaration(node, { declarators }).addDeclarations(_declaration.DeclarationType.fromVarDeclKind(node.kind), true);
+    // passes bindingsForParent up, for for-in and for-of to add their write-references
+  }
+
+  reduceVariableDeclarationStatement(node, _ref30) {
+    var declaration = _ref30.declaration;
+
+    return declaration.withoutBindingsForParent();
+  }
+
+  reduceVariableDeclarator(node, _ref31) {
+    var binding = _ref31.binding,
+        init = _ref31.init;
+
+    var s = super.reduceVariableDeclarator(node, { binding, init });
+    if (init) {
+      return s.addReferences(_reference.Accessibility.WRITE, true);
+    }
+    return s;
+  }
+
+  reduceWithStatement(node, _ref32) {
+    var object = _ref32.object,
+        body = _ref32.body;
+
+    return super.reduceWithStatement(node, { object, body: body.finish(node, _scope.ScopeType.WITH) });
+  }
+}
+exports.default = ScopeAnalyzer;
+},{"./declaration":7,"./reference":10,"./scope":15,"./scope-state":14,"./strictness-reducer":16,"multimap":18,"shift-reducer":4}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _multimap = require('multimap');
+
+var _multimap2 = _interopRequireDefault(_multimap);
+
+var _scope = require('./scope');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright 2015 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class ScopeLookup {
+  constructor(globalScope) {
+    var _this = this;
+
+    this.scope = globalScope;
+    this.variableMap = new _multimap2.default();
+
+    var addVariable = function addVariable(v) {
+      v.declarations.forEach(function (decl) {
+        return _this.variableMap.set(decl.node, v);
+      });
+      v.references.forEach(function (ref) {
+        if (!_this.variableMap.has(ref.node) || _this.variableMap.get(ref.node).indexOf(v) === -1) {
+          _this.variableMap.set(ref.node, v);
+        }
+      });
+    };
+    (function addVariables(scope) {
+      scope.children.forEach(addVariables);
+      scope.variables.forEach(addVariable);
+    })(globalScope);
+  }
+
+  lookup(node) {
+    /* Gives a map from BindingIdentifiers and IdentifierExpressions to a list of Variables.
+    Assuming that the given node is defined in the scope, the map always returns at least one Variable.
+    It will return two in precisely three cases:
+    `try{}catch(e){var e = ...}`, function declarations in blocks for which annex B.3.3 applies, and class declarations.
+    In this case the same identifier refers to two variables.
+    Both are returned, with the block-scoped variable being returned first in the first two cases, and the inner variable
+    being returned first in the third case. */
+    return this.variableMap.get(node);
+  }
+
+  isGlobal(node) {
+    return this.scope instanceof _scope.GlobalScope && this.variableMap.has(node);
+  }
+}
+exports.default = ScopeLookup;
+},{"./scope":15,"multimap":18}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.serialize = serialize;
+
+var _flattener = require('./flattener');
+
+var _flattener2 = _interopRequireDefault(_flattener);
+
+var _declaration = require('./declaration');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright 2015 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class Serializer {
+  constructor(scope) {
+    var _this = this;
+
+    this.scope = scope;
+    var nodes = _flattener2.default.flatten(scope.astNode);
+    this.ids = new Map();
+    nodes.forEach(function (n) {
+      return _this.ids.set(n, _this.ids.size);
+    });
+    this.declarationCompare = declarationCompare.bind(this, this.ids);
+    this.referenceCompare = referenceCompare.bind(this, this.ids);
+    this.variableCompare = variableCompare.bind(this, this.ids);
+  }
+
+  serialize() {
+    return this.serializeScope(this.scope);
+  }
+
+  serializeScope(scope) {
+    return `{"node": "${this.serializeNode(scope.astNode)}"` + `, "type": "${scope.type.name}"` + `, "isDynamic": ${scope.dynamic}` + `, "through": ${this.serializeReferenceList(this.collectThrough(scope.through))}` + `, "variables": ${this.serializeVariableList(scope.variableList)}` + `, "children": [${scope.children.map(this.serializeScope.bind(this)).join(', ')}]` + '}';
+  }
+
+  serializeNode(node) {
+    if (node.type === 'IdentifierExpression') {
+      return 'IdentifierExpression(' + node.name + ')_' + this.ids.get(node);
+    } else if (node.type === 'AssignmentTargetIdentifier') {
+      return 'AssignmentTargetIdentifier(' + node.name + ')_' + this.ids.get(node);
+    } else if (node.type === 'BindingIdentifier') {
+      return 'BindingIdentifier(' + node.name + ')_' + this.ids.get(node);
+    }
+    return node.type + '_' + this.ids.get(node);
+  }
+
+  collectThrough(through) {
+    var references = [];
+    through.forEach(function (v) {
+      return references.push(v);
+    });
+    return references.sort(this.referenceCompare);
+  }
+
+  serializeReference(reference) {
+    return `{"node": "${this.serializeNode(reference.node)}"` + `, "accessibility": "${reference.accessibility.isDelete ? 'Delete' : ''}${reference.accessibility.isRead ? 'Read' : ''}${reference.accessibility.isWrite ? 'Write' : ''}"` + '}';
+  }
+
+  serializeReferenceList(references) {
+    return `[${references.map(this.serializeReference.bind(this)).join(', ')}]`;
+  }
+
+  serializeDeclaration(declaration) {
+    return `{"node": "${this.serializeNode(declaration.node)}"` + `, "kind": "${declaration.type.name}"` + '}';
+  }
+
+  serializeVariable(variable) {
+    return `{"name": "${variable.name}"` + `, "references": ${this.serializeReferenceList(variable.references)}` + `, "declarations": [${variable.declarations.map(this.serializeDeclaration.bind(this)).join(', ')}]` + '}';
+  }
+
+  serializeVariableList(variables) {
+    variables = variables.slice(0).sort(this.variableCompare);
+    return `[${variables.map(this.serializeVariable.bind(this)).join(', ')}]`;
+  }
+}
+
+function declarationCompare(ids, d1, d2) {
+  function kindToInd(kind) {
+    switch (kind) {
+      case _declaration.DeclarationType.VAR:
+        return 0;
+      case _declaration.DeclarationType.CONST:
+        return 1;
+      case _declaration.DeclarationType.LET:
+        return 2;
+      case _declaration.DeclarationType.FUNCTION_DECLARATION:
+        return 3;
+      case _declaration.DeclarationType.FUNCTION_VAR_DECLARATION:
+        return 4;
+      case _declaration.DeclarationType.FUNCTION_NAME:
+        return 5;
+      case _declaration.DeclarationType.CLASS_NAME:
+        return 6;
+      case _declaration.DeclarationType.PARAMETER:
+        return 7;
+      case _declaration.DeclarationType.CATCH_PARAMETER:
+        return 8;
+      case _declaration.DeclarationType.IMPORT:
+        return 9;
+      default:
+        throw 'Unrecognized declaration type';
+    }
+  }
+  var comparison = kindToInd(d1.type) - kindToInd(d2.type);
+  if (comparison !== 0) {
+    return comparison;
+  }
+  return ids.get(d1.node) - ids.get(d2.node);
+}
+
+function referenceCompare(ids, r1, r2) {
+  var comparison = (r1.accessibility.isRead ? 1 : 0) + (r1.accessibility.isWrite ? 2 : 0) + (r1.accessibility.isDelete ? 4 : 0) - ((r2.accessibility.isRead ? 1 : 0) + (r2.accessibility.isWrite ? 2 : 0) + (r2.accessibility.isDelete ? 4 : 0));
+  if (comparison !== 0) {
+    return comparison;
+  }
+  return ids.get(r1.node) - ids.get(r2.node);
+}
+
+function variableCompare(ids, v1, v2) {
+  if (v1.name < v2.name) {
+    return -1;
+  }
+  if (v1.name > v2.name) {
+    return 1;
+  }
+  var comparison = v1.declarations.length - v2.declarations.length;
+  if (comparison !== 0) {
+    return comparison;
+  }
+  comparison = v1.references.length - v2.references.length;
+  if (comparison !== 0) {
+    return comparison;
+  }
+  for (var i = 0; i < v1.declarations.length; ++i) {
+    var d1 = v1.declarations[i];
+    var d2 = v2.declarations[i];
+    comparison = declarationCompare(ids, d1, d2);
+    if (comparison !== 0) {
+      return comparison;
+    }
+  }
+  for (var _i = 0; _i < v1.references.length; ++_i) {
+    var r1 = v1.references[_i];
+    var r2 = v2.references[_i];
+    comparison = referenceCompare(ids, r1, r2);
+    if (comparison !== 0) {
+      return comparison;
+    }
+  }
+  return 0;
+}
+
+function serialize(scope) {
+  return new Serializer(scope).serialize();
+}
+},{"./declaration":7,"./flattener":8}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _multimap = require('multimap');
+
+var _multimap2 = _interopRequireDefault(_multimap);
+
+var _declaration = require('./declaration');
+
+var _reference = require('./reference');
+
+var _scope = require('./scope');
+
+var _variable = require('./variable');
+
+var _variable2 = _interopRequireDefault(_variable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function merge(multiMap, otherMultiMap) {
+  otherMultiMap.forEachEntry(function (v, k) {
+    multiMap.set.apply(multiMap, [k].concat(v));
+  });
+  return multiMap;
+} /**
+   * Copyright 2015 Shape Security, Inc.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License")
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *     http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   */
+
+function resolveDeclarations(freeIdentifiers, decls, variables) {
+  decls.forEachEntry(function (declarations, name) {
+    var references = freeIdentifiers.get(name) || [];
+    variables = variables.concat(new _variable2.default(name, references, declarations));
+    freeIdentifiers.delete(name);
+  });
+  return variables;
+}
+
+class ScopeState {
+  constructor() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$freeIdentifiers = _ref.freeIdentifiers,
+        freeIdentifiers = _ref$freeIdentifiers === undefined ? new _multimap2.default() : _ref$freeIdentifiers,
+        _ref$functionScopedDe = _ref.functionScopedDeclarations,
+        functionScopedDeclarations = _ref$functionScopedDe === undefined ? new _multimap2.default() : _ref$functionScopedDe,
+        _ref$blockScopedDecla = _ref.blockScopedDeclarations,
+        blockScopedDeclarations = _ref$blockScopedDecla === undefined ? new _multimap2.default() : _ref$blockScopedDecla,
+        _ref$functionDeclarat = _ref.functionDeclarations,
+        functionDeclarations = _ref$functionDeclarat === undefined ? new _multimap2.default() : _ref$functionDeclarat,
+        _ref$children = _ref.children,
+        children = _ref$children === undefined ? [] : _ref$children,
+        _ref$dynamic = _ref.dynamic,
+        dynamic = _ref$dynamic === undefined ? false : _ref$dynamic,
+        _ref$bindingsForParen = _ref.bindingsForParent,
+        bindingsForParent = _ref$bindingsForParen === undefined ? [] : _ref$bindingsForParen,
+        _ref$atsForParent = _ref.atsForParent,
+        atsForParent = _ref$atsForParent === undefined ? [] : _ref$atsForParent,
+        _ref$potentiallyVarSc = _ref.potentiallyVarScopedFunctionDeclarations,
+        potentiallyVarScopedFunctionDeclarations = _ref$potentiallyVarSc === undefined ? new _multimap2.default() : _ref$potentiallyVarSc,
+        _ref$hasParameterExpr = _ref.hasParameterExpressions,
+        hasParameterExpressions = _ref$hasParameterExpr === undefined ? false : _ref$hasParameterExpr;
+
+    this.freeIdentifiers = freeIdentifiers;
+    this.functionScopedDeclarations = functionScopedDeclarations;
+    this.blockScopedDeclarations = blockScopedDeclarations;
+    this.functionDeclarations = functionDeclarations;
+    this.children = children;
+    this.dynamic = dynamic;
+    this.bindingsForParent = bindingsForParent;
+    this.atsForParent = atsForParent;
+    this.potentiallyVarScopedFunctionDeclarations = potentiallyVarScopedFunctionDeclarations;
+    this.hasParameterExpressions = hasParameterExpressions;
+  }
+
+  static empty() {
+    return new ScopeState({});
+  }
+
+  /*
+   * Monoidal append: merges the two states together
+   */
+  concat(b) {
+    if (this === b) {
+      return this;
+    }
+    return new ScopeState({
+      freeIdentifiers: merge(merge(new _multimap2.default(), this.freeIdentifiers), b.freeIdentifiers),
+      functionScopedDeclarations: merge(merge(new _multimap2.default(), this.functionScopedDeclarations), b.functionScopedDeclarations),
+      blockScopedDeclarations: merge(merge(new _multimap2.default(), this.blockScopedDeclarations), b.blockScopedDeclarations),
+      functionDeclarations: merge(merge(new _multimap2.default(), this.functionDeclarations), b.functionDeclarations),
+      children: this.children.concat(b.children),
+      dynamic: this.dynamic || b.dynamic,
+      bindingsForParent: this.bindingsForParent.concat(b.bindingsForParent),
+      atsForParent: this.atsForParent.concat(b.atsForParent),
+      potentiallyVarScopedFunctionDeclarations: merge(merge(new _multimap2.default(), this.potentiallyVarScopedFunctionDeclarations), b.potentiallyVarScopedFunctionDeclarations),
+      hasParameterExpressions: this.hasParameterExpressions || b.hasParameterExpressions
+    });
+  }
+
+  /*
+   * Observe variables entering scope
+   */
+  addDeclarations(kind) {
+    var keepBindingsForParent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var declMap = new _multimap2.default();
+    merge(declMap, kind.isBlockScoped ? this.blockScopedDeclarations : this.functionScopedDeclarations);
+    this.bindingsForParent.forEach(function (binding) {
+      return declMap.set(binding.name, new _declaration.Declaration(binding, kind));
+    });
+    var s = new ScopeState(this);
+    if (kind.isBlockScoped) {
+      s.blockScopedDeclarations = declMap;
+    } else {
+      s.functionScopedDeclarations = declMap;
+    }
+    if (!keepBindingsForParent) {
+      s.bindingsForParent = [];
+      s.atsForParent = [];
+    }
+    return s;
+  }
+
+  addFunctionDeclaration() {
+    if (this.bindingsForParent.length === 0) {
+      return this; // i.e., this function declaration is `export default function () {...}`
+    }
+    var binding = this.bindingsForParent[0];
+    var s = new ScopeState(this);
+    merge(s.functionDeclarations, new _multimap2.default([[binding.name, new _declaration.Declaration(binding, _declaration.DeclarationType.FUNCTION_DECLARATION)]]));
+    s.bindingsForParent = [];
+    return s;
+  }
+
+  /*
+   * Observe a reference to a variable
+   */
+  addReferences(accessibility) {
+    var keepBindingsForParent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var freeMap = new _multimap2.default();
+    merge(freeMap, this.freeIdentifiers);
+    this.bindingsForParent.forEach(function (binding) {
+      return freeMap.set(binding.name, new _reference.Reference(binding, accessibility));
+    });
+    this.atsForParent.forEach(function (binding) {
+      return freeMap.set(binding.name, new _reference.Reference(binding, accessibility));
+    });
+    var s = new ScopeState(this);
+    s.freeIdentifiers = freeMap;
+    if (!keepBindingsForParent) {
+      s.bindingsForParent = [];
+      s.atsForParent = [];
+    }
+    return s;
+  }
+
+  taint() {
+    var s = new ScopeState(this);
+    s.dynamic = true;
+    return s;
+  }
+
+  withoutBindingsForParent() {
+    var s = new ScopeState(this);
+    s.bindingsForParent = [];
+    return s;
+  }
+
+  withParameterExpressions() {
+    var s = new ScopeState(this);
+    s.hasParameterExpressions = true;
+    return s;
+  }
+
+  withoutParameterExpressions() {
+    var s = new ScopeState(this);
+    s.hasParameterExpressions = false;
+    return s;
+  }
+
+  withPotentialVarFunctions(functions) {
+    var pvsfd = merge(new _multimap2.default(), this.potentiallyVarScopedFunctionDeclarations);
+    functions.forEach(function (f) {
+      return pvsfd.set(f.name, new _declaration.Declaration(f, _declaration.DeclarationType.FUNCTION_VAR_DECLARATION));
+    });
+    var s = new ScopeState(this);
+    s.potentiallyVarScopedFunctionDeclarations = pvsfd;
+    return s;
+  }
+
+  /*
+   * Used when a scope boundary is encountered. Resolves found free identifiers
+   * and declarations into variable objects. Any free identifiers remaining are
+   * carried forward into the new state object.
+   */
+  finish(astNode, scopeType) {
+    var _ref2 = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        _ref2$shouldResolveAr = _ref2.shouldResolveArguments,
+        shouldResolveArguments = _ref2$shouldResolveAr === undefined ? false : _ref2$shouldResolveAr,
+        _ref2$shouldB = _ref2.shouldB33,
+        shouldB33 = _ref2$shouldB === undefined ? false : _ref2$shouldB,
+        _ref2$isFunctionWithP = _ref2.isFunctionWithParameterExpressions,
+        isFunctionWithParameterExpressions = _ref2$isFunctionWithP === undefined ? false : _ref2$isFunctionWithP;
+
+    var variables = [];
+    var functionScoped = new _multimap2.default();
+    var freeIdentifiers = merge(new _multimap2.default(), this.freeIdentifiers);
+    var pvsfd = merge(new _multimap2.default(), this.potentiallyVarScopedFunctionDeclarations);
+    var children = this.children;
+
+    var hasSimpleCatchBinding = scopeType.name === 'Catch' && astNode.binding.type === 'BindingIdentifier';
+    this.blockScopedDeclarations.forEachEntry(function (v, k) {
+      if (hasSimpleCatchBinding && v.length === 1 && v[0].node === astNode.binding) {
+        // A simple catch binding is the only type of lexical binding which does *not* block B.3.3 hoisting.
+        // See B.3.5: https://tc39.github.io/ecma262/#sec-variablestatements-in-catch-blocks
+        return;
+      }
+      pvsfd.delete(k);
+    });
+    this.functionDeclarations.forEachEntry(function (v, k) {
+      var existing = pvsfd.get(k);
+      if (existing && (v.length > 1 || v[0].node !== existing[0].node)) {
+        // Note that this is *currently* the spec'd behavior, but is regarded as a bug; see https://github.com/tc39/ecma262/issues/913
+        pvsfd.delete(k);
+      }
+    });
+    this.functionScopedDeclarations.forEachEntry(function (v, k) {
+      var existing = pvsfd.get(k);
+      if (existing && v.some(function (d) {
+        return d.type === _declaration.DeclarationType.PARAMETER;
+      })) {
+        // Despite being function scoped, parameters *do* block B.3.3 hoisting.
+        // See B.3.3.1.a.ii: https://tc39.github.io/ecma262/#sec-web-compat-functiondeclarationinstantiation
+        // "If replacing the FunctionDeclaration f with a VariableStatement that has F as a BindingIdentifier would not produce any Early Errors for func and F is not an element of parameterNames, then"
+        pvsfd.delete(k);
+      }
+    });
+
+    var declarations = new _multimap2.default();
+
+    switch (scopeType) {
+      case _scope.ScopeType.BLOCK:
+      case _scope.ScopeType.CATCH:
+      case _scope.ScopeType.WITH:
+      case _scope.ScopeType.FUNCTION_NAME:
+      case _scope.ScopeType.CLASS_NAME:
+      case _scope.ScopeType.PARAMETER_EXPRESSION:
+        // resolve references to only block-scoped free declarations
+        merge(declarations, this.blockScopedDeclarations);
+        merge(declarations, this.functionDeclarations);
+        variables = resolveDeclarations(freeIdentifiers, declarations, variables);
+        merge(functionScoped, this.functionScopedDeclarations);
+        break;
+      case _scope.ScopeType.PARAMETERS:
+      case _scope.ScopeType.ARROW_FUNCTION:
+      case _scope.ScopeType.FUNCTION:
+      case _scope.ScopeType.MODULE:
+      case _scope.ScopeType.SCRIPT:
+        // resolve references to both block-scoped and function-scoped free declarations
+
+        // top-level lexical declarations in scripts are not globals, so create a separate scope for them
+        // otherwise lexical and variable declarations go in the same scope.
+        if (scopeType === _scope.ScopeType.SCRIPT) {
+          children = [new _scope.Scope({
+            children,
+            variables: resolveDeclarations(freeIdentifiers, this.blockScopedDeclarations, []),
+            through: merge(new _multimap2.default(), freeIdentifiers),
+            type: _scope.ScopeType.SCRIPT,
+            isDynamic: this.dynamic,
+            astNode
+          })];
+        } else {
+          merge(declarations, this.blockScopedDeclarations);
+        }
+
+        if (shouldResolveArguments) {
+          declarations.set('arguments');
+        }
+        merge(declarations, this.functionScopedDeclarations);
+        merge(declarations, this.functionDeclarations);
+
+        if (shouldB33) {
+          merge(declarations, pvsfd);
+        }
+        if (!isFunctionWithParameterExpressions) {
+          pvsfd = new _multimap2.default();
+        }
+
+        variables = resolveDeclarations(freeIdentifiers, declarations, variables);
+
+        // no declarations in a module are global
+        if (scopeType === _scope.ScopeType.MODULE) {
+          children = [new _scope.Scope({
+            children,
+            variables,
+            through: freeIdentifiers,
+            type: _scope.ScopeType.MODULE,
+            isDynamic: this.dynamic,
+            astNode
+          })];
+          variables = [];
+        }
+        break;
+      default:
+        throw new Error('not reached');
+    }
+
+    var scope = scopeType === _scope.ScopeType.SCRIPT || scopeType === _scope.ScopeType.MODULE ? new _scope.GlobalScope({ children, variables, through: freeIdentifiers, astNode }) : new _scope.Scope({
+      children,
+      variables,
+      through: freeIdentifiers,
+      type: scopeType,
+      isDynamic: this.dynamic,
+      astNode
+    });
+
+    return new ScopeState({
+      freeIdentifiers,
+      functionScopedDeclarations: functionScoped,
+      children: [scope],
+      bindingsForParent: this.bindingsForParent,
+      potentiallyVarScopedFunctionDeclarations: pvsfd,
+      hasParameterExpressions: this.hasParameterExpressions
+    });
+  }
+}
+exports.default = ScopeState;
+},{"./declaration":7,"./reference":10,"./scope":15,"./variable":17,"multimap":18}],15:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GlobalScope = exports.Scope = exports.ScopeType = undefined;
+
+var _variable = require('./variable');
+
+var _variable2 = _interopRequireDefault(_variable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+class ScopeType {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+exports.ScopeType = ScopeType; /**
+                                * Copyright 2015 Shape Security, Inc.
+                                *
+                                * Licensed under the Apache License, Version 2.0 (the "License")
+                                * you may not use this file except in compliance with the License.
+                                * You may obtain a copy of the License at
+                                *
+                                *     http://www.apache.org/licenses/LICENSE-2.0
+                                *
+                                * Unless required by applicable law or agreed to in writing, software
+                                * distributed under the License is distributed on an "AS IS" BASIS,
+                                * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                * See the License for the specific language governing permissions and
+                                * limitations under the License.
+                                */
+
+ScopeType.GLOBAL = new ScopeType('Global');
+ScopeType.MODULE = new ScopeType('Module');
+ScopeType.SCRIPT = new ScopeType('Script');
+ScopeType.ARROW_FUNCTION = new ScopeType('ArrowFunction');
+ScopeType.FUNCTION = new ScopeType('Function');
+ScopeType.FUNCTION_NAME = new ScopeType('FunctionName'); // named function expressions
+ScopeType.CLASS_NAME = new ScopeType('ClassName'); // named class expressions
+ScopeType.PARAMETERS = new ScopeType('Parameters');
+ScopeType.PARAMETER_EXPRESSION = new ScopeType('ParameterExpression');
+ScopeType.WITH = new ScopeType('With');
+ScopeType.CATCH = new ScopeType('Catch');
+ScopeType.BLOCK = new ScopeType('Block');
+
+class Scope {
+  constructor(_ref) {
+    var _this = this;
+
+    var children = _ref.children,
+        variables = _ref.variables,
+        through = _ref.through,
+        type = _ref.type,
+        isDynamic = _ref.isDynamic,
+        astNode = _ref.astNode;
+
+    this.children = children;
+    this.through = through;
+    this.type = type;
+    this.astNode = astNode;
+
+    this.variables = new Map();
+    variables.forEach(function (v) {
+      return _this.variables.set(v.name, v);
+    });
+
+    this.variableList = [];
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = this.variables.values()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var x = _step.value;
+
+        this.variableList.push(x);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    this.dynamic = isDynamic || type === ScopeType.WITH || type === ScopeType.GLOBAL;
+  }
+
+  isGlobal() {
+    return this.type === ScopeType.GLOBAL;
+  }
+
+  lookupVariable(name) {
+    return this.variables.get(name);
+  }
+}
+
+exports.Scope = Scope;
+class GlobalScope extends Scope {
+  constructor(_ref2) {
+    var _this2;
+
+    var children = _ref2.children,
+        variables = _ref2.variables,
+        through = _ref2.through,
+        astNode = _ref2.astNode;
+
+    _this2 = super({ children, variables, through, type: ScopeType.GLOBAL, isDynamic: true, astNode });
+    through.forEachEntry(function (v, k) {
+      _this2.variables.set(k, new _variable2.default(k, v, []));
+    });
+    this.variableList = [];
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = this.variables.values()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var x = _step2.value;
+
+        this.variableList.push(x);
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+          _iterator2.return();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+  }
+}
+exports.GlobalScope = GlobalScope;
+},{"./variable":17}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _shiftReducer = require('shift-reducer');
+
+var _shiftReducer2 = _interopRequireDefault(_shiftReducer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// TODO this file should live elsewhere
+
+class SetMonoid {
+  // nb not immutable
+  constructor(set) {
+    this.set = set;
+  }
+
+  static empty() {
+    return new SetMonoid(new Set());
+  }
+
+  concat(b) {
+    return new SetMonoid(merge(this.set, b.set));
+  }
+
+  extract() {
+    return this.set;
+  }
+
+  add(e) {
+    // this happens to work, since, as used in StrictnessReducer, .add is never called until after something has been merged, so the identity element is never mutated.
+    // to do this in an immutable fashion, uncomment the line below. 
+    // this.set = merge(new Set, this.set);
+    this.set.add(e);
+    return this;
+  }
+}
+
+function hasStrict(directives) {
+  return directives.some(function (d) {
+    return d.rawValue === 'use strict';
+  });
+}
+
+function merge(s1, s2) {
+  var out = new Set();
+  s1.forEach(function (v) {
+    return out.add(v);
+  });
+  s2.forEach(function (v) {
+    return out.add(v);
+  });
+  return out;
+}
+
+// Given a Script, the analyze method returns a set containing all ArrowExpression, FunctionDeclaration, FunctionExpression, and Script nodes which are sloppy mode. All other ArrowExpression, FunctionDeclaration, FunctionExpression, and Script nodes are strict.
+class StrictnessReducer extends _shiftReducer.MonoidalReducer {
+  constructor() {
+    super(SetMonoid);
+  }
+
+  static analyze(script) {
+    return (0, _shiftReducer2.default)(new this(), script).extract();
+  }
+
+  reduceArrowExpression(node, _ref) {
+    var params = _ref.params,
+        body = _ref.body;
+
+    if (node.body.type === 'FunctionBody' && hasStrict(node.body.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceArrowExpression(node, { params, body }).add(node);
+  }
+
+  reduceClassDeclaration() {
+    return SetMonoid.empty();
+  }
+
+  reduceClassExpression() {
+    return SetMonoid.empty();
+  }
+
+  reduceFunctionDeclaration(node, _ref2) {
+    var name = _ref2.name,
+        params = _ref2.params,
+        body = _ref2.body;
+
+    if (hasStrict(node.body.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceFunctionDeclaration(node, { name, params, body }).add(node);
+  }
+
+  reduceFunctionExpression(node, _ref3) {
+    var name = _ref3.name,
+        params = _ref3.params,
+        body = _ref3.body;
+
+    if (hasStrict(node.body.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceFunctionExpression(node, { name, params, body }).add(node);
+  }
+
+  reduceGetter(node, _ref4) {
+    var name = _ref4.name,
+        body = _ref4.body;
+
+    if (hasStrict(node.body.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceGetter(node, { name, body }).add(node);
+  }
+
+  reduceMethod(node, _ref5) {
+    var name = _ref5.name,
+        params = _ref5.params,
+        body = _ref5.body;
+
+    if (hasStrict(node.body.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceMethod(node, { name, params, body }).add(node);
+  }
+
+  reduceScript(node, _ref6) {
+    var directives = _ref6.directives,
+        statements = _ref6.statements;
+
+    if (hasStrict(node.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceScript(node, { directives, statements }).add(node);
+  }
+
+  reduceSetter(node, _ref7) {
+    var name = _ref7.name,
+        param = _ref7.param,
+        body = _ref7.body;
+
+    if (hasStrict(node.body.directives)) {
+      return SetMonoid.empty();
+    }
+    return super.reduceSetter(node, { name, param, body }).add(node);
+  }
+}
+exports.default = StrictnessReducer;
+},{"shift-reducer":4}],17:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Copyright 2014 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+class Variable {
+  constructor(name, references, declarations) {
+    this.name = name;
+    this.references = references;
+    this.declarations = declarations;
+  }
+}
+exports.default = Variable;
+},{}],18:[function(require,module,exports){
+"use strict";
+
+/* global module, define */
+
+function mapEach(map, operation){
+  var keys = map.keys();
+  var next;
+  while(!(next = keys.next()).done) {
+    operation(map.get(next.value), next.value, map);
+  }
+}
+
+var Multimap = (function() {
+  var mapCtor;
+  if (typeof Map !== 'undefined') {
+    mapCtor = Map;
+
+    if (!Map.prototype.keys) {
+      Map.prototype.keys = function() {
+        var keys = [];
+        this.forEach(function(item, key) {
+          keys.push(key);
+        });
+        return keys;
+      };
+    }
+  }
+
+  function Multimap(iterable) {
+    var self = this;
+
+    self._map = mapCtor;
+
+    if (Multimap.Map) {
+      self._map = Multimap.Map;
+    }
+
+    self._ = self._map ? new self._map() : {};
+
+    if (iterable) {
+      iterable.forEach(function(i) {
+        self.set(i[0], i[1]);
+      });
+    }
+  }
+
+  /**
+   * @param {Object} key
+   * @return {Array} An array of values, undefined if no such a key;
+   */
+  Multimap.prototype.get = function(key) {
+    return this._map ? this._.get(key) : this._[key];
+  };
+
+  /**
+   * @param {Object} key
+   * @param {Object} val...
+   */
+  Multimap.prototype.set = function(key, val) {
+    var args = Array.prototype.slice.call(arguments);
+
+    key = args.shift();
+
+    var entry = this.get(key);
+    if (!entry) {
+      entry = [];
+      if (this._map)
+        this._.set(key, entry);
+      else
+        this._[key] = entry;
+    }
+
+    Array.prototype.push.apply(entry, args);
+    return this;
+  };
+
+  /**
+   * @param {Object} key
+   * @param {Object=} val
+   * @return {boolean} true if any thing changed
+   */
+  Multimap.prototype.delete = function(key, val) {
+    if (!this.has(key))
+      return false;
+
+    if (arguments.length == 1) {
+      this._map ? (this._.delete(key)) : (delete this._[key]);
+      return true;
+    } else {
+      var entry = this.get(key);
+      var idx = entry.indexOf(val);
+      if (idx != -1) {
+        entry.splice(idx, 1);
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  /**
+   * @param {Object} key
+   * @param {Object=} val
+   * @return {boolean} whether the map contains 'key' or 'key=>val' pair
+   */
+  Multimap.prototype.has = function(key, val) {
+    var hasKey = this._map ? this._.has(key) : this._.hasOwnProperty(key);
+
+    if (arguments.length == 1 || !hasKey)
+      return hasKey;
+
+    var entry = this.get(key) || [];
+    return entry.indexOf(val) != -1;
+  };
+
+
+  /**
+   * @return {Array} all the keys in the map
+   */
+  Multimap.prototype.keys = function() {
+    if (this._map)
+      return makeIterator(this._.keys());
+
+    return makeIterator(Object.keys(this._));
+  };
+
+  /**
+   * @return {Array} all the values in the map
+   */
+  Multimap.prototype.values = function() {
+    var vals = [];
+    this.forEachEntry(function(entry) {
+      Array.prototype.push.apply(vals, entry);
+    });
+
+    return makeIterator(vals);
+  };
+
+  /**
+   *
+   */
+  Multimap.prototype.forEachEntry = function(iter) {
+    mapEach(this, iter);
+  };
+
+  Multimap.prototype.forEach = function(iter) {
+    var self = this;
+    self.forEachEntry(function(entry, key) {
+      entry.forEach(function(item) {
+        iter(item, key, self);
+      });
+    });
+  };
+
+
+  Multimap.prototype.clear = function() {
+    if (this._map) {
+      this._.clear();
+    } else {
+      this._ = {};
+    }
+  };
+
+  Object.defineProperty(
+    Multimap.prototype,
+    "size", {
+      configurable: false,
+      enumerable: true,
+      get: function() {
+        var total = 0;
+
+        mapEach(this, function(value){
+          total += value.length;
+        });
+
+        return total;
+      }
+    });
+
+  var safariNext;
+
+  try{
+    safariNext = new Function('iterator', 'makeIterator', 'var keysArray = []; for(var key of iterator){keysArray.push(key);} return makeIterator(keysArray).next;');
+  }catch(error){
+    // for of not implemented;
+  }
+
+  function makeIterator(iterator){
+    if(Array.isArray(iterator)){
+      var nextIndex = 0;
+
+      return {
+        next: function(){
+          return nextIndex < iterator.length ?
+            {value: iterator[nextIndex++], done: false} :
+          {done: true};
+        }
+      };
+    }
+
+    // Only an issue in safari
+    if(!iterator.next && safariNext){
+      iterator.next = safariNext(iterator, makeIterator);
+    }
+
+    return iterator;
+  }
+
+  return Multimap;
+})();
+
+
+if(typeof exports === 'object' && module && module.exports)
+  module.exports = Multimap;
+else if(typeof define === 'function' && define.amd)
+  define(function() { return Multimap; });
+
+},{}],19:[function(require,module,exports){
+// Generated by src/generate-spec.js. 
+
+/**
+ * Copyright 2016 Shape Security, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Hack to make Babel6 import this as a module.
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = (function() {
+  var SPEC = {};
+
+  var BOOLEAN = { typeName: "Boolean" };
+  var DOUBLE = { typeName: "Number" };
+  var STRING = { typeName: "String" };
+  function Maybe(arg) { return { typeName: "Maybe", argument: arg }; }
+  function List(arg) { return { typeName: "List", argument: arg }; }
+  function Const(arg) { return { typeName: "Const", argument: arg }; }
+  function Union() { return { typeName: "Union", arguments: [].slice.call(arguments, 0) }; }
+
+
+  var TYPE_INDICATOR = {
+    typeName: "Enum",
+    values: ["ArrayAssignmentTarget", "ArrayBinding", "ArrayExpression", "ArrowExpression", "AssignmentExpression", "AssignmentTargetIdentifier", "AssignmentTargetPropertyIdentifier", "AssignmentTargetPropertyProperty", "AssignmentTargetWithDefault", "BinaryExpression", "BindingIdentifier", "BindingPropertyIdentifier", "BindingPropertyProperty", "BindingWithDefault", "Block", "BlockStatement", "BreakStatement", "CallExpression", "CatchClause", "ClassDeclaration", "ClassElement", "ClassExpression", "CompoundAssignmentExpression", "ComputedMemberAssignmentTarget", "ComputedMemberExpression", "ComputedPropertyName", "ConditionalExpression", "ContinueStatement", "DataProperty", "DebuggerStatement", "Directive", "DoWhileStatement", "EmptyStatement", "Export", "ExportAllFrom", "ExportDefault", "ExportFrom", "ExportFromSpecifier", "ExportLocalSpecifier", "ExportLocals", "ExpressionStatement", "ForInStatement", "ForOfStatement", "ForStatement", "FormalParameters", "FunctionBody", "FunctionDeclaration", "FunctionExpression", "Getter", "IdentifierExpression", "IfStatement", "Import", "ImportNamespace", "ImportSpecifier", "LabeledStatement", "LiteralBooleanExpression", "LiteralInfinityExpression", "LiteralNullExpression", "LiteralNumericExpression", "LiteralRegExpExpression", "LiteralStringExpression", "Method", "Module", "NewExpression", "NewTargetExpression", "ObjectAssignmentTarget", "ObjectBinding", "ObjectExpression", "ReturnStatement", "Script", "Setter", "ShorthandProperty", "SpreadElement", "StaticMemberAssignmentTarget", "StaticMemberExpression", "StaticPropertyName", "Super", "SwitchCase", "SwitchDefault", "SwitchStatement", "SwitchStatementWithDefault", "TemplateElement", "TemplateExpression", "ThisExpression", "ThrowStatement", "TryCatchStatement", "TryFinallyStatement", "UnaryExpression", "UpdateExpression", "VariableDeclaration", "VariableDeclarationStatement", "VariableDeclarator", "WhileStatement", "WithStatement", "YieldExpression", "YieldGeneratorExpression"]
+  };
+
+  var BinaryOperator = {
+    typeName: "Enum",
+    values: ["==", "!=", "===", "!==", "<", "<=", ">", ">=", "in", "instanceof", "<<", ">>", ">>>", "+", "-", "*", "/", "%", "**", ",", "||", "&&", "|", "^", "&"]
+  }
+  
+  var CompoundAssignmentOperator = {
+    typeName: "Enum",
+    values: ["+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "|=", "^=", "&="]
+  }
+  
+  var UnaryOperator = {
+    typeName: "Enum",
+    values: ["+", "-", "!", "~", "typeof", "void", "delete"]
+  }
+  
+  var UpdateOperator = {
+    typeName: "Enum",
+    values: ["++", "--"]
+  }
+  
+  var VariableDeclarationKind = {
+    typeName: "Enum",
+    values: ["var", "let", "const"]
+  }
+  
+
+  var ArrayAssignmentTarget = SPEC.ArrayAssignmentTarget = {};
+  var ArrayBinding = SPEC.ArrayBinding = {};
+  var ArrayExpression = SPEC.ArrayExpression = {};
+  var ArrowExpression = SPEC.ArrowExpression = {};
+  var AssignmentExpression = SPEC.AssignmentExpression = {};
+  var AssignmentTargetIdentifier = SPEC.AssignmentTargetIdentifier = {};
+  var AssignmentTargetPropertyIdentifier = SPEC.AssignmentTargetPropertyIdentifier = {};
+  var AssignmentTargetPropertyProperty = SPEC.AssignmentTargetPropertyProperty = {};
+  var AssignmentTargetWithDefault = SPEC.AssignmentTargetWithDefault = {};
+  var BinaryExpression = SPEC.BinaryExpression = {};
+  var BindingIdentifier = SPEC.BindingIdentifier = {};
+  var BindingPropertyIdentifier = SPEC.BindingPropertyIdentifier = {};
+  var BindingPropertyProperty = SPEC.BindingPropertyProperty = {};
+  var BindingWithDefault = SPEC.BindingWithDefault = {};
+  var Block = SPEC.Block = {};
+  var BlockStatement = SPEC.BlockStatement = {};
+  var BreakStatement = SPEC.BreakStatement = {};
+  var CallExpression = SPEC.CallExpression = {};
+  var CatchClause = SPEC.CatchClause = {};
+  var ClassDeclaration = SPEC.ClassDeclaration = {};
+  var ClassElement = SPEC.ClassElement = {};
+  var ClassExpression = SPEC.ClassExpression = {};
+  var CompoundAssignmentExpression = SPEC.CompoundAssignmentExpression = {};
+  var ComputedMemberAssignmentTarget = SPEC.ComputedMemberAssignmentTarget = {};
+  var ComputedMemberExpression = SPEC.ComputedMemberExpression = {};
+  var ComputedPropertyName = SPEC.ComputedPropertyName = {};
+  var ConditionalExpression = SPEC.ConditionalExpression = {};
+  var ContinueStatement = SPEC.ContinueStatement = {};
+  var DataProperty = SPEC.DataProperty = {};
+  var DebuggerStatement = SPEC.DebuggerStatement = {};
+  var Directive = SPEC.Directive = {};
+  var DoWhileStatement = SPEC.DoWhileStatement = {};
+  var EmptyStatement = SPEC.EmptyStatement = {};
+  var Export = SPEC.Export = {};
+  var ExportAllFrom = SPEC.ExportAllFrom = {};
+  var ExportDefault = SPEC.ExportDefault = {};
+  var ExportFrom = SPEC.ExportFrom = {};
+  var ExportFromSpecifier = SPEC.ExportFromSpecifier = {};
+  var ExportLocalSpecifier = SPEC.ExportLocalSpecifier = {};
+  var ExportLocals = SPEC.ExportLocals = {};
+  var ExpressionStatement = SPEC.ExpressionStatement = {};
+  var ForInStatement = SPEC.ForInStatement = {};
+  var ForOfStatement = SPEC.ForOfStatement = {};
+  var ForStatement = SPEC.ForStatement = {};
+  var FormalParameters = SPEC.FormalParameters = {};
+  var FunctionBody = SPEC.FunctionBody = {};
+  var FunctionDeclaration = SPEC.FunctionDeclaration = {};
+  var FunctionExpression = SPEC.FunctionExpression = {};
+  var Getter = SPEC.Getter = {};
+  var IdentifierExpression = SPEC.IdentifierExpression = {};
+  var IfStatement = SPEC.IfStatement = {};
+  var Import = SPEC.Import = {};
+  var ImportNamespace = SPEC.ImportNamespace = {};
+  var ImportSpecifier = SPEC.ImportSpecifier = {};
+  var LabeledStatement = SPEC.LabeledStatement = {};
+  var LiteralBooleanExpression = SPEC.LiteralBooleanExpression = {};
+  var LiteralInfinityExpression = SPEC.LiteralInfinityExpression = {};
+  var LiteralNullExpression = SPEC.LiteralNullExpression = {};
+  var LiteralNumericExpression = SPEC.LiteralNumericExpression = {};
+  var LiteralRegExpExpression = SPEC.LiteralRegExpExpression = {};
+  var LiteralStringExpression = SPEC.LiteralStringExpression = {};
+  var Method = SPEC.Method = {};
+  var Module = SPEC.Module = {};
+  var NewExpression = SPEC.NewExpression = {};
+  var NewTargetExpression = SPEC.NewTargetExpression = {};
+  var ObjectAssignmentTarget = SPEC.ObjectAssignmentTarget = {};
+  var ObjectBinding = SPEC.ObjectBinding = {};
+  var ObjectExpression = SPEC.ObjectExpression = {};
+  var ReturnStatement = SPEC.ReturnStatement = {};
+  var Script = SPEC.Script = {};
+  var Setter = SPEC.Setter = {};
+  var ShorthandProperty = SPEC.ShorthandProperty = {};
+  var SpreadElement = SPEC.SpreadElement = {};
+  var StaticMemberAssignmentTarget = SPEC.StaticMemberAssignmentTarget = {};
+  var StaticMemberExpression = SPEC.StaticMemberExpression = {};
+  var StaticPropertyName = SPEC.StaticPropertyName = {};
+  var Super = SPEC.Super = {};
+  var SwitchCase = SPEC.SwitchCase = {};
+  var SwitchDefault = SPEC.SwitchDefault = {};
+  var SwitchStatement = SPEC.SwitchStatement = {};
+  var SwitchStatementWithDefault = SPEC.SwitchStatementWithDefault = {};
+  var TemplateElement = SPEC.TemplateElement = {};
+  var TemplateExpression = SPEC.TemplateExpression = {};
+  var ThisExpression = SPEC.ThisExpression = {};
+  var ThrowStatement = SPEC.ThrowStatement = {};
+  var TryCatchStatement = SPEC.TryCatchStatement = {};
+  var TryFinallyStatement = SPEC.TryFinallyStatement = {};
+  var UnaryExpression = SPEC.UnaryExpression = {};
+  var UpdateExpression = SPEC.UpdateExpression = {};
+  var VariableDeclaration = SPEC.VariableDeclaration = {};
+  var VariableDeclarationStatement = SPEC.VariableDeclarationStatement = {};
+  var VariableDeclarator = SPEC.VariableDeclarator = {};
+  var WhileStatement = SPEC.WhileStatement = {};
+  var WithStatement = SPEC.WithStatement = {};
+  var YieldExpression = SPEC.YieldExpression = {};
+  var YieldGeneratorExpression = SPEC.YieldGeneratorExpression = {};
+
+  var MemberExpression = Union(ComputedMemberExpression, StaticMemberExpression);
+  var AssignmentTargetProperty = Union(AssignmentTargetPropertyIdentifier, AssignmentTargetPropertyProperty);
+  var Class = Union(ClassDeclaration, ClassExpression);
+  var ExportDeclaration = Union(Export, ExportAllFrom, ExportDefault, ExportFrom, ExportLocals);
+  var PropertyName = Union(ComputedPropertyName, StaticPropertyName);
+  var Function = Union(FunctionDeclaration, FunctionExpression);
+  var ImportDeclaration = Union(Import, ImportNamespace);
+  var IterationStatement = Union(DoWhileStatement, ForInStatement, ForOfStatement, ForStatement, WhileStatement);
+  var MemberAssignmentTarget = Union(ComputedMemberAssignmentTarget, StaticMemberAssignmentTarget);
+  var BindingProperty = Union(BindingPropertyIdentifier, BindingPropertyProperty);
+  var MethodDefinition = Union(Getter, Method, Setter);
+  var Program = Union(Module, Script);
+  var VariableReference = Union(AssignmentTargetIdentifier, BindingIdentifier, IdentifierExpression);
+  var NamedObjectProperty = Union(DataProperty, MethodDefinition);
+  var Expression = Union(ArrayExpression, ArrowExpression, AssignmentExpression, BinaryExpression, CallExpression, ClassExpression, CompoundAssignmentExpression, ConditionalExpression, FunctionExpression, IdentifierExpression, LiteralBooleanExpression, LiteralInfinityExpression, LiteralNullExpression, LiteralNumericExpression, LiteralRegExpExpression, LiteralStringExpression, MemberExpression, NewExpression, NewTargetExpression, ObjectExpression, TemplateExpression, ThisExpression, UnaryExpression, UpdateExpression, YieldExpression, YieldGeneratorExpression);
+  var Statement = Union(BlockStatement, BreakStatement, ClassDeclaration, ContinueStatement, DebuggerStatement, EmptyStatement, ExpressionStatement, FunctionDeclaration, IfStatement, IterationStatement, LabeledStatement, ReturnStatement, SwitchStatement, SwitchStatementWithDefault, ThrowStatement, TryCatchStatement, TryFinallyStatement, VariableDeclarationStatement, WithStatement);
+  var ObjectProperty = Union(NamedObjectProperty, ShorthandProperty);
+  var Node = Union(ArrayAssignmentTarget, ArrayBinding, AssignmentTargetProperty, AssignmentTargetWithDefault, BindingProperty, BindingWithDefault, Block, CatchClause, ClassElement, Directive, ExportDeclaration, ExportFromSpecifier, ExportLocalSpecifier, Expression, FormalParameters, FunctionBody, ImportDeclaration, ImportSpecifier, MemberAssignmentTarget, ObjectAssignmentTarget, ObjectBinding, ObjectProperty, Program, PropertyName, SpreadElement, Statement, Super, SwitchCase, SwitchDefault, TemplateElement, VariableDeclaration, VariableDeclarator, VariableReference);
+
+  ArrayAssignmentTarget.typeName = "ArrayAssignmentTarget";
+  ArrayAssignmentTarget.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ArrayAssignmentTarget" },
+    { name: "elements", type: List(Maybe(Union(AssignmentTargetWithDefault, Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget))))) },
+    { name: "rest", type: Maybe(Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget))) }
+  ];
+
+  ArrayBinding.typeName = "ArrayBinding";
+  ArrayBinding.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ArrayBinding" },
+    { name: "elements", type: List(Maybe(Union(BindingWithDefault, Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding))))) },
+    { name: "rest", type: Maybe(Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding))) }
+  ];
+
+  ArrayExpression.typeName = "ArrayExpression";
+  ArrayExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ArrayExpression" },
+    { name: "elements", type: List(Maybe(Union(Expression, SpreadElement))) }
+  ];
+
+  ArrowExpression.typeName = "ArrowExpression";
+  ArrowExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ArrowExpression" },
+    { name: "params", type: FormalParameters },
+    { name: "body", type: Union(Expression, FunctionBody) }
+  ];
+
+  AssignmentExpression.typeName = "AssignmentExpression";
+  AssignmentExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "AssignmentExpression" },
+    { name: "binding", type: Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget)) },
+    { name: "expression", type: Expression }
+  ];
+
+  AssignmentTargetIdentifier.typeName = "AssignmentTargetIdentifier";
+  AssignmentTargetIdentifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "AssignmentTargetIdentifier" },
+    { name: "name", type: STRING }
+  ];
+
+  AssignmentTargetPropertyIdentifier.typeName = "AssignmentTargetPropertyIdentifier";
+  AssignmentTargetPropertyIdentifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "AssignmentTargetPropertyIdentifier" },
+    { name: "binding", type: AssignmentTargetIdentifier },
+    { name: "init", type: Maybe(Expression) }
+  ];
+
+  AssignmentTargetPropertyProperty.typeName = "AssignmentTargetPropertyProperty";
+  AssignmentTargetPropertyProperty.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "AssignmentTargetPropertyProperty" },
+    { name: "name", type: PropertyName },
+    { name: "binding", type: Union(AssignmentTargetWithDefault, Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget))) }
+  ];
+
+  AssignmentTargetWithDefault.typeName = "AssignmentTargetWithDefault";
+  AssignmentTargetWithDefault.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "AssignmentTargetWithDefault" },
+    { name: "binding", type: Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget)) },
+    { name: "init", type: Expression }
+  ];
+
+  BinaryExpression.typeName = "BinaryExpression";
+  BinaryExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BinaryExpression" },
+    { name: "left", type: Expression },
+    { name: "operator", type: BinaryOperator },
+    { name: "right", type: Expression }
+  ];
+
+  BindingIdentifier.typeName = "BindingIdentifier";
+  BindingIdentifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BindingIdentifier" },
+    { name: "name", type: STRING }
+  ];
+
+  BindingPropertyIdentifier.typeName = "BindingPropertyIdentifier";
+  BindingPropertyIdentifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BindingPropertyIdentifier" },
+    { name: "binding", type: BindingIdentifier },
+    { name: "init", type: Maybe(Expression) }
+  ];
+
+  BindingPropertyProperty.typeName = "BindingPropertyProperty";
+  BindingPropertyProperty.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BindingPropertyProperty" },
+    { name: "name", type: PropertyName },
+    { name: "binding", type: Union(BindingWithDefault, Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding))) }
+  ];
+
+  BindingWithDefault.typeName = "BindingWithDefault";
+  BindingWithDefault.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BindingWithDefault" },
+    { name: "binding", type: Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding)) },
+    { name: "init", type: Expression }
+  ];
+
+  Block.typeName = "Block";
+  Block.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Block" },
+    { name: "statements", type: List(Statement) }
+  ];
+
+  BlockStatement.typeName = "BlockStatement";
+  BlockStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BlockStatement" },
+    { name: "block", type: Block }
+  ];
+
+  BreakStatement.typeName = "BreakStatement";
+  BreakStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "BreakStatement" },
+    { name: "label", type: Maybe(STRING) }
+  ];
+
+  CallExpression.typeName = "CallExpression";
+  CallExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "CallExpression" },
+    { name: "callee", type: Union(Expression, Super) },
+    { name: "arguments", type: List(Union(Expression, SpreadElement)) }
+  ];
+
+  CatchClause.typeName = "CatchClause";
+  CatchClause.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "CatchClause" },
+    { name: "binding", type: Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding)) },
+    { name: "body", type: Block }
+  ];
+
+  ClassDeclaration.typeName = "ClassDeclaration";
+  ClassDeclaration.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ClassDeclaration" },
+    { name: "name", type: BindingIdentifier },
+    { name: "super", type: Maybe(Expression) },
+    { name: "elements", type: List(ClassElement) }
+  ];
+
+  ClassElement.typeName = "ClassElement";
+  ClassElement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ClassElement" },
+    { name: "isStatic", type: BOOLEAN },
+    { name: "method", type: MethodDefinition }
+  ];
+
+  ClassExpression.typeName = "ClassExpression";
+  ClassExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ClassExpression" },
+    { name: "name", type: Maybe(BindingIdentifier) },
+    { name: "super", type: Maybe(Expression) },
+    { name: "elements", type: List(ClassElement) }
+  ];
+
+  CompoundAssignmentExpression.typeName = "CompoundAssignmentExpression";
+  CompoundAssignmentExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "CompoundAssignmentExpression" },
+    { name: "binding", type: Union(AssignmentTargetIdentifier, MemberAssignmentTarget) },
+    { name: "operator", type: CompoundAssignmentOperator },
+    { name: "expression", type: Expression }
+  ];
+
+  ComputedMemberAssignmentTarget.typeName = "ComputedMemberAssignmentTarget";
+  ComputedMemberAssignmentTarget.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ComputedMemberAssignmentTarget" },
+    { name: "object", type: Union(Expression, Super) },
+    { name: "expression", type: Expression }
+  ];
+
+  ComputedMemberExpression.typeName = "ComputedMemberExpression";
+  ComputedMemberExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ComputedMemberExpression" },
+    { name: "object", type: Union(Expression, Super) },
+    { name: "expression", type: Expression }
+  ];
+
+  ComputedPropertyName.typeName = "ComputedPropertyName";
+  ComputedPropertyName.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ComputedPropertyName" },
+    { name: "expression", type: Expression }
+  ];
+
+  ConditionalExpression.typeName = "ConditionalExpression";
+  ConditionalExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ConditionalExpression" },
+    { name: "test", type: Expression },
+    { name: "consequent", type: Expression },
+    { name: "alternate", type: Expression }
+  ];
+
+  ContinueStatement.typeName = "ContinueStatement";
+  ContinueStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ContinueStatement" },
+    { name: "label", type: Maybe(STRING) }
+  ];
+
+  DataProperty.typeName = "DataProperty";
+  DataProperty.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "DataProperty" },
+    { name: "name", type: PropertyName },
+    { name: "expression", type: Expression }
+  ];
+
+  DebuggerStatement.typeName = "DebuggerStatement";
+  DebuggerStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "DebuggerStatement" }
+  ];
+
+  Directive.typeName = "Directive";
+  Directive.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Directive" },
+    { name: "rawValue", type: STRING }
+  ];
+
+  DoWhileStatement.typeName = "DoWhileStatement";
+  DoWhileStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "DoWhileStatement" },
+    { name: "body", type: Statement },
+    { name: "test", type: Expression }
+  ];
+
+  EmptyStatement.typeName = "EmptyStatement";
+  EmptyStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "EmptyStatement" }
+  ];
+
+  Export.typeName = "Export";
+  Export.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Export" },
+    { name: "declaration", type: Union(ClassDeclaration, FunctionDeclaration, VariableDeclaration) }
+  ];
+
+  ExportAllFrom.typeName = "ExportAllFrom";
+  ExportAllFrom.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExportAllFrom" },
+    { name: "moduleSpecifier", type: STRING }
+  ];
+
+  ExportDefault.typeName = "ExportDefault";
+  ExportDefault.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExportDefault" },
+    { name: "body", type: Union(ClassDeclaration, Expression, FunctionDeclaration) }
+  ];
+
+  ExportFrom.typeName = "ExportFrom";
+  ExportFrom.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExportFrom" },
+    { name: "namedExports", type: List(ExportFromSpecifier) },
+    { name: "moduleSpecifier", type: STRING }
+  ];
+
+  ExportFromSpecifier.typeName = "ExportFromSpecifier";
+  ExportFromSpecifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExportFromSpecifier" },
+    { name: "name", type: STRING },
+    { name: "exportedName", type: Maybe(STRING) }
+  ];
+
+  ExportLocalSpecifier.typeName = "ExportLocalSpecifier";
+  ExportLocalSpecifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExportLocalSpecifier" },
+    { name: "name", type: IdentifierExpression },
+    { name: "exportedName", type: Maybe(STRING) }
+  ];
+
+  ExportLocals.typeName = "ExportLocals";
+  ExportLocals.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExportLocals" },
+    { name: "namedExports", type: List(ExportLocalSpecifier) }
+  ];
+
+  ExpressionStatement.typeName = "ExpressionStatement";
+  ExpressionStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ExpressionStatement" },
+    { name: "expression", type: Expression }
+  ];
+
+  ForInStatement.typeName = "ForInStatement";
+  ForInStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ForInStatement" },
+    { name: "left", type: Union(Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget)), VariableDeclaration) },
+    { name: "right", type: Expression },
+    { name: "body", type: Statement }
+  ];
+
+  ForOfStatement.typeName = "ForOfStatement";
+  ForOfStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ForOfStatement" },
+    { name: "left", type: Union(Union(Union(ArrayAssignmentTarget, ObjectAssignmentTarget), Union(AssignmentTargetIdentifier, MemberAssignmentTarget)), VariableDeclaration) },
+    { name: "right", type: Expression },
+    { name: "body", type: Statement }
+  ];
+
+  ForStatement.typeName = "ForStatement";
+  ForStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ForStatement" },
+    { name: "init", type: Maybe(Union(Expression, VariableDeclaration)) },
+    { name: "test", type: Maybe(Expression) },
+    { name: "update", type: Maybe(Expression) },
+    { name: "body", type: Statement }
+  ];
+
+  FormalParameters.typeName = "FormalParameters";
+  FormalParameters.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "FormalParameters" },
+    { name: "items", type: List(Union(BindingWithDefault, Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding)))) },
+    { name: "rest", type: Maybe(Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding))) }
+  ];
+
+  FunctionBody.typeName = "FunctionBody";
+  FunctionBody.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "FunctionBody" },
+    { name: "directives", type: List(Directive) },
+    { name: "statements", type: List(Statement) }
+  ];
+
+  FunctionDeclaration.typeName = "FunctionDeclaration";
+  FunctionDeclaration.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "FunctionDeclaration" },
+    { name: "isGenerator", type: BOOLEAN },
+    { name: "name", type: BindingIdentifier },
+    { name: "params", type: FormalParameters },
+    { name: "body", type: FunctionBody }
+  ];
+
+  FunctionExpression.typeName = "FunctionExpression";
+  FunctionExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "FunctionExpression" },
+    { name: "isGenerator", type: BOOLEAN },
+    { name: "name", type: Maybe(BindingIdentifier) },
+    { name: "params", type: FormalParameters },
+    { name: "body", type: FunctionBody }
+  ];
+
+  Getter.typeName = "Getter";
+  Getter.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Getter" },
+    { name: "name", type: PropertyName },
+    { name: "body", type: FunctionBody }
+  ];
+
+  IdentifierExpression.typeName = "IdentifierExpression";
+  IdentifierExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "IdentifierExpression" },
+    { name: "name", type: STRING }
+  ];
+
+  IfStatement.typeName = "IfStatement";
+  IfStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "IfStatement" },
+    { name: "test", type: Expression },
+    { name: "consequent", type: Statement },
+    { name: "alternate", type: Maybe(Statement) }
+  ];
+
+  Import.typeName = "Import";
+  Import.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Import" },
+    { name: "defaultBinding", type: Maybe(BindingIdentifier) },
+    { name: "namedImports", type: List(ImportSpecifier) },
+    { name: "moduleSpecifier", type: STRING }
+  ];
+
+  ImportNamespace.typeName = "ImportNamespace";
+  ImportNamespace.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ImportNamespace" },
+    { name: "defaultBinding", type: Maybe(BindingIdentifier) },
+    { name: "namespaceBinding", type: BindingIdentifier },
+    { name: "moduleSpecifier", type: STRING }
+  ];
+
+  ImportSpecifier.typeName = "ImportSpecifier";
+  ImportSpecifier.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ImportSpecifier" },
+    { name: "name", type: Maybe(STRING) },
+    { name: "binding", type: BindingIdentifier }
+  ];
+
+  LabeledStatement.typeName = "LabeledStatement";
+  LabeledStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LabeledStatement" },
+    { name: "label", type: STRING },
+    { name: "body", type: Statement }
+  ];
+
+  LiteralBooleanExpression.typeName = "LiteralBooleanExpression";
+  LiteralBooleanExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LiteralBooleanExpression" },
+    { name: "value", type: BOOLEAN }
+  ];
+
+  LiteralInfinityExpression.typeName = "LiteralInfinityExpression";
+  LiteralInfinityExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LiteralInfinityExpression" }
+  ];
+
+  LiteralNullExpression.typeName = "LiteralNullExpression";
+  LiteralNullExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LiteralNullExpression" }
+  ];
+
+  LiteralNumericExpression.typeName = "LiteralNumericExpression";
+  LiteralNumericExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LiteralNumericExpression" },
+    { name: "value", type: DOUBLE }
+  ];
+
+  LiteralRegExpExpression.typeName = "LiteralRegExpExpression";
+  LiteralRegExpExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LiteralRegExpExpression" },
+    { name: "pattern", type: STRING },
+    { name: "global", type: BOOLEAN },
+    { name: "ignoreCase", type: BOOLEAN },
+    { name: "multiLine", type: BOOLEAN },
+    { name: "sticky", type: BOOLEAN },
+    { name: "unicode", type: BOOLEAN }
+  ];
+
+  LiteralStringExpression.typeName = "LiteralStringExpression";
+  LiteralStringExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "LiteralStringExpression" },
+    { name: "value", type: STRING }
+  ];
+
+  Method.typeName = "Method";
+  Method.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Method" },
+    { name: "isGenerator", type: BOOLEAN },
+    { name: "name", type: PropertyName },
+    { name: "params", type: FormalParameters },
+    { name: "body", type: FunctionBody }
+  ];
+
+  Module.typeName = "Module";
+  Module.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Module" },
+    { name: "directives", type: List(Directive) },
+    { name: "items", type: List(Union(ExportDeclaration, ImportDeclaration, Statement)) }
+  ];
+
+  NewExpression.typeName = "NewExpression";
+  NewExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "NewExpression" },
+    { name: "callee", type: Expression },
+    { name: "arguments", type: List(Union(Expression, SpreadElement)) }
+  ];
+
+  NewTargetExpression.typeName = "NewTargetExpression";
+  NewTargetExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "NewTargetExpression" }
+  ];
+
+  ObjectAssignmentTarget.typeName = "ObjectAssignmentTarget";
+  ObjectAssignmentTarget.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ObjectAssignmentTarget" },
+    { name: "properties", type: List(AssignmentTargetProperty) }
+  ];
+
+  ObjectBinding.typeName = "ObjectBinding";
+  ObjectBinding.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ObjectBinding" },
+    { name: "properties", type: List(BindingProperty) }
+  ];
+
+  ObjectExpression.typeName = "ObjectExpression";
+  ObjectExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ObjectExpression" },
+    { name: "properties", type: List(ObjectProperty) }
+  ];
+
+  ReturnStatement.typeName = "ReturnStatement";
+  ReturnStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ReturnStatement" },
+    { name: "expression", type: Maybe(Expression) }
+  ];
+
+  Script.typeName = "Script";
+  Script.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Script" },
+    { name: "directives", type: List(Directive) },
+    { name: "statements", type: List(Statement) }
+  ];
+
+  Setter.typeName = "Setter";
+  Setter.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Setter" },
+    { name: "name", type: PropertyName },
+    { name: "param", type: Union(BindingWithDefault, Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding))) },
+    { name: "body", type: FunctionBody }
+  ];
+
+  ShorthandProperty.typeName = "ShorthandProperty";
+  ShorthandProperty.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ShorthandProperty" },
+    { name: "name", type: IdentifierExpression }
+  ];
+
+  SpreadElement.typeName = "SpreadElement";
+  SpreadElement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "SpreadElement" },
+    { name: "expression", type: Expression }
+  ];
+
+  StaticMemberAssignmentTarget.typeName = "StaticMemberAssignmentTarget";
+  StaticMemberAssignmentTarget.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "StaticMemberAssignmentTarget" },
+    { name: "object", type: Union(Expression, Super) },
+    { name: "property", type: STRING }
+  ];
+
+  StaticMemberExpression.typeName = "StaticMemberExpression";
+  StaticMemberExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "StaticMemberExpression" },
+    { name: "object", type: Union(Expression, Super) },
+    { name: "property", type: STRING }
+  ];
+
+  StaticPropertyName.typeName = "StaticPropertyName";
+  StaticPropertyName.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "StaticPropertyName" },
+    { name: "value", type: STRING }
+  ];
+
+  Super.typeName = "Super";
+  Super.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "Super" }
+  ];
+
+  SwitchCase.typeName = "SwitchCase";
+  SwitchCase.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "SwitchCase" },
+    { name: "test", type: Expression },
+    { name: "consequent", type: List(Statement) }
+  ];
+
+  SwitchDefault.typeName = "SwitchDefault";
+  SwitchDefault.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "SwitchDefault" },
+    { name: "consequent", type: List(Statement) }
+  ];
+
+  SwitchStatement.typeName = "SwitchStatement";
+  SwitchStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "SwitchStatement" },
+    { name: "discriminant", type: Expression },
+    { name: "cases", type: List(SwitchCase) }
+  ];
+
+  SwitchStatementWithDefault.typeName = "SwitchStatementWithDefault";
+  SwitchStatementWithDefault.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "SwitchStatementWithDefault" },
+    { name: "discriminant", type: Expression },
+    { name: "preDefaultCases", type: List(SwitchCase) },
+    { name: "defaultCase", type: SwitchDefault },
+    { name: "postDefaultCases", type: List(SwitchCase) }
+  ];
+
+  TemplateElement.typeName = "TemplateElement";
+  TemplateElement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "TemplateElement" },
+    { name: "rawValue", type: STRING }
+  ];
+
+  TemplateExpression.typeName = "TemplateExpression";
+  TemplateExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "TemplateExpression" },
+    { name: "tag", type: Maybe(Expression) },
+    { name: "elements", type: List(Union(Expression, TemplateElement)) }
+  ];
+
+  ThisExpression.typeName = "ThisExpression";
+  ThisExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ThisExpression" }
+  ];
+
+  ThrowStatement.typeName = "ThrowStatement";
+  ThrowStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "ThrowStatement" },
+    { name: "expression", type: Expression }
+  ];
+
+  TryCatchStatement.typeName = "TryCatchStatement";
+  TryCatchStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "TryCatchStatement" },
+    { name: "body", type: Block },
+    { name: "catchClause", type: CatchClause }
+  ];
+
+  TryFinallyStatement.typeName = "TryFinallyStatement";
+  TryFinallyStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "TryFinallyStatement" },
+    { name: "body", type: Block },
+    { name: "catchClause", type: Maybe(CatchClause) },
+    { name: "finalizer", type: Block }
+  ];
+
+  UnaryExpression.typeName = "UnaryExpression";
+  UnaryExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "UnaryExpression" },
+    { name: "operator", type: UnaryOperator },
+    { name: "operand", type: Expression }
+  ];
+
+  UpdateExpression.typeName = "UpdateExpression";
+  UpdateExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "UpdateExpression" },
+    { name: "isPrefix", type: BOOLEAN },
+    { name: "operator", type: UpdateOperator },
+    { name: "operand", type: Union(AssignmentTargetIdentifier, MemberAssignmentTarget) }
+  ];
+
+  VariableDeclaration.typeName = "VariableDeclaration";
+  VariableDeclaration.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "VariableDeclaration" },
+    { name: "kind", type: VariableDeclarationKind },
+    { name: "declarators", type: List(VariableDeclarator) }
+  ];
+
+  VariableDeclarationStatement.typeName = "VariableDeclarationStatement";
+  VariableDeclarationStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "VariableDeclarationStatement" },
+    { name: "declaration", type: VariableDeclaration }
+  ];
+
+  VariableDeclarator.typeName = "VariableDeclarator";
+  VariableDeclarator.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "VariableDeclarator" },
+    { name: "binding", type: Union(BindingIdentifier, Union(ArrayBinding, ObjectBinding)) },
+    { name: "init", type: Maybe(Expression) }
+  ];
+
+  WhileStatement.typeName = "WhileStatement";
+  WhileStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "WhileStatement" },
+    { name: "test", type: Expression },
+    { name: "body", type: Statement }
+  ];
+
+  WithStatement.typeName = "WithStatement";
+  WithStatement.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "WithStatement" },
+    { name: "object", type: Expression },
+    { name: "body", type: Statement }
+  ];
+
+  YieldExpression.typeName = "YieldExpression";
+  YieldExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "YieldExpression" },
+    { name: "expression", type: Maybe(Expression) }
+  ];
+
+  YieldGeneratorExpression.typeName = "YieldGeneratorExpression";
+  YieldGeneratorExpression.fields = [
+    { name: "type", type: Const(TYPE_INDICATOR), value: "YieldGeneratorExpression" },
+    { name: "expression", type: Expression }
+  ];
+
+  return SPEC;
+}());
+
+},{}]},{},[1]);
