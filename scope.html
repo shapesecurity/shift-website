@@ -60,20 +60,24 @@
         color: black;
       }
       .var-read {
-        background-color: #909A50;
+        background-color: #BE171F;
         color: white;
       }
       .var-write {
-        background-color: #FEAA5B;
-        color: black;
+        background-color: #78835B;
+        color: white;
       }
       .var-read.var-write {
         background-color: #1A697A;
         color: white;
       }
       .var-decl {
-        background-color: #B02A6A;
-        color: white;
+        background-color: #F6A935;
+        color: black;
+      }
+      .var-delete {
+        background-color: #EEE2AE;
+        color: black;
       }
       .var-read, .var-write, .var-decl {
         border-color: black;
@@ -131,8 +135,9 @@
             all other identifiers which refer to the same variable, color-coded by type:
             <span class="code-identifier var-decl">declarations</span>,
             <span class="code-identifier var-read">read&nbsp;references</span>,
-            <span class="code-identifier var-write">write&nbsp;references</span>, and
-            <span class="code-identifier var-read var-write">read-write&nbsp;references</span>.
+            <span class="code-identifier var-write">write&nbsp;references</span>,
+            <span class="code-identifier var-read var-write">read-write&nbsp;references</span>, and
+            <span class="code-identifier var-delete">deletes</span>.
           </p>
 
           <p id="program-radio" class="text-center">

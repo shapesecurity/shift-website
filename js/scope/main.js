@@ -118,6 +118,9 @@ function setHighlight(identifier) {
     if (ref.accessibility.isWrite) {
       ele.classList.add('var-write');
     }
+    if (ref.accessibility.isDelete) {
+      ele.classList.add('var-delete');
+    }
   });
 }
 
@@ -134,6 +137,10 @@ function unhighlight() {
   eles = document.querySelectorAll('#demo1 .var-read');
   for (var i = 0; i < eles.length; ++i) {
     eles[i].classList.remove('var-read');
+  }
+  eles = document.querySelectorAll('#demo1 .var-delete');
+  for (var i = 0; i < eles.length; ++i) {
+    eles[i].classList.remove('var-delete');
   }
 }
 
