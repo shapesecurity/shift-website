@@ -10,7 +10,8 @@
     "shift-parser": "5.2.0",
     "shift-reducer": "4.0.1",
     "shift-scope": "3.1.0",
-    "shift-validator": "3.0.0"
+    "shift-validator": "3.0.0",
+    "uglify-es": "3.1.1"
   },
   "scripts": {
     "build": "bash ./update.sh",
