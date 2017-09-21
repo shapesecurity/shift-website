@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // fn from http://underscorejs.org/docs/underscore.html
 // https://github.com/jashkenas/underscore/blob/master/LICENSE
@@ -34,14 +34,14 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = ace.edit(document.querySelector("#demo1 .editor"));
+var editor = ace.edit(document.querySelector('#demo1 .editor'));
 
-var error = document.querySelector("#demo1 .error-message");
-var output = document.querySelector("#demo1 .output");
-var outputContainer = document.querySelector("#demo1 .output-container");
+var error = document.querySelector('#demo1 .error-message');
+var output = document.querySelector('#demo1 .output');
+var outputContainer = document.querySelector('#demo1 .output-container');
 
-var radio = document.querySelector("#script-radio");
-var radio2 = document.querySelector("#module-radio");
+var radio = document.querySelector('#script-radio');
+var radio2 = document.querySelector('#module-radio');
 
 function displayError(exception) {
   unhighlight();
@@ -52,14 +52,14 @@ function displayError(exception) {
       row: exception.line - 1,
       column: exception.column,
       text: exception.message,
-      type: "error" // also warning and information
+      type: 'error' // also warning and information
     }]);
   }
-  outputContainer.classList.add("error");
+  outputContainer.classList.add('error');
 }
 
 function hideError() {
-  outputContainer.classList.remove("error");
+  outputContainer.classList.remove('error');
   editor.getSession().clearAnnotations();
 }
 
@@ -71,13 +71,13 @@ function render(program) {
 var session = editor.getSession();
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
-editor.setOption("fontFamily", "Source Code Pro");
-editor.setOption("fontSize", "10pt");
+editor.setOption('fontFamily', 'Source Code Pro');
+editor.setOption('fontSize', '10pt');
 editor.setShowPrintMargin(false);
-editor.setTheme("ace/theme/textmate");
+editor.setTheme('ace/theme/textmate');
 editor.setWrapBehavioursEnabled(false);
-session.setMode("ace/mode/javascript");
-session.setOption("useWorker", false);
+session.setMode('ace/mode/javascript');
+session.setOption('useWorker', false);
 session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
@@ -156,103 +156,66 @@ function mouseOverHandler(e) {
 function mouseOutHandler(e) {
   unhighlight();
 }
-output.addEventListener("mouseover", mouseOverHandler);
-output.addEventListener("mouseout", mouseOutHandler);
+output.addEventListener('mouseover', mouseOverHandler);
+output.addEventListener('mouseout', mouseOutHandler);
 
-function escapeHTML(maybeString) {
-  if (maybeString == null) {
-    return maybeString;
-  }
-  return maybeString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function escapeHTML(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function WebGen() {
-  var webGen = new codegen.FormattedCodeGen;
+function collectIdentifiers(globalScope, locations) {
+  // returns the identifiers in source order.
+  var identifiers = (function collect(scope) {
+    var newIdentifiers = scope.variableList.reduce(function (acc, v) {
+      return acc.concat(v.references.map(function (r) {
+        return r.node;
+      }), v.declarations.map(function (r) {
+        return r.node;
+      }));
+    }, []);
+    return [].concat.apply(newIdentifiers, scope.children.map(collect));
+  }(globalScope));
 
-  webGen.reduceDirective = function(node, obj) {
-    node.rawValue = escapeHTML(node.rawValue);
-    return codegen.FormattedCodeGen.prototype.reduceDirective.call(this, node, obj);
+  identifiers = identifiers.filter(function (v, i) {
+    return i === identifiers.indexOf(v);
+  });
+
+  return identifiers.sort(function(a, b) {
+    return locations.get(a).start.offset - locations.get(b).start.offset;
+  });
+}
+
+function wrapIdentifiersInSpans(program, identifiers, locations) {
+  // assumes identifiers are in source order.
+  var out = '';
+  var previousIndex = 0;
+  for (var i = 0; i < identifiers.length; ++i) {
+    var location = locations.get(identifiers[i]);
+    out += escapeHTML(program.substring(previousIndex, location.start.offset));
+    var idStr = program.substring(location.start.offset, location.end.offset);
+    var trailingWhitespaceIndex = idStr.match(/\s*$/).index; // TODO this is a stupid hack pending https://github.com/shapesecurity/shift-parser-js/issues/363
+    out += '<span class="code-binding" data-identifier="' + i + '">' + escapeHTML(idStr.substring(0, trailingWhitespaceIndex)) + '</span>' + idStr.substring(trailingWhitespaceIndex);
+    previousIndex = location.end.offset;
   }
-  webGen.reduceImport = function(node, obj) {
-    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
-    return codegen.FormattedCodeGen.prototype.reduceImport.call(this, node, obj);
-  }
-  webGen.reduceImportNamespace = function(node, obj) {
-    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
-    return codegen.FormattedCodeGen.prototype.reduceImportNamespace.call(this, node, obj);
-  }
-  webGen.reduceExportAllFrom = function(node, obj) {
-    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
-    return codegen.FormattedCodeGen.prototype.reduceExportAllFrom.call(this, node, obj);
-  }
-  webGen.reduceExportFrom = function(node, obj) {
-    node.moduleSpecifier = escapeHTML(node.moduleSpecifier);
-    return codegen.FormattedCodeGen.prototype.reduceExportFrom.call(this, node, obj);
-  }
-  webGen.reduceLiteralRegExpExpression = function(node) {
-    var rep = codegen.FormattedCodeGen.prototype.reduceLiteralRegExpExpression.call(this, node);
-    rep.token = escapeHTML(rep.token);
-    return rep;
-  }
-  webGen.reduceLiteralStringExpression = function(node) {
-    var rep = codegen.FormattedCodeGen.prototype.reduceLiteralStringExpression.call(this, node);
-    rep.token = escapeHTML(rep.token);
-    return rep;
-  };
-  webGen.reduceTemplateExpression = function(node, obj) {
-    for (var i = 0; i < node.elements.length; ++i) {
-      if (node.elements[i].type === "TemplateElement") {
-        node.elements[i].rawValue = escapeHTML(node.elements[i].rawValue);
-      }
-    }
-    return codegen.FormattedCodeGen.prototype.reduceTemplateExpression.call(this, node, obj);
-  };
-  webGen.reduceAssignmentTargetIdentifier = function(binding) {
-    var rep = codegen.FormattedCodeGen.prototype.reduceAssignmentTargetIdentifier.call(this, binding);
-    var ind = identifiers.indexOf(binding);
-    if (ind === -1) {
-      ind = identifiers.length;
-      identifiers.push(binding);
-    }
-    rep.token = "<span class=\"code-binding\" data-identifier=\"" + ind + "\">" + rep.token + "</span>";
-    return rep;
-  };
-  webGen.reduceBindingIdentifier = function(binding) {
-    var rep = codegen.FormattedCodeGen.prototype.reduceBindingIdentifier.call(this, binding);
-    var ind = identifiers.indexOf(binding);
-    if (ind === -1) {
-      ind = identifiers.length;
-      identifiers.push(binding);
-    }
-    rep.token = "<span class=\"code-binding\" data-identifier=\"" + ind + "\">" + rep.token + "</span>";
-    return rep;
-  };
-  webGen.reduceIdentifierExpression = function(identifier) {
-    var rep = codegen.FormattedCodeGen.prototype.reduceIdentifierExpression.call(this, identifier);
-    var ind = identifiers.indexOf(identifier);
-    if (ind === -1) {
-      ind = identifiers.length;
-      identifiers.push(identifier);
-    }
-    rep.token = "<span class=\"code-identifier\" data-identifier=\"" + ind + "\">" + rep.token + "</span>";
-    return rep;
-  };
-  return webGen;
+  out += escapeHTML(program.substring(previousIndex));
+  return out;
 }
 
 function onChange() {
   var code = editor.getValue();
-  var parseFn = radio.checked ? parser.parseScript : parser.parseModule;
+  var parseFn = radio.checked ? parser.parseScriptWithLocation : parser.parseModuleWithLocation;
   try {
-    var ast = parseFn(code);
-    lookup = new scope.ScopeLookup(scope.default(ast));
-    identifiers = [];
-    var program = codegen.default(ast, new WebGen);
+    var treeAndLocations = parseFn(code);
+    var tree = treeAndLocations.tree;
+    var locations = treeAndLocations.locations;
+    var globalScope = scope.default(tree);
+    identifiers = collectIdentifiers(globalScope, locations);
+    lookup = new scope.ScopeLookup(globalScope);
+    render(wrapIdentifiersInSpans(code, identifiers, locations));
   } catch (ex) {
     displayError(ex);
     return;
   }
-  render(program);
 }
 
 editor.getSession().on('change', debounce(onChange, 300));
