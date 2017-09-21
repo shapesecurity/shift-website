@@ -165,17 +165,15 @@ function escapeHTML(str) {
 
 function collectIdentifiers(globalScope, locations) {
   // returns the identifiers in source order.
-  var identifiers = [];
-  (function collect(scope) {
-    scope.variableList.forEach(function (v) {
-      [].push.apply(identifiers, v.references.map(function (r) {
+  var identifiers = (function collect(scope) {
+    var newIdentifiers = scope.variableList.reduce(function (acc, v) {
+      return acc.concat(v.references.map(function (r) {
+        return r.node;
+      }), v.declarations.map(function (r) {
         return r.node;
       }));
-      [].push.apply(identifiers, v.declarations.map(function (r) {
-        return r.node;
-      }));
-    });
-    scope.children.forEach(collect);
+    }, []);
+    return [].concat.apply(newIdentifiers, scope.children.map(collect));
   }(globalScope));
 
   identifiers = identifiers.filter(function (v, i) {
