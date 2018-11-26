@@ -4,14 +4,16 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "14.4.0",
+    "@polymer/polymer": "3.1.0",
+    "browserify": "16.2.3",
     "shift-codegen": "5.1.0",
     "shift-fuzzer": "1.0.2",
     "shift-parser": "5.2.4",
     "shift-reducer": "4.4.0",
     "shift-scope": "3.1.0",
     "shift-validator": "3.0.0",
-    "uglify-es": "3.1.1"
+    "uglify-es": "3.1.1",
+    "ui-treeview-2": "1.0.5"
   },
   "scripts": {
     "build": "bash ./update.sh",

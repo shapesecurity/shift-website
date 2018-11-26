@@ -20,7 +20,6 @@
     "tests"
   ],
   "dependencies": {
-    "ui-treeview": "*",
     "ace-builds": "~1.1.9"
   }
 }

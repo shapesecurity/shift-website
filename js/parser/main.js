@@ -107,4 +107,4 @@ editor.getSession().on('change', debounce(onChange, 300));
 radio.addEventListener('change', onChange);
 radio2.addEventListener('change', onChange);
 
-window.addEventListener('polymer-ready', onChange);
+window.addEventListener('WebComponentsReady', onChange);
