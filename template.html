@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Shift Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="css/ribbon.css" rel="stylesheet">
+    <link href="css/css.css" rel="stylesheet">
+    <link href="css/demo.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"/>
+
+    <!-- highlight.js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/magula.min.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- ace editor -->
+    <script src="bower_components/ace-builds/src-min/ace.js"></script>
+    <script src="bower_components/ace-builds/src-min/mode-javascript.js"></script>
+    <script src="bower_components/ace-builds/src-min/theme-monokai.js"></script>
+
+    <script src="js/shift-ast.js"></script>
+    <script src="js/shift-parser.js"></script>
+    <script src="js/shift-template.js"></script>
+    <script src="js/shift-codegen.js"></script>
+
+    <style>
+      #demo0, #demo1 {
+        resize: vertical;
+      }
+      #demo0 {
+        height: 250px;
+      }
+      #template-container {
+        width: 50%;
+      }
+      #modifier-container {
+        width: 100%;
+      }
+      #template {
+        width: 100%;
+      }
+      #modifier {
+        width: 100%;
+      }
+      #output {
+        width: 100%;
+        background-color: #F8F8F8;
+      }
+      #demo1 .output-container {
+        width: 50%;
+      }
+      .program-radio-label {
+        font-size: medium;
+      }
+      #program-radio {
+        margin-bottom: 0px;
+      }
+      #template-radio {
+        margin-bottom: -10px;
+      }
+      .error-message {
+        padding-left: 4.3em;
+        position: relative;
+        float: top;
+      }
+      .editor.error {
+        position: relative;
+      }
+      .editor.error .editor {
+        position: absolute;
+        bottom: 0;
+        height: 93%;
+      }
+      .editor.error .error-message {
+        display: block;
+      }
+      #save-button {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="ribbon-container right">
+      <div class="ribbon">
+        <a href="https://github.com/shapesecurity/shift-template-js" target="_blank">Fork me on GitHub</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+
+        <div class="masthead">
+          <h3><a href="./index.html" class="muted hub-link">part of the Shift suite</a></h3>
+        </div>
+
+        <div class="jumbotron">
+          <h1><span class="shift">Shift</span> Template</h1>
+          <p class="lead">
+            generates a Shift AST from Shift templating markup
+          </p>
+        </div>
+
+        <hr />
+
+        <section id="demo">
+          <h3>Demo</h3>
+
+          <p>
+            This demo shows a rendering of the Template output on the right. You may
+            edit the template on the left, and the template parameters in the center.
+            The template parameters here are passed directly to the second argument of 
+            applyStructuredTemplate.
+          </p>
+
+          <p id="program-radio" class="text-center">
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="script-radio" value="script"> Script
+            </label>
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="module-radio" value="module" checked> Module
+            </label>
+          </p>
+
+          <div class="demo" id="demo0">
+              <div id="modifier-container" class="editor">
+                <div spellcheck="false" class="editor" id="modifier">{
+  foo: node => new Shift.IdentifierExpression({name: node.name + '_'}),
+  bar: node => new Shift.LiteralNumericExpression({value: node.value + 1}),
+}
+</div>
+              <div class="error-message"></div>
+            </div>
+          </div>
+
+          <div class="demo" id="demo1">
+            <div id="template-container" class="editor">
+              <div spellcheck="false" class="editor" id="template">a + /*# foo # IdentifierExpression #*/ b;
+0 + /*# bar #*/ 1;
+</div>
+              <div class="error-message"></div>
+            </div>
+            <div class="output-container">
+              <div class="editor" spellcheck="false" id="output"></div>
+            </div>
+            <script src="js/template/main.js"></script>
+          </div>
+        </section>
+
+        <section id="installation">
+          <h3>Installation</h3>
+
+          <pre><code class="nohighlight">npm install shift-template</code></pre>
+        </section>
+
+        <section id="usage">
+          <h3>Usage</h3>
+
+          <pre><code class="javascript">import Shift from "shift-ast";
+import { applyTemplate } from "shift-template";
+let src = `
+a + /*# foo # IdentifierExpression #*/ b;
+0 + /*# bar #*/ 1;
+`;
+let replaced = applyTemplate(src, {
+  foo: node => new Shift.IdentifierExpression({ name: node.name + '_' }),
+  bar: node => new Shift.LiteralNumericExpression({ value: node.value + 1 }),
+});
+/* replaced is an AST representing:
+a + b_;
+0 + 2;
+*/
+</code></pre>
+
+<pre><code class="javascript">import Shift from "shift-ast";
+import { applyStructuredTemplate } from "shift-template";
+let src = `
+[
+  /*# if markerAtStart #*/
+    { prop: 'marker' },
+  /*# for each x of xs #*/
+    { prop: /*# x::prop #*/ null },
+  /*# unless markerAtStart #*/
+    { prop: 'marker' },
+]
+`;
+
+let templateValues = {
+  markerAtStart: false,
+  xs: [
+    { prop: () => new Shift.LiteralNumericExpression({ value: 1 }) },
+    { prop: () => new Shift.LiteralNumericExpression({ value: 2 }) },
+    { prop: () => new Shift.LiteralNumericExpression({ value: 3 }) },
+  ]
+};
+
+let replaced = applyStructuredTemplate(script, templateValues);
+/* replaced is an AST representing:
+[
+  { prop: 1 },
+  { prop: 2 },
+  { prop: 3 },
+  { prop: 'marker' },
+]
+*/
+</code></pre>
+
+          <pre><code class="javascript">import { parseScriptWithLocation } from "shift-parser";
+import { findNodes } from "shift-template";
+let { tree, location, comments } = parseScriptWithLocation("/* ECMAScript program template markup */");
+let names = findNodes({ tree, locations, comments });
+/* names =
+[
+  {
+    name: "foo",
+    node: {
+      type: "IdentifierExpression",
+      name: "b",
+    },
+    comment: { text, type, start, end },
+  },
+  {
+    name: "bar",
+    node: {
+      type: "LiteralNumericExpression",
+      value: 1,
+    },
+    comment: { text, type, start, end },
+  },
+]
+*/
+</code></pre>
+        </section>
+
+      </div>
+
+      <hr />
+
+      <div class="footer">
+        <p>&copy; 2016 Shape Security, Inc.</p>
+      </div>
+
+    </div>
+
+  </body>
+</html>
