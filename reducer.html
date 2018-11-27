@@ -21,30 +21,81 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
+    <!-- ui-treeview web component -->
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="node_modules/ui-treeview/dist/index.js"></script>
+    <link href="css/ui-treeview.css" rel="stylesheet">
+    
     <style>
-      #demo1 .editor {
-        width: 60%;
+      #demo0, #demo1 {
+        resize: vertical;
+      }
+      #demo0 {
+        height: 250px;
+      }
+      #reducing-container {
+        width: 50%;
+      }
+      #reducer-container {
+        width: 100%;
+      }
+      #reducing {
+        width: 100%;
+      }
+      #reducer {
+        width: 100%;
+      }
+      #output {
+        width: 100%;
+        background-color: #F8F8F8;
       }
       #demo1 .output-container {
-        width: 40%;
+        width: 50%;
       }
-      #demo1 .output {
-        font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
-        font-size: 21px;
-        padding: 1em;
-        white-space: pre;
+      .thunked-radio-label {
+        font-size: medium;
       }
-      #demo1 .go-button {
+      .program-radio-label {
+        font-size: medium;
+      }
+      #program-radio {
+        margin-bottom: 0px;
+      }
+      #thunked-radio {
+        margin-bottom: -10px;
+      }
+      .error-message {
+        padding-left: 4.3em;
+        position: relative;
+        float: top;
+      }
+      .editor.error {
+        position: relative;
+      }
+      .editor.error .editor {
         position: absolute;
-        right: 1em;
-        top: 1em;
+        bottom: 0;
+        height: 93%;
+      }
+      .editor.error .error-message {
+        display: block;
+      }
+      .hidden {
+        display: none;
+        width: 0%;
+      }
+      #save-button {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
       }
     </style>
 
     <script src="node_modules/ace-builds/src-min/ace.js"></script>
+    <script src="js/shift-ast.js"></script>
+    <script src="js/shift-codegen.js"></script>
     <script src="js/shift-parser.js"></script>
     <script src="js/shift-reducer.js"></script>
-    <script src="js/babel.js"></script>
     <script>var MonoidalReducer = reducer.MonoidalReducer;</script>
   </head>
 
@@ -105,35 +156,73 @@
             <code class="javascript">node</code>.
           </p>
 
+          <p id="program-radio" class="text-center">
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="script-radio" value="script"> Script
+            </label>
+            <label class="radio inline program-radio-label">
+              <input type="radio" name="program-radio" id="module-radio" value="module" checked> Module
+            </label>
+          </p>
+
+          <p id="thunked-radio" class="text-center">
+            <label class="radio inline thunked-radio-label">
+              <input type="radio" name="thunked-radio" id="not-thunked-radio" value="not-thunked" checked> Not Thunked
+            </label>
+            <label class="radio inline thunked-radio-label">
+              <input type="radio" name="thunked-radio" id="thunked-radio" value="thunked"> Thunked
+            </label>
+          </p>
+
+          <div class="demo" id="demo0">
+            <div id="reducer-container" class="editor">
+              <div spellcheck="false" class="editor" id="reducer">(function() {
+  let EMPTY;
+  class Collector {
+    constructor(x) { this.value = x; }
+    static empty() { return EMPTY; }
+    concat(a) { return new Collector(this.value.concat(a.value)); }
+    extract() { return this.value; }
+  }
+  EMPTY = new Collector([]);
+
+  return class IdentifierCollector extends MonoidalReducer {
+    constructor() {
+      super(Collector);
+    }
+    
+    reduceModule(node, state) {
+      return super.reduceModule(node, state).extract();
+    }
+
+    reduceIdentifierExpression(node, state) {
+      return new Collector([node.name]);
+    }
+  }
+})();
+</div>
+              <div class="error-message"></div>
+            </div>
+          </div>
+
           <div class="demo" id="demo1">
-          <div class="editor" spellcheck="false">let EMPTY;
-class Collector {
-  constructor(x) { this.value = x; }
-  static empty() { return EMPTY; }
-  concat(a) { return new Collector(this.value.concat(a.value)); }
-  extract() { return this.value; }
-}
-EMPTY = new Collector([]);
+            <div id="reducing-container" class="editor">
+              <div spellcheck="false" class="editor" id="reducing">"use strict";
 
-export default class IdentifierCollector extends MonoidalReducer {
-  constructor() {
-    super(Collector);
-  }
-  
-  reduceModule(node, state) {
-    return super.reduceModule(node, state).extract();
-  }
+let [x,y,z] = [1,2,3].map(_ => _ * 2);
 
-  reduceIdentifierExpression(node, state) {
-    return new Collector([node.name]);
+class Person {
+  constructor(name) {
+    this.name = name;
   }
 }
 </div>
-            <div class="output-container">
-              <div class="output json"></div>
               <div class="error-message"></div>
             </div>
-            <button class="btn btn-primary btn-lg go-button" type="button">RUN</button>
+            <div class="output-container">
+              <div class="editor hidden" spellcheck="false" id="output"></div>
+              <ui-treeview expanded class="output hidden"></ui-treeview>
+            </div>
             <script src="js/reducer/main.js"></script>
           </div>
         </section>

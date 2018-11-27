@@ -34,16 +34,24 @@ function debounce(func, wait, immediate) {
   };
 }
 
-var editor = ace.edit(document.querySelector("#demo1 .editor"))
+var reducingEditor = ace.edit(document.querySelector("#reducing"));
+var reducerEditor = ace.edit(document.querySelector("#reducer"));
 
-var error = document.querySelector("#demo1 .error-message");
-var output = document.querySelector("#demo1 .output");
+var reducingContainer = document.querySelector("#reducing-container");
+var reducerContainer = document.querySelector("#reducer-container");
+
+var reducingError = document.querySelector("#reducing-container .error-message");
+var reducerError = document.querySelector("#reducer-container .error-message");
+
+var outputElement = document.querySelector("#output");
+var output = ace.edit(outputElement);
+var outputTree = document.querySelector("#demo1 .output-container .output") ;
 var outputContainer = document.querySelector("#demo1 .output-container");
-var goButton = document.querySelector("#demo1 .go-button");
 
-function displayError(exception, editor) {
-  hideError(editor);
-  error.textContent = exception.message;
+function displayError(exception, container, editor, error) {
+  hideError(container, editor);
+  error.textContent = exception.description || exception.message;
+  console.dir(exception);
   if (exception.line) {
     editor.getSession().setAnnotations([{
       row: exception.line - 1,
@@ -52,102 +60,163 @@ function displayError(exception, editor) {
       type: "error" // also warning and information
     }]);
   }
-  outputContainer.classList.add("error");
+  container.classList.add("error");
 }
 
-function hideError(editor) {
-  outputContainer.classList.remove("error");
+function hideError(container, editor) {
+  container.classList.remove("error");
   editor.getSession().clearAnnotations();
 }
 
-function render(program) {
-  output.textContent = program;
-  hljs.highlightBlock(output);
+function render(ast, isText) {
+  if (isText) {
+    output.setValue(ast, -1);
+  } else {
+    outputTree.display(ast);
+  }
 }
 
-var session = editor.getSession();
-editor.setBehavioursEnabled(false);
-editor.setHighlightActiveLine(false);
-editor.setOption("fontFamily", "Source Code Pro");
-editor.setOption("fontSize", "10pt");
-editor.setShowPrintMargin(false);
-editor.setTheme("ace/theme/textmate");
-editor.setWrapBehavioursEnabled(false);
-session.setMode("ace/mode/javascript");
-session.setOption("useWorker", false);
-session.setTabSize(2);
-session.setUseSoftTabs(true);
-session.setUseWrapMode(false);
 
+reducingEditor.$blockScrolling = Infinity;
+var reducingSession = reducingEditor.getSession();
+reducingEditor.setBehavioursEnabled(false);
+reducingEditor.setHighlightActiveLine(false);
+reducingEditor.setOption("fontFamily", "Source Code Pro");
+reducingEditor.setOption("fontSize", "10pt");
+reducingEditor.setShowPrintMargin(false);
+reducingEditor.setTheme("ace/theme/textmate");
+reducingEditor.setWrapBehavioursEnabled(false);
+reducingSession.setMode("ace/mode/javascript");
+reducingSession.setOption("useWorker", false);
+reducingSession.setTabSize(2);
+reducingSession.setUseSoftTabs(true);
+reducingSession.setUseWrapMode(false);
+
+reducerEditor.$blockScrolling = Infinity;
+var reducerSession = reducerEditor.getSession();
+reducerEditor.setBehavioursEnabled(false);
+reducerEditor.setHighlightActiveLine(false);
+reducerEditor.setOption("fontFamily", "Source Code Pro");
+reducerEditor.setOption("fontSize", "10pt");
+reducerEditor.setShowPrintMargin(false);
+reducerEditor.setTheme("ace/theme/textmate");
+reducerEditor.setWrapBehavioursEnabled(false);
+reducerSession.setMode("ace/mode/javascript");
+reducerSession.setOption("useWorker", false);
+reducerSession.setTabSize(2);
+reducerSession.setUseSoftTabs(true);
+reducerSession.setUseWrapMode(false);
+
+output.$blockScrolling = Infinity;
+var outputSession = output.getSession();
+output.setBehavioursEnabled(false);
+output.setHighlightActiveLine(false);
+output.setOption("fontFamily", "Source Code Pro");
+output.setOption("fontSize", "10pt");
+output.setShowPrintMargin(false);
+output.setTheme("ace/theme/textmate");
+output.setWrapBehavioursEnabled(false);
+output.setReadOnly(true);
+outputSession.setMode("ace/mode/javascript");
+outputSession.setOption("useWorker", false);
+outputSession.setTabSize(2);
+outputSession.setUseSoftTabs(true);
+outputSession.setUseWrapMode(false);
+
+var scriptRadio = document.querySelector("#script-radio");
+var moduleRadio = document.querySelector("#module-radio");
+
+var thunkedRadio = document.querySelector("#thunked-radio");
+var notThunkedRadio = document.querySelector("#not-thunked-radio");
 
 var lastExecutedProgram;
 
-session.on('change', debounce(function onChange() {
-  var input = editor.getValue();
-  goButton.style.display = "none";
-  compile(input, function(ast, program) {
-    goButton.style.display = input === lastExecutedProgram ? "none" : "initial";
-  });
-}, 300));
+var cachedReducer = {};
 
-function go(){
-  var input = editor.getValue();
-  compile(input, function(ast, program) {
-    lastExecutedProgram = input;
-    exec(ast, program);
-    goButton.style.display = "none";
-  });
+var reducerDisplayingScript = void 0;
+
+var params = {};
+location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){
+  params[param] = decodeURIComponent(value);
+});
+if ('reducing_type' in params) {
+  (params.reducing_type === 'script' ? scriptRadio : moduleRadio).checked = true;
 }
-goButton.addEventListener("click", go);
-
-function compile(es6program, cont) {
-  try {
-    var ast = parser.parseModule(es6program, { earlyErrors: true });
-  } catch (ex) {
-    displayError(ex, editor);
-    return;
-  }
-  hideError(editor);
-
-  try {
-    var es5program = babel(es6program, { ast: false, retainLines: true }).code;
-  } catch (ex) {
-    ex.line = ex.loc.line;
-    ex.column = ex.loc.column;
-    displayError(ex, editor);
-    return;
-  }
-  hideError(editor);
-
-  cont(ast, es5program);
+if ('thunked' in params) {
+  (params.thunked === 'yes' ? thunkedRadio : notThunkedRadio).checked = true;
+}
+if ('reducing' in params) {
+  reducingEditor.setValue(params.reducing, -1);
+}
+if ('reducer' in params) {
+  reducerEditor.setValue(params.reducer, -1);
 }
 
-function exec(ast, program) {
-  var exports = {}, module = {exports: exports};
-  try {
-    eval(program);
-    var inputReducer = new exports.default;
-    var state = reducer.default(inputReducer, ast);
-  } catch (ex) {
-    findEvalLineNumber(ex);
-    displayError(ex, editor);
-    return;
-  }
-  hideError(editor);
-  render(JSON.stringify(state, null, 2));
-}
+var isLoaded = false;
 
-function findEvalLineNumber(ex) {
-  ex.column = ex.column || ex.columnNumber;
-  ex.line = ex.line || ex.lineNumber;
-  if (!ex.line) {
-    var stackLines = ex.stack.split("\n");
-    var match = stackLines[1].match(/<anonymous>:(\d+):(\d+)/) || stackLines[0].match(/eval:(\d+):(\d+)/);
-    if (match != null) {
-      ex.line = match[1];
-      ex.column = match[2];
+function onChange() {
+  hideError(reducingContainer, reducingEditor);
+  hideError(reducerContainer, reducerEditor);
+  var reducing = reducingEditor.getValue();
+  var reducerProgram = reducerEditor.getValue();
+  var evaluatedReducer = cachedReducer[reducerProgram];
+  if (evaluatedReducer === void 0) {
+    try {
+      parser.parseScript(reducerProgram, { earlyErrors : true }); // check parse errors, otherwise we don't get reliable location information
+      evaluatedReducer = (function() {
+        var Shift = ast;
+        var {reduce, thunkedReduce, thunkify, thunkifyClass, memoize, CloneReducer, LazyCloneReducer, MonoidalReducer, ThunkedMonoidalReducer, adapt, PlusReducer, ThunkedPlusReducer, ConcatReducer, ThunkedConcatReducer, AndReducer, ThunkedAndReducer, OrReducer, ThunkedOrReducer } = reducer;
+        return eval(reducerProgram);
+      })() || {}
+      cachedReducer[reducerProgram] = evaluatedReducer;
+    } catch (ex) {
+      displayError(ex, reducerContainer, reducerEditor, reducerError);
+      render(ex.toString(), true);
+      return;
     }
   }
+  if (isLoaded) {
+    var args = {
+      reducing_type: scriptRadio.checked ? 'script' : 'module',
+      thunked: thunkedRadio.checked ? 'yes' : 'no',
+      reducing: encodeURIComponent(reducingEditor.getValue()),
+      reducer: encodeURIComponent(reducerEditor.getValue()),
+    };
+    history.pushState({}, '', `?${Object.keys(args).map(name => `${name}=${args[name]}`).join('&')}`);
+  }
+  isLoaded = true;
+  var returnedValue = null;
+  try {
+    var parsed = (moduleRadio.checked ? parser.parseModule : parser.parseScript)(reducing, { earlyErrors : true });
+    var reduced = (thunkedRadio.checked ? reducer.thunkedReduce : reducer.reduce)(new evaluatedReducer, parsed);
+    if (typeof reduced === 'object' && (reduced.type === 'Module' || reduced.type === 'Script')) {
+      returnedValue = codegen.default(reduced, new codegen.FormattedCodeGen);
+      if (reducerDisplayingScript === void 0 || !reducerDisplayingScript) {
+        outputElement.classList.remove('hidden');
+        outputTree.classList.add('hidden');
+      }
+      reducerDisplayingScript = true;
+    } else {
+      returnedValue = reduced;
+      if (reducerDisplayingScript === void 0 || reducerDisplayingScript) {
+        outputTree.classList.remove('hidden');
+        outputElement.classList.add('hidden');
+      }
+      reducerDisplayingScript = false;
+    }
+  } catch (ex) {
+    displayError(ex, reducingContainer, reducingEditor, reducingError);
+    render(ex.toString(), true);
+    return;
+  }
+  render(returnedValue, reducerDisplayingScript);
 }
 
-window.addEventListener('DOMContentLoaded', go);
+reducingEditor.getSession().on('change', debounce(onChange, 300));
+reducerEditor.getSession().on('change', debounce(onChange, 300));
+scriptRadio.addEventListener('change', onChange);
+moduleRadio.addEventListener('change', onChange);
+thunkedRadio.addEventListener('change', onChange);
+notThunkedRadio.addEventListener('change', onChange);
+
+document.addEventListener('DOMContentLoaded', onChange);
