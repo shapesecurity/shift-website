@@ -3,8 +3,6 @@
   "description": "website for the Shift suite of tools",
   "main": "index.js",
   "dependencies": {
-  },
-  "dependencies": {
     "ui-treeview": "1.0.3",
     "ace-builds": "1.4.2"
   },
@@ -16,7 +14,9 @@
     "shift-reducer": "4.4.0",
     "shift-scope": "3.1.0",
     "shift-validator": "3.0.0",
-    "uglify-es": "3.1.1"
+    "uglify-es": "3.1.1",
+    "shift-ast": "4.0.0",
+    "shift-template": "1.1.0"
   },
   "scripts": {
     "build": "bash ./update.sh",

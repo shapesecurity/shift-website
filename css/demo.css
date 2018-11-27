@@ -84,3 +84,7 @@
 .output-container.error .error-message {
   display: initial;
 }
+
+.editor.error .error-message {
+  display: initial;
+}
