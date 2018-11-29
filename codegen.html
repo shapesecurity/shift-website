@@ -23,19 +23,32 @@
 
     <style>
       #demo1 .editor {
-        width: 60%;
+        width: 100%;
       }
-      #demo1 .output-container {
-        width: 40%;
+      #actions {
+        text-align: center;
       }
-      #demo1 .output {
-        font-family: Source Code Pro, DejaVu Sans Mono, Droid Sans Mono, Courier New, Courier, monospace;
-        font-size: 21px;
-        padding: 1em;
+      .error-message {
+        padding-left: 4.3em;
+        position: relative;
+        float: top;
       }
+      #demo1.error {
+        position: relative;
+      }
+      #demo1.error .editor {
+        position: absolute;
+        bottom: 0;
+        height: 93%;
+      }
+      #demo1.error .error-message {
+        display: block;
+      }
+
     </style>
 
     <script src="node_modules/ace-builds/src-min/ace.js"></script>
+    <script src="js/shift-parser.js"></script>
     <script src="js/shift-codegen.js"></script>
   </head>
 
@@ -65,10 +78,10 @@
         <h3>Demo</h3>
 
         <p>
-          In this demo, a Shift AST is given on the left, and the code generator
-          output is shown on the right. Notice how the code generator outputs
-          only the whitespace/punctuation that is strictly necessary for the
-          program to round trip through the parser.
+          In this demo, a script is provided, and the formatted code generator
+          output is shown when the beautify button is pressed below.
+          When the uglify button is pressed, a minimal code generator provides
+          the smallest possible output, not including minimizer rewriting.
         </p>
 
         <div class="demo" id="demo1">
@@ -98,12 +111,13 @@
   ]
 }
 </div>
-          <div class="output-container">
-            <div class="output"></div>
-            <div class="error-message"></div>
-          </div>
+          <div class="error-message"></div>
           <script src="js/codegen/main.js"></script>
         </div>
+        <div id="actions">
+            <button class="btn btn-primary btn-lg" type="button" id="beautify-button" class="action-button">Beautify</button>
+            <button class="btn btn-primary btn-lg" type="button" id="uglify-button" class="action-button">Uglify</button>
+          </div>
       </section>
 
       <section id="installation">

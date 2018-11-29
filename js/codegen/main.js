@@ -1,44 +1,10 @@
 "use strict";
 
-// fn from http://underscorejs.org/docs/underscore.html
-// https://github.com/jashkenas/underscore/blob/master/LICENSE
-function debounce(func, wait, immediate) {
-  var timeout, args, context, timestamp, result;
-
-  var later = function() {
-    var last = Date.now() - timestamp;
-
-    if (last < wait && last > 0) {
-      timeout = setTimeout(later, wait - last);
-    } else {
-      timeout = null;
-      if (!immediate) {
-        result = func.apply(context, args);
-        if (!timeout) context = args = null;
-      }
-    }
-  };
-
-  return function() {
-    context = this;
-    args = arguments;
-    timestamp = Date.now();
-    var callNow = immediate && !timeout;
-    if (!timeout) timeout = setTimeout(later, wait);
-    if (callNow) {
-      result = func.apply(context, args);
-      context = args = null;
-    }
-
-    return result;
-  };
-}
-
 var editor = ace.edit(document.querySelector("#demo1 .editor"));
 
+var errorContainer = document.querySelector("#demo1");
+
 var error = document.querySelector("#demo1 .error-message");
-var output = document.querySelector("#demo1 .output");
-var outputContainer = document.querySelector("#demo1 .output-container");
 
 function displayError(exception) {
   hideError();
@@ -51,17 +17,17 @@ function displayError(exception) {
       type: "error" // also warning and information
     }]);
   }
-  outputContainer.classList.add("error");
+  errorContainer.classList.add("error");
 }
 
 function hideError() {
-  outputContainer.classList.remove("error");
+  errorContainer.classList.remove("error");
   editor.getSession().clearAnnotations();
 }
 
 function render(program) {
   hideError();
-  output.textContent = program;
+  editor.setValue(program, -1);
   hljs.highlightBlock(output);
 }
 
@@ -73,17 +39,17 @@ editor.setOption("fontSize", "10pt");
 editor.setShowPrintMargin(false);
 editor.setTheme("ace/theme/textmate");
 editor.setWrapBehavioursEnabled(false);
-session.setMode("ace/mode/json");
+session.setMode("ace/mode/javascript");
 session.setOption("useWorker", false);
 session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
 
-function onChange() {
+function onChange(codeGenerator) {
   var code = editor.getValue();
   try {
-    var ast = (0, eval)("(function(){return " + code + "}())");
-    var program = codegen.default(ast);
+    var ast = parser.parseScript(code);
+    var program = codegen.default(ast, codeGenerator);
   } catch (ex) {
     displayError(ex);
     return;
@@ -91,6 +57,13 @@ function onChange() {
   render(program);
 }
 
-editor.getSession().on('change', debounce(onChange, 300));
+function onLoad() {
+  document.querySelector("#beautify-button").addEventListener('click', function() {
+    onChange(new codegen.FormattedCodeGen);
+  });
+  document.querySelector("#uglify-button").addEventListener('click', function() {
+    onChange(new codegen.MinimalCodeGen);
+  });
+}
 
-window.addEventListener('DOMContentLoaded', onChange);
+window.addEventListener('DOMContentLoaded', onLoad);

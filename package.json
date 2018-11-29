@@ -3,8 +3,6 @@
   "description": "website for the Shift suite of tools",
   "main": "index.js",
   "dependencies": {
-  },
-  "dependencies": {
     "ui-treeview": "1.0.3",
     "ace-builds": "1.4.2"
   },
