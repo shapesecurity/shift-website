@@ -31,9 +31,19 @@
       }
 
       figure.comparison {
-        width: 346px;
+        width: 47%;
         margin: 0 2px;
+        text-align: left;
+        padding-left: .5em;
+        padding-right: .5em;
+      }
+
+      figure.left {
         float: left;
+      }
+
+      figure.right {
+        float: right;
       }
 
       figure.comparison ui-treeview {
@@ -46,6 +56,12 @@
       figure.comparison figcaption {
         text-align: center;
       }
+
+      .row-fluid {
+        text-align: center;
+      }
+
+      
     </style>
   </head>
 
@@ -119,13 +135,13 @@
           </div>
 
           <div class="row-fluid">
-            <figure class="comparison">
+            <figure class="comparison left">
               <ui-treeview expanded>
                 {"type":"Script","directives":[],"statements":[{"type":"VariableDeclarationStatement","declaration":{"type":"VariableDeclaration","kind":"var","declarators":[{"type":"VariableDeclarator","binding":{"type":"BindingIdentifier","name":"x"},"init":null}]}},{"type":"ForStatement","init":{"type":"VariableDeclaration","kind":"var","declarators":[{"type":"VariableDeclarator","binding":{"type":"BindingIdentifier","name":"y"},"init":null}]},"test":null,"update":null,"body":{"type":"EmptyStatement"}}]}
               </ui-treeview>
               <figcaption><h5><span class="shift">Shift</span></h5></figcaption>
             </figure>
-            <figure class="comparison">
+            <figure class="comparison right">
               <ui-treeview expanded>
                 {"type":"Program","body":[{"type":"VariableDeclaration","declarations":[{"type":"VariableDeclarator","id":{"type":"Identifier","name":"x"},"init":null}],"kind":"var"},{"type":"ForStatement","init":{"type":"VariableDeclaration","declarations":[{"type":"VariableDeclarator","id":{"type":"Identifier","name":"y"},"init":null}],"kind":"var"},"test":null,"update":null,"body":{"type":"EmptyStatement"}}]}
               </ui-treeview>
