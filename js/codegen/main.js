@@ -58,10 +58,10 @@ function onChange(codeGenerator) {
 }
 
 function onLoad() {
-  document.querySelector("#beautify-button").addEventListener('click', function() {
+  document.querySelector("#pretty-button").addEventListener('click', function() {
     onChange(new codegen.FormattedCodeGen);
   });
-  document.querySelector("#uglify-button").addEventListener('click', function() {
+  document.querySelector("#minimal-button").addEventListener('click', function() {
     onChange(new codegen.MinimalCodeGen);
   });
 }

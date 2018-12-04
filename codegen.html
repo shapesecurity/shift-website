@@ -68,56 +68,34 @@
       <div class="jumbotron">
         <h1><span class="shift">Shift</span> Code Generator</h1>
         <p class="lead">
-          generates an ECMAScript program from a valid Shift AST
+          prettifies/minifies an ECMAScript program using the Shift AST
         </p>
       </div>
 
       <hr />
-
       <section id="demo">
         <h3>Demo</h3>
 
         <p>
           In this demo, a script is provided, and the formatted code generator
-          output is shown when the beautify button is pressed below.
-          When the uglify button is pressed, a minimal code generator provides
+          output is shown when the pretty button is pressed below.
+          When the minimal button is pressed, a minimal code generator provides
           the smallest possible output, not including minimizer rewriting.
         </p>
-
+        <div id="actions">
+          <button class="btn btn-primary btn-lg" type="button" id="pretty-button" class="action-button">Pretty</button>
+          <button class="btn btn-primary btn-lg" type="button" id="minimal-button" class="action-button">Minimal</button>
+        </div>
         <div class="demo" id="demo1">
-        <div class="editor" spellcheck="false">{
-  type: "Script",
-  directives: [],
-  statements: [
-    {
-      type: "VariableDeclarationStatement",
-      declaration: {
-        type: "VariableDeclaration",
-        kind: "let",
-        declarators: [
-          {
-            type: "VariableDeclarator",
-            binding: { type: "BindingIdentifier", name: "a" },
-            init: { type: "LiteralNumericExpression", value: 0 }
-          },
-          {
-            type: "VariableDeclarator",
-            binding: { type: "BindingIdentifier", name: "b" },
-            init: { type: "LiteralStringExpression", value: "string" }
-          }
-        ]
-      }
-    }
-  ]
-}
+          <div class="editor" spellcheck="false">for(let x;x>5;x++){if(x < 3){do {
+  console.log(`${x} < 3`);
+} while (false)} else {
+  console.log(`${x} >= 3`);
+}}
 </div>
           <div class="error-message"></div>
           <script src="js/codegen/main.js"></script>
         </div>
-        <div id="actions">
-            <button class="btn btn-primary btn-lg" type="button" id="beautify-button" class="action-button">Beautify</button>
-            <button class="btn btn-primary btn-lg" type="button" id="uglify-button" class="action-button">Uglify</button>
-          </div>
       </section>
 
       <section id="installation">
