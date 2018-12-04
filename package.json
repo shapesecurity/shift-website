@@ -13,7 +13,7 @@
     "shift-scope": "3.1.0",
     "shift-validator": "3.0.0",
     "uglify-es": "3.1.1",
-    "ui-treeview-2": "1.0.7"
+    "ui-treeview": "1.0.3"
   },
   "scripts": {
     "build": "bash ./update.sh",
