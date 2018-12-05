@@ -2,7 +2,8 @@
   "version": "0.0.0",
   "description": "website for the Shift suite of tools",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "@polymer/polymer": "3.1.0",
     "browserify": "16.2.3",
@@ -13,7 +14,8 @@
     "shift-scope": "3.1.0",
     "shift-validator": "3.0.0",
     "uglify-es": "3.1.1",
-    "ui-treeview": "1.0.3"
+    "ui-treeview": "1.0.3",
+    "ace-builds": "1.4.2"
   },
   "scripts": {
     "build": "bash ./update.sh",
