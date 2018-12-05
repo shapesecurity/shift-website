@@ -4,8 +4,11 @@
   "main": "index.js",
   "dependencies": {
   },
+  "dependencies": {
+    "ui-treeview": "1.0.3",
+    "ace-builds": "1.4.2"
+  },
   "devDependencies": {
-    "@polymer/polymer": "3.1.0",
     "browserify": "16.2.3",
     "shift-codegen": "5.1.0",
     "shift-fuzzer": "1.0.2",
@@ -13,9 +16,7 @@
     "shift-reducer": "4.4.0",
     "shift-scope": "3.1.0",
     "shift-validator": "3.0.0",
-    "uglify-es": "3.1.1",
-    "ui-treeview": "1.0.3",
-    "ace-builds": "1.4.2"
+    "uglify-es": "3.1.1"
   },
   "scripts": {
     "build": "bash ./update.sh",
