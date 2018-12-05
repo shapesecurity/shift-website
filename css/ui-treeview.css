@@ -1,4 +1,4 @@
-ui-treeview::shadow /deep/ * {
+ui-treeview {
   font-family: Source Code Pro;
   font-size: small;
   line-height: 120%;
@@ -7,32 +7,4 @@ ui-treeview::shadow /deep/ * {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-}
-
-ui-treeview::shadow /deep/ #caret {
-  margin-left: 1px;
-  margin-right: -1px;
-}
-
-ui-treeview::shadow /deep/ .expanded #caret {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-ui-treeview::shadow /deep/ .title:hover {
-  background-color: transparent;
-  cursor: pointer;
-}
-
-ui-treeview::shadow /deep/ .inline #caret {
-  visibility: hidden;
-}
-
-ui-treeview::shadow /deep/ [inline] .title:hover {
-  cursor: default;
-}
-
-ui-treeview::shadow /deep/ #caretSvg {
-  width: 11px;
-  height: 11px;
 }
