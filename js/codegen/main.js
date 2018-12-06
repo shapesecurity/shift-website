@@ -48,7 +48,7 @@ session.setUseWrapMode(false);
 function onChange(codeGenerator) {
   var code = editor.getValue();
   try {
-    var ast = parser.parseScript(code);
+    var ast = parser.parseModule(code);
     var program = codegen.default(ast, codeGenerator);
   } catch (ex) {
     displayError(ex);
