@@ -126,9 +126,6 @@ outputSession.setUseWrapMode(false);
 var scriptRadio = document.querySelector("#script-radio");
 var moduleRadio = document.querySelector("#module-radio");
 
-var thunkedRadio = document.querySelector("#thunked-radio");
-var notThunkedRadio = document.querySelector("#not-thunked-radio");
-
 var lastExecutedProgram;
 
 var cachedReducer = {};
@@ -141,9 +138,6 @@ location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){
 });
 if ('reducing_type' in params) {
   (params.reducing_type === 'script' ? scriptRadio : moduleRadio).checked = true;
-}
-if ('thunked' in params) {
-  (params.thunked === 'yes' ? thunkedRadio : notThunkedRadio).checked = true;
 }
 if ('reducing' in params) {
   reducingEditor.setValue(params.reducing, -1);
@@ -178,7 +172,6 @@ function onChange() {
   if (isLoaded) {
     var args = {
       reducing_type: scriptRadio.checked ? 'script' : 'module',
-      thunked: thunkedRadio.checked ? 'yes' : 'no',
       reducing: encodeURIComponent(reducingEditor.getValue()),
       reducer: encodeURIComponent(reducerEditor.getValue()),
     };
@@ -188,7 +181,7 @@ function onChange() {
   var returnedValue = null;
   try {
     var parsed = (moduleRadio.checked ? parser.parseModule : parser.parseScript)(reducing, { earlyErrors : true });
-    var reduced = (thunkedRadio.checked ? reducer.thunkedReduce : reducer.reduce)(new evaluatedReducer, parsed);
+    var reduced = reducer.reduce(new evaluatedReducer, parsed);
     if (typeof reduced === 'object' && (reduced.type === 'Module' || reduced.type === 'Script')) {
       returnedValue = codegen.default(reduced, new codegen.FormattedCodeGen);
       if (reducerDisplayingScript === void 0 || !reducerDisplayingScript) {
@@ -216,7 +209,5 @@ reducingEditor.getSession().on('change', debounce(onChange, 300));
 reducerEditor.getSession().on('change', debounce(onChange, 300));
 scriptRadio.addEventListener('change', onChange);
 moduleRadio.addEventListener('change', onChange);
-thunkedRadio.addEventListener('change', onChange);
-notThunkedRadio.addEventListener('change', onChange);
 
 document.addEventListener('DOMContentLoaded', onChange);
