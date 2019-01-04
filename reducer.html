@@ -32,6 +32,7 @@
       }
       #demo0 {
         height: 250px;
+        margin-top: 10px;
       }
       #reducing-container {
         width: 50%;
@@ -88,6 +89,30 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
+      }
+      .reducer-title {
+        margin: 10px 0px auto;
+        text-align: center;
+        font-size: 1.4em;
+      }
+      .double-title {
+        margin: 0 auto;
+      }
+      .reducing-title {
+        display: inline-block;
+        margin-bottom: 0px;
+        position: relative;
+        left: 20%;
+        transform: translate(-100%, 0%);
+        font-size: 1.4em;
+      }
+      .reduced-title {
+        display: inline-block;
+        margin-bottom: 0px;
+        position: relative;
+        left: 80%;
+        transform: translate(-100%, 0%);
+        font-size: 1.4em;
       }
     </style>
 
@@ -164,7 +189,9 @@
               <input type="radio" name="program-radio" id="module-radio" value="module" checked> Module
             </label>
           </p>
-          
+          <p class="reducer-title">
+            Reducer
+          </p>
           <div class="demo" id="demo0">
             <div id="reducer-container" class="editor">
               <div spellcheck="false" class="editor" id="reducer">(function() {
@@ -195,7 +222,10 @@
               <div class="error-message"></div>
             </div>
           </div>
-
+          <p class="double-title">
+            <p class="reducing-title">Reducer</p>
+            <p class="reduced-title">Reduced</p>
+          </p>
           <div class="demo" id="demo1">
             <div id="reducing-container" class="editor">
               <div spellcheck="false" class="editor" id="reducing">"use strict";
