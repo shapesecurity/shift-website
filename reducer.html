@@ -213,8 +213,12 @@
       return super.reduceModule(node, state).extract();
     }
 
+    reduceBindingIdentifier(node, state) {
+      return new Collector(['binding: ' + node.name]);
+    }
+    
     reduceIdentifierExpression(node, state) {
-      return new Collector([node.name]);
+      return new Collector(['reference: ' + node.name]);
     }
   }
 })();
