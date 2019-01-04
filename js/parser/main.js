@@ -103,9 +103,7 @@ if ('script' in params) {
   editor.setValue(params.script, -1);
 }
 
-var isLoaded = false;
-
-function onChange() {
+function updateASTRendering() {
   var code = editor.getValue();
   var parseFn = scriptRadio.checked ? parser.parseScript : parser.parseModule;
   try {
@@ -115,19 +113,25 @@ function onChange() {
     return;
   }
 
-  if (isLoaded) {
+  render(ast);
+}
+
+function persistState() {
     var args = {
       parse_type: scriptRadio.checked ? 'script' : 'module',
       script: encodeURIComponent(editor.getValue()),
     };
     history.pushState({}, '', `?${Object.keys(args).map(name => `${name}=${args[name]}`).join('&')}`);
-  }
-  isLoaded = true;
-  render(ast);
 }
 
-editor.getSession().on('change', debounce(onChange, 300));
-scriptRadio.addEventListener('change', onChange);
-moduleRadio.addEventListener('change', onChange);
+editor.getSession().on('change', debounce(function() {
+  updateASTRendering();
+  persistState();
+}, 300));
 
-document.addEventListener('WebComponentsReady', onChange);
+scriptRadio.addEventListener('change', updateASTRendering);
+scriptRadio.addEventListener('change', persistState);
+moduleRadio.addEventListener('change', updateASTRendering);
+moduleRadio.addEventListener('change', persistState);
+
+document.addEventListener('WebComponentsReady', updateASTRendering);
