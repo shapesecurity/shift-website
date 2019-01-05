@@ -40,8 +40,8 @@ var error = document.querySelector("#demo1 .error-message");
 var output = document.querySelector("#demo1 .output");
 var outputContainer = document.querySelector("#demo1 .output-container");
 
-var radio = document.querySelector("#script-radio");
-var radio2 = document.querySelector("#module-radio");
+var scriptRadio = document.querySelector("#script-radio");
+var moduleRadio = document.querySelector("#module-radio");
 
 function displayError(exception) {
   hideError();
@@ -69,6 +69,7 @@ function render(ast) {
   output.display(ast);
 }
 
+editor.$blockScrolling = Infinity;
 var session = editor.getSession();
 editor.setBehavioursEnabled(false);
 editor.setHighlightActiveLine(false);
@@ -83,28 +84,54 @@ session.setTabSize(2);
 session.setUseSoftTabs(true);
 session.setUseWrapMode(false);
 
+// legacy url support
 var params = {};
 location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){ params[param] = decodeURIComponent(value); });
 if ({}.hasOwnProperty.call(params, 'type') && (params.type === 'Module' || params.type === 'Script') && {}.hasOwnProperty.call(params, 'code')) {
-  (params.type === 'Script' ? radio : radio2).checked = true;
+  (params.type === 'Script' ? scriptRadio : moduleRadio).checked = true;
   session.setValue(params.code);
 }
 
+var params = {};
+location.search.replace(/[?&](\w+)=([^&]*)/g, function(match, param, value){
+  params[param] = decodeURIComponent(value);
+});
+if ('parse_type' in params) {
+  (params.parse_type === 'script' ? scriptRadio : moduleRadio).checked = true;
+}
+if ('script' in params) {
+  editor.setValue(params.script, -1);
+}
 
-function onChange() {
+function updateASTRendering() {
   var code = editor.getValue();
-  var parseFn = radio.checked ? parser.parseScript : parser.parseModule;
+  var parseFn = scriptRadio.checked ? parser.parseScript : parser.parseModule;
   try {
     var ast = parseFn(code, { earlyErrors : true });
   } catch (ex) {
     displayError(ex);
     return;
   }
+
   render(ast);
 }
 
-editor.getSession().on('change', debounce(onChange, 300));
-radio.addEventListener('change', onChange);
-radio2.addEventListener('change', onChange);
+function persistState() {
+    var args = {
+      parse_type: scriptRadio.checked ? 'script' : 'module',
+      script: encodeURIComponent(editor.getValue()),
+    };
+    history.pushState({}, '', `?${Object.keys(args).map(name => `${name}=${args[name]}`).join('&')}`);
+}
 
-window.addEventListener('WebComponentsReady', onChange);
+editor.getSession().on('change', debounce(function() {
+  updateASTRendering();
+  persistState();
+}, 300));
+
+scriptRadio.addEventListener('change', updateASTRendering);
+scriptRadio.addEventListener('change', persistState);
+moduleRadio.addEventListener('change', updateASTRendering);
+moduleRadio.addEventListener('change', persistState);
+
+document.addEventListener('WebComponentsReady', updateASTRendering);
