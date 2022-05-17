@@ -7,14 +7,14 @@
     "ace-builds": "1.4.2",
     "esbuild": "0.14.39",
     "terser": "5.13.1",
-    "shift-ast": "4.0.0",
-    "shift-codegen": "5.1.0",
-    "shift-fuzzer": "1.0.2",
-    "shift-parser": "5.2.4",
-    "shift-reducer": "4.4.0",
-    "shift-scope": "3.1.0",
-    "shift-template": "1.1.0",
-    "shift-validator": "3.0.0"
+    "shift-ast": "7.0.0",
+    "shift-codegen": "8.0.0",
+    "shift-fuzzer": "3.0.0",
+    "shift-parser": "8.0.0",
+    "shift-reducer": "7.0.0",
+    "shift-scope": "6.0.0",
+    "shift-template": "2.0.0",
+    "shift-validator": "6.0.0"
   },
   "scripts": {
     "build": "bash ./update.sh",
