@@ -6,7 +6,7 @@
     "ui-treeview": "1.0.3",
     "ace-builds": "1.4.2",
     "esbuild": "0.14.39",
-    "terser": "5.13.1",
+    "terser": "5.14.2",
     "shift-ast": "7.0.0",
     "shift-codegen": "8.0.0",
     "shift-fuzzer": "3.0.0",
